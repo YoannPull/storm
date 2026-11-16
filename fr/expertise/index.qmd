@@ -1,0 +1,50 @@
+---
+pagetitle: "Expertise — STORM"
+description: "Les méthodes quantitatives de STORM et leurs applications."
+page-layout: full
+---
+
+:::: {.theme-head}
+
+[Expertise]{.kicker}
+
+# Expertise
+
+::: {.position-line}
+
+Des méthodes quantitatives, pensées pour l'application. Le détail de nos travaux se trouve dans nos publications et nos notes.
+
+:::
+
+::::
+
+:::: {.section-wide}
+
+```{=html}
+<div class="sh"><h2>Méthodes</h2></div>
+<div class="xblocks"><div class="xblock" id="statistique"><span class="n">01</span><h3>Statistique et économétrie</h3><p>Mesurer, tester et surveiller les modèles de risque avec des garanties statistiques claires : calibration, valeurs extrêmes, suivi en continu.</p></div><div class="xblock" id="machine-learning"><span class="n">02</span><h3>Machine learning et intelligence artificielle</h3><p>Des modèles plus flexibles, à condition qu'ils restent explicables, robustes et validables — des approches interprétables aux modèles de fondation.</p></div><div class="xblock" id="stress-testing"><span class="n">03</span><h3>Stress testing et scénarios</h3><p>Propager des scénarios dans les modèles de risque, ou partir du seuil de rupture pour remonter au scénario le plus plausible.</p></div></div>
+<div class="sh"><h2>Stress testing, en mouvement</h2></div>
+<div class="anim-group">
+<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Stress test de crédit</button><button type="button" data-pane="rst" aria-pressed="false">Reverse stress test</button></div>
+<div class="anim-pane" data-pane="credit"><div class="storm-anim" data-anim="credit"></div></div>
+<div class="anim-pane" data-pane="rst" hidden><div class="storm-anim" data-anim="rst"></div></div>
+</div>
+<div class="sh"><h2>Validation et suivi des modèles</h2></div>
+<p class="lede-p">Vérifier qu’un modèle reste bien calibré, et le détecter au plus tôt quand il dérive.</p>
+<div class="anim-group">
+<div class="anim-switch" role="group"><button type="button" data-pane="eprocess" aria-pressed="true">Surveillance en continu</button><button type="button" data-pane="jeffreys" aria-pressed="false">Test de calibration</button></div>
+<div class="anim-pane" data-pane="eprocess"><div class="storm-anim" data-anim="eprocess"></div></div>
+<div class="anim-pane" data-pane="jeffreys" hidden><div class="storm-anim" data-anim="jeffreys"></div></div>
+</div>
+<div class="sh"><h2>Applications</h2></div>
+<div class="xblocks"><div class="xblock app" id="credit"><h3>Risque de crédit</h3><p>Développer, valider et surveiller les modèles de crédit, et mesurer leur comportement sous stress.</p></div><div class="xblock app" id="climat"><h3>Risques climatiques</h3><p>Intégrer les risques physiques et de transition dans l'évaluation des risques financiers.</p></div><div class="xblock app" id="geopolitique"><h3>Risque géopolitique et macro-financier</h3><p>Comprendre comment les chocs se propagent aux portefeuilles, et lesquels pourraient les mettre en difficulté.</p></div></div>
+<div class="sh"><h2>Pour aller plus loin</h2></div>
+```
+
+::: {.more-links}
+
+[Publications](../publications/index.qmd) · [Notes techniques](../publications/index.qmd#notes-techniques) · [Actualités](../actualites/index.qmd)
+
+:::
+
+::::

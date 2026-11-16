@@ -44,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-43079c3d81531febd1f9a52dd662ba45.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-11d92f49eee63fbfce3dae82d71e3e36.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-895eb612c8b0b095671e1254788c7e15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3e1420142a4220f2da9f0aa9007cbaa9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -149,6 +149,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../assets/css/fonts.css">
+<link rel="stylesheet" href="../../assets/css/storm-dark.css">
 <meta property="og:title" content="Risque de crédit et scénarios climatiques : capter l’information complète de la distribution sous stress – STORM">
 <meta property="og:description" content="L’approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall.">
 <meta property="og:site_name" content="STORM">
@@ -158,12 +159,15 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-sm " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../fr/index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../assets/brand/logo-storm-mark-navy.svg" alt="STORM — Quantitative Risk Collective" class="navbar-logo light-content">
     <img src="../../assets/brand/logo-storm-mark-navy.svg" alt="STORM — Quantitative Risk Collective" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../fr/index.html">
+    <span class="navbar-title">STORM</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Recherche"></div>
@@ -173,8 +177,8 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../fr/recherche/index.html"> 
-<span class="menu-text">Recherche</span></a>
+    <a class="nav-link" href="../../fr/expertise/index.html"> 
+<span class="menu-text">Expertise</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../fr/actualites/index.html"> 
@@ -193,6 +197,10 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="../../en/index.html"> 
 <span class="menu-text">EN</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../fr/a-propos/index.html#contact"> 
+<span class="menu-text">Nous contacter</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -338,141 +346,904 @@ window.Quarto = {
 
 </main> <!-- /main -->
 <!-- =========================================================================
-     Fond animé + petits scripts communs. Inséré en fin de page sur tout le
-     site (clé include-after-body de _quarto.yml).
+     Scripts communs, insérés en fin de page sur tout le site
+     (clé include-after-body de _quarto.yml).
 
-     Le fond : des densités de probabilité en perspective qui dérivent
-     lentement. La zone au-delà du quantile à 95 % de chaque densité est
-     ombrée en or, avec un trait au quantile. Toutes les ~18 s, un épisode de
-     stress balaie la page de haut en bas : les densités s'élargissent et
-     penchent à droite, le quantile s'éloigne, la queue grossit, puis tout se
-     détend. Immobile sur les pages de lecture (notes, pages d'axe, à propos)
-     et si le visiteur a désactivé les animations.
-
-     Réglages rapides (dans le script ci-dessous) :
-       N      nombre de lignes          PERIOD  durée d'un cycle de stress (s)
-       alpha  intensité des traits      GOLD    couleur des queues
+     1. Fond « horizon de densité » derrière l'accueil (.home-hero) : une
+        grande densité en poussière, la queue au-delà du quantile à 95 % en
+        bleu STORM. Elle respire lentement ; immobile si le visiteur a
+        désactivé les animations.
+     2. Animations de méthodes, à placer dans une page avec :
+          ::: {.storm-anim data-anim="credit"}   stress test de crédit
+          :::
+          ::: {.storm-anim data-anim="rst"}      reverse stress test
+          :::
+          data-anim="jeffreys"  test de Jeffreys (calibration des PD)
+          data-anim="eprocess"  surveillance en continu (e-processus)
+        Les textes suivent la langue de la page (fr / en).
+     3. Sur l'accueil : le sélecteur entre les deux animations.
+     Chaque animation démarre quand elle entre à l'écran, et se met en pause
+     quand elle en sort.
      ========================================================================= -->
-<canvas id="storm-bg" aria-hidden="true"></canvas>
-<div class="storm-glow" aria-hidden="true"></div>
-<script>
-/* Accueil : boutons « en bref / plus / approche » */
-document.querySelectorAll('.pills [data-panel]').forEach(function (b) {
-  b.addEventListener('click', function () {
-    document.querySelectorAll('.pills [data-panel]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-    document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('is-hidden', p.id !== 'panel-' + b.dataset.panel); });
-  });
-});
-</script>
-<script>
-/* ---- Moving distributions ------------------------------------------------
-   A ridgeline of conditional densities seen in perspective. Each line carries
-   two skewed densities that drift slowly. The area beyond each density's 95%
-   quantile is shaded in the notes' gold, with a thin tick at the quantile.
-   Every ~18 s a stress episode sweeps down the ridgeline: the densities widen
-   and skew right, the quantile slides out and the shaded tail grows, then
-   everything relaxes.                                                      */
-(function(){
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-  const c=document.getElementById('storm-bg'), g=c.getContext('2d');
-  const BG=(getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#f7f8fa'), INK='18,68,137', GOLD='189,140,66';
-  const N=30, STEP=6, PERIOD=18;          // lines, x-step (px), stress cycle (s)
-  let W,H,lines=[],t=Math.random()*100,last=performance.now();
+<style>
+/* ---- Animation : stress test de crédit (.storm-flow) -------------------- */
+/* ===== composant : schéma animé ===== */
+.storm-flow{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.sf-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sf-tabs{display:inline-flex;gap:2px;padding:3px;background:var(--bg);border:1px solid var(--line);border-radius:999px;font-family:var(--sans);font-size:13.5px}
+.sf-tabs button{all:unset;cursor:pointer;padding:4px 12px;border-radius:999px;color:var(--muted);transition:background .15s,color .15s}
+.sf-tabs button:hover{color:var(--ink)}
+.sf-tabs button[aria-pressed="true"]{background:#fff;color:#000}
+.sf-tabs button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.sf-tag{font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.02em}
+.sf-svg{display:block;width:100%;height:auto;overflow:visible}
+.sf-node rect{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.2;transition:stroke .3s,fill .3s}
+.sf-node.on rect{stroke:#fff;fill:var(--surface-2)}
+.sf-node.swap rect{stroke:var(--signal);stroke-dasharray:5 4;fill:var(--tint)}
+.sf-node .n{font-family:var(--mono);font-size:11px;fill:var(--faint)}
+.sf-node .t{font-family:var(--sans);font-size:14.5px;font-weight:600;fill:var(--ink)}
+.sf-node .s{font-family:var(--sans);font-size:11.5px;fill:var(--muted)}
+.sf-node .swaplab{font-family:var(--mono);font-size:10.5px;fill:var(--primary);opacity:0;transition:opacity .4s}
+.sf-node.swap .swaplab{opacity:1}
+.sf-edge{fill:none;stroke:var(--line-strong);stroke-width:1.2}
+.sf-out rect{fill:var(--surface);stroke:var(--line);stroke-width:1.2;transition:stroke .3s,fill .3s,opacity .3s}
+.sf-out.on rect{stroke:#fff}
+.sf-out.tail.on rect{stroke:var(--signal);fill:var(--signal-tint)}
+.sf-out.off{opacity:.45}
+.sf-out .t{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:var(--ink)}
+.sf-out .v{font-family:var(--mono);font-size:15px;font-weight:500;fill:var(--ink)}
+.sf-out.tail .v{fill:var(--signal)}
+.sf-out .d{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
+.sf-mini{fill:none;stroke:#e6ebf2;stroke-width:1.3;opacity:0;transition:opacity .5s}
+.sf-mini.tailfill{fill:rgba(77,141,255,.40);stroke:none}
+.sf-mini.show{opacity:1}
+.sf-caption{font-family:var(--mono);font-size:13px;color:var(--body);min-height:2.6em;margin:6px 2px 0;padding-top:10px;border-top:1px solid var(--line)}
+.sf-caption .p{color:var(--primary)}
+.sf-caption .cur{display:inline-block;width:.55em;height:1em;vertical-align:-.15em;background:var(--primary);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.sf-foot{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+.sf-foot a{color:var(--primary);text-decoration:none}
+@media (prefers-reduced-motion:reduce){.sf-caption .cur{animation:none}}
 
-  // erf approximation (Abramowitz–Stegun 7.1.26) for the skew-normal CDF part
+
+/* ---- Animation : reverse stress test (.rst) ----------------------------- */
+/* ===== composant : reverse stress test ===== */
+.rst{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.rst-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:4px}
+.rst-steps{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--sans);font-size:12.5px}
+.rst-steps span{padding:3px 10px;border-radius:999px;border:1px solid var(--line-strong);color:var(--faint);transition:all .3s}
+.rst-steps span.on{color:#000;background:#fff;border-color:#fff}
+.rst-steps span.done{color:var(--muted);border-color:var(--line-strong)}
+.rst-tag{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
+.rst svg{display:block;width:100%;height:auto}
+.rst .ax{stroke:var(--line-strong);stroke-width:1}
+.rst .axl{font-family:var(--sans);font-size:12px;fill:var(--muted)}
+.rst .ring{fill:none;stroke:#e9edf3;stroke-width:1;stroke-dasharray:1.5 5;stroke-opacity:.32}
+.rst .ring.live{stroke-dasharray:none;stroke-opacity:.8;stroke-width:1.2}
+.rst .front{fill:none;stroke:var(--signal);stroke-width:1.6}
+.rst .flab{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.rst .base{fill:#fff}
+.rst .blab{font-family:var(--sans);font-size:12px;fill:var(--body)}
+.rst .star{fill:var(--signal)}
+.rst .slab{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:#fff}
+.rst .hood{fill:#4d8dff;fill-opacity:0;stroke:#4d8dff;stroke-width:1.3;stroke-opacity:.95}
+.rst .hlab{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.rst .rlab{font-family:var(--mono);font-size:10px;fill:#8a9099}
+.rst .plab{font-family:var(--mono);font-size:11px;font-weight:500;fill:#fff}
+.rst .path{stroke:#fff;stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.6;fill:none}
+.rst-read{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.rst-read div{border:1px solid var(--line);border-radius:10px;padding:9px 12px;transition:border-color .3s}
+.rst-read div.on{border-color:#fff}
+.rst-read div.blue.on{border-color:var(--signal);background:var(--signal-tint)}
+.rst-read b{display:block;font-family:var(--sans);font-size:12px;font-weight:600;color:var(--ink)}
+.rst-read span{display:block;font-family:var(--mono);font-size:14px;color:var(--ink);margin-top:2px}
+.rst-read div.blue span{color:var(--signal)}
+.rst-read i{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:1px}
+.rst-cap{font-family:var(--mono);font-size:13px;color:var(--body);min-height:2.6em;margin:10px 2px 0;padding-top:10px;border-top:1px solid var(--line)}
+.rst-cap .p{color:var(--primary)}
+.rst-cap .cur{display:inline-block;width:.55em;height:1em;vertical-align:-.15em;background:var(--primary);margin-left:2px;animation:rstblink 1s steps(1) infinite}
+@keyframes rstblink{50%{opacity:0}}
+.rst-foot{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+.rst-foot a{color:var(--primary);text-decoration:none}
+@media (max-width:640px){.rst-read{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.rst-steps span:not(.on){display:none}}
+@media (prefers-reduced-motion:reduce){.rst-cap .cur{animation:none}}
+
+
+
+/* ---- Animations : validation et suivi (.va) -------------------------------- */
+.va{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.va svg{display:block;width:100%;height:auto}
+.va .va-ax{stroke:var(--line-strong);stroke-width:1}
+.va .va-tick{font-family:var(--mono);font-size:10px;fill:#8a9099}
+.va .va-lab{font-family:var(--sans);font-size:12px;fill:var(--muted)}
+.va .va-curve{fill:none;stroke:#e9edf3;stroke-width:1.6}
+.va .va-left{fill:rgba(77,141,255,.35);stroke:none}
+.va .va-pd{stroke:#fff;stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.7}
+.va .va-pdl{font-family:var(--mono);font-size:11px;fill:#fff}
+.va .va-pvl{font-family:var(--mono);font-size:11px;font-weight:500;fill:var(--signal)}
+.va .va-zone{fill:rgba(77,141,255,.07)}
+.va .va-thr{stroke:var(--signal);stroke-width:1.3;stroke-dasharray:5 4}
+.va .va-thrl{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.va .va-review{stroke:#fff;stroke-opacity:.18;stroke-width:1;stroke-dasharray:2 4}
+.va .va-rl{font-family:var(--mono);font-size:10px;fill:#6c737c}
+.va .va-drift{stroke:#fff;stroke-width:1;stroke-dasharray:3 3}
+.va .va-dl{font-family:var(--sans);font-size:11.5px;fill:#c7ccd3}
+.va .va-line{fill:none;stroke:#e9edf3;stroke-width:1.8;stroke-linejoin:round}
+.va .va-line.blue{stroke:var(--signal);stroke-width:2.2}
+.va .va-al{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:#fff}
+.va-read{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:10px}
+.va-read div{border:1px solid var(--line);border-radius:10px;padding:9px 12px;transition:border-color .3s,background .3s}
+.va-read b{display:block;font-family:var(--sans);font-size:12px;font-weight:600;color:#fff}
+.va-read span{display:block;font-family:var(--mono);font-size:14px;color:#fff;margin-top:2px}
+.va-read div.blue span{color:var(--signal)}
+.va-read i{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:1px}
+.va-read div.alert{border-color:var(--signal);background:var(--signal-tint)}
+.va-read div.alert span{color:var(--signal)}
+.va-cap{font-family:var(--mono);font-size:13px;color:var(--body);min-height:2.6em;margin:10px 2px 0;padding-top:10px;border-top:1px solid var(--line)}
+.va-cap .p{color:var(--primary)}
+.va-cap .cur{display:inline-block;width:.55em;height:1em;vertical-align:-.15em;background:var(--primary);margin-left:2px;animation:vablink 1s steps(1) infinite}
+@keyframes vablink{50%{opacity:0}}
+.va-foot{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+.va-foot a{color:var(--primary)}
+.va-tag{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.anim-group .lede-p{font-style:italic;color:var(--muted);margin:0 0 1rem}
+
+/* Jeffreys (portefeuille à faible taux de défaut) et surveillance haute fréquence */
+.va .va-row{font-family:var(--sans);font-size:13px;font-weight:600;fill:#fff}
+.va .va-verdict{font-family:var(--mono);font-size:14px;fill:#e9edf3}
+.va .va-verdict.bad{fill:var(--signal)}
+.va .va-pvt{font-family:var(--mono);font-size:12px;fill:#8a9099}
+.va .va-cnt{font-family:var(--mono);font-size:11px;fill:#c7ccd3}
+.va .va-price{fill:none;stroke:#e9edf3;stroke-width:1.4;stroke-linejoin:round}
+.va .va-eline{fill:none;stroke:#8a9099;stroke-width:1.4}
+.va .va-eline.on{stroke:var(--signal);stroke-width:1.8}
+.va .va-earea{fill:rgba(138,144,153,.12)}
+.va .va-earea.on{fill:rgba(77,141,255,.28)}
+.va-tabs{display:inline-flex;gap:2px;padding:3px;margin-bottom:6px;background:var(--bg);border:1px solid var(--line-strong);border-radius:999px;font-family:var(--sans);font-size:13px}
+.va-tabs button{all:unset;cursor:pointer;padding:4px 12px;border-radius:999px;color:var(--muted)}
+.va-tabs button:hover{color:#fff}
+.va-tabs button[aria-pressed="true"]{background:#fff;color:#000}
+.va-tabs button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.va .va-ticks{stroke:var(--signal);stroke-width:1.6}
+.va .va-fa{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.va .va-rev{font-family:var(--mono);font-size:9.5px;fill:#6c737c}
+
+.va .va-fl .va-flagl{stroke-width:1;stroke-dasharray:2 3}
+.va .va-fl.false .va-flagl{stroke:rgba(77,141,255,.75)}
+.va .va-fl.true .va-flagl{stroke:#fff}
+.va .va-fl.false .va-flag{fill:var(--signal)}
+.va .va-fl.true .va-flag{fill:#fff}
+.va .va-flagt{font-family:var(--mono);font-size:10.5px;fill:var(--signal)}
+.va .va-fl.true .va-flagt{fill:#fff;font-weight:500}
+.va .va-gbg{fill:#15171a}
+.va .va-gfill{fill:#8a9099;transition:fill .2s}
+.va .va-gfill.on{fill:var(--signal)}
+.va .va-gthr{stroke:#fff;stroke-width:1.2}
+.va .va-lab tspan{font-size:11px}
+
+</style>
+<script>
+/* ---- Density horizon ------------------------------------------------------
+   One large right-skewed density drawn in fine dust behind the hero. The dust
+   drifts slowly along the curve; dots beyond the 95 % quantile glow gold and a
+   thin tick marks the quantile. Every ~24 s the tail gently thickens, the
+   quantile slides out, then everything relaxes. Fades out as you scroll.   */
+(function(){
+  const hero=document.querySelector('.home-hero'); if(!hero) return;
+  const c=document.createElement('canvas'); c.id='storm-horizon'; c.setAttribute('aria-hidden','true'); hero.prepend(c);
+  const g=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DUST=[226,232,242], BLUE=[77,141,255];
+  let W,H,dpr,P=[],t=0,last=performance.now();
   function erf(x){const s=Math.sign(x);x=Math.abs(x);const k=1/(1+.3275911*x);
     return s*(1-(((((1.061405429*k-1.453152027)*k)+1.421413741)*k-.284496736)*k+.254829592)*k*Math.exp(-x*x));}
-  // skew-normal density, peak-normalised so amplitude stays readable
-  function sn(z,a){return Math.exp(-z*z/2)*(1+erf(a*z/Math.SQRT2));}
-
+  const sn=(z,a)=>Math.exp(-z*z/2)*(1+erf(a*z/Math.SQRT2));   // skew-normal, unnormalised
+  // shape at time t: stress s ∈ [0,1] breathes slowly
+  const stress=()=>{const ph=(t/24)%1;return Math.pow(Math.max(0,Math.sin(ph*Math.PI)),3);};
+  // Big density spanning the hero, between the text and the pillars.
+  const content=hero.querySelector('.hero-in'), pillars=hero.querySelector('.pillars');
+  function shape(){
+    const s=stress(), wide=W>=900;
+    const pil=getComputedStyle(pillars).position==='absolute'?pillars.offsetHeight:0;
+    const base=H-pil-26-BAND()*.5, top=content.offsetTop+content.offsetHeight+30;
+    return {mu:(wide?.44:.40)*W, om:((wide?.15:.17)+.04*s)*W, a:2.4+3.4*s, base, amp:Math.max(80,base-top)*(1-.1*s), s};
+  }
+  let peak=1, q95z=1.6;
+  function calib(S){ // peak height + 95 % quantile in z units for current skew
+    let mx=0,tot=0;const cum=[];
+    for(let z=-4;z<=8;z+=.02){const v=sn(z,S.a);mx=Math.max(mx,v);tot+=v;cum.push([z,tot]);}
+    peak=mx;for(const [z,v] of cum){if(v>=.95*tot){q95z=z;break;}}
+  }
+  const curveY=(x,S)=>S.base-S.amp*sn((x-S.mu)/S.om,S.a)/peak;
+  // mouse parallax (smoothed)
+  let mx=0,my=0,tx=0,ty=0;
+  addEventListener('mousemove',e=>{tx=e.clientX/innerWidth*2-1;ty=e.clientY/innerHeight*2-1;},{passive:true});
   function resize(){
-    const d=Math.min(devicePixelRatio||1,2);
-    W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;g.setTransform(d,0,0,d,0,0);
-    lines=[];
-    for(let i=0;i<N;i++){
-      const r=(i*0.6180339887)%1, depth=i/(N-1);           // 0 = far (top), 1 = near (bottom)
-      lines.push({
-        y:H*(.06+.94*Math.pow(depth,1.25)),
-        amp:(18+depth*95)*(H/900+.25),
-        alpha:.05+depth*.09,
-        bumps:[0,1].map(k=>({
-          base:(k?.68:.26)+(r-.5)*.22, drift:.035+.03*((r*7+k)%1), ph:r*6.28+k*2.1,
-          w:.045+.03*((r*3+k*.5)%1), h:k?.75+.25*r:1
-        }))
-      });
+    dpr=Math.min(devicePixelRatio||1,2);W=hero.clientWidth;H=hero.clientHeight;
+    c.width=W*dpr;c.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(9000,W*6.5));P=[];
+    for(let i=0;i<n;i++){
+      const d=Math.pow(Math.random(),.8);                       // depth: 0 far … 1 near
+      const haze=Math.random()<.14;
+      P.push({x:Math.random()*W*1.2-W*.1, v:5+Math.random()*9, d,
+        j:(haze?16:1.6)*(Math.random()+Math.random()+Math.random()-1.5), ph:Math.random()*6.28,
+        r:.55+d*1.7, a:(haze?.10:.22)+d*.55});
     }
   }
-
-  // stress intensity on line i at time t : a pulse that sweeps top -> bottom
-  function stress(i){
-    const p=((t/PERIOD)%1)*1.6-.3, d=i/(N-1)-p;
-    return Math.exp(-d*d/.012);
+  // a ribbon seen in perspective: depth spreads the dust vertically and widens it
+  const BAND=()=>W>=900?46:26;
+  function px(p,S){const cx=W*.5;return cx+(p.x-cx)*(.88+.24*p.d)+mx*14*p.d;}
+  function py(p,S,x){return curveY(p.x,S)+(p.d-.5)*BAND()+p.j*(1+.25*Math.sin(t*.6+p.ph))+my*6*p.d;}
+  function stroke(S,x0,x1,rgb,w,a){
+    g.beginPath();for(let x=x0;x<=x1;x+=4){const y=curveY(x,S);x===x0?g.moveTo(x,y):g.lineTo(x,y);}
+    g.strokeStyle=`rgba(${rgb},${a})`;g.lineWidth=w;g.lineCap='round';g.stroke();
   }
-
-  // 95% quantile of the (unnormalised) skew-normal, in z units — cached by skew
-  const qCache=new Map();
-  function q95(a){
-    const key=Math.round(a*20);if(qCache.has(key))return qCache.get(key);
-    const A=key/20,dz=.02;let tot=0;const cum=[];
-    for(let z=-4;z<=7;z+=dz){tot+=sn(z,A);cum.push([z,tot]);}
-    let q=cum[cum.length-1][0];for(const [z,v] of cum){if(v>=.95*tot){q=z;break;}}
-    qCache.set(key,q);return q;
-  }
-
-  function draw(){
-    g.fillStyle=BG;g.fillRect(0,0,W,H);
-    for(let i=0;i<N;i++){                     // back to front, each line hides what is behind
-      const L=lines[i], s=stress(i), depth=i/(N-1);
-      const a=1.2+5.5*s;                      // stress skews to the right tail…
-      const P=L.bumps.map(b=>({
-        mu:W*(b.base+.07*Math.sin(t*b.drift+b.ph)+.03*Math.sin(t*b.drift*2.3+i*.4)),
-        om:W*b.w*(1+.25*Math.sin(t*.05+b.ph)+.9*s),   // …and widens the density
-        h:b.h*(1-.25*s)
-      }));
-      const Y=x=>{let y=0;for(const p of P)y+=p.h*sn((x-p.mu)/p.om,a);return L.y-y*L.amp*.5;};
-      const pts=[];for(let x=-STEP;x<=W+STEP;x+=STEP)pts.push([x,Y(x)]);
-
-      // occlude the lines behind (classic ridgeline)
-      g.beginPath();g.moveTo(pts[0][0],H);for(const p of pts)g.lineTo(p[0],p[1]);g.lineTo(W+STEP,H);g.closePath();
-      g.fillStyle=BG;g.fill();
-
-      // tail beyond the 95% quantile: shaded area + tick
-      const k=.4+.6*depth, q=q95(a);
-      for(const p of P){
-        const xq=p.mu+q*p.om, xe=p.mu+4.2*p.om;
-        if(xe<0||xq>W)continue;
-        // only this density's own tail (not the neighbouring bump)
-        const Yb=x=>L.y-p.h*sn((x-p.mu)/p.om,a)*L.amp*.5;
-        g.beginPath();g.moveTo(xq,L.y);g.lineTo(xq,Yb(xq));
-        for(let x=Math.ceil(xq/STEP)*STEP;x<xe;x+=STEP)g.lineTo(x,Yb(x));
-        g.lineTo(xe,L.y);g.closePath();
-        g.fillStyle=`rgba(${GOLD},${(.06+.26*s)*k})`;g.fill();
-        g.beginPath();g.moveTo(xq,L.y+2);g.lineTo(xq,Yb(xq)-3);
-        g.strokeStyle=`rgba(${GOLD},${(.22+.6*s)*k})`;g.lineWidth=1;g.stroke();
-      }
-
-      // the density line itself
-      g.beginPath();pts.forEach((p,k)=>k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));
-      g.strokeStyle=`rgba(${INK},${L.alpha})`;g.lineWidth=1;g.stroke();
+  function draw(dt){
+    t+=dt;mx+=(tx-mx)*.04;my+=(ty-my)*.04;
+    const S=shape();calib(S);
+    g.clearRect(0,0,W,H);
+    const fade=Math.max(0,1-scrollY/(H*.8));if(fade<=0)return;
+    const xq=S.mu+q95z*S.om;
+    g.globalCompositeOperation='lighter';
+    // bloom: wide, faint strokes along the curve (white body, blue tail)
+    for(const [w,a] of [[34,.018],[14,.035],[5,.07]]){
+      stroke(S,-10,xq,DUST,w,a*fade); stroke(S,xq,W+10,BLUE,w,a*1.6*fade);
     }
+    // dust
+    for(const p of P){
+      p.x+=p.v*dt;if(p.x>W*1.1)p.x-=W*1.2;
+      const x=px(p,S), y=py(p,S);
+      const tail=p.x>xq, tw=.8+.2*Math.sin(t*1.3+p.ph);
+      g.fillStyle=`rgba(${tail?BLUE:DUST},${p.a*tw*fade*(tail?1.25:1)})`;g.fillRect(x,y,p.r,p.r);
+    }
+    // bright core line
+    stroke(S,-10,xq,DUST,1.1,.22*fade); stroke(S,xq,W+10,BLUE,1.3,.5*fade);
+    g.globalCompositeOperation='source-over';
+    // quantile tick + label
+    const yq=curveY(xq,S);
+    g.strokeStyle=`rgba(${BLUE},${(.55+.35*S.s)*fade})`;g.lineWidth=1;
+    g.beginPath();g.moveTo(xq+.5,S.base+BAND()*.5+8);g.lineTo(xq+.5,yq-14);g.stroke();
+    g.fillStyle=`rgba(${BLUE},${(.75+.25*S.s)*fade})`;g.font='500 11px "IBM Plex Mono", monospace';
+    g.fillText('q95',xq+7,S.base+BAND()*.5+18);
   }
-  // Pages de lecture (notes, pages d'axe, à propos) : fond immobile, pour ne
-  // pas distraire. Le fond bouge sur l'accueil et les pages de liste.
-  const reading=!document.querySelector('main.column-page')||!!document.querySelector('.theme-body');
-  if(reading){resize();draw();addEventListener('resize',()=>{resize();draw();});return;}
-  function loop(now){t+=Math.min(.05,(now-last)/1000);last=now;draw();if(!reduce.matches)requestAnimationFrame(loop);}
-  resize();addEventListener('resize',()=>{resize();draw();});
-  draw();
-  if(!reduce.matches)requestAnimationFrame(loop);
-  reduce.addEventListener?.('change',()=>{if(!reduce.matches){last=performance.now();requestAnimationFrame(loop);}});
-
-  // soft glow following the cursor
-  const glow=document.querySelector('.storm-glow');let mx=0,my=0,gx=0,gy=0,run=false;
-  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(reduce.matches)return;glow.classList.add('on');
-    if(!run){run=true;gx=mx;gy=my;(function f(){gx+=(mx-gx)*.08;gy+=(my-gy)*.08;glow.style.left=gx+'px';glow.style.top=gy+'px';requestAnimationFrame(f)})();}});
-  document.addEventListener('mouseleave',()=>glow.classList.remove('on'));
+  function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;draw(dt);requestAnimationFrame(loop);}
+  resize();addEventListener('resize',()=>{resize();draw(0);});
+  if(reduce){t=8;draw(0);addEventListener('scroll',()=>draw(0),{passive:true});}
+  else requestAnimationFrame(loop);
 })();
+</script>
+<script>
+(function(){
 
+const LANG=(document.documentElement.lang||'fr').slice(0,2)==='en'?'en':'fr';
+const FLOW_TX={
+ fr:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-tabs" role="group" aria-label="Mode du schéma">
+   <button type="button" data-mode="moyenne" aria-pressed="false">Pratique standard</button>
+   <button type="button" data-mode="distribution" aria-pressed="true">Approche STORM</button>
+   <button type="button" data-mode="briques" aria-pressed="false">Vos modèles</button></div></div>
+   <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
+   <div class="sf-foot">D'après <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026). <span class="sf-tag">· valeurs illustratives</span></div></div>`,
+  steps:[{t:'Choc',s:'Scénario macro-financier',k:'scénario',c:'Un choc frappe l’économie : récession, hausse des taux, tensions géopolitiques…'},
+   {t:'Économie',s:'Propagation du choc',k:'propagation',c:'Le choc se propage dans l’économie.'},
+   {t:'Crédit',s:'Conditions de crédit du portefeuille',k:'facteur de risque',c:'Il se traduit en conditions de crédit pour le portefeuille.'},
+   {t:'Défauts',s:'Probabilités de défaut',k:'probabilités',c:'Ces conditions deviennent des probabilités de défaut.'}],
+  outs:[{t:'Risque moyen',n:'Risque moyen',tail:false},{t:'Risque extrême',n:'Risque extrême',tail:true},{t:'Moyenne des extrêmes',n:'Moy. extrêmes',tail:true}],
+  end:{moyenne:'La pratique standard ne fait passer qu’un scénario central : un risque moyen sous-estimé, et rien sur les extrêmes.',
+   distribution:'Toute la distribution traverse le dispositif : le risque moyen est corrigé et les extrêmes deviennent mesurables — au même coût de calcul.',
+   briques:'Les briques 2 et 3 se remplacent par vos modèles déjà validés. Aucun re-développement.'},
+  yours:'votre modèle', here:' — ici, votre modèle validé.', central:'scénario central', notmeasured:'non mesuré',
+  vs:' % vs scénario central', thr:'seuil à 95 %', beyond:'au-delà du seuil', num:x=>x.replace('.',',')},
+ en:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-tabs" role="group" aria-label="Diagram mode">
+   <button type="button" data-mode="moyenne" aria-pressed="false">Standard practice</button>
+   <button type="button" data-mode="distribution" aria-pressed="true">STORM approach</button>
+   <button type="button" data-mode="briques" aria-pressed="false">Your models</button></div></div>
+   <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
+   <div class="sf-foot">Based on <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026). <span class="sf-tag">· illustrative values</span></div></div>`,
+  steps:[{t:'Shock',s:'Macro-financial scenario',k:'scenario',c:'A shock hits the economy: recession, rising rates, geopolitical tensions…'},
+   {t:'Economy',s:'Shock propagation',k:'propagation',c:'The shock spreads through the economy.'},
+   {t:'Credit',s:'Portfolio credit conditions',k:'risk factor',c:'It translates into credit conditions for the portfolio.'},
+   {t:'Defaults',s:'Default probabilities',k:'probabilities',c:'These conditions become default probabilities.'}],
+  outs:[{t:'Average risk',n:'Average risk',tail:false},{t:'Extreme risk',n:'Extreme risk',tail:true},{t:'Mean of extremes',n:'Mean extremes',tail:true}],
+  end:{moyenne:'Standard practice only passes a central scenario through: average risk is understated, and nothing is said about extremes.',
+   distribution:'The whole distribution goes through: average risk is corrected and extremes become measurable — at the same computational cost.',
+   briques:'Blocks 2 and 3 can be replaced by your already-validated models. No redevelopment.'},
+  yours:'your model', here:' — here, your validated model.', central:'central scenario', notmeasured:'not measured',
+  vs:' % vs central scenario', thr:'95 % threshold', beyond:'beyond the threshold', num:x=>x}
+};
+const RST_TX={
+ fr:{markup:u=>`<div class="rst"><div class="rst-top"><div class="rst-steps"><span data-s="0">1 · Seuil</span><span data-s="1">2 · Explorer</span><span data-s="2">3 · Rupture</span><span data-s="3">4 · Voisinage</span><span data-s="4">5 · Sélection</span></div></div>
+   ${RST_SVG(u)}<div class="rst-read">
+   <div data-r="0"><b>Seuil de capital</b><span>ratio de 7,0 %</span><i>à ne pas franchir</i></div>
+   <div data-r="1" class="blue"><b>Point de rupture</b><span class="v1">—</span><i>plausibilité</i></div>
+   <div data-r="2"><b>Voisinage</b><span class="v2">—</span><i>plausibilité</i></div>
+   <div data-r="3"><b>Sélection</b><span class="v3">—</span><i>scénarios retenus</i></div></div>
+   <div class="rst-cap" aria-live="polite"></div>
+   <div class="rst-foot">D'après <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026). <span class="rst-tag">· valeurs illustratives</span></div></div>`,
+  ax:'Choc économique →', ay:'Choc géopolitique →', flab:'Seuil de capital · ratio de 7 %', hood:'Voisinage', central:'Scénario central', breakpt:'Point de rupture',
+  caps:p=>['On fixe d’abord le seuil : le ratio de capital ne doit pas passer sous 7 %.',
+    'On explore les scénarios autour du scénario central : chaque anneau est un niveau de plausibilité.',
+    'Le premier scénario qui touche le seuil est le point de rupture le plus plausible ('+p+').',
+    'Son voisinage, côté rupture : des scénarios proches du point de rupture, qui franchissent tous le seuil.',
+    'On en retient un nombre fini, assez différents pour raconter des histoires distinctes — chacun avec sa plausibilité.']},
+ en:{markup:u=>`<div class="rst"><div class="rst-top"><div class="rst-steps"><span data-s="0">1 · Threshold</span><span data-s="1">2 · Explore</span><span data-s="2">3 · Break</span><span data-s="3">4 · Neighbourhood</span><span data-s="4">5 · Selection</span></div></div>
+   ${RST_SVG(u)}<div class="rst-read">
+   <div data-r="0"><b>Capital threshold</b><span>ratio of 7.0 %</span><i>not to be breached</i></div>
+   <div data-r="1" class="blue"><b>Breaking point</b><span class="v1">—</span><i>plausibility</i></div>
+   <div data-r="2"><b>Neighbourhood</b><span class="v2">—</span><i>plausibility</i></div>
+   <div data-r="3"><b>Selection</b><span class="v3">—</span><i>scenarios kept</i></div></div>
+   <div class="rst-cap" aria-live="polite"></div>
+   <div class="rst-foot">Based on <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026). <span class="rst-tag">· illustrative values</span></div></div>`,
+  ax:'Economic shock →', ay:'Geopolitical shock →', flab:'Capital threshold · ratio of 7 %', hood:'Neighbourhood', central:'Central scenario', breakpt:'Breaking point',
+  caps:p=>['First, set the threshold: the capital ratio must not fall below 7 %.',
+    'Explore scenarios around the central one: each ring is a level of plausibility.',
+    'The first scenario to touch the threshold is the most plausible breaking point ('+p+').',
+    'Its neighbourhood, on the breaking side: nearby scenarios that all breach the threshold.',
+    'Keep a finite set, different enough to tell distinct stories — each with its own plausibility.']}
+};
+function RST_SVG(u){return `<svg viewBox="0 0 560 400" role="img" aria-hidden="true"><defs>
+  <pattern id="rst-hatch${u}" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="rgba(77,141,255,.05)"/><line x1="0" y1="0" x2="0" y2="7" stroke="rgba(77,141,255,.16)" stroke-width="1"/></pattern>
+  <radialGradient id="rst-glow${u}"><stop offset="0" stop-color="rgba(77,141,255,.55)"/><stop offset="1" stop-color="rgba(77,141,255,0)"/></radialGradient></defs>
+  <g class="g-axes"></g><g class="g-zone"></g><g class="g-rings"></g><g class="g-dots"></g><g class="g-top"></g></svg>`;}
+
+function initFlow(root,TX,VIS){
+  const BLUE='#4d8dff', WHITE='#e9edf3';
+
+  root.innerHTML=TX.markup; const svg=root.querySelector('svg'), cap=root.querySelector('.sf-caption');
+  const NS='http://www.w3.org/2000/svg', reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- le modèle (Merton–Vasicek), valeurs illustratives ---------- */
+  function erf(x){const s=Math.sign(x);x=Math.abs(x);const k=1/(1+.3275911*x);
+    return s*(1-(((((1.061405429*k-1.453152027)*k)+1.421413741)*k-.284496736)*k+.254829592)*k*Math.exp(-x*x));}
+  const Phi=x=>.5*(1+erf(x/Math.SQRT2));
+  function PhiInv(p){ // Acklam
+    const a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924],
+          b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857],
+          c=[-.00778489400243029,-.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878],
+          d=[.00778469570904146,.32246712907004,2.445134137143,3.75440866190742];
+    const q=p<.02425?Math.sqrt(-2*Math.log(p)):p>1-.02425?Math.sqrt(-2*Math.log(1-p)):0;
+    if(p<.02425)return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    if(p>1-.02425)return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    const r=p-.5,s=r*r;return(((((a[0]*s+a[1])*s+a[2])*s+a[3])*s+a[4])*s+a[5])*r/(((((b[0]*s+b[1])*s+b[2])*s+b[3])*s+b[4])*s+1);
+  }
+  const P0=.02, RHO=.12, MZ=-1.2, SZ=.7;                  // PD de long terme, corrélation, facteur Z sous stress
+  const PD=z=>Phi((PhiInv(P0)-Math.sqrt(RHO)*z)/Math.sqrt(1-RHO));
+  // intégration numérique sur Z ~ N(MZ, SZ)
+  let m=0,w=0;const zq=MZ-1.6449*SZ, q95=PD(zq);let es=0,we=0;
+  for(let x=-6;x<=6;x+=.005){const f=Math.exp(-x*x/2),v=PD(MZ+SZ*x);m+=f*v;w+=f;if(MZ+SZ*x<=zq){es+=f*v;we+=f;}}
+  const V={path:PD(MZ), mean:m/w, q95, es:es/we};
+  const pct=v=>TX.num((100*v).toFixed(2))+' %';
+
+  /* ---------- contenu ---------- */
+  const STEPS=TX.steps, OUTS=TX.outs, END=TX.end;
+
+  /* ---------- mise en page (horizontale / verticale) ---------- */
+  let L, nodes=[], outs=[], parts=[], minis={};
+  function layout(){
+    const narrow=root.clientWidth<560;
+    svg.innerHTML='';nodes=[];outs=[];parts=[];
+    if(!narrow){
+      L={W:760,H:300,narrow,nw:112,nh:78,ow:150,oh:62};
+      L.nodes=STEPS.map((_,i)=>({x:6+i*148,y:111}));
+      L.outs=OUTS.map((_,i)=>({x:L.W-L.ow-4,y:22+i*92}));
+    }else{
+      L={W:360,H:560,narrow,nw:300,nh:62,ow:104,oh:78};
+      L.nodes=STEPS.map((_,i)=>({x:30,y:8+i*96}));
+      L.outs=OUTS.map((_,i)=>({x:8+i*118,y:472}));
+    }
+    svg.setAttribute('viewBox',`0 0 ${L.W} ${L.H}`);
+    const el=(tag,attrs,parent=svg)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent.appendChild(e);return e;};
+    // centres
+    L.c=L.nodes.map(n=>({x:n.x+L.nw/2,y:n.y+L.nh/2}));
+    L.oc=L.outs.map(o=>({x:o.x+o.x*0+L.ow/2,y:o.y+L.oh/2}));
+    // arêtes
+    for(let i=0;i<3;i++){const a=L.c[i],b=L.c[i+1];
+      el('path',{class:'sf-edge',d:L.narrow?`M${a.x} ${a.y+L.nh/2}L${b.x} ${b.y-L.nh/2}`:`M${a.x+L.nw/2} ${a.y}L${b.x-L.nw/2} ${b.y}`});}
+    const last=L.c[3];
+    L.oc.forEach(o=>{
+      const sx=L.narrow?last.x:last.x+L.nw/2, sy=L.narrow?last.y+L.nh/2:last.y;
+      const ex=L.narrow?o.x:o.x-L.ow/2, ey=L.narrow?o.y-L.oh/2:o.y;
+      el('path',{class:'sf-edge',d:L.narrow?`M${sx} ${sy}C${sx} ${sy+50},${ex} ${ey-50},${ex} ${ey}`:`M${sx} ${sy}C${sx+40} ${sy},${ex-40} ${ey},${ex} ${ey}`});
+    });
+    // particules
+    // Each output is computed from the whole distribution: the cloud splits
+    // into three equal streams after the last block.
+    const N=44;
+    for(let out=0;out<3;out++)for(let k=0;k<N;k++){
+      const z=PhiInv((k+.5)/N);                     // rang de quantile fixe
+      parts.push({z,out,lag:Math.random()*.12,e:el('circle',{r:2.1,fill:WHITE,opacity:0})});
+    }
+    parts.push({z:0,lag:0,solo:true,e:el('circle',{r:4.2,fill:WHITE,opacity:0})});
+    // briques
+    STEPS.forEach((s,i)=>{
+      const g=el('g',{class:'sf-node'}),n=L.nodes[i];
+      el('rect',{x:n.x,y:n.y,width:L.nw,height:L.nh,rx:9},g);
+      el('text',{class:'n',x:n.x+10,y:n.y+17},g).textContent='0'+(i+1);
+      const tx=L.narrow?n.x+40:n.x+L.nw/2, anchor=L.narrow?'start':'middle';
+      el('text',{class:'t',x:tx,y:n.y+(L.narrow?27:36),'text-anchor':anchor},g).textContent=s.t;
+      el('text',{class:'s',x:tx,y:n.y+(L.narrow?45:54),'text-anchor':anchor},g).textContent=L.narrow?s.s:s.k;
+      if(i===1||i===2) el('text',{class:'swaplab',x:n.x+L.nw-8,y:n.y+17,'text-anchor':'end'},g).textContent=TX.yours;
+      nodes.push(g);
+    });
+    // mini densités (Z dans le satellite, PD dans la cartographie)
+    const mk=(i,fn,tail)=>{const n=L.nodes[i],x0=L.narrow?n.x+L.nw-96:n.x+20,w=L.narrow?84:L.nw-40,y0=L.narrow?n.y+L.nh-10:n.y+L.nh-4,h=L.narrow?26:15;
+      let mx=0;for(let k=0;k<=40;k++)mx=Math.max(mx,fn(k/40));const f0=fn;fn=u=>f0(u)/mx;
+      let d='',df='';for(let k=0;k<=40;k++){const u=k/40,v=fn(u);d+=(k?'L':'M')+(x0+u*w).toFixed(1)+' '+(y0-v*h).toFixed(1);}
+      if(tail){df=`M${x0+tail*w} ${y0}`;for(let k=Math.round(tail*40);k<=40;k++){const u=k/40;df+=`L${(x0+u*w).toFixed(1)} ${(y0-fn(u)*h).toFixed(1)}`;}df+=`L${x0+w} ${y0}Z`;}
+      const g=el('g',{});if(df)el('path',{class:'sf-mini tailfill',d:df},g);el('path',{class:'sf-mini',d},g);return g;};
+    minis.z=mk(2,u=>Math.exp(-Math.pow((u-.5)/.17,2)/2),null);
+    minis.pd=mk(3,u=>Math.pow(u,1.4)*Math.exp(-u*5.2),.62);
+    // sorties
+    OUTS.forEach((o,i)=>{
+      const g=el('g',{class:'sf-out'+(o.tail?' tail':'')}),p=L.outs[i];
+      el('rect',{x:p.x,y:p.y,width:L.ow,height:L.oh,rx:9},g);
+      el('text',{class:'t',x:p.x+12,y:p.y+19},g).textContent=L.narrow?o.n:o.t;
+      el('text',{class:'v',x:p.x+12,y:p.y+(L.narrow?44:41)},g).textContent='—';
+      el('text',{class:'d',x:p.x+12,y:p.y+(L.narrow?62:55)},g).textContent='';
+      outs.push(g);
+    });
+  }
+
+  /* ---------- trajectoire d'une particule ---------- */
+  const lerp=(a,b,u)=>a+(b-a)*u, ease=u=>u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+  function pos(p,u,mode){
+    // u ∈ [0,1] : 0→0.75 le long des 4 briques, 0.75→1 vers une sortie
+    const spreadMax=L.narrow?60:26;
+    if(u<.75){
+      const s=u/.75*3,i=Math.min(2,Math.floor(s)),f=s-i,a=L.c[i],b=L.c[i+1];
+      const x=lerp(a.x,b.x,f),y=lerp(a.y,b.y,f);
+      const grow=mode==='moyenne'?0:Math.min(1,Math.max(0,(s-.6)/1.6));  // la dispersion naît dans le VAR
+      const off=p.z*grow*spreadMax*.55;
+      return L.narrow?{x:x+off,y}:{x,y:y+off};
+    }
+    const f=ease((u-.75)/.25),a=L.c[3];
+    const tail=p.z<=-1.6449, k=mode==='moyenne'?0:p.out, o=L.oc[k];
+    const sx=L.narrow?a.x+p.z*spreadMax*.55:a.x, sy=L.narrow?a.y:a.y+p.z*spreadMax*.55;
+    return {x:lerp(sx,o.x,f),y:lerp(sy,o.y,f),k,tail};
+  }
+
+  /* ---------- légende tapée ---------- */
+  let sayTxt='', sayT=0, sayEl=null;
+  function say(txt){
+    sayTxt=txt; sayT=performance.now();
+    cap.innerHTML='<span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span>';
+    sayEl=cap.querySelector('.x'); if(reduce) sayEl.textContent=txt;
+  }
+  function typeTick(now){ if(sayEl) sayEl.textContent=sayTxt.slice(0,Math.floor((now-sayT)/38)); }
+
+  /* ---------- boucle ---------- */
+  let mode='distribution', t0=performance.now(), lastStep=-1, userPicked=false, cycles=0;
+  const DUR=14000;                                        // ms par cycle
+  function setMode(m,byUser){
+    mode=m;userPicked=userPicked||byUser;t0=performance.now();lastStep=-1;
+    root.querySelectorAll('.sf-tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+    nodes.forEach((n,i)=>n.classList.toggle('swap',m==='briques'&&(i===1||i===2)));
+    outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});
+    Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));
+  }
+  root.querySelectorAll('.sf-tabs button').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode,true)));
+
+  function fill(){
+    const set=(i,v,d,off)=>{const o=outs[i];o.classList.toggle('on',!off);o.classList.toggle('off',!!off);o.querySelector('.v').textContent=v;o.querySelector('.d').textContent=d;};
+    if(mode==='moyenne'){set(0,pct(V.path),TX.central);set(1,'—',TX.notmeasured,true);set(2,'—',TX.notmeasured,true);}
+    else{const gain=((V.mean/V.path-1)*100).toFixed(0);
+      set(0,pct(V.mean),'+'+gain+TX.vs);set(1,pct(V.q95),TX.thr);set(2,pct(V.es),TX.beyond);}
+  }
+
+  let lastNow=performance.now(), seen=false;
+  function frame(now){
+    if(!reduce&&!VIS.on){t0+=now-lastNow;lastNow=now;requestAnimationFrame(frame);return;}
+    if(!seen){seen=true;t0=now;lastStep=-1;}
+    lastNow=now;
+    let u=(now-t0)/DUR;
+    if(u>=1){cycles++;if(!userPicked&&cycles%2===0){const order=['distribution','moyenne','briques'];setMode(order[(order.indexOf(mode)+1)%3]);}
+      else{t0=now;lastStep=-1;outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));}
+      u=0;}
+    const run=Math.min(1,u/.66);                         // fin de cycle : pause sur les résultats
+    // briques allumées + légende
+    const step=run<.75?Math.min(3,Math.floor(run/.75*3+.15)):4;
+    nodes.forEach((n,i)=>n.classList.toggle('on',i<=step&&step<4||step===4));
+    if(step!==lastStep){lastStep=step;
+      if(step<4)say(mode==='briques'&&(step===1||step===2)?STEPS[step].c+TX.here:STEPS[step].c);
+      else{say(END[mode]);fill();}
+      if(step>=2&&mode!=='moyenne')minis.z.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
+      if(step>=3&&mode!=='moyenne')minis.pd.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
+    }
+    // particules
+    for(const p of parts){
+      const show=mode==='moyenne'?p.solo:!p.solo;
+      if(!show){p.e.setAttribute('opacity',0);continue;}
+      const uu=Math.max(0,Math.min(1,run*1.08-p.lag));
+      const q=pos(p,uu,mode);
+      p.e.setAttribute('cx',q.x.toFixed(1));p.e.setAttribute('cy',q.y.toFixed(1));
+      const fade=uu<=0?0:uu>=1?(p.solo?.9:.55):(p.solo?1:.75);
+      p.e.setAttribute('opacity',fade);
+      p.e.setAttribute('fill',mode!=='moyenne'&&q.k>=1?BLUE:WHITE);   // les flux vers les deux mesures de queue sont bleus
+    }
+    if(!reduce){typeTick(now);requestAnimationFrame(frame);}
+  }
+
+  layout();setMode('distribution');
+  if(reduce){ // image fixe : résultats directement
+    lastStep=-1;frame(t0+DUR*.95);
+  }else requestAnimationFrame(frame);
+  let rw=root.clientWidth;addEventListener('resize',()=>{if(Math.abs(root.clientWidth-rw)>40){rw=root.clientWidth;layout();setMode(mode);}});
+
+}
+let RST_N=0;
+function initRST(root,TX,VIS){
+  const UID='-'+(++RST_N);
+
+  root.innerHTML=TX.markup(UID);
+  const svg=root.querySelector('svg'), NS='http://www.w3.org/2000/svg';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const G={axes:svg.querySelector('.g-axes'),zone:svg.querySelector('.g-zone'),rings:svg.querySelector('.g-rings'),dots:svg.querySelector('.g-dots'),top:svg.querySelector('.g-top')};
+  const cap=root.querySelector('.rst-cap'), steps=[...root.querySelectorAll('.rst-steps span')], reads=[...root.querySelectorAll('.rst-read div')];
+  const v1=root.querySelector('.v1'), v2=root.querySelector('.v2'), v3=root.querySelector('.v3');
+  const el=(tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};
+  const BLUE='#4d8dff', WHITE='#e9edf3';
+
+  /* ---------- geometry (scenario space u, v ∈ [0, 5]) ---------- */
+  const X0=58,X1=540,Y0=352,Y1=22, U=5;
+  const px=u=>X0+u/U*(X1-X0), py=v=>Y0-v/U*(Y0-Y1);
+  const MU=[.75,.7], RHO=.4, SQ=Math.sqrt(1-RHO*RHO);
+  const off=(c,x,y)=>[c[0]+x, c[1]+RHO*x+SQ*y];                 // metric offset → scenario space
+  const at=(d,th)=>off(MU,d*Math.cos(th),d*Math.sin(th));
+  const maha=(u,v)=>{const a=u-MU[0],b=v-MU[1];return Math.sqrt((a*a-2*RHO*a*b+b*b)/(1-RHO*RHO));};
+  const K=4.6, f=(u,v)=>.8*u+.7*v+.15*u*v, breach=(u,v)=>f(u,v)>=K;
+  const vF=u=>(K-.8*u)/(.7+.15*u);
+  const FR=[];let best={d:1e9};
+  for(let u=0;u<=5.75;u+=.01){const v=vF(u);if(v<0)break;const d=maha(u,v);if(d<best.d)best={d,u,v};if(v<=U&&u<=U)FR.push([u,v]);}
+  const DSTAR=best.d, S=[best.u,best.v], RN=.9;                 // breaking point, neighbourhood radius
+  // plausibility of a scenario = share of scenarios at least as extreme as it
+  const plaus=d=>Math.exp(-d*d/2), pc=x=>Math.round(100*x)+' %';
+  const PSTAR=plaus(DSTAR);
+
+  /* ---------- static drawing ---------- */
+  const clip=el('clipPath',{id:'rst-clip'+UID},svg.querySelector('defs'));
+  el('rect',{x:X0,y:Y1,width:X1-X0,height:Y0-Y1},clip);
+  [G.zone,G.rings,G.dots].forEach(g=>g.setAttribute('clip-path','url(#rst-clip'+UID+')'));
+  el('line',{class:'ax',x1:X0,y1:Y0,x2:X1,y2:Y0},G.axes);el('line',{class:'ax',x1:X0,y1:Y0,x2:X0,y2:Y1},G.axes);
+  el('text',{class:'axl',x:X1,y:Y0+24,'text-anchor':'end'},G.axes).textContent=TX.ax;
+  el('text',{class:'axl',x:X0-8,y:Y1+4,'text-anchor':'end',transform:`rotate(-90 ${X0-8} ${Y1+4})`},G.axes).textContent=TX.ay;
+  const fd=FR.map((p,i)=>(i?'L':'M')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1)).join('');
+  const zone=el('path',{class:'zone',d:fd+`L${px(U)} ${py(U)}Z`,opacity:0,fill:'url(#rst-hatch'+UID+')'},G.zone);
+  const front=el('path',{class:'front',d:fd},G.zone);
+  const flen=front.getTotalLength?front.getTotalLength():800;front.style.strokeDasharray=flen;front.style.strokeDashoffset=flen;
+  const flab=el('text',{class:'flab',x:X1-10,y:Y1+18,'text-anchor':'end',opacity:0},G.top);flab.textContent=TX.flab;
+  const ellipse=(c,d)=>{let s='';for(let k=0;k<=72;k++){const t=k/72*2*Math.PI,p=off(c,d*Math.cos(t),d*Math.sin(t));s+=(k?'L':'M')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1);}return s+'Z';};
+  const LEVELS=[.5,1,1.5,2].filter(d=>d<DSTAR-.08);
+  const statics=LEVELS.map(d=>el('path',{class:'ring',d:ellipse(MU,d),opacity:0},G.rings));
+  const rlabs=LEVELS.map(d=>{const p=at(d,1.62);const t=el('text',{class:'rlab',x:px(p[0]),y:py(p[1])-5,'text-anchor':'middle',opacity:0},G.top);t.textContent=pc(plaus(d));return t;});
+  const live=el('path',{class:'ring live',d:'',opacity:0},G.rings);
+  // neighbourhood of the breaking point
+  const zclip=el('clipPath',{id:'rst-zclip'+UID},svg.querySelector('defs'));
+  el('path',{d:fd+`L${px(U)} ${py(U)}Z`},zclip);
+  const hoodG=el('g',{'clip-path':'url(#rst-zclip'+UID+')'},G.rings);
+  const hood=el('path',{class:'hood',d:ellipse(S,RN),opacity:0},hoodG);
+  const hlen=hood.getTotalLength?hood.getTotalLength():300;
+  const hlab=el('text',{class:'hlab',opacity:0},G.top);hlab.textContent=TX.hood;
+  { const p=off(S,RN*.95,RN*.25); hlab.setAttribute('x',px(p[0])+8); hlab.setAttribute('y',py(p[1])+4); }
+  const base=el('circle',{class:'base',cx:px(MU[0]),cy:py(MU[1]),r:0},G.top);
+  const blab=el('text',{class:'blab',x:px(MU[0])+10,y:py(MU[1])+18,opacity:0},G.top);blab.textContent=TX.central;
+  const path=el('path',{class:'path',d:`M${px(MU[0])} ${py(MU[1])}L${px(S[0])} ${py(S[1])}`,opacity:0},G.top);
+  const glow=el('circle',{cx:px(S[0]),cy:py(S[1]),r:26,fill:'url(#rst-glow'+UID+')',opacity:0},G.top);
+  const star=el('circle',{class:'star',cx:px(S[0]),cy:py(S[1]),r:0},G.top);
+  const slab=el('text',{class:'slab',opacity:0},G.top);slab.textContent=TX.breakpt;
+  { const p=off(S,-RN*.9,RN*.55); slab.setAttribute('x',px(p[0])-6); slab.setAttribute('y',py(p[1])); slab.setAttribute('text-anchor','end'); }
+
+  /* ---------- particles ---------- */
+  let rnd=7;const R=()=>{rnd=(rnd*16807)%2147483647;return rnd/2147483647;};
+  const SEARCH=150, NEIGH=90, PICK=5;
+  const search=[...Array(SEARCH)].map(()=>({th:R()*2*Math.PI,sp:.4+R()*.45,t0:3.5+R()*4.2,e:el('circle',{r:1.7,fill:WHITE,opacity:0},G.dots)}));
+  // neighbourhood: uniform inside the ellipse, slightly denser near the centre
+  const neigh=[];
+  while(neigh.length<NEIGH){const r=RN*Math.pow(R(),.62),th=R()*2*Math.PI;const [u,v]=off(S,r*Math.cos(th),r*Math.sin(th));
+    if(!breach(u,v)||u>U||v>U)continue;
+    neigh.push({u,v,br:true,p:plaus(maha(u,v)),t0:12.0+R()*2.0,e:el('circle',{cx:px(u),cy:py(v),r:2.1,fill:BLUE,opacity:0},G.dots)});}
+  const PMIN=Math.min(...neigh.map(p=>p.p));
+  // selection: a finite, diverse set among the breaching scenarios (farthest-point sampling)
+  const cand=neigh.filter(p=>p.br);
+  const dist=(a,b)=>{const x=a.u-b.u,y=a.v-b.v;return Math.sqrt((x*x-2*RHO*x*y+y*y)/(1-RHO*RHO));};
+  const picks=[cand.reduce((m,p)=>dist(p,{u:S[0],v:S[1]})<dist(m,{u:S[0],v:S[1]})?p:m,cand[0])];
+  while(picks.length<Math.min(PICK,cand.length)){
+    let bestp=null,bd=-1;for(const p of cand){if(picks.includes(p))continue;const d=Math.min(...picks.map(q=>dist(p,q)));if(d>bd){bd=d;bestp=p;}}
+    picks.push(bestp);
+  }
+  picks.forEach((p,i)=>{p.pick=i;p.ring=el('circle',{cx:px(p.u),cy:py(p.v),r:7,fill:'none',stroke:'#fff','stroke-width':1.2,opacity:0},G.top);
+    const left=p.u<S[0]-.05, below=p.v<S[1]-.05;p.lab=el('text',{class:'plab',x:px(p.u)+(left?-10:10),y:py(p.v)+(below?16:-9),'text-anchor':left?'end':'start',opacity:0},G.top);p.lab.textContent='S'+(i+1)+' · '+pc(p.p);});
+  svg.appendChild(G.top);                                         // labels on top
+
+  /* ---------- caption ---------- */
+  const CAPS=TX.caps(pc(PSTAR));
+  let sayTxt='',sayT=0,sayEl=null;
+  function say(t,now){sayTxt=t;sayT=now;cap.innerHTML='<span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span>';sayEl=cap.querySelector('.x');if(reduce)sayEl.textContent=t;}
+
+  /* ---------- timeline ---------- */
+  const T=24, clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+  const B=[0,3.2,8.6,11.8,16.4];                                   // step starts
+  let start=performance.now(), lastStep=-1;
+  function render(now,tt){
+    const t=tt!=null?tt:((now-start)/1000)%T;
+    const step=t<B[1]?0:t<B[2]?1:t<B[3]?2:t<B[4]?3:4;
+    if(step!==lastStep){lastStep=step;say(CAPS[step],now);
+      steps.forEach((s,i)=>{s.classList.toggle('on',i===step);s.classList.toggle('done',i<step);});
+      reads.forEach((r,i)=>r.classList.toggle('on',i===0||(i===1&&step>=2)||(i===2&&step>=3)||(i===3&&step>=4)));
+      if(step<2)v1.textContent='—'; if(step<3)v2.textContent='—'; if(step<4)v3.textContent='—';
+    }
+    const out=t>T-1?1-clamp((t-(T-1))/.9):1;
+    // 1 · threshold
+    const a0=ease(clamp(t/2.0));
+    front.style.strokeDashoffset=flen*(1-a0);front.setAttribute('opacity',out);
+    zone.setAttribute('opacity',a0*out);flab.setAttribute('opacity',clamp((t-1.2)/.8)*out);
+    // 2 · exploration
+    const b=clamp((t-B[1])/.5);base.setAttribute('r',4.5*b);base.setAttribute('opacity',out);blab.setAttribute('opacity',b*out);
+    const g=ease(clamp((t-(B[1]+.3))/(B[2]-B[1]-.4))), Rr=g*DSTAR;
+    live.setAttribute('d',Rr>.02?ellipse(MU,Rr):'');live.setAttribute('opacity',(t<B[1]?0:t<B[2]?.8:.3)*out);
+    statics.forEach((r,i)=>{const o=(Rr>=LEVELS[i]?(t<B[3]?.9:.45):0)*out;r.setAttribute('opacity',o);rlabs[i].setAttribute('opacity',o*.9);});
+    const dimSearch=t<B[3]?1:Math.max(.15,1-(t-B[3])/1.2);
+    for(const p of search){
+      const d=(t-p.t0)*p.sp;
+      if(d<=0){p.e.setAttribute('opacity',0);p.hit=null;continue;}
+      let pos=at(d,p.th);
+      if(!p.hit&&breach(pos[0],pos[1]))p.hit={pos,t};
+      if(p.hit)pos=p.hit.pos;
+      const o=p.hit?Math.max(.18,1-(t-p.hit.t)/2.5):(d>5?0:.7);
+      p.e.setAttribute('cx',px(pos[0]).toFixed(1));p.e.setAttribute('cy',py(pos[1]).toFixed(1));
+      p.e.setAttribute('fill',p.hit?BLUE:WHITE);p.e.setAttribute('opacity',o*out*dimSearch);
+    }
+    // 3 · breaking point
+    const c=clamp((t-B[2])/.6);
+    star.setAttribute('r',5.5*c);star.setAttribute('opacity',out);
+    glow.setAttribute('opacity',c*(.65+.35*Math.sin(t*4))*out*(t<B[4]?1:.5));
+    path.setAttribute('opacity',.55*c*out);slab.setAttribute('opacity',c*out*(t<B[4]?1:.6));
+    if(step>=2&&v1.textContent==='—')v1.textContent=pc(PSTAR);
+    // 4 · neighbourhood: outline draws, then fills with nearby scenarios
+    const h=ease(clamp((t-B[3])/1.0));
+    hood.style.strokeDasharray=`${hlen*h} ${hlen}`;hood.setAttribute('opacity',(h>0?1:0)*out);
+    hood.style.fillOpacity=.16*h;hlab.setAttribute('opacity',h*out);
+    const sel=clamp((t-B[4])/.6);                                  // 5 · others fade once the selection starts
+    for(const p of neigh){
+      const o=clamp((t-p.t0)/.4), keep=p.pick!=null;
+      p.e.setAttribute('opacity',o*.95*out*(keep?1:1-.7*sel));
+      if(keep){const k=clamp((t-(B[4]+.8+p.pick*.7))/.4);
+        p.e.setAttribute('r',2.1+1.6*k);p.e.setAttribute('fill',k>0?'#fff':BLUE);
+        p.ring.setAttribute('opacity',k*out);p.ring.setAttribute('r',7+6*(1-k));p.lab.setAttribute('opacity',k*out);}
+    }
+    if(step>=3&&v2.textContent==='—')v2.textContent=pc(PMIN)+' – '+pc(PSTAR);
+    if(step>=4&&v3.textContent==='—')v3.textContent=String(picks.length);
+    if(sayEl)sayEl.textContent=sayTxt.slice(0,Math.floor((now-sayT)/38));
+  }
+  if(reduce){render(performance.now(),22);if(sayEl)sayEl.textContent=CAPS[4];}
+  else{let last=performance.now(),seen=false;(function loop(now){if(!VIS.on){start+=now-last;}else{if(!seen){seen=true;start=now;lastStep=-1;}render(now);}last=now;requestAnimationFrame(loop);})(performance.now());}
+
+}
+/* ---- Validation & monitoring animations ---------------------------------
+   initJeffreys : low-default portfolio (2 000 borrowers, predicted PD 0.01 %,
+     i.e. 0.2 default expected per year). One default occurs: the normal
+     (Gaussian) test already rejects the model, the Jeffreys test does not.
+     Repeated over 100 years where the model is right, the normal test rejects
+     wrongly about one year in five; Jeffreys stays close to its nominal level.
+   initEprocess : in-house method (not yet published). A high-frequency data
+     stream; an evidence signal against the model updates at each tick. A
+     regime change (volatility jump) is detected within a few observations.
+   Illustrative values only.                                                  */
+function mkTyper(cap,reduce,speed){let txt='',t0=0,x=null;
+  return {say(t,now){txt=t;t0=now;cap.innerHTML='<span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span>';x=cap.querySelector('.x');if(reduce)x.textContent=t;},
+          tick(now){if(x&&!reduce)x.textContent=txt.slice(0,Math.floor((now-t0)/speed));}};}
+function svgEl(svg){const NS='http://www.w3.org/2000/svg';return (tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};}
+function loopWhenVisible(VIS,reduce,T,render,tFinal){
+  if(reduce){render(performance.now(),tFinal);return;}
+  let start=performance.now(),last=start,seen=false;
+  (function loop(now){if(!VIS.on){start+=now-last;}else{if(!seen){seen=true;start=now;}render(now,((now-start)/1000)%T);}last=now;requestAnimationFrame(loop);})(start);
+}
+
+function initJeffreys(root,TX,VIS){
+  root.innerHTML=TX.markup;
+  const svg=root.querySelector('svg'), el=svgEl(svg), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ty=mkTyper(root.querySelector('.va-cap'),reduce,34);
+  const N=2000, COLS=50, STEP=3.5, GX=18, GY=40;
+  const YEARS=[0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // the portfolio
+  el('text',{class:'va-lab',x:GX,y:GY-14}).textContent=TX.grid;
+  const cells=[];for(let i=0;i<N;i++)cells.push(el('rect',{x:GX+(i%COLS)*STEP,y:GY+Math.floor(i/COLS)*STEP,width:2.2,height:2.2,fill:'#e9edf3',opacity:.22}));
+  const DEF=1137, hit=el('circle',{cx:GX+(DEF%COLS)*STEP+1.1,cy:GY+Math.floor(DEF/COLS)*STEP+1.1,r:0,fill:'#4d8dff'});
+  const hitG=el('circle',{cx:hit.getAttribute('cx'),cy:hit.getAttribute('cy'),r:12,fill:'rgba(77,141,255,.35)',opacity:0});
+  {const tl=el('text',{class:'va-lab',x:GX,y:GY+40*STEP+18});TX.pdLines.forEach((ln,k)=>{const sp=el('tspan',{x:GX,dy:k?15:0},tl);sp.textContent=ln;});}
+  // the two tests
+  // 20 rating grades (columns) × 5 annual reviews (rows), all well calibrated
+  const RX=226, G=20, Y=5, rows=[{name:TX.normal,y:46,p1:.037},{name:TX.jeff,y:158,p1:.060}];
+  rows.forEach(R=>{
+    el('text',{class:'va-row',x:RX,y:R.y}).textContent=R.name;
+    R.v=el('text',{class:'va-verdict',x:RX,y:R.y+22});
+    R.pv=el('text',{class:'va-pvt',x:RX+322,y:R.y+22,'text-anchor':'end'});
+    R.rl=[];for(let r=0;r<Y;r++){R.rl.push(el('text',{class:'va-rev',x:RX,y:R.y+40+r*9.5,opacity:0}));R.rl[r].textContent=TX.review(r+1);}
+    R.cells=[];for(let k=0;k<G*Y;k++)R.cells.push(el('rect',{x:RX+58+(k%G)*13.2,y:R.y+33+Math.floor(k/G)*9.5,width:10,height:7,rx:1.2,fill:'#e9edf3',opacity:0}));
+    R.cnt=el('text',{class:'va-cnt',x:RX,y:R.y+92,opacity:0});
+  });
+  const rej=d=>({n:d>=1,j:d>=2});
+  const T=17;let last=-1;
+  function render(now,t){
+    const step=t<2.6?0:t<6?1:t<12.6?2:3;
+    if(step!==last){last=step;ty.say(TX.caps[step],now);}
+    const one=t>=2.8;
+    hit.setAttribute('r',one?3.2:0);hitG.setAttribute('opacity',one?(.5+.5*Math.sin(now/160)):0);
+    rows.forEach((R,i)=>{
+      const p=one?R.p1:(i?.472:.673), bad=p<.05;
+      R.v.textContent=bad?TX.reject:TX.accept;R.v.setAttribute('class','va-verdict'+(bad?' bad':''));
+      R.pv.textContent='p = '+TX.num((100*p).toFixed(1))+' %';
+    });
+    // one annual review every 1.2 s, 20 grades at a time
+    const nr=t<6.4?0:Math.min(Y,1+Math.floor((t-6.4)/1.2)), shown=nr*G;
+    let cn=0,cj=0;
+    for(let k=0;k<G*Y;k++){const s=k<shown,r=rej(YEARS[k]);if(s&&r.n)cn++;if(s&&r.j)cj++;
+      rows[0].cells[k].setAttribute('opacity',s?(r.n?1:.28):0);rows[0].cells[k].setAttribute('fill',r.n?'#4d8dff':'#e9edf3');
+      rows[1].cells[k].setAttribute('opacity',s?(r.j?1:.28):0);rows[1].cells[k].setAttribute('fill',r.j?'#4d8dff':'#e9edf3');}
+    rows.forEach(R=>R.rl.forEach((e,r)=>e.setAttribute('opacity',r<nr?1:0)));
+    rows[0].cnt.setAttribute('opacity',nr?1:0);rows[1].cnt.setAttribute('opacity',nr?1:0);
+    rows[0].cnt.textContent=TX.wrong(cn,shown);rows[1].cnt.textContent=TX.wrong(cj,shown);
+    ty.tick(now);
+  }
+  loopWhenVisible(VIS,reduce,T,render,15);
+}
+
+function initEprocess(root,TX,VIS){
+  root.innerHTML=TX.markup;
+  const svg=root.querySelector('svg'), el=svgEl(svg), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ty=mkTyper(root.querySelector('.va-cap'),reduce,30);
+  const vF=root.querySelector('.vF'), vD=root.querySelector('.vD'), boxF=root.querySelector('.boxF'), boxD=root.querySelector('.boxD');
+  const R=[0.832, -1.372, 0.476, -1.517, -0.476, -1.442, -0.877, 1.732, -0.426, -1.084, 1.179, 0.71, 1.135, 0.907, 1.235, -0.432, 1.488, -0.239, 0.025, 0.807, -1.305, -0.693, -1.312, -0.441, -1.07, 0.288, -0.916, -0.464, 0.87, 0.751, 2.11, 0.748, 0.801, 0.17, 0.931, 1.058, -0.508, -0.634, 0.637, 0.335, 0.384, -0.974, 0.837, 1.746, 1.892, 1.045, 1.906, 0.065, 0.458, 0.264, 0.999, -0.771, -0.854, 0.402, -0.067, 0.152, 0.354, -0.566, 0.659, -0.805, -0.239, -1.095, 0.025, 0.445, -0.263, 2.272, 1.495, 0.366, -0.215, -0.894, -0.445, 0.547, 0.691, -1.252, 0.756, 0.658, -0.408, -1.419, 0.734, 0.608, -1.026, 0.364, 0.897, -0.204, 0.447, 0.014, -0.851, 1.858, 0.087, -0.875, -0.242, 0.079, -0.336, 0.086, 0.117, -1.135, 1.013, -0.438, 0.393, 0.713, 0.582, -0.636, -1.04, -0.233, -1.73, -0.018, 0.193, 0.343, -0.92, -0.963, -0.073, -0.323, -2.033, -0.486, 0.201, 1.613, 1.216, -0.344, -1.555, -1.976, 0.014, -0.959, 1.072, -0.705, -0.711, 0.823, 0.294, -1.372, -0.616, 0.672, -0.198, 0.082, 0.098, 1.283, -0.253, 0.609, -0.078, 0.065, -2.653, 0.225, -1.45, 0.098, -0.128, -1.975, -1.254, -1.177, 0.947, -0.307, -1.116, 0.931, -1.841, 1.323, -0.884, 0.175, -0.485, -0.669, 0.315, -1.236, -0.606, -1.554, -0.033, 0.797, -0.976, 0.716, 0.327, -0.814, -0.389, 0.092, 0.22, -2.107, -0.951, -0.627, 0.73, 0.52, 0.298, -0.703, -0.763, 0.176, -0.165, 1.864, 1.203, -0.734, 0.56, -1.039, -1.06, -0.658, -0.985, 0.493, 0.923, 1.231, 2.702, 1.807, -0.379, 0.866, -0.304, -0.188, -1.518, -0.441, 1.959, 0.024, 2.042, 1.168, 0.705, -0.356, 0.467, -0.17, 1.809, 1.448, 1.273, -0.276, 2.296, -0.565, -0.477, -0.564, -0.662, -2.059, 0.562, -1.92, 2.121, -0.633, 1.079, -1.848, -0.419, -1.333, -0.226, 0.531, 0.751, 1.705, 0.905, -0.111, 0.001, 0.356, -0.4, 0.308, -0.27, -0.19, -0.329, 0.144, 1.53, 0.781, -0.705, -0.053, 0.791, -0.856, 0.576, -0.535, 1.031, 0.67, 0.253, 0.267, 0.638, -0.894, 1.097, 1.689, -0.582, 0.028, 0.721, -1.104, 0.611, 0.9, 0.303, -1.7, 0.998, -1.895, 0.63, -0.711, -0.144, -0.879, 0.664, 0.857, -0.031, -0.047, 1.193, -0.495, -0.491, 0.05, -1.13, 0.507, 0.712, 0.068, -0.349, -0.418, -0.606, -0.014, -0.84, -0.673, 0.446, -0.173, -0.297, -1.051, 1.119, 0.458, -1.959, -0.427, -0.385, -0.346, -1.378, 0.305, -0.847, 0.113, 0.032, -0.432, 0.051, 0.713, -0.956, -0.667, -0.812, -0.152, 1.287, -1.749, -1.09, -1.111, 0.201, 2.094, 0.099, -0.924, -0.466, 0.818, -0.957, -0.096, -0.258, -1.515, 0.478, -0.509, 0.103, -0.23, -0.61, 0.862, 1.483, 0.439, -1.675, 0.457, -0.53, -0.033, 0.374, 0.63, 0.046, 1.526, 0.609, 1.045, 0.041, -0.384, -0.552, 1.189, 0.19, -0.141, -0.565, 0.334, -0.212, 0.483, -0.352, 0.896, -1.494, -1.378, 0.276, -1.452, 1.939, 1.514, 1.795, -0.053, -0.188, 1.495, 0.511, -0.56, -0.746, -2.326, -0.611, -0.175, -0.001, -0.417, -1.755, 2.315, -1.002, -0.667, -0.455, 0.737, 2.369, -1.501, -0.176, 0.17, -1.265, -1.589, 0.621, 0.445, -1.021, -0.15, -0.116, -2.37, 1.694, -0.549, -1.215, 0.992, 0.774, 2.151, -0.148, -0.713, -0.929, 0.738, 0.275, -0.413, 0.702, 0.093, 0.995, 1.248, -1.093, 0.562, 0.168, 0.758, -0.658, 1.43, 1.093, -0.14, -0.39, -0.205, -0.74, -0.535, 1.229, 0.9, 1.674, -0.917, -0.185, 0.672, 0.458, 0.622, -0.643, 0.149, 0.148, -1.487, -0.048, 0.844, -1.507, -0.345, 1.341, 0.813, -0.603, 1.014, 0.705, 0.118, -0.459, 0.361, 1.51, -0.087, -0.173, 0.303, 0.177, 1.152, -0.659, -1.19, 0.101, 0.044, 1.449, -0.647, -2.278, 0.568, -0.375, 0.383, -0.093, 0.201, -0.149, -0.407, -0.171, -2.038, 0.624, -1.28, -1.156, 0.744, 0.249, -0.694, -2.119, 0.247, 0.879, 0.319, -0.227, -0.866, -2.802, -0.835, 1.049, -0.065, -1.94, -1.11, 4.887, 0.119, -0.604, -1.016, 1.929, 0.865, 2.862, 2.337, -3.149, 1.889, 4.481, -2.04, 1.148, 1.701, 0.87, 2.055, -0.893, -3.562, -0.842, -3.019, -0.412, 0.198, -2.81, -0.569, 5.922, 3.024, 0.885, 2.255, -0.938, 0.751, -2.492, -0.554, -2.263, -2.045, 3.486, -0.454, 2.33, -2.235, 1.552, 0.674, 5.093, 2.293, 1.061, 1.609, -0.209, -0.855, 2.408, -0.673, 3.297, 0.151, -1.395, -0.572, 1.295, 3.451, -2.168, 4.727, -1.166, 2.91, -0.855, 0.678, -1.876, 2.317, 0.849, 2.698, -1.143, -2.635, 1.125, 0.131, 4.976, -1.565, -0.537, -1.933, -1.918, -0.512, -1.617, 1.632, 1.516, -0.387, 1.149, -0.942, 0.754, -0.069, 0.345, 2.912, 1.447, -1.97, -1.077, 0.129, 0.732, -1.848, 3.171, -1.982, -0.662, -0.167, -3.861, -2.46, 3.102, -1.745, 3.029, 0.156, -0.891, -1.384, 0.831, 0.273, -1.816, 1.272, -1.193, 0.727, 1.241, -1.393, 1.329, -3.152, 3.538, -0.375, 0.663, 0.787, -2.249, 3.848, 0.772, 2.392, -0.283, -3.029, 1.043, 2.305, 1.882, 1.207, -2.034, -0.131, -2.771, -0.271, 2.319, 0.21, -1.763, -0.078, -1.065, 0.049, -1.063, -1.232, -0.416, -0.18, 0.098, 0.166, 0.135, 1.938, 1.258, -0.447, 1.647, 2.343, -0.087, 1.261, 0.447, 0.623, -0.422, 0.85, -0.464, 1.417, 1.57, -2.034, 0.989, -2.32, 2.001, 0.006, -0.232, -1.516, 0.138, 0.057, -2.495, 1.642, 2.295, 0.742, 1.464, 2.208, 0.618, -1.338, -1.422, 0.067, 1.887, -0.543, 1.647, -3.979, -0.816, -2.795, -2.867, 2.732, -0.605, 0.208, -1.123, 0.991, -1.819, 1.656, -0.746, 0.151, -1.004, -2.228, -0.218, -3.926, -0.731, 1.702, 1.934, 1.235, 0.027, -2.293, -3.8, 0.557, -0.302, 0.111, 1.857, -1.54, 1.167, -1.806, -1.188, 0.268, 0.97, -2.249, -0.529, -1.052, -1.556, -1.078, 0.307, -0.984, -0.448, 3.211, 0.719, 0.014, 0.651, -1.676, -1.391, 2.234, -0.979, -0.738, 0.105, 0.784, -3.162, 3.581, 0.378, -2.785, -2.005, 1.989, 1.672, -0.941, 1.24, 3.021, 2.081, -3.955, 3.244, 0.724, 1.263, 0.319, 0.81, 0.684, 0.457, -2.419, 0.648, 1.237, 3.338, -1.664, 0.117, 0.563, 2.158, 5.778, 0.856, -1.036, -1.606, 0.003, 0.2, -0.353, 1.083, -2.524, 0.665, 1.984, 2.504, 1.195, 3.762, -4.021, -2.041, 0.905, 0.453, -1.018, -0.42, 1.999, 1.863, -3.1, -1.083, 2.631, -3.821, 1.087, 2.937, -2.204, -0.179, -2.228, 0.579, 3.346, -0.384, -1.401, 0.711, -2.379, 1.831, 0.559, 0.314, -0.297, -3.603, -0.759, 0.712, 0.726, 2.43, 2.267, -0.435, 1.26, 0.424, 3.169, 1.491, 0.41, -0.051, -0.568, 0.132, 2.361, 3.348, 2.003, 0.718, 0.367], NPTS=R.length, CH=470, S1=1.8, THR=Math.log(20), W=30, CTHR=1.459;
+  const P=[100];for(let i=1;i<NPTS;i++)P.push(P[i-1]*Math.exp(.0045*R[i]));
+  // anytime-valid evidence (hidden: only its level is shown, as a thin gauge)
+  const E=[];let l=0;for(const x of R){l=Math.max(0,l)+(-Math.log(S1)-x*x/2*(1/(S1*S1)-1));E.push(l);}
+  const ALARM=E.findIndex((v,i)=>i>=CH&&v>=THR);
+  // classic test redone at every observation (rolling window, 5 % level)
+  const C=[],F=[];for(let i=0;i<NPTS;i++){let s=0,n=0;for(let j=Math.max(0,i-W+1);j<=i;j++){s+=R[j]*R[j];n++;}C.push(s/n);F.push(i>=W&&s/n>CTHR);}
+  const EPS=F.map((f,i)=>f&&!F[i-1]?i:-1).filter(i=>i>=0);          // starts of classic alerts
+  const CALARM=EPS.find(i=>i>=CH);
+  const WIN=260, X0=14, X1=546, PY0=212, PY1=40, GY=238, GH=6;
+  const defs=el('defs',{});const gid='va-g'+Math.random().toString(36).slice(2,7);
+  const gr=el('linearGradient',{id:gid,x1:0,y1:0,x2:0,y2:1},defs);el('stop',{offset:0,'stop-color':'rgba(233,237,243,.20)'},gr);el('stop',{offset:1,'stop-color':'rgba(233,237,243,0)'},gr);
+  el('text',{class:'va-lab',x:X0,y:12}).textContent=TX.stream;
+  const area=el('path',{fill:`url(#${gid})`}), pl=el('path',{class:'va-price'});
+  const chL=el('line',{class:'va-drift',y1:PY1,y2:PY0,opacity:0}), chT=el('text',{class:'va-dl',y:PY0-8,opacity:0});chT.textContent=TX.change;
+  // alert flags on the stream
+  const flags=[...Array(12)].map(()=>{const g=el('g',{opacity:0});
+    return {g,line:el('line',{class:'va-flagl'},g),dot:el('rect',{class:'va-flag',width:8,height:8,rx:1.5},g),lab:el('text',{class:'va-flagt'},g)};});
+  const head=el('circle',{r:3.2,fill:'#fff'}), headG=el('circle',{r:10,fill:'rgba(255,255,255,.18)'});
+  // thin alert gauge
+  el('text',{class:'va-lab',x:X0,y:GY-6}).textContent=TX.gauge;
+  el('rect',{class:'va-gbg',x:X0,y:GY,width:X1-X0,height:GH,rx:3});
+  const gfill=el('rect',{class:'va-gfill',x:X0,y:GY,width:0,height:GH,rx:3});
+  el('line',{class:'va-gthr',x1:X1,y1:GY-3,x2:X1,y2:GY+GH+3});
+  // tabs
+  let mode='classic', user=false, lastCycle=0, last=-1, restart=false, offset=0;
+  const tabs=[...root.querySelectorAll('.va-tabs button')];
+  function setMode(m,byUser){mode=m;user=user||byUser;last=-1;tabs.forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));}
+  tabs.forEach(b=>b.addEventListener('click',()=>{setMode(b.dataset.mode,true);restart=true;}));
+  setMode('classic');
+  const T=15, RATE=NPTS/12.5;
+  function render(now,tt){
+    if(restart){offset=tt;restart=false;}
+    const t=((tt-offset)%T+T)%T, cyc=Math.floor((tt-offset)/T);
+    if(cyc!==lastCycle){lastCycle=cyc;if(!user)setMode(mode==='classic'?'anytime':'classic');}
+    const cl=mode==='classic', h=Math.min(NPTS-1,Math.floor(t*RATE)), a=Math.max(0,h-WIN);
+    const step=h<110?0:h<240?1:h<CH?2:3;
+    if(step!==last){last=step;ty.say((cl?TX.capsClassic:TX.capsAnytime)[step],now);}
+    let lo=1e9,hi=-1e9;for(let i=a;i<=h;i++){lo=Math.min(lo,P[i]);hi=Math.max(hi,P[i]);}
+    const pad=(hi-lo)*.18+.5;lo-=pad;hi+=pad;
+    const x=i=>X1-(h-i)/WIN*(X1-X0), yP=v=>PY0-(v-lo)/(hi-lo)*(PY0-PY1);
+    let d='';for(let i=a;i<=h;i++)d+=(i>a?'L':'M')+x(i).toFixed(1)+' '+yP(P[i]).toFixed(1);
+    pl.setAttribute('d',d);area.setAttribute('d',d+`L${x(h).toFixed(1)} ${PY0}L${x(a).toFixed(1)} ${PY0}Z`);
+    head.setAttribute('cx',x(h));head.setAttribute('cy',yP(P[h]));headG.setAttribute('cx',x(h));headG.setAttribute('cy',yP(P[h]));
+    const showCh=h>=CH&&h-CH<WIN;chL.setAttribute('x1',x(CH));chL.setAttribute('x2',x(CH));chL.setAttribute('opacity',showCh?.6:0);
+    chT.setAttribute('x',x(CH)+5);chT.setAttribute('opacity',showCh?1:0);
+    // flags visible in the window
+    const list=(cl?EPS:[ALARM]).filter(i=>i<=h&&i>=a);
+    let lastLab=-1e9;
+    flags.forEach((f,k)=>{const i=list[k];if(i==null){f.g.setAttribute('opacity',0);return;}
+      const fx=x(i), fy=yP(P[i]), isFalse=i<CH, age=h-i;
+      const showLab=fx-lastLab>78;if(showLab)lastLab=fx;f.lab.setAttribute('opacity',showLab?1:0);
+      f.g.setAttribute('opacity',Math.min(1,age/6+.2));
+      f.line.setAttribute('x1',fx);f.line.setAttribute('x2',fx);f.line.setAttribute('y1',fy);f.line.setAttribute('y2',PY1);
+      f.dot.setAttribute('x',fx-4);f.dot.setAttribute('y',PY1-4);
+      f.lab.setAttribute('x',fx-3);f.lab.setAttribute('y',PY1-9);f.lab.textContent=isFalse?TX.falseAlarm:TX.alarm;
+      f.g.setAttribute('class',isFalse?'va-fl false':'va-fl true');});
+    // gauge
+    const lvl=cl?C[h]/CTHR:E[h]/THR;
+    gfill.setAttribute('width',Math.max(0,Math.min(1,lvl))*(X1-X0));gfill.setAttribute('class','va-gfill'+(lvl>=1?' on':''));
+    // boxes
+    const nFalse=cl?EPS.filter(i=>i<=h&&i<CH).length:0, AL=cl?CALARM:ALARM, det=h>=AL;
+    vF.textContent=String(nFalse);boxF.classList.toggle('alert',nFalse>0);
+    vD.textContent=det?TX.delay(AL-CH):'—';boxD.classList.toggle('alert',det);
+    ty.tick(now);
+  }
+  loopWhenVisible(VIS,reduce,T*2,(now,t)=>render(now,t),8.8);
+}
+
+const VA_TX={
+ fr:{
+  jeff:{markup:`<div class="va"><svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">D'après <a href="https://www.sciencedirect.com/science/article/abs/pii/S0377221726004509" target="_blank" rel="noopener">A Bayesian Approach to Probability Default Model Calibration</a> — Hurlin &amp; Pull, <em>European Journal of Operational Research</em> (2026).</div></div>`,
+   grid:'Portefeuille à faible taux de défaut · 2 000 emprunteurs', pd:'', pdLines:['Probabilité de défaut prédite : 0,01 %','soit 0,2 défaut attendu par an'],
+   normal:'Test normal (approximation gaussienne)', jeff:'Test de Jeffreys', accept:'Calibration acceptée', reject:'Calibration rejetée',
+   num:x=>x.replace('.',','), wrong:(c,n)=>`rejets à tort : ${c} sur ${n} tests`, review:n=>`revue ${n}`,
+   caps:['Peu de défauts : 2 000 emprunteurs, 0,2 défaut attendu par an.',
+     'Un seul défaut : le test normal rejette déjà. Jeffreys, non.',
+     '20 classes de notation, 5 revues annuelles, des modèles tous justes :',
+     'le test normal rejette à tort près d’une fois sur cinq. Jeffreys reste fiable.']},
+  eproc:{markup:`<div class="va"><div class="va-tabs" role="group" aria-label="Approche"><button type="button" data-mode="classic" aria-pressed="true">Test classique</button><button type="button" data-mode="anytime" aria-pressed="false">Approche valide à tout instant</button></div>
+   <svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
+   <div class="va-read"><div class="boxF"><b>Fausses alertes</b><span class="vF">0</span><i>avant tout changement</i></div>
+   <div class="boxD"><b>Détection du changement</b><span class="vD">—</span><i>après la rupture</i></div></div>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">Méthode développée en interne par STORM — travaux non encore publiés.</div></div>`,
+   stream:'Indicateur surveillé · flux de données en temps réel', gauge:'Niveau d\u2019alerte', change:'changement de régime', alarm:'Alerte', falseAlarm:'fausse alerte',
+   delay:n=>`${n} observations`,
+   capsClassic:['Un modèle surveille un flux de données en continu.',
+     'Test classique, refait à chaque observation.',
+     'Rien n’a changé, et pourtant les alertes s’enchaînent.',
+     'La vraie alerte se perd parmi les fausses.'],
+   capsAnytime:['Un modèle surveille un flux de données en continu.',
+     'Approche valide à tout instant : la preuve s’accumule.',
+     'Aucune fausse alerte, même en regardant en continu.',
+     'Changement de régime : alerte en quelques observations.']}
+ },
+ en:{
+  jeff:{markup:`<div class="va"><svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">Based on <a href="https://www.sciencedirect.com/science/article/abs/pii/S0377221726004509" target="_blank" rel="noopener">A Bayesian Approach to Probability Default Model Calibration</a> — Hurlin &amp; Pull, <em>European Journal of Operational Research</em> (2026).</div></div>`,
+   grid:'Low-default portfolio · 2,000 borrowers', pd:'', pdLines:['Predicted probability of default: 0.01 %','i.e. 0.2 default expected per year'],
+   normal:'Normal test (Gaussian approximation)', jeff:'Jeffreys test', accept:'Calibration accepted', reject:'Calibration rejected',
+   num:x=>x, wrong:(c,n)=>`wrong rejections: ${c} out of ${n} tests`, review:n=>`review ${n}`,
+   caps:['Few defaults: 2,000 borrowers, 0.2 default expected per year.',
+     'A single default: the normal test already rejects. Jeffreys does not.',
+     '20 rating grades, 5 annual reviews, all models right:',
+     'the normal test wrongly rejects nearly one time in five. Jeffreys stays reliable.']},
+  eproc:{markup:`<div class="va"><div class="va-tabs" role="group" aria-label="Approach"><button type="button" data-mode="classic" aria-pressed="true">Classic test</button><button type="button" data-mode="anytime" aria-pressed="false">Anytime-valid approach</button></div>
+   <svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
+   <div class="va-read"><div class="boxF"><b>False alarms</b><span class="vF">0</span><i>before any change</i></div>
+   <div class="boxD"><b>Change detection</b><span class="vD">—</span><i>after the break</i></div></div>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">Method developed in-house by STORM — not yet published.</div></div>`,
+   stream:'Monitored indicator · real-time data stream', gauge:'Alert level', change:'regime change', alarm:'Alert', falseAlarm:'false alarm',
+   delay:n=>`${n} observations`,
+   capsClassic:['A model monitors a continuous data stream.',
+     'Classic test, redone at every observation.',
+     'Nothing has changed, yet alarms keep coming.',
+     'The real alarm gets lost among the false ones.'],
+   capsAnytime:['A model monitors a continuous data stream.',
+     'Anytime-valid approach: evidence builds up.',
+     'No false alarm, even when watching continuously.',
+     'Regime change: alarm within a few observations.']}
+ }
+};
+
+
+// each animation starts when it scrolls into view, and pauses when it leaves
+function watch(el){const V={on:false,heard:false};
+  if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{V.heard=true;V.on=e.isIntersecting;}),{threshold:.35}).observe(el);
+    // safety net: if the browser never reports visibility, fall back to "on screen" by geometry
+    setTimeout(()=>{if(!V.heard){const r=el.getBoundingClientRect();V.on=r.bottom>0&&r.top<innerHeight&&r.height>0;}},1500);}
+  else V.on=true;
+  return V;}
+document.querySelectorAll('.storm-anim[data-anim="credit"]').forEach(el=>initFlow(el,FLOW_TX[LANG],watch(el)));
+document.querySelectorAll('.storm-anim[data-anim="rst"]').forEach(el=>initRST(el,RST_TX[LANG],watch(el)));
+document.querySelectorAll('.storm-anim[data-anim="jeffreys"]').forEach(el=>initJeffreys(el,VA_TX[LANG].jeff,watch(el)));
+document.querySelectorAll('.storm-anim[data-anim="eprocess"]').forEach(el=>initEprocess(el,VA_TX[LANG].eproc,watch(el)));
+// switches between animations: each switch drives the panes of its own group
+document.querySelectorAll('.anim-switch').forEach(sw=>{
+  const grp=sw.closest('.anim-group')||document;
+  const panes=[...grp.querySelectorAll('.anim-pane')];
+  sw.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    sw.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    panes.forEach(p=>p.hidden=p.dataset.pane!==b.dataset.pane);
+    dispatchEvent(new Event('resize'));
+  }));
+});
+
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

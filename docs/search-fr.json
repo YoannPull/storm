@@ -1,304 +1,59 @@
 [
   {
-    "objectID": "fr/actualites/index.html",
-    "href": "fr/actualites/index.html",
-    "title": "Actualités",
+    "objectID": "fr/expertise/index.html",
+    "href": "fr/expertise/index.html",
+    "title": "Expertise",
     "section": "",
-    "text": "Le fil du collectif\n\nActualités\n\nNotes techniques, publications et interventions du collectif.\n\n\n\n\n\n2026Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosIntervention invitéeoct. 2026 · ESRB — Annual Stress Test Workshop, Banque nationale de Pologne, CracovieYoann Pull↗Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatiqueMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitiqueMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de créditInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→Siham rejoint STORM en tant que chercheuseÉquipesept. 2026 · Square Management, Paris→Séjour de recherche au département de statistique de Stanford UniversitySéjour de recherchesept. 2026 · Inférence séquentielle et anytime-valid, avec Aaditya RamdasYoann Pull↗Generalized Impulse Responses of Portfolio Default ProbabilitiesArticle soumisaoût 2026 · arXiv:2608.04469Guillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull↗18th Annual SoFiE ConferenceConférencejuin 2026 · Society for Financial Econometrics, University of MacauYoann Pull↗A Bayesian Approach to Probability Default Model CalibrationPubliéjuin 2026 · European Journal of Operational ResearchChristophe Hurlin, Yoann Pull↗19e Financial Risks International ForumConférencemars 2026 · Institut Louis Bachelier, ParisYoann Pull↗The at-Risk Approach: A New Tool for Stress Tests and OverlaysPubliémars 2026 · Annals of Operations ResearchGuillaume Flament, Christophe Hurlin, Quentin Lajaunie→Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosDocument de travailjanv. 2026 · arXiv:2601.03983Christophe Hurlin, Quentin Lajaunie, Yoann Pull↗2025Séminaire de recherche du LEOSéminairenov. 2025 · Laboratoire d'Économie d'Orléans, Université d'OrléansYoann Pull→QFFE 2025 — Quantitative Finance and Financial EconometricsConférencejuin 2025 · Aix-Marseille School of Economics, MarseilleYoann Pull→2024Congrès de l'ARAE — Association for Research in Applied EconometricsConférencedéc. 2024 · Université Paris Dauphine-PSL, ParisYoann Pull→\nAucun article correspondant\n\n\nToutes les notes techniques · Publications · RSS"
+    "text": "Expertise\n\nExpertise\n\nDes méthodes quantitatives, pensées pour l’application. Le détail de nos travaux se trouve dans nos publications et nos notes.\n\n\n\n\nMéthodes\n01Statistique et économétrieMesurer, tester et surveiller les modèles de risque avec des garanties statistiques claires : calibration, valeurs extrêmes, suivi en continu.02Machine learning et intelligence artificielleDes modèles plus flexibles, à condition qu'ils restent explicables, robustes et validables — des approches interprétables aux modèles de fondation.03Stress testing et scénariosPropager des scénarios dans les modèles de risque, ou partir du seuil de rupture pour remonter au scénario le plus plausible.\nStress testing, en mouvement\n\nStress test de créditReverse stress test\n\n\n\nValidation et suivi des modèles\nVérifier qu’un modèle reste bien calibré, et le détecter au plus tôt quand il dérive.\n\nSurveillance en continuTest de calibration\n\n\n\nApplications\nRisque de créditDévelopper, valider et surveiller les modèles de crédit, et mesurer leur comportement sous stress.Risques climatiquesIntégrer les risques physiques et de transition dans l'évaluation des risques financiers.Risque géopolitique et macro-financierComprendre comment les chocs se propagent aux portefeuilles, et lesquels pourraient les mettre en difficulté.\nPour aller plus loin\n\nPublications · Notes techniques · Actualités"
   },
   {
-    "objectID": "fr/notes/downscaling.html",
-    "href": "fr/notes/downscaling.html",
-    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "objectID": "fr/notes/stress-tests-credit.html",
+    "href": "fr/notes/stress-tests-credit.html",
+    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
     "section": "",
-    "text": "En bref L’évaluation prospective des risques physiques s’appuie sur les projections climatiques produites par la communauté scientifique internationale, dont la génération la plus récente est le CMIP6. Ces projections sont produites par des modèles globaux conçus pour l’étude du système climatique à l’échelle planétaire : leurs sorties brutes ne peuvent pas être utilisées directement pour évaluer un aléa sur des expositions localisées. Les méthodes de downscaling statistique distribution-wise y répondent en alignant les lois marginales simulées sur celles d’une réanalyse de référence."
+    "text": "En bref Les stress tests de crédit disposent déjà d’un pont entre scénario macro-financier et probabilités de défaut : les modèles satellites. Mais ce pont ne transmet, le plus souvent, qu’une trajectoire moyenne. Lorsque la PD est une fonction non linéaire d’un facteur de crédit incertain, cette transmission partielle écarte l’incertitude prédictive : elle sous-estime les niveaux projetés de PD — jusqu’à 8 % dans notre application — et ne dit rien de la queue de distribution, là où se décident provisions et capital."
   },
   {
-    "objectID": "fr/notes/downscaling.html#pourquoi-les-sorties-brutes-ne-suffisent-pas",
-    "href": "fr/notes/downscaling.html#pourquoi-les-sorties-brutes-ne-suffisent-pas",
-    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
-    "section": "1. Pourquoi les sorties brutes ne suffisent pas",
-    "text": "1. Pourquoi les sorties brutes ne suffisent pas\nL’intensification des aléas physiques se transmet aux bilans financiers par une chaîne documentée : l’aléa frappe des expositions localisées — collatéral immobilier, sites industriels, contreparties agricoles — dont la vulnérabilité détermine un dommage physique qui se traduit en pertes financières, hausse du risque de crédit pour les banques et alourdissement de la sinistralité pour les assureurs.\n\nPourquoi c’est important\n\nLa résolution spatiale. La maille des modèles globaux dépasse fréquemment la centaine de kilomètres : deux sites distants de plusieurs dizaines de kilomètres partagent la même valeur simulée. L’interpolation lisse les valeurs sans créer d’information locale nouvelle.\nLe biais de distribution. Les modèles CMIP sous-estiment l’ampleur et la fréquence des événements extrêmes — précisément ceux qui concentrent les impacts économiques et financiers.\nL’agrégation multi-modèles ne suffit pas. Un ensemble de modèles rend compte de leur divergence, non de ce qu’ils partagent : un biais commun se retrouve aussi bien dans la médiane que dans les bornes de l’enveloppe d’incertitude.\nSouveraineté et auditabilité. Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d’auditabilité qui s’imposent aux établissements."
+    "objectID": "fr/notes/stress-tests-credit.html#ce-que-la-trajectoire-moyenne-ne-transmet-pas",
+    "href": "fr/notes/stress-tests-credit.html#ce-que-la-trajectoire-moyenne-ne-transmet-pas",
+    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
+    "section": "1. Ce que la trajectoire moyenne ne transmet pas",
+    "text": "1. Ce que la trajectoire moyenne ne transmet pas\nLe stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s’élargit chaque année. L’architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.\nLa marge de progrès est dans la façon dont le scénario traverse cette chaîne. En pratique, il est propagé comme une trajectoire moyenne, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Utile, cette approche devient incomplète dès que la PD est non linéaire dans les conditions de crédit : la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. En écartant l’incertitude prédictive, l’approximation joue, par convexité, toujours dans le même sens — elle sous-estime le niveau des PD.\n\nPourquoi c’est important\n\nDes niveaux de PD sous-estimés. Le plug-in (PD évaluée sur la trajectoire moyenne) et la perfect foresight (chemin supposé connu) écartent tout ou partie de l’incertitude prédictive : dans notre application, les PD à trois ans sont sous-estimées de 7 à 8 %, un biais direct sur provisions et capital.\nPas de mesure de queue. Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.\nUne hypothèse peu documentée. La dispersion du facteur de crédit est écartée sans justification explicite, un point d’attention croissant pour la validation interne comme pour le superviseur."
   },
   {
-    "objectID": "fr/notes/downscaling.html#les-méthodes-distribution-wise-principe-et-variantes",
-    "href": "fr/notes/downscaling.html#les-méthodes-distribution-wise-principe-et-variantes",
-    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
-    "section": "2. Les méthodes distribution-wise : principe et variantes",
-    "text": "2. Les méthodes distribution-wise : principe et variantes\nLes approches Model Output Statistics établissent une relation statistique directe entre les sorties brutes d’un modèle climatique et une référence locale — typiquement une réanalyse telle qu’ERA5-Land, de résolution native de 9 km. La relation, apprise sur la période historique, est ensuite appliquée aux projections du même modèle.\n\n1REGRIDDINGAlignement spatial des grilles2APPRENTISSAGEMéthodes candidates surl'historique3SÉLECTIONÉchantillon de test indépendant4APPLICATIONRecalibrage puis projectionsfuturesFigure 1. La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d'ajustement : la préservation du signal de changement prime dans un exercice prospectif.\nAucun article correspondant\n\n\nCe que la correction apporte\n\nUne loi marginale réaliste. La distribution corrigée retrouve la structure bimodale — régimes hivernal et estival — que les sorties brutes aplatissent.\nDes extrêmes exploitables. Les quantiles hauts et bas cessent d’être systématiquement sous-estimés, ce qui conditionne toute mesure de risque physique.\nUn coût de mise en œuvre modeste. Aucune simulation climatique à fine échelle n’est requise.\nUne maîtrise interne. La méthode est explicite, documentable et justifiable auprès du superviseur."
+    "objectID": "fr/notes/stress-tests-credit.html#corriger-le-niveau-révéler-la-queue-larchitecture",
+    "href": "fr/notes/stress-tests-credit.html#corriger-le-niveau-révéler-la-queue-larchitecture",
+    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
+    "section": "2. Corriger le niveau, révéler la queue : l’architecture",
+    "text": "2. Corriger le niveau, révéler la queue : l’architecture\nLe cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l’incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c’est là le point décisif en pratique : chaque bloc est remplaçable par le modèle interne déjà validé de l’établissement.\n\n1CHOCInnovationmacro-financière2VAR MACROPropage le choc dansl'économie3SATELLITEFacteur de créditsystémique Z4CARTOGRAPHIEMerton–Vasicek π(Z)PD moyennecorrigée de l'incertitude prédictivePD-at-Riskquantile de queueExpected shortfallmoyenne au-delà du seuilFigure 1. Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l'établissement.\nAucun article correspondant\n\nUne seule équation, déjà familière aux équipes de crédit. Le cœur du satellite est le modèle de Merton–Vasicek, socle du cadre IRB de Bâle, qui relie le facteur systémique Z_t à la PD conditionnelle du portefeuille :\n\\pi(Z_t) \\;=\\; \\Phi\\!\\left(\\frac{\\Phi^{-1}(p) - \\sqrt{\\rho}\\,Z_t}{\\sqrt{1-\\rho}}\\right)\noù \\Phi est la fonction de répartition de la loi normale, p la PD de long terme et \\rho la corrélation d’actifs. Rien de nouveau ici : c’est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.\n\nCe que le cadre apporte\n\nUne correction de niveau. La PD moyenne intègre la distribution complète du facteur de crédit au lieu de sa seule espérance — le biais de convexité disparaît.\nDeux mesures de queue, gratuitement. PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.\nModularité. Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l’établissement sans toucher au reste.\nGénéralité. Le stress test géopolitique sur le crédit américain n’est qu’une preuve de concept : la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels."
   },
   {
-    "objectID": "fr/notes/downscaling.html#mise-en-œuvre",
-    "href": "fr/notes/downscaling.html#mise-en-œuvre",
-    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "objectID": "fr/notes/stress-tests-credit.html#mise-en-œuvre",
+    "href": "fr/notes/stress-tests-credit.html#mise-en-œuvre",
+    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
     "section": "3. Mise en œuvre",
-    "text": "3. Mise en œuvre\n\nAligner les grilles. Regridding des sorties du modèle sur la grille de la réanalyse de référence.\nApprendre et sélectionner. Estimer plusieurs méthodes candidates sur un échantillon d’apprentissage, puis les départager sur un échantillon de test indépendant.\nRecalibrer et projeter. Réestimer sur l’intégralité de l’historique, puis appliquer aux scénarios futurs.\n\n\nÀ retenir pour chaque équipe\n\nModélisation. Deux critères, pas un : ajustement sur l’historique et préservation du signal de changement aux quantiles extrêmes.\nValidation. La méthode retenue doit être justifiée sur le second critère, qui n’apparaît dans aucune métrique d’ajustement standard.\nPilotage. Maîtriser la correction en interne relève autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif.\n\n\n\nDiscuter de ce travail ? Une question, une application à votre portefeuille ou une demande de présentation : écrivez au collectif →\n\n\nCette note s’appuie sur les travaux conduits au sein du collectif STORM — Scenario-based Testing & Optimization in Risk Modeling — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans."
+    "text": "3. Mise en œuvre\n\nConserver le satellite de crédit interne. Le cadre se branche sur le modèle déjà validé et n’en modifie ni la spécification ni la calibration.\nBrancher un bloc macro-financier dynamique en amont. Un VAR bayésien estimé sur l’historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.\nProduire les trois sorties pour chaque scénario du catalogue. PD moyenne corrigée, PD-at-Risk et expected shortfall, pour chaque horizon de projection.\n\n\nÀ retenir pour chaque équipe\n\nModélisation. Le biais de convexité est systématique et signé : la trajectoire moyenne sous-estime toujours la PD. Le corriger ne coûte rien de plus qu’un changement d’objet propagé.\nValidation. L’hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.\nPilotage. Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement."
   },
   {
-    "objectID": "fr/notes/downscaling.html#références",
-    "href": "fr/notes/downscaling.html#références",
-    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
-    "section": "Références",
-    "text": "Références\n\nCaisse Centrale de Réassurance (2023). Conséquences du changement climatique sur le coût des catastrophes naturelles en France à horizon 2050.\nLenderink, G., Buishand, A. & van Deursen, W. (2007). Estimates of future discharges of the river Rhine using two scenario methodologies. Hydrology and Earth System Sciences, 11(3), 1145–1159.\nMaraun, D. & Widmann, M. (2018). Statistical Downscaling and Bias Correction for Climate Research. Cambridge University Press.\nMichelangeli, P.-A., Vrac, M. & Loukos, H. (2009). Probabilistic downscaling approaches. Geophysical Research Letters, 36(11).\nVautard, R. et al. (2020). Human contribution to the record-breaking June and July 2019 heatwaves in Western Europe. Environmental Research Letters, 15(9), 094077."
-  },
-  {
-    "objectID": "fr/notes/reverse-stress-test.html",
-    "href": "fr/notes/reverse-stress-test.html",
-    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
-    "section": "",
-    "text": "En bref Les stress tests classiques répondent à la question « combien coûterait ce scénario ? ». Le régulateur pose désormais aussi la question inverse : « quel scénario coûterait cela ? » L’exercice thématique 2026 de la BCE demande aux banques d’identifier les événements géopolitiques susceptibles d’entamer leur capital CET1 d’au moins 300 points de base. Cette note présente une architecture opérationnelle qui transforme un seuil de capital en scénario de rupture, en réutilisant les modèles internes existants."
-  },
-  {
-    "objectID": "fr/notes/reverse-stress-test.html#ce-que-les-scénarios-prescrits-ne-couvrent-pas",
-    "href": "fr/notes/reverse-stress-test.html#ce-que-les-scénarios-prescrits-ne-couvrent-pas",
-    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
-    "section": "1. Ce que les scénarios prescrits ne couvrent pas",
-    "text": "1. Ce que les scénarios prescrits ne couvrent pas\nLe stress testing standard part d’un scénario prescrit et en mesure l’impact. Le reverse stress testing part du résultat qui compte — un franchissement de seuil — et remonte vers le scénario qui l’expliquerait. Les deux sont complémentaires.\n\nPourquoi c’est important\n\nUn angle mort structurel. Un exercice forward n’évalue que les scénarios que l’on a pensé à écrire ; une combinaison de chocs dangereuse pour le profil propre de l’établissement peut ne figurer dans aucun catalogue. Le reverse stress testing va la chercher directement.\nUne attente prudentielle explicite. Les principes de stress testing du Comité de Bâle incluent le reverse stress testing, et l’exercice thématique 2026 de la BCE en fait une demande concrète, avec un seuil chiffré.\nUne exigence de plausibilité. Sans mesure de plausibilité explicite, un scénario de rupture reste un récit : impossible à comparer, difficile à challenger en validation."
-  },
-  {
-    "objectID": "fr/notes/reverse-stress-test.html#du-seuil-au-scénario-une-architecture-en-cinq-briques",
-    "href": "fr/notes/reverse-stress-test.html#du-seuil-au-scénario-une-architecture-en-cinq-briques",
-    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
-    "section": "2. Du seuil au scénario : une architecture en cinq briques",
-    "text": "2. Du seuil au scénario : une architecture en cinq briques\nLe seuil de capital entre par la gauche, un scénario documenté sort par la droite. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement.\n\n1SEUILRatio CET1 minimal R*2SCÉNARIOSMacro-financiers etgéopolitiques3TRANSMISSIONPD/LGD → pertes → RWA/CET14RUPTUREPoint s* le plus plausible5GOUVERNANCEVoisinage local etrobustesseFigure 1. Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement.\nAucun article correspondant\n\nUne seule équation à retenir. Le reverse stress test se formule comme une recherche de plausibilité sous contrainte :\ns^\\star \\in \\arg\\max_{s \\in \\mathcal{S}} f(s) \\quad \\text{sous contrainte} \\quad R(s) \\le R^\\star\noù f(s) mesure la plausibilité du scénario, R(s) le ratio de capital sous ce scénario et R^\\star le seuil critique. Le point de rupture s^\\star est la façon la plus crédible de franchir le seuil, pas la plus sévère : c’est précisément ce qui le rend discutable en comité et opposable en validation.\n\nCe que le cadre apporte\n\nAucun re-développement. Le moteur de crédit interne (Merton–Vasicek / ASRF, déjà validé) et les cartographies PD/LGD existantes sont réutilisés tels quels ; seule la couche de recherche s’ajoute.\nUne plausibilité explicite. Chaque scénario de rupture est assorti d’une mesure de crédibilité — densité de référence ou distance statistique — comparable d’un exercice à l’autre.\nUn objet de gouvernance. Un point de rupture documenté et son voisinage, plutôt qu’une bibliothèque de récits non hiérarchisés.\nGénéralisable. Géopolitique, climat, taux, secteur, marché : changer de famille de scénarios ne change ni l’architecture, ni la gouvernance."
-  },
-  {
-    "objectID": "fr/notes/reverse-stress-test.html#mise-en-œuvre",
-    "href": "fr/notes/reverse-stress-test.html#mise-en-œuvre",
-    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
-    "section": "3. Mise en œuvre",
-    "text": "3. Mise en œuvre\n\nFixer la condition de défaillance. Un seuil de capital explicite, par exemple un ratio CET1 minimal, ou une perte maximale tolérée.\nDécrire l’espace de scénarios et sa plausibilité. Un petit nombre de facteurs de risque et une densité de référence suffisent pour rendre la recherche interprétable.\nRéutiliser la chaîne de transmission interne. Cartographies PD/LGD, pertes, RWA et capital : le dispositif existant fournit R(s) sans modification.\n\n\nÀ retenir pour chaque équipe\n\nModélisation. La plausibilité doit être définie avant la recherche, pas après : c’est elle qui distingue un scénario de rupture d’un récit sévère.\nValidation. Le point de rupture et son voisinage sont documentés et reproductibles, donc opposables.\nPilotage. L’exercice répond directement à la demande prudentielle 2026 sans nouvelle infrastructure de modèles."
-  },
-  {
-    "objectID": "fr/notes/reverse-stress-test.html#article-de-recherche-associé",
-    "href": "fr/notes/reverse-stress-test.html#article-de-recherche-associé",
-    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
+    "objectID": "fr/notes/stress-tests-credit.html#article-de-recherche-associé",
+    "href": "fr/notes/stress-tests-credit.html#article-de-recherche-associé",
+    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
     "section": "Article de recherche associé",
-    "text": "Article de recherche associé\nHurlin, C., Lajaunie, Q. & Pull, Y. (2026). Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational Framework. arXiv:2601.03983\n\nDiscuter de ce travail ? Une question, une application à votre portefeuille ou une demande de présentation : écrivez au collectif →\n\n\nCette note s’appuie sur les travaux conduits au sein du collectif STORM — Scenario-based Testing & Optimization in Risk Modeling — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans."
+    "text": "Article de recherche associé\nFlament, G., Hurlin, C., Lajaunie, Q. & Pull, Y. (2026). Generalized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical Risk. arXiv:2608.04469 · SSRN\n\nDiscuter de ce travail ? Une question, une application à votre portefeuille ou une demande de présentation : écrivez au collectif →\n\n\nCette note s’appuie sur les travaux conduits au sein du collectif STORM — Scenario-based Testing & Optimization in Risk Modeling — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans."
   },
   {
-    "objectID": "fr/notes/reverse-stress-test.html#références",
-    "href": "fr/notes/reverse-stress-test.html#références",
-    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
+    "objectID": "fr/notes/stress-tests-credit.html#références",
+    "href": "fr/notes/stress-tests-credit.html#références",
+    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
     "section": "Références",
-    "text": "Références\n\nBCBS (2009). Principles for sound stress testing practices and supervision. BCBS155, Comité de Bâle.\nBCBS (2018). Stress testing principles. D450, Comité de Bâle.\nECB (2025). ECB to assess banks’ stress testing capabilities to capture geopolitical risk. Communiqué, supervision bancaire, 12 décembre 2025.\nGlasserman, P., Kang, C. & Kang, W. (2015). Stress scenario selection by empirical likelihood. Quantitative Finance, 15(1), 25–41.\nGordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. Journal of Financial Intermediation, 12(3), 199–232.\nGrundke, P. (2011). Reverse stress tests with bottom-up approaches. Journal of Risk Model Validation, 5(3), 71–90.\nKopeliovich, Y., Novosyolov, A., Satchkov, D. & Schachter, B. (2015). Robust risk estimation and hedging: A reverse stress testing approach. The Journal of Derivatives, 22(4), 10–25.\nVasicek, O. (2002). The distribution of loan portfolio value. Risk, 15(12), 160–162."
+    "text": "Références\n\nAdrian, T., Boyarchenko, N. & Giannone, D. (2019). Vulnerable growth. American Economic Review, 109(4), 1263–1289.\nCaldara, D. & Iacoviello, M. (2022). Measuring geopolitical risk. American Economic Review, 112(4), 1194–1225.\nGordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. Journal of Financial Intermediation, 12(3), 199–232.\nMerton, R. C. (1974). On the pricing of corporate debt: The risk structure of interest rates. The Journal of Finance, 29(2), 449–470.\nVasicek, O. (2002). The distribution of loan portfolio value. Risk, 15(12), 160–162.\nWilson, T. C. (1997). Portfolio credit risk. RISK, 10(10), 56–61."
   },
   {
-    "objectID": "fr/a-propos/index.html",
-    "href": "fr/a-propos/index.html",
-    "title": "À propos",
+    "objectID": "fr/notes/index.html",
+    "href": "fr/notes/index.html",
+    "title": "Notes",
     "section": "",
-    "text": "Le collectif\n\n\n\nSTORM — Scenario-based Testing & Optimization in Risk Modeling — est le collectif de recherche quantitative de Square Management."
-  },
-  {
-    "objectID": "fr/a-propos/index.html#ce-que-nous-faisons",
-    "href": "fr/a-propos/index.html#ce-que-nous-faisons",
-    "title": "À propos",
-    "section": "Ce que nous faisons",
-    "text": "Ce que nous faisons\nNous développons, étudions et appliquons des méthodologies statistiques, économétriques et d’apprentissage automatique à des problèmes de décision sous incertitude. Une grande part de nos travaux actuels trouve son origine dans la gestion des risques financiers — risque de crédit, validation et monitoring de modèles, stress testing, risques climatique et géopolitique — mais l’objectif est de produire des méthodes transférables à d’autres domaines.\nLe collectif transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Cela se traduit par deux formats complémentaires : des articles de recherche, soumis et publiés dans des revues à comité de lecture, et des notes techniques, qui en restituent l’usage opérationnel pour les équipes de modélisation, de validation et de pilotage."
-  },
-  {
-    "objectID": "fr/a-propos/index.html#comment-nous-travaillons",
-    "href": "fr/a-propos/index.html#comment-nous-travaillons",
-    "title": "À propos",
-    "section": "Comment nous travaillons",
-    "text": "Comment nous travaillons\nDeux principes traversent l’ensemble de nos travaux.\nLa moyenne n’est pas le risque. La pratique standard propage un scénario le long de sa trajectoire centrale. Or le risque ne se lit pas dans la moyenne : il se concentre dans les queues. Nous propageons la distribution conditionnelle complète — ou nous inversons le problème et partons du seuil de rupture.\nDes briques, pas des remplacements. Nos cadres sont modulaires par construction. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement. Aucun re-développement n’est demandé : le dispositif existant produit davantage, au même coût de calcul."
-  },
-  {
-    "objectID": "fr/a-propos/index.html#contact",
-    "href": "fr/a-propos/index.html#contact",
-    "title": "À propos",
-    "section": "Nous écrire",
-    "text": "Nous écrire\nPour toute question sur nos travaux, une collaboration de recherche ou une demande de présentation, écrivez au collectif.\n\ncontact@storm.example.org\n\n\nSTORM fait partie de Square Management et du Square Research Center."
-  },
-  {
-    "objectID": "fr/recherche/risque-de-credit.html",
-    "href": "fr/recherche/risque-de-credit.html",
-    "title": "Risque de crédit",
-    "section": "",
-    "text": "Axe de recherche\n\n\n\nLe moteur de crédit des banques est connu, validé et stable. Ce qui lui manque n’est pas un nouveau modèle : c’est la distribution qu’il n’a jamais appris à transmettre."
-  },
-  {
-    "objectID": "fr/recherche/risque-de-credit.html#comment-nous-abordons-le-sujet",
-    "href": "fr/recherche/risque-de-credit.html#comment-nous-abordons-le-sujet",
-    "title": "Risque de crédit",
-    "section": "Comment nous abordons le sujet",
-    "text": "Comment nous abordons le sujet\nL’architecture du stress testing de crédit est bien rodée. Un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, et la cartographie Merton–Vasicek — le socle du cadre IRB de Bâle — convertit un facteur systémique latent en probabilité de défaut. Cette chaîne fonctionne, elle est documentée, et elle est déjà validée en interne dans la plupart des établissements.\nLa marge de progrès n’est donc pas dans les briques. Elle est dans ce que le scénario perd en les traversant. En pratique, le scénario est propagé comme une trajectoire moyenne, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Dès lors que la PD est non linéaire dans les conditions de crédit — et elle l’est toujours — la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. Par convexité, l’approximation joue toujours dans le même sens : elle sous-estime le niveau des PD.\nDeux conséquences, et elles sont chiffrables. La première est un biais de niveau, direct sur les provisions et le capital : dans notre application, les PD à trois ans sont sous-estimées de 7 à 8 %. La seconde est une absence : ni quantile de PD, ni expected shortfall, alors que le risque se matérialise précisément dans la queue, plus réactive que le centre.\nNotre ligne de travail consiste à récupérer cette information sans rien remplacer. Le satellite reste le satellite ; la cartographie reste Merton–Vasicek. Ce qui change est l’objet propagé : la distribution conditionnelle complète du facteur de crédit, et non sa seule espérance.\nLa question de la validation suit la même logique. Valider une calibration de PD, c’est décider si un écart observé entre défauts prédits et défauts constatés est compatible avec le modèle. Le test de Jeffreys, retenu par les superviseurs, mérite d’être réexaminé dans un cadre bayésien explicite : il n’est pas également fiable dans toutes les configurations de portefeuille. Et lorsque le suivi devient continu plutôt qu’annuel, la validité même du test doit être repensée — c’est l’objet de nos travaux sur les e-values."
-  },
-  {
-    "objectID": "fr/recherche/risque-de-credit.html#méthodes-mobilisées",
-    "href": "fr/recherche/risque-de-credit.html#méthodes-mobilisées",
-    "title": "Risque de crédit",
-    "section": "Méthodes mobilisées",
-    "text": "Méthodes mobilisées\n\nMerton–Vasicek / ASRF Régression quantile Lois skew-t VAR bayésien Fonctions de réponse généralisées Tests bayésiens E-values IFRS 9 Cadre IRB"
-  },
-  {
-    "objectID": "fr/recherche/risque-de-credit.html#projets",
-    "href": "fr/recherche/risque-de-credit.html#projets",
-    "title": "Risque de crédit",
-    "section": "Projets",
-    "text": "Projets\n\nPD Lifetime — IFRS 9À démarrer · T3Projection des probabilités de défaut à maturité sous IFRS 9 : structure par terme, conditionnement macroéconomique et cohérence avec le cadre IRB.SICR — Dégradation significative du risqueEn cours · T2Critères de transition entre étapes IFRS 9 : ce que « significatif » veut dire quantitativement, et la sensibilité des provisions au seuil retenu.Early Warning IndicatorsÀ démarrer · T3Détection précoce de la dégradation du risque de contrepartie : construction, calibration et évaluation des indicateurs d'alerte.Monitoring anytime-valid de la calibrationEn coursSuivi séquentiel de la calibration des PD par e-values : un test qui reste valide quel que soit le moment où on le regarde.\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-de-credit.html#articles-et-notes",
-    "href": "fr/recherche/risque-de-credit.html#articles-et-notes",
-    "title": "Risque de crédit",
-    "section": "Articles et notes",
-    "text": "Articles et notes\n\nA Bayesian Approach to Probability Default Model Calibration: Theoretical and Empirical Insights on the Jeffreys TestChristophe Hurlin, Yoann Pull · European Journal of Operational ResearchUne réévaluation bayésienne du test de Jeffreys utilisé par les superviseurs pour valider la calibration des probabilités de défaut, avec des résultats théoriques et des éléments empiriques sur les conditions dans lesquelles le test peut être cru.PubliéRevueSSRNThe at-Risk Approach: A New Tool for Stress Tests and OverlaysGuillaume Flament, Christophe Hurlin, Quentin Lajaunie · Annals of Operations Research · 361, 27–60Un cadre qui reconstruit la distribution conditionnelle complète du facteur de risque sous scénario, par régression quantile et lissage paramétrique, pour en dériver directement des mesures de queue.PubliéNote technique →\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-de-credit.html#ce-que-nous-explorons",
-    "href": "fr/recherche/risque-de-credit.html#ce-que-nous-explorons",
-    "title": "Risque de crédit",
-    "section": "Ce que nous explorons",
-    "text": "Ce que nous explorons\n\n\natRisk multivarié L’approche at-Risk repose aujourd’hui sur un facteur systémique latent unique. Étendue à plusieurs facteurs conjoints, elle permettrait de distinguer les sources de stress plutôt que de les agréger.\n\n\nCe que la validation interne peut exiger La dispersion du facteur de crédit est aujourd’hui écartée sans justification explicite. À partir de quel seuil cette hypothèse devient-elle un point d’attention pour la validation interne comme pour le superviseur ?\n\n\nTransférabilité hors crédit La mécanique « propager la distribution plutôt que la moyenne » ne doit rien au crédit. Quels autres domaines de décision sous incertitude reposent aujourd’hui sur une projection en valeur centrale ?"
-  },
-  {
-    "objectID": "fr/recherche/index.html",
-    "href": "fr/recherche/index.html",
-    "title": "Recherche",
-    "section": "",
-    "text": "Axes de recherche\n\nRecherche\n\nTrois domaines d’application, un socle méthodologique qui les traverse tous. Les méthodes circulent d’un axe à l’autre : c’est le même argument distributionnel qui sert au crédit, au climat et au géopolitique.\n\n\n\n\n\nRisque de créditCalibration et validation des PD, IFRS 9, dégradation significative du risque, indicateurs d'alerte précoce, mesures de queue sous scénario.→Risque climatiqueDownscaling statistique des projections, scénarios CRD6 et NGFS, copules climatiques, scores de vulnérabilité, stress tests climatiques.→Risque géopolitiqueStress tests et reverse stress tests géopolitiques, propagation des chocs aux portefeuilles de crédit, indicateurs de risque géopolitique.→Méthodes et fondementsInférence séquentielle et anytime-valid, e-values, méthodes bayésiennes, quantiles et mesures de queue, explicabilité, équité, réseaux de Kolmogorov–Arnold.→\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/methodes.html",
-    "href": "fr/recherche/methodes.html",
-    "title": "Méthodes et fondements",
-    "section": "",
-    "text": "Axe de recherche\n\n\n\nLes axes applicatifs posent les questions. Celui-ci construit les outils — et se réserve le droit de les construire sans application immédiate."
-  },
-  {
-    "objectID": "fr/recherche/methodes.html#comment-nous-abordons-le-sujet",
-    "href": "fr/recherche/methodes.html#comment-nous-abordons-le-sujet",
-    "title": "Méthodes et fondements",
-    "section": "Comment nous abordons le sujet",
-    "text": "Comment nous abordons le sujet\nCet axe existe pour une raison précise : les trois autres partagent plus de méthodes qu’ils ne partagent de sujets. Le même argument distributionnel sert au crédit, au climat et au géopolitique ; la même question de validation se pose partout où un modèle est mis en production. Isoler le socle méthodologique évite de le réinventer axe par axe — et laisse la place à des travaux dont l’application n’est pas encore écrite.\nInférence séquentielle et anytime-valid. La validation d’un modèle de risque est traditionnellement un exercice ponctuel : on fixe une date, on teste, on conclut. Le suivi réel est continu, et regarder le même test à répétition détruit sa garantie. Les e-values et les martingales de test offrent une alternative : une statistique qu’on peut consulter à tout instant, y compris à un instant d’arrêt choisi après coup, sans invalider le contrôle du risque de première espèce. Appliqué au monitoring de la calibration des PD, cela change la nature de l’exercice — d’une photographie annuelle à une surveillance continue.\nMéthodes bayésiennes et validation. Le test de Jeffreys, retenu par les superviseurs pour valider la calibration des probabilités de défaut, est un objet bayésien qui mérite d’être traité comme tel. Le réexaminer dans un cadre explicite permet de dire dans quelles configurations de portefeuille il peut être cru, et dans lesquelles il ne devrait pas emporter la décision.\nQuantiles et mesures de queue. L’ensemble at-Risk — régression quantile, lissage paramétrique, rétrotransformation analytique — constitue une boîte à outils générique dont le crédit n’est qu’un cas d’usage. Son extension multivariée est ouverte.\nApprentissage automatique, sous conditions. Explicabilité et équité ne sont pas des suppléments d’âme quand un modèle décide d’un crédit : ce sont des propriétés que la validation interne doit pouvoir exiger et mesurer. Quant aux architectures récentes — les réseaux de Kolmogorov–Arnold, par exemple — nous les évaluons sans présupposé : la question est ce qu’elles apportent, ou n’apportent pas, à la modélisation de séries temporelles de risque."
-  },
-  {
-    "objectID": "fr/recherche/methodes.html#méthodes-mobilisées",
-    "href": "fr/recherche/methodes.html#méthodes-mobilisées",
-    "title": "Méthodes et fondements",
-    "section": "Méthodes mobilisées",
-    "text": "Méthodes mobilisées\n\nE-values Martingales de test Inférence anytime-valid Méthodes bayésiennes Test de Jeffreys Régression quantile Copules Explicabilité Équité Réseaux de Kolmogorov–Arnold"
-  },
-  {
-    "objectID": "fr/recherche/methodes.html#projets",
-    "href": "fr/recherche/methodes.html#projets",
-    "title": "Méthodes et fondements",
-    "section": "Projets",
-    "text": "Projets\n\nE-values et inférence anytime-validEn coursTester en continu sans payer le prix des tests répétés : martingales de test, e-values et validité à tout instant d'arrêt.Réseaux de Kolmogorov–ArnoldEn coursCe que les architectures KAN apportent — ou non — à la modélisation de séries temporelles de risque.atRisk multivariéÀ démarrerÉtendre l'approche at-Risk à plusieurs facteurs systémiques conjoints plutôt qu'à un facteur latent unique.ExplicabilitéÀ démarrerCe que la validation interne peut réellement exiger d'un modèle de risque en matière d'explicabilité, et comment le mesurer.ÉquitéÀ démarrerMesures d'équité appliquées aux modèles de décision de crédit : ce qu'elles capturent, ce qu'elles arbitrent.\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/methodes.html#articles-et-notes",
-    "href": "fr/recherche/methodes.html#articles-et-notes",
-    "title": "Méthodes et fondements",
-    "section": "Articles et notes",
-    "text": "Articles et notes\n\n\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/methodes.html#ce-que-nous-explorons",
-    "href": "fr/recherche/methodes.html#ce-que-nous-explorons",
-    "title": "Méthodes et fondements",
-    "section": "Ce que nous explorons",
-    "text": "Ce que nous explorons\n\n\nTests séquentiels à réponses différées En crédit, le défaut s’observe avec un retard. Que devient une procédure anytime-valid lorsque l’information arrive décalée dans le temps ?\n\n\natRisk multivarié Étendre l’approche à plusieurs facteurs systémiques conjoints, pour distinguer les sources de stress plutôt que de les agréger dans un facteur latent unique.\n\n\nCe que l’explicabilité peut garantir Les méthodes d’explicabilité produisent des attributions, pas des garanties. Que peut réellement en exiger une validation interne ?\n\n\nAu-delà du risque financier Les méthodes de ce socle ne doivent rien à la finance. Macro, santé, énergie : quels domaines reposent aujourd’hui sur des projections en valeur centrale ?"
-  },
-  {
-    "objectID": "fr/publications/index.html",
-    "href": "fr/publications/index.html",
-    "title": "Publications",
-    "section": "",
-    "text": "Travaux académiques\n\nPublications\n\nDeux formats complémentaires : des articles de recherche, publiés ou en cours d’évaluation, et des notes techniques qui en restituent l’usage opérationnel.\n\n\n\n\nArticles de recherchenotes techniques ↓\n\nGeneralized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical RiskGuillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2608.04469Un cadre modulaire à deux blocs qui propage la distribution complète du facteur de crédit : il corrige la PD moyenne de l'incertitude prédictive et délivre en forme close un quantile de queue et un expected shortfall.SoumisarXivSSRNNote technique →A Bayesian Approach to Probability Default Model Calibration: Theoretical and Empirical Insights on the Jeffreys TestChristophe Hurlin, Yoann Pull · European Journal of Operational ResearchUne réévaluation bayésienne du test de Jeffreys utilisé par les superviseurs pour valider la calibration des probabilités de défaut, avec des résultats théoriques et des éléments empiriques sur les conditions dans lesquelles le test peut être cru.PubliéRevueSSRNThe at-Risk Approach: A New Tool for Stress Tests and OverlaysGuillaume Flament, Christophe Hurlin, Quentin Lajaunie · Annals of Operations Research · 361, 27–60Un cadre qui reconstruit la distribution conditionnelle complète du facteur de risque sous scénario, par régression quantile et lissage paramétrique, pour en dériver directement des mesures de queue.PubliéNote technique →Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational FrameworkChristophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2601.03983Le reverse stress testing formulé comme une recherche de plausibilité sous contrainte : partir d'un seuil de capital et identifier la combinaison de chocs la plus crédible capable de le franchir.Document de travailarXivNote technique →\nAucun article correspondant\n\nNotes techniquesRSS\n\nRisque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatique · Risque de crédit · Stress testing · QuantilesMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatique · Downscaling · Risque physiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitique · Stress testing · OptimisationMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de crédit · Stress testing · QuantilesInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-climatique.html",
-    "href": "fr/recherche/risque-climatique.html",
-    "title": "Risque climatique",
-    "section": "",
-    "text": "Axe de recherche\n\n\n\nAvant de mesurer l’effet d’un scénario climatique sur un portefeuille, il faut que l’aléa soit correctement localisé, correctement corrigé, et que sa queue de distribution ait survécu au traitement."
-  },
-  {
-    "objectID": "fr/recherche/risque-climatique.html#comment-nous-abordons-le-sujet",
-    "href": "fr/recherche/risque-climatique.html#comment-nous-abordons-le-sujet",
-    "title": "Risque climatique",
-    "section": "Comment nous abordons le sujet",
-    "text": "Comment nous abordons le sujet\nLa chaîne du risque climatique est longue : un scénario d’émissions produit une trajectoire macro-financière et un champ d’aléas physiques ; ces aléas frappent des expositions localisées dont la vulnérabilité détermine un dommage ; le dommage se traduit en pertes, en risque de crédit accru et en sinistralité. Chaque maillon peut détruire l’information qui compte.\nEn amont, la donnée. Les projections climatiques CMIP6 sont produites par des modèles globaux dont la maille dépasse souvent la centaine de kilomètres. À cette résolution, deux sites distants de plusieurs dizaines de kilomètres partagent la même valeur simulée, et la moyenne spatiale atténue les pointes locales. Plus grave : les modèles sous-estiment de façon documentée l’ampleur et la fréquence des événements extrêmes — précisément ceux qui concentrent les impacts financiers. Corriger cela suppose de rectifier la forme de la loi simulée, pas seulement son niveau. Et une correction de biais poursuit deux objectifs distincts, dont rien ne garantit qu’ils soient satisfaits ensemble : ramener la distribution simulée sur celle de la référence, et transporter intact le signal de changement projeté. Entre deux méthodes également bien ajustées sur l’historique, l’une peut amputer une part sensible du signal aux quantiles extrêmes. Ce point de sélection est, à nos yeux, le plus sous-estimé de la chaîne.\nEn aval, la mesure. Le même argument distributionnel qu’en risque de crédit s’applique aux scénarios climatiques. Appliquée aux trajectoires NGFS, l’approche at-Risk montre qu’un scénario n’est pas seulement plus ou moins sévère par sa moyenne, mais par l’épaisseur et l’asymétrie de sa queue défavorable : les scénarios de transition rapide génèrent des queues nettement plus épaisses à court terme, en raison de la brutalité des réajustements requis. Deux trajectoires moyennes voisines peuvent recouvrir des vulnérabilités du simple au double.\nUne contrainte de souveraineté. Des projections corrigées existent, mais ne sont pas toujours librement accessibles. Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d’auditabilité qui s’imposent aux établissements bancaires et assurantiels. Maîtriser ces méthodes en interne relève autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif auprès du superviseur."
-  },
-  {
-    "objectID": "fr/recherche/risque-climatique.html#méthodes-mobilisées",
-    "href": "fr/recherche/risque-climatique.html#méthodes-mobilisées",
-    "title": "Risque climatique",
-    "section": "Méthodes mobilisées",
-    "text": "Méthodes mobilisées\n\nDownscaling statistique Model Output Statistics Correction de biais Copules Scénarios NGFS CRD6 Régression quantile Lois skew-t"
-  },
-  {
-    "objectID": "fr/recherche/risque-climatique.html#projets",
-    "href": "fr/recherche/risque-climatique.html#projets",
-    "title": "Risque climatique",
-    "section": "Projets",
-    "text": "Projets\n\nCRD6 — ScénariosEn cours · T2Ce que la directive CRD6 attend en matière de scénarios climatiques, et comment un établissement peut y répondre avec ses modèles existants.Downscaling statistique climatiqueEn cours · T3Correction de biais des projections CMIP6 : aligner les lois marginales simulées sur une réanalyse de référence sans amputer le signal de changement.Lire la note →Score de vulnérabilitéEn cours · T4Mesurer la vulnérabilité d'une exposition à un aléa physique, une fois l'aléa correctement localisé et corrigé.Copules climatiquesEn cours · T4Dépendance entre aléas climatiques : ce que la structure de dépendance ajoute à une analyse conduite aléa par aléa.Stress test climatique — atRiskEn cours · T4L'approche at-Risk appliquée aux trajectoires NGFS : la queue de la distribution du risque sous scénario climatique, et non sa seule moyenne.Lire la note →\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-climatique.html#articles-et-notes",
-    "href": "fr/recherche/risque-climatique.html#articles-et-notes",
-    "title": "Risque climatique",
-    "section": "Articles et notes",
-    "text": "Articles et notes\n\n\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-climatique.html#ce-que-nous-explorons",
-    "href": "fr/recherche/risque-climatique.html#ce-que-nous-explorons",
-    "title": "Risque climatique",
-    "section": "Ce que nous explorons",
-    "text": "Ce que nous explorons\n\n\nDépendance entre aléas Les analyses sont conduites aléa par aléa. Ce que la structure de dépendance — canicule et sécheresse, tempête et inondation — ajoute à une évaluation de portefeuille reste à quantifier.\n\n\nDu champ corrigé au score de vulnérabilité Une fois l’aléa correctement localisé, comment passer d’une distribution locale à une mesure de vulnérabilité d’exposition qui soit à la fois défendable et exploitable dans un modèle de risque ?\n\n\nCritères de sélection d’une correction La préservation du signal de changement n’apparaît dans aucune métrique d’ajustement standard. Quel critère formel proposer à la validation interne ?"
-  },
-  {
-    "objectID": "fr/recherche/risque-geopolitique.html",
-    "href": "fr/recherche/risque-geopolitique.html",
-    "title": "Risque géopolitique",
-    "section": "",
-    "text": "Axe de recherche\n\n\n\nLe régulateur ne demande plus seulement ce que coûterait un scénario géopolitique. Il demande quel scénario coûterait trois cents points de base de CET1."
-  },
-  {
-    "objectID": "fr/recherche/risque-geopolitique.html#comment-nous-abordons-le-sujet",
-    "href": "fr/recherche/risque-geopolitique.html#comment-nous-abordons-le-sujet",
-    "title": "Risque géopolitique",
-    "section": "Comment nous abordons le sujet",
-    "text": "Comment nous abordons le sujet\nLe risque géopolitique a une particularité méthodologique : il se prête mal au catalogue. Un exercice de stress testing classique n’évalue que les scénarios que l’on a pensé à écrire, et une combinaison de chocs dangereuse pour le profil propre d’un établissement peut ne figurer dans aucune liste. L’exercice thématique 2026 de la BCE prend acte de cette limite en posant la question à l’envers : identifier les événements géopolitiques susceptibles d’entamer le capital CET1 d’au moins trois cents points de base.\nNous traitons cette demande comme un problème d’optimisation, pas comme un exercice de rédaction. Le reverse stress testing se formule comme une recherche de plausibilité sous contrainte : parmi tous les scénarios qui franchissent le seuil, retenir celui que la densité de référence rend le plus crédible. Le point de rupture qui en sort n’est pas le plus sévère — il est le plus probable parmi les scénarios fatals, et c’est précisément ce qui le rend discutable en comité et opposable en validation. L’exercice cesse d’être un récit : il produit un objet documenté, chiffré, assorti de son voisinage de scénarios proches.\nLa direction avant, elle, hérite de l’argument distributionnel. Propager un choc géopolitique jusqu’aux probabilités de défaut d’un portefeuille suppose une chaîne macro-financier → satellite de crédit → cartographie. Là encore, transmettre la seule trajectoire moyenne sous-estime le niveau des PD et ne dit rien de la queue. Le stress test géopolitique sur le crédit américain nous sert de preuve de concept ; la mécanique ne doit rien au géopolitique et s’applique telle quelle aux scénarios climatiques, monétaires ou sectoriels.\nReste la mesure elle-même. Un indice de risque géopolitique narratif ne s’injecte pas dans un modèle de risque. Construire une mesure exploitable — stable, interprétable, et dont la dynamique se transmet effectivement au crédit — est un chantier à part entière, et celui sur lequel la demande des établissements est aujourd’hui la plus forte."
-  },
-  {
-    "objectID": "fr/recherche/risque-geopolitique.html#méthodes-mobilisées",
-    "href": "fr/recherche/risque-geopolitique.html#méthodes-mobilisées",
-    "title": "Risque géopolitique",
-    "section": "Méthodes mobilisées",
-    "text": "Méthodes mobilisées\n\nOptimisation sous contrainte Vraisemblance empirique VAR bayésien Fonctions de réponse généralisées Merton–Vasicek / ASRF Mesures de plausibilité Indicateurs de risque"
-  },
-  {
-    "objectID": "fr/recherche/risque-geopolitique.html#projets",
-    "href": "fr/recherche/risque-geopolitique.html#projets",
-    "title": "Risque géopolitique",
-    "section": "Projets",
-    "text": "Projets\n\nStress test géopolitiqueEn cours · T2Propager un choc géopolitique jusqu'aux probabilités de défaut d'un portefeuille de crédit, en transmettant la distribution et non la seule trajectoire moyenne.Lire la note →Reverse stress test géopolitiqueEn cours · T4Partir d'un seuil de capital CET1 et remonter vers le scénario de rupture le plus plausible, assorti de son voisinage.Lire la note →Indicateur de risque géopolitiqueEn cours · T3Construire une mesure de risque géopolitique exploitable dans un modèle de risque, plutôt qu'un simple indice narratif.\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-geopolitique.html#articles-et-notes",
-    "href": "fr/recherche/risque-geopolitique.html#articles-et-notes",
-    "title": "Risque géopolitique",
-    "section": "Articles et notes",
-    "text": "Articles et notes\n\nGeneralized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical RiskGuillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2608.04469Un cadre modulaire à deux blocs qui propage la distribution complète du facteur de crédit : il corrige la PD moyenne de l'incertitude prédictive et délivre en forme close un quantile de queue et un expected shortfall.SoumisarXivSSRNNote technique →Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational FrameworkChristophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2601.03983Le reverse stress testing formulé comme une recherche de plausibilité sous contrainte : partir d'un seuil de capital et identifier la combinaison de chocs la plus crédible capable de le franchir.Document de travailarXivNote technique →\nAucun article correspondant"
-  },
-  {
-    "objectID": "fr/recherche/risque-geopolitique.html#ce-que-nous-explorons",
-    "href": "fr/recherche/risque-geopolitique.html#ce-que-nous-explorons",
-    "title": "Risque géopolitique",
-    "section": "Ce que nous explorons",
-    "text": "Ce que nous explorons\n\n\nLe choix de la mesure de plausibilité Densité de référence ou distance statistique : le scénario de rupture dépend du choix. Quel critère rend ce choix défendable devant un superviseur ?\n\n\nUn indicateur exploitable en modèle Comment construire une mesure de risque géopolitique dont la dynamique se transmet effectivement au risque de crédit, plutôt qu’un indice narratif décoratif ?\n\n\nVoisinage et robustesse Un point de rupture isolé est fragile. Comment caractériser son voisinage de manière à en faire un objet de gouvernance et non un artefact d’optimisation ?"
-  },
-  {
-    "objectID": "fr/index.html",
-    "href": "fr/index.html",
-    "title": "STORM",
-    "section": "",
-    "text": "Un collectif de recherche de Square Management\n\n\n\n\n\n\n\n\n  en bref\n  plus\n  approche\n\n\nNous développons des méthodes quantitatives pour mesurer, suivre et stresser le risque — là où il se cache : dans les queues de distribution.\n\n\nSTORM est le collectif de recherche quantitative de Square Management. Nous développons des méthodologies statistiques, économétriques et d’apprentissage automatique pour mesurer, suivre et stresser le risque.\nNos travaux portent aujourd’hui sur les risques financiers : crédit, validation de modèles, stress testing, risques climatique et géopolitique.\n\n\n01 — La moyenne n’est pas le risque. Nous propageons la distribution conditionnelle complète, ou nous partons du seuil de rupture.\n02 — Des briques, pas des remplacements. Chaque brique se branche sur le modèle interne déjà validé. Aucun re-développement.\n\n\n\nActualitéstout voir →\n\n2026Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosIntervention invitéeoct. 2026 · ESRB — Annual Stress Test Workshop, Banque nationale de Pologne, CracovieYoann Pull↗Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatiqueMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitiqueMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de créditInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nAucun article correspondant\n\nRechercheles axes →\n\nRisque de créditCalibration et validation des PD, IFRS 9, dégradation significative du risque, indicateurs d'alerte précoce, mesures de queue sous scénario.→Risque climatiqueDownscaling statistique des projections, scénarios CRD6 et NGFS, copules climatiques, scores de vulnérabilité, stress tests climatiques.→Risque géopolitiqueStress tests et reverse stress tests géopolitiques, propagation des chocs aux portefeuilles de crédit, indicateurs de risque géopolitique.→Méthodes et fondementsInférence séquentielle et anytime-valid, e-values, méthodes bayésiennes, quantiles et mesures de queue, explicabilité, équité, réseaux de Kolmogorov–Arnold.→\nAucun article correspondant"
+    "text": "Notes techniques\n\nNotes\n\nNotes techniques, focus méthodologiques et perspectives courtes. Chaque note se lit seule ; celles qui accompagnent un article de recherche le signalent.\n\n\n\n\n\nRisque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatique · Risque de crédit · Stress testing · QuantilesMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatique · Downscaling · Risque physiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitique · Stress testing · OptimisationMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de crédit · Stress testing · QuantilesInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nAucun article correspondant"
   },
   {
     "objectID": "fr/notes/atrisk-climat.html",
@@ -343,52 +98,136 @@
     "text": "Références\n\nAdrian, T., Boyarchenko, N. & Giannone, D. (2019). Vulnerable growth. American Economic Review, 109(4), 1263–1289.\nAydemir, R., Atik, Z. & Guloglu, B. (2024). Macro stress testing the credit risk of conventional and participation banks in Turkey: a nonparametric quantile regression approach. Eastern European Economics, 62(6), 727–761.\nAzzalini, A. & Capitanio, A. (2003). Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t-distribution. JRSS Series B, 65(2), 367–389.\nGordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. Journal of Financial Intermediation, 12(3), 199–232.\nSchechtman, R. & Gaglianone, W. P. (2012). Macro stress testing of credit risk focused on the tails. Journal of Financial Stability, 8(3), 174–192.\nVasicek, O. A. (1987). Probability of loss on loan portfolio. KMV."
   },
   {
-    "objectID": "fr/notes/index.html",
-    "href": "fr/notes/index.html",
-    "title": "Notes",
+    "objectID": "fr/index.html",
+    "href": "fr/index.html",
+    "title": "STORM",
     "section": "",
-    "text": "Notes techniques\n\nNotes\n\nNotes techniques, focus méthodologiques et perspectives courtes. Chaque note se lit seule ; celles qui accompagnent un article de recherche le signalent.\n\n\n\n\n\nRisque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatique · Risque de crédit · Stress testing · QuantilesMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatique · Downscaling · Risque physiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitique · Stress testing · OptimisationMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de crédit · Stress testing · QuantilesInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nAucun article correspondant"
+    "text": "Quantifier l’incertitude,éclairer la décision.\n\nSTORM est un collectif de recherche quantitative de Square Management. Nous développons des modèles et des méthodes pour mesurer, anticiper et piloter les risques.\n\nLire nos travauxNous contacter\n\nModéliserModèles de risque de crédit, climatiques et macro-financiersStresserStress tests, scénarios et reverse stress testsSurveillerValidation, calibration et suivi en continu des modèlesApprendreMachine learning interprétable et modèles de fondation\n\n\nNotre ADN : la méthode\nDes méthodes quantitatives, pensées pour l’application\n\nNous développons des méthodes, puis nous les mettons à l’épreuve sur des problèmes de risque réels.\n\n\n01Statistique et économétrieMesurer, tester et surveiller les modèles avec des garanties statistiques claires.→02Machine learning et intelligence artificielleDes modèles flexibles qui restent explicables, robustes et validables.→03Stress testing et scénariosPropager des scénarios, ou remonter du seuil de rupture au scénario le plus plausible.→\nAucun article correspondant\n\n\n\nUne méthode, en mouvement\n\nStress test de créditReverse stress testSurveillance en continu\nTransmettre la distribution, pas seulement la trajectoire moyenneLe même stress test, en propageant un seul scénario central — ou toute la distribution.\nPartir du seuil de capital, pas du scénarioLe reverse stress test inverse la question : quel est le scénario le plus plausible capable de franchir le seuil ?\nDétecter une dérive sans multiplier les fausses alertesLe même flux surveillé avec un test classique, puis avec une approche valide à tout instant.\n\n\n\nActualitéstout voir →\n\n2026Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosIntervention invitéeoct. 2026 · ESRB — Annual Stress Test Workshop, Banque nationale de Pologne, CracovieYoann Pull↗Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatiqueMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitiqueMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de créditInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nAucun article correspondant\n\nApplicationstoute l'expertise →\n\nRisque de créditDévelopper, valider et surveiller les modèles de crédit, et mesurer leur comportement sous stress.→Risques climatiquesIntégrer les risques physiques et de transition dans l'évaluation des risques financiers.→Risque géopolitique et macro-financierComprendre comment les chocs se propagent aux portefeuilles, et lesquels pourraient les mettre en difficulté.→\nAucun article correspondant"
   },
   {
-    "objectID": "fr/notes/stress-tests-credit.html",
-    "href": "fr/notes/stress-tests-credit.html",
-    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
+    "objectID": "fr/publications/index.html",
+    "href": "fr/publications/index.html",
+    "title": "Publications",
     "section": "",
-    "text": "En bref Les stress tests de crédit disposent déjà d’un pont entre scénario macro-financier et probabilités de défaut : les modèles satellites. Mais ce pont ne transmet, le plus souvent, qu’une trajectoire moyenne. Lorsque la PD est une fonction non linéaire d’un facteur de crédit incertain, cette transmission partielle écarte l’incertitude prédictive : elle sous-estime les niveaux projetés de PD — jusqu’à 8 % dans notre application — et ne dit rien de la queue de distribution, là où se décident provisions et capital."
+    "text": "Travaux académiques\n\nPublications\n\nDeux formats complémentaires : des articles de recherche, publiés ou en cours d’évaluation, et des notes techniques qui en restituent l’usage opérationnel.\n\n\n\n\nArticles de recherchenotes techniques ↓\n\nGeneralized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical RiskGuillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2608.04469Un cadre modulaire à deux blocs qui propage la distribution complète du facteur de crédit : il corrige la PD moyenne de l'incertitude prédictive et délivre en forme close un quantile de queue et un expected shortfall.SoumisarXivSSRNNote technique →A Bayesian Approach to Probability Default Model Calibration: Theoretical and Empirical Insights on the Jeffreys TestChristophe Hurlin, Yoann Pull · European Journal of Operational ResearchUne réévaluation bayésienne du test de Jeffreys utilisé par les superviseurs pour valider la calibration des probabilités de défaut, avec des résultats théoriques et des éléments empiriques sur les conditions dans lesquelles le test peut être cru.PubliéRevueSSRNThe at-Risk Approach: A New Tool for Stress Tests and OverlaysGuillaume Flament, Christophe Hurlin, Quentin Lajaunie · Annals of Operations Research · 361, 27–60Un cadre qui reconstruit la distribution conditionnelle complète du facteur de risque sous scénario, par régression quantile et lissage paramétrique, pour en dériver directement des mesures de queue.PubliéRevueNote technique →Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational FrameworkChristophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2601.03983Le reverse stress testing formulé comme une recherche de plausibilité sous contrainte : partir d'un seuil de capital et identifier la combinaison de chocs la plus crédible capable de le franchir.Document de travailarXivNote technique →\nAucun article correspondant\n\nNotes techniquesRSS\n\nRisque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatique · Risque de crédit · Stress testing · QuantilesMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatique · Downscaling · Risque physiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitique · Stress testing · OptimisationMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de crédit · Stress testing · QuantilesInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nAucun article correspondant"
   },
   {
-    "objectID": "fr/notes/stress-tests-credit.html#ce-que-la-trajectoire-moyenne-ne-transmet-pas",
-    "href": "fr/notes/stress-tests-credit.html#ce-que-la-trajectoire-moyenne-ne-transmet-pas",
-    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
-    "section": "1. Ce que la trajectoire moyenne ne transmet pas",
-    "text": "1. Ce que la trajectoire moyenne ne transmet pas\nLe stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s’élargit chaque année. L’architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.\nLa marge de progrès est dans la façon dont le scénario traverse cette chaîne. En pratique, il est propagé comme une trajectoire moyenne, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Utile, cette approche devient incomplète dès que la PD est non linéaire dans les conditions de crédit : la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. En écartant l’incertitude prédictive, l’approximation joue, par convexité, toujours dans le même sens — elle sous-estime le niveau des PD.\n\nPourquoi c’est important\n\nDes niveaux de PD sous-estimés. Le plug-in (PD évaluée sur la trajectoire moyenne) et la perfect foresight (chemin supposé connu) écartent tout ou partie de l’incertitude prédictive : dans notre application, les PD à trois ans sont sous-estimées de 7 à 8 %, un biais direct sur provisions et capital.\nPas de mesure de queue. Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.\nUne hypothèse peu documentée. La dispersion du facteur de crédit est écartée sans justification explicite, un point d’attention croissant pour la validation interne comme pour le superviseur."
+    "objectID": "fr/a-propos/index.html",
+    "href": "fr/a-propos/index.html",
+    "title": "À propos",
+    "section": "",
+    "text": "Le collectif\n\n\n\nSTORM est un collectif de recherche quantitative de Square Management : une équipe de chercheurs et de consultants qui développe des méthodes pour mesurer, anticiper et piloter les risques."
   },
   {
-    "objectID": "fr/notes/stress-tests-credit.html#corriger-le-niveau-révéler-la-queue-larchitecture",
-    "href": "fr/notes/stress-tests-credit.html#corriger-le-niveau-révéler-la-queue-larchitecture",
-    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
-    "section": "2. Corriger le niveau, révéler la queue : l’architecture",
-    "text": "2. Corriger le niveau, révéler la queue : l’architecture\nLe cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l’incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c’est là le point décisif en pratique : chaque bloc est remplaçable par le modèle interne déjà validé de l’établissement.\n\n1CHOCInnovationmacro-financière2VAR MACROPropage le choc dansl'économie3SATELLITEFacteur de créditsystémique Z4CARTOGRAPHIEMerton–Vasicek π(Z)PD moyennecorrigée de l'incertitude prédictivePD-at-Riskquantile de queueExpected shortfallmoyenne au-delà du seuilFigure 1. Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l'établissement.\nAucun article correspondant\n\nUne seule équation, déjà familière aux équipes de crédit. Le cœur du satellite est le modèle de Merton–Vasicek, socle du cadre IRB de Bâle, qui relie le facteur systémique Z_t à la PD conditionnelle du portefeuille :\n\\pi(Z_t) \\;=\\; \\Phi\\!\\left(\\frac{\\Phi^{-1}(p) - \\sqrt{\\rho}\\,Z_t}{\\sqrt{1-\\rho}}\\right)\noù \\Phi est la fonction de répartition de la loi normale, p la PD de long terme et \\rho la corrélation d’actifs. Rien de nouveau ici : c’est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.\n\nCe que le cadre apporte\n\nUne correction de niveau. La PD moyenne intègre la distribution complète du facteur de crédit au lieu de sa seule espérance — le biais de convexité disparaît.\nDeux mesures de queue, gratuitement. PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.\nModularité. Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l’établissement sans toucher au reste.\nGénéralité. Le stress test géopolitique sur le crédit américain n’est qu’une preuve de concept : la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels."
+    "objectID": "fr/a-propos/index.html#qui-nous-sommes",
+    "href": "fr/a-propos/index.html#qui-nous-sommes",
+    "title": "À propos",
+    "section": "Qui nous sommes",
+    "text": "Qui nous sommes\nSTORM réunit des chercheurs et des consultants aux profils complémentaires : statistique, économétrie, économie, data science et machine learning.\nCette double culture, académique et opérationnelle, est au cœur de notre façon de travailler : les questions viennent du terrain, les réponses passent par la méthode."
   },
   {
-    "objectID": "fr/notes/stress-tests-credit.html#mise-en-œuvre",
-    "href": "fr/notes/stress-tests-credit.html#mise-en-œuvre",
-    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
+    "objectID": "fr/a-propos/index.html#ce-que-nous-faisons",
+    "href": "fr/a-propos/index.html#ce-que-nous-faisons",
+    "title": "À propos",
+    "section": "Ce que nous faisons",
+    "text": "Ce que nous faisons\nNous développons des modèles et des méthodes quantitatives pour mesurer, anticiper et piloter les risques. Nos travaux portent aujourd’hui principalement sur les risques financiers, mais les méthodes sont pensées pour être transférables à d’autres domaines.\nIls prennent deux formes complémentaires : des articles de recherche, soumis à des revues à comité de lecture, et des notes techniques, qui en restituent l’usage opérationnel."
+  },
+  {
+    "objectID": "fr/a-propos/index.html#comment-nous-travaillons",
+    "href": "fr/a-propos/index.html#comment-nous-travaillons",
+    "title": "À propos",
+    "section": "Comment nous travaillons",
+    "text": "Comment nous travaillons\nLa méthode d’abord. Des outils rigoureux, aux garanties statistiques claires.\nPensé pour l’application. Chaque méthode est mise à l’épreuve sur des problèmes réels et s’intègre aux dispositifs existants.\nOuvert à la discussion. Nos travaux sont publiés, présentés en conférence et soumis à la critique de la communauté académique. Nos méthodes sont aussi présentées aux équipes opérationnelles, qui les mettent à l’épreuve de leur pratique."
+  },
+  {
+    "objectID": "fr/a-propos/index.html#contact",
+    "href": "fr/a-propos/index.html#contact",
+    "title": "À propos",
+    "section": "Travailler avec nous",
+    "text": "Travailler avec nous\nAvec les équipes de conseil de Square Management, nous accompagnons les institutions financières sur leurs enjeux de modélisation et de gestion des risques : de la conception des modèles à leur validation, des stress tests à la formation des équipes.\nUn projet, une question, une demande de présentation : écrivez-nous.\n\ncontact@storm.example.org\n\n\nSTORM fait partie de Square Management et du Square Research Center."
+  },
+  {
+    "objectID": "fr/notes/reverse-stress-test.html",
+    "href": "fr/notes/reverse-stress-test.html",
+    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
+    "section": "",
+    "text": "En bref Les stress tests classiques répondent à la question « combien coûterait ce scénario ? ». Le régulateur pose désormais aussi la question inverse : « quel scénario coûterait cela ? » L’exercice thématique 2026 de la BCE demande aux banques d’identifier les événements géopolitiques susceptibles d’entamer leur capital CET1 d’au moins 300 points de base. Cette note présente une architecture opérationnelle qui transforme un seuil de capital en scénario de rupture, en réutilisant les modèles internes existants."
+  },
+  {
+    "objectID": "fr/notes/reverse-stress-test.html#ce-que-les-scénarios-prescrits-ne-couvrent-pas",
+    "href": "fr/notes/reverse-stress-test.html#ce-que-les-scénarios-prescrits-ne-couvrent-pas",
+    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
+    "section": "1. Ce que les scénarios prescrits ne couvrent pas",
+    "text": "1. Ce que les scénarios prescrits ne couvrent pas\nLe stress testing standard part d’un scénario prescrit et en mesure l’impact. Le reverse stress testing part du résultat qui compte — un franchissement de seuil — et remonte vers le scénario qui l’expliquerait. Les deux sont complémentaires.\n\nPourquoi c’est important\n\nUn angle mort structurel. Un exercice forward n’évalue que les scénarios que l’on a pensé à écrire ; une combinaison de chocs dangereuse pour le profil propre de l’établissement peut ne figurer dans aucun catalogue. Le reverse stress testing va la chercher directement.\nUne attente prudentielle explicite. Les principes de stress testing du Comité de Bâle incluent le reverse stress testing, et l’exercice thématique 2026 de la BCE en fait une demande concrète, avec un seuil chiffré.\nUne exigence de plausibilité. Sans mesure de plausibilité explicite, un scénario de rupture reste un récit : impossible à comparer, difficile à challenger en validation."
+  },
+  {
+    "objectID": "fr/notes/reverse-stress-test.html#du-seuil-au-scénario-une-architecture-en-cinq-briques",
+    "href": "fr/notes/reverse-stress-test.html#du-seuil-au-scénario-une-architecture-en-cinq-briques",
+    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
+    "section": "2. Du seuil au scénario : une architecture en cinq briques",
+    "text": "2. Du seuil au scénario : une architecture en cinq briques\nLe seuil de capital entre par la gauche, un scénario documenté sort par la droite. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement.\n\n1SEUILRatio CET1 minimal R*2SCÉNARIOSMacro-financiers etgéopolitiques3TRANSMISSIONPD/LGD → pertes → RWA/CET14RUPTUREPoint s* le plus plausible5GOUVERNANCEVoisinage local etrobustesseFigure 1. Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement.\nAucun article correspondant\n\nUne seule équation à retenir. Le reverse stress test se formule comme une recherche de plausibilité sous contrainte :\ns^\\star \\in \\arg\\max_{s \\in \\mathcal{S}} f(s) \\quad \\text{sous contrainte} \\quad R(s) \\le R^\\star\noù f(s) mesure la plausibilité du scénario, R(s) le ratio de capital sous ce scénario et R^\\star le seuil critique. Le point de rupture s^\\star est la façon la plus crédible de franchir le seuil, pas la plus sévère : c’est précisément ce qui le rend discutable en comité et opposable en validation.\n\nCe que le cadre apporte\n\nAucun re-développement. Le moteur de crédit interne (Merton–Vasicek / ASRF, déjà validé) et les cartographies PD/LGD existantes sont réutilisés tels quels ; seule la couche de recherche s’ajoute.\nUne plausibilité explicite. Chaque scénario de rupture est assorti d’une mesure de crédibilité — densité de référence ou distance statistique — comparable d’un exercice à l’autre.\nUn objet de gouvernance. Un point de rupture documenté et son voisinage, plutôt qu’une bibliothèque de récits non hiérarchisés.\nGénéralisable. Géopolitique, climat, taux, secteur, marché : changer de famille de scénarios ne change ni l’architecture, ni la gouvernance."
+  },
+  {
+    "objectID": "fr/notes/reverse-stress-test.html#mise-en-œuvre",
+    "href": "fr/notes/reverse-stress-test.html#mise-en-œuvre",
+    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
     "section": "3. Mise en œuvre",
-    "text": "3. Mise en œuvre\n\nConserver le satellite de crédit interne. Le cadre se branche sur le modèle déjà validé et n’en modifie ni la spécification ni la calibration.\nBrancher un bloc macro-financier dynamique en amont. Un VAR bayésien estimé sur l’historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.\nProduire les trois sorties pour chaque scénario du catalogue. PD moyenne corrigée, PD-at-Risk et expected shortfall, pour chaque horizon de projection.\n\n\nÀ retenir pour chaque équipe\n\nModélisation. Le biais de convexité est systématique et signé : la trajectoire moyenne sous-estime toujours la PD. Le corriger ne coûte rien de plus qu’un changement d’objet propagé.\nValidation. L’hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.\nPilotage. Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement."
+    "text": "3. Mise en œuvre\n\nFixer la condition de défaillance. Un seuil de capital explicite, par exemple un ratio CET1 minimal, ou une perte maximale tolérée.\nDécrire l’espace de scénarios et sa plausibilité. Un petit nombre de facteurs de risque et une densité de référence suffisent pour rendre la recherche interprétable.\nRéutiliser la chaîne de transmission interne. Cartographies PD/LGD, pertes, RWA et capital : le dispositif existant fournit R(s) sans modification.\n\n\nÀ retenir pour chaque équipe\n\nModélisation. La plausibilité doit être définie avant la recherche, pas après : c’est elle qui distingue un scénario de rupture d’un récit sévère.\nValidation. Le point de rupture et son voisinage sont documentés et reproductibles, donc opposables.\nPilotage. L’exercice répond directement à la demande prudentielle 2026 sans nouvelle infrastructure de modèles."
   },
   {
-    "objectID": "fr/notes/stress-tests-credit.html#article-de-recherche-associé",
-    "href": "fr/notes/stress-tests-credit.html#article-de-recherche-associé",
-    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
+    "objectID": "fr/notes/reverse-stress-test.html#article-de-recherche-associé",
+    "href": "fr/notes/reverse-stress-test.html#article-de-recherche-associé",
+    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
     "section": "Article de recherche associé",
-    "text": "Article de recherche associé\nFlament, G., Hurlin, C., Lajaunie, Q. & Pull, Y. (2026). Generalized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical Risk. arXiv:2608.04469 · SSRN\n\nDiscuter de ce travail ? Une question, une application à votre portefeuille ou une demande de présentation : écrivez au collectif →\n\n\nCette note s’appuie sur les travaux conduits au sein du collectif STORM — Scenario-based Testing & Optimization in Risk Modeling — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans."
+    "text": "Article de recherche associé\nHurlin, C., Lajaunie, Q. & Pull, Y. (2026). Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational Framework. arXiv:2601.03983\n\nDiscuter de ce travail ? Une question, une application à votre portefeuille ou une demande de présentation : écrivez au collectif →\n\n\nCette note s’appuie sur les travaux conduits au sein du collectif STORM — Scenario-based Testing & Optimization in Risk Modeling — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans."
   },
   {
-    "objectID": "fr/notes/stress-tests-credit.html#références",
-    "href": "fr/notes/stress-tests-credit.html#références",
-    "title": "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne",
+    "objectID": "fr/notes/reverse-stress-test.html#références",
+    "href": "fr/notes/reverse-stress-test.html#références",
+    "title": "Reverse stress testing : partir du seuil de capital, pas du scénario",
     "section": "Références",
-    "text": "Références\n\nAdrian, T., Boyarchenko, N. & Giannone, D. (2019). Vulnerable growth. American Economic Review, 109(4), 1263–1289.\nCaldara, D. & Iacoviello, M. (2022). Measuring geopolitical risk. American Economic Review, 112(4), 1194–1225.\nGordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. Journal of Financial Intermediation, 12(3), 199–232.\nMerton, R. C. (1974). On the pricing of corporate debt: The risk structure of interest rates. The Journal of Finance, 29(2), 449–470.\nVasicek, O. (2002). The distribution of loan portfolio value. Risk, 15(12), 160–162.\nWilson, T. C. (1997). Portfolio credit risk. RISK, 10(10), 56–61."
+    "text": "Références\n\nBCBS (2009). Principles for sound stress testing practices and supervision. BCBS155, Comité de Bâle.\nBCBS (2018). Stress testing principles. D450, Comité de Bâle.\nECB (2025). ECB to assess banks’ stress testing capabilities to capture geopolitical risk. Communiqué, supervision bancaire, 12 décembre 2025.\nGlasserman, P., Kang, C. & Kang, W. (2015). Stress scenario selection by empirical likelihood. Quantitative Finance, 15(1), 25–41.\nGordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. Journal of Financial Intermediation, 12(3), 199–232.\nGrundke, P. (2011). Reverse stress tests with bottom-up approaches. Journal of Risk Model Validation, 5(3), 71–90.\nKopeliovich, Y., Novosyolov, A., Satchkov, D. & Schachter, B. (2015). Robust risk estimation and hedging: A reverse stress testing approach. The Journal of Derivatives, 22(4), 10–25.\nVasicek, O. (2002). The distribution of loan portfolio value. Risk, 15(12), 160–162."
+  },
+  {
+    "objectID": "fr/notes/downscaling.html",
+    "href": "fr/notes/downscaling.html",
+    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "section": "",
+    "text": "En bref L’évaluation prospective des risques physiques s’appuie sur les projections climatiques produites par la communauté scientifique internationale, dont la génération la plus récente est le CMIP6. Ces projections sont produites par des modèles globaux conçus pour l’étude du système climatique à l’échelle planétaire : leurs sorties brutes ne peuvent pas être utilisées directement pour évaluer un aléa sur des expositions localisées. Les méthodes de downscaling statistique distribution-wise y répondent en alignant les lois marginales simulées sur celles d’une réanalyse de référence."
+  },
+  {
+    "objectID": "fr/notes/downscaling.html#pourquoi-les-sorties-brutes-ne-suffisent-pas",
+    "href": "fr/notes/downscaling.html#pourquoi-les-sorties-brutes-ne-suffisent-pas",
+    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "section": "1. Pourquoi les sorties brutes ne suffisent pas",
+    "text": "1. Pourquoi les sorties brutes ne suffisent pas\nL’intensification des aléas physiques se transmet aux bilans financiers par une chaîne documentée : l’aléa frappe des expositions localisées — collatéral immobilier, sites industriels, contreparties agricoles — dont la vulnérabilité détermine un dommage physique qui se traduit en pertes financières, hausse du risque de crédit pour les banques et alourdissement de la sinistralité pour les assureurs.\n\nPourquoi c’est important\n\nLa résolution spatiale. La maille des modèles globaux dépasse fréquemment la centaine de kilomètres : deux sites distants de plusieurs dizaines de kilomètres partagent la même valeur simulée. L’interpolation lisse les valeurs sans créer d’information locale nouvelle.\nLe biais de distribution. Les modèles CMIP sous-estiment l’ampleur et la fréquence des événements extrêmes — précisément ceux qui concentrent les impacts économiques et financiers.\nL’agrégation multi-modèles ne suffit pas. Un ensemble de modèles rend compte de leur divergence, non de ce qu’ils partagent : un biais commun se retrouve aussi bien dans la médiane que dans les bornes de l’enveloppe d’incertitude.\nSouveraineté et auditabilité. Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d’auditabilité qui s’imposent aux établissements."
+  },
+  {
+    "objectID": "fr/notes/downscaling.html#les-méthodes-distribution-wise-principe-et-variantes",
+    "href": "fr/notes/downscaling.html#les-méthodes-distribution-wise-principe-et-variantes",
+    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "section": "2. Les méthodes distribution-wise : principe et variantes",
+    "text": "2. Les méthodes distribution-wise : principe et variantes\nLes approches Model Output Statistics établissent une relation statistique directe entre les sorties brutes d’un modèle climatique et une référence locale — typiquement une réanalyse telle qu’ERA5-Land, de résolution native de 9 km. La relation, apprise sur la période historique, est ensuite appliquée aux projections du même modèle.\n\n1REGRIDDINGAlignement spatial des grilles2APPRENTISSAGEMéthodes candidates surl'historique3SÉLECTIONÉchantillon de test indépendant4APPLICATIONRecalibrage puis projectionsfuturesFigure 1. La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d'ajustement : la préservation du signal de changement prime dans un exercice prospectif.\nAucun article correspondant\n\n\nCe que la correction apporte\n\nUne loi marginale réaliste. La distribution corrigée retrouve la structure bimodale — régimes hivernal et estival — que les sorties brutes aplatissent.\nDes extrêmes exploitables. Les quantiles hauts et bas cessent d’être systématiquement sous-estimés, ce qui conditionne toute mesure de risque physique.\nUn coût de mise en œuvre modeste. Aucune simulation climatique à fine échelle n’est requise.\nUne maîtrise interne. La méthode est explicite, documentable et justifiable auprès du superviseur."
+  },
+  {
+    "objectID": "fr/notes/downscaling.html#mise-en-œuvre",
+    "href": "fr/notes/downscaling.html#mise-en-œuvre",
+    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "section": "3. Mise en œuvre",
+    "text": "3. Mise en œuvre\n\nAligner les grilles. Regridding des sorties du modèle sur la grille de la réanalyse de référence.\nApprendre et sélectionner. Estimer plusieurs méthodes candidates sur un échantillon d’apprentissage, puis les départager sur un échantillon de test indépendant.\nRecalibrer et projeter. Réestimer sur l’intégralité de l’historique, puis appliquer aux scénarios futurs.\n\n\nÀ retenir pour chaque équipe\n\nModélisation. Deux critères, pas un : ajustement sur l’historique et préservation du signal de changement aux quantiles extrêmes.\nValidation. La méthode retenue doit être justifiée sur le second critère, qui n’apparaît dans aucune métrique d’ajustement standard.\nPilotage. Maîtriser la correction en interne relève autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif.\n\n\n\nDiscuter de ce travail ? Une question, une application à votre portefeuille ou une demande de présentation : écrivez au collectif →\n\n\nCette note s’appuie sur les travaux conduits au sein du collectif STORM — Scenario-based Testing & Optimization in Risk Modeling — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans."
+  },
+  {
+    "objectID": "fr/notes/downscaling.html#références",
+    "href": "fr/notes/downscaling.html#références",
+    "title": "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique",
+    "section": "Références",
+    "text": "Références\n\nCaisse Centrale de Réassurance (2023). Conséquences du changement climatique sur le coût des catastrophes naturelles en France à horizon 2050.\nLenderink, G., Buishand, A. & van Deursen, W. (2007). Estimates of future discharges of the river Rhine using two scenario methodologies. Hydrology and Earth System Sciences, 11(3), 1145–1159.\nMaraun, D. & Widmann, M. (2018). Statistical Downscaling and Bias Correction for Climate Research. Cambridge University Press.\nMichelangeli, P.-A., Vrac, M. & Loukos, H. (2009). Probabilistic downscaling approaches. Geophysical Research Letters, 36(11).\nVautard, R. et al. (2020). Human contribution to the record-breaking June and July 2019 heatwaves in Western Europe. Environmental Research Letters, 15(9), 094077."
+  },
+  {
+    "objectID": "fr/actualites/index.html",
+    "href": "fr/actualites/index.html",
+    "title": "Actualités",
+    "section": "",
+    "text": "Le fil du collectif\n\nActualités\n\nNotes techniques, publications et interventions du collectif.\n\n\n\n\n\n2026Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosIntervention invitéeoct. 2026 · ESRB — Annual Stress Test Workshop, Banque nationale de Pologne, CracovieYoann Pull↗Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stressNotesept. 2026 · Risque climatiqueMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physiqueNotesept. 2026 · Risque climatiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénarioNotesept. 2026 · Risque géopolitiqueMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenneNotesept. 2026 · Risque de créditInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→Séjour de recherche au département de statistique de Stanford UniversitySéjour de recherchesept. 2026 · Inférence séquentielle et anytime-valid, avec Aaditya RamdasYoann Pull↗Generalized Impulse Responses of Portfolio Default ProbabilitiesArticle soumisaoût 2026 · arXiv:2608.04469Guillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull↗18th Annual SoFiE ConferenceConférencejuin 2026 · Society for Financial Econometrics, University of MacauYoann Pull↗A Bayesian Approach to Probability Default Model CalibrationPubliéjuin 2026 · European Journal of Operational ResearchChristophe Hurlin, Yoann Pull↗19e Financial Risks International ForumConférencemars 2026 · Institut Louis Bachelier, ParisYoann Pull↗The at-Risk Approach: A New Tool for Stress Tests and OverlaysPubliémars 2026 · Annals of Operations ResearchGuillaume Flament, Christophe Hurlin, Quentin Lajaunie↗Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosDocument de travailjanv. 2026 · arXiv:2601.03983Christophe Hurlin, Quentin Lajaunie, Yoann Pull↗\nAucun article correspondant\n\n\nToutes les notes techniques · Publications · RSS"
   }
 ]

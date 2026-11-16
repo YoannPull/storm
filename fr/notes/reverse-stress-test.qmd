@@ -73,6 +73,10 @@ où $f(s)$ mesure la plausibilité du scénario, $R(s)$ le ratio de capital sous
 
 :::
 
+::: {.storm-anim data-anim="rst"}
+
+:::
+
 ## 3. Mise en œuvre
 
 1. **Fixer la condition de défaillance.** Un seuil de capital explicite, par exemple un ratio CET1 minimal, ou une perte maximale tolérée.

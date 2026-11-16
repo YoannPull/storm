@@ -54,8 +54,9 @@
   note: "notes/atrisk-climat.html"
   note_titre_fr: "Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress"
   note_titre_en: "Credit risk and climate scenarios: capturing the full distributional information under stress"
-  path: ""
-  liens: {}
+  path: "https://link.springer.com/article/10.1007/s10479-025-06789-0"
+  liens:
+    journal: "https://link.springer.com/article/10.1007/s10479-025-06789-0"
 
 - title: "Generalized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical Risk"
   auteurs: ["Guillaume Flament", "Christophe Hurlin", "Quentin Lajaunie", "Yoann Pull"]

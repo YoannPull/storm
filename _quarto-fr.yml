@@ -11,8 +11,8 @@ website:
   navbar:
     logo-href: /fr/index.html
     left:
-      - text: "Recherche"
-        href: /fr/recherche/index.html
+      - text: "Expertise"
+        href: /fr/expertise/index.html
       - text: "Actualités"
         href: /fr/actualites/index.html
       - text: "Publications"
@@ -22,6 +22,8 @@ website:
     right:
       - text: "EN"
         href: /en/index.html
+      - text: "Nous contacter"
+        href: /fr/a-propos/index.html#contact
   page-footer:
     left: "**STORM** — Quantitative Risk Collective · un collectif de Square Management"
     right:

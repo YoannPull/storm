@@ -1,6 +1,6 @@
 ---
 pagetitle: "About — STORM"
-description: "What STORM is, how the collective works, and how to reach it."
+description: "STORM, a team of researchers and consultants in quantitative research within Square Management."
 page-layout: full
 ---
 
@@ -12,7 +12,7 @@ page-layout: full
 
 ::: {.position-line}
 
-STORM — *Scenario-based Testing & Optimization in Risk Modeling* — is the quantitative research collective of **Square Management**.
+STORM is a quantitative research collective of **Square Management**: a team of researchers and consultants developing methods to measure, anticipate and manage risk.
 
 :::
 
@@ -20,23 +20,31 @@ STORM — *Scenario-based Testing & Optimization in Risk Modeling* — is the qu
 
 :::: {.theme-body}
 
+## Who we are
+
+STORM brings together researchers and consultants with complementary backgrounds: statistics, econometrics, economics, data science and machine learning.
+
+This dual culture, academic and operational, is at the heart of how we work: the questions come from practice, the answers go through method.
+
 ## What we do
 
-We develop, study and apply statistical, econometric and machine-learning methodologies to problems of decision under uncertainty. Much of our current work originates in financial risk management — credit risk, model validation and monitoring, stress testing, climate and geopolitical risk — but the aim is to produce methods that transfer to other domains.
+We develop quantitative models and methods to measure, anticipate and manage risk. Our current work focuses mainly on financial risk, but the methods are designed to transfer to other fields.
 
-The collective turns quantitative research into concrete methodological building blocks for institutions' risk teams. This takes two complementary forms: **research papers**, submitted to and published in peer-reviewed journals, and **technical notes**, which carry the same work into practice for modelling, validation and steering teams.
+It takes two complementary forms: **research papers**, submitted to peer-reviewed journals, and **technical notes**, which carry the work into practice.
 
 ## How we work
 
-Two principles run through everything we do.
+**Method first.** Rigorous tools with clear statistical guarantees.
 
-**The mean is not the risk.** Standard practice propagates a scenario along its central path. But risk is not read in the mean: it concentrates in the tails. We propagate the full conditional distribution, or we invert the problem and start from the breaking threshold.
+**Built for application.** Every method is put to the test on real problems and fits into existing set-ups.
 
-**Building blocks, not replacements.** Our frameworks are modular by construction. Each block is independent and replaceable by the institution's already-validated internal model. No redevelopment is asked for: the existing set-up produces more, at the same computational cost.
+**Open to discussion.** Our work is published, presented at conferences and open to the scrutiny of the academic community. Our methods are also presented to operational teams, who test them against their own practice.
 
-## Get in touch {#contact}
+## Work with us {#contact}
 
-For questions about our work, research collaboration or a request for a presentation, write to the collective.
+Together with Square Management's consulting teams, we support financial institutions on their risk modelling and risk management challenges: from model design to validation, from stress testing to team training.
+
+A project, a question, a presentation request: write to us.
 
 ::: {.linkrow}
 
@@ -51,4 +59,3 @@ STORM is part of Square Management and the Square Research Center.
 :::
 
 ::::
-

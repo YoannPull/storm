@@ -56,27 +56,11 @@ Le libellé (« Intervention », « Talk »…) se choisit tout seul selon `type
 `etiquette` / `etiquette_en` le remplacent si besoin (« Séminaire »…).
 L'accueil montre les cinq plus récentes.
 
-### Ajouter un projet
+### Projets internes
 
-`data/projets.yml`. Le projet apparaît automatiquement sur la page de son axe.
-
-```yaml
-- title: "Nom du projet"
-  title_en: "Project name"
-  axe: "credit"                     # credit | climat | geopolitique | methodes
-  statut: "en-cours"                # a-demarrer | en-cours | relecture | termine
-  statut_fr: "En cours"
-  statut_en: "In progress"
-  horizon: "T3"                     # ou ""
-  resume_fr: "Une ou deux phrases."
-  resume_en: "One or two sentences."
-  equipe: ["Quentin Lajaunie", "Yoann Pull"]
-  livrables: ["note", "article"]
-  note: "notes/ma-note.html"        # ou "" s'il n'y a pas de note
-```
-
-`statut` pilote la couleur de la pastille ; `statut_fr` / `statut_en` sont les
-mots affichés. Changer d'axe = changer `axe`, rien d'autre.
+`data/projets.yml` n'est plus affiché sur le site (choix de la refonte : le site
+reste général, les articles et les notes portent le détail). Le fichier est
+conservé pour mémoire.
 
 ### Ajouter une publication
 
@@ -193,12 +177,16 @@ positions, flèches, numéros, largeurs. Il n'y a jamais de SVG à écrire.
 
 De 2 à 6 étapes passent bien. Sans `sorties`, le schéma est plus compact.
 
-### Ajouter un axe de recherche
+### Modifier l'expertise (méthodes et applications)
 
-1. Ajouter un bloc dans `data/axes.yml`.
-2. Créer `fr/recherche/<slug>.qmd` et `en/research/<slug>.qmd` — le plus simple
-   est de copier une page d'axe existante et de remplacer `axe: "credit"` par le
-   nouveau nom dans les deux blocs `listing`.
+- **Page Expertise** : `fr/expertise/index.qmd` et `en/expertise/index.qmd`.
+  Chaque méthode et chaque application y est un bloc court (titre + une
+  phrase), avec un identifiant (`id="credit"`…) qui sert de lien.
+- **Cartes et lignes de l'accueil** : `data/axes.yml` (`groupe: "methode"` ou
+  `"application"`). Le champ `path` pointe vers la section de la page Expertise.
+
+Les anciennes pages détaillées (une par axe) sont rangées dans
+`_ancien/recherche-fr/` et `_ancien/research-en/`.
 
 ---
 
@@ -206,42 +194,57 @@ De 2 à 6 étapes passent bien. Sans `sorties`, le schéma est plus compact.
 
 ### Couleurs et typographie
 
-`assets/css/storm.scss`, bloc `:root` en haut du fichier. La palette vient des
-notes techniques du collectif ; l'encre du logo est `#0a2d5a`.
+`assets/css/storm.scss`, bloc `:root` en haut du fichier. Le site est **noir**
+(refonte 2026), avec un seul accent : le bleu STORM, éclairci pour rester lisible
+sur noir. Le bas du fichier (« THÈME NOIR — ajustements ») contient les réglages
+propres au thème noir et les styles des animations.
 
 | Variable | Valeur | Rôle |
 |---|---|---|
-| `--ink` | `#0a2d5a` | logo, titres |
-| `--primary` | `#124489` | liens, filets, traits des schémas |
-| `--primary-soft` | `#5a7daa` | texte secondaire |
-| `--tint` | `#e9eff6` | fond des encadrés |
-| `--signal` | `#bd8c42` | accent chaud — queues de distribution (aussi dans le fond animé) |
-| `--bg` / `--surface` | `#f7f8fa` / `#ffffff` | fonds (`--bg` doit rester égal à `$body-bg`) |
-| `--chart-1…4` | | séries de données |
+| `--ink` | `#ffffff` | titres |
+| `--body` | `#c7ccd3` | texte courant |
+| `--primary` | `#7aa9ff` | liens, petits libellés |
+| `--signal` | `#4d8dff` | bleu STORM — queues, extrêmes, ruptures |
+| `--tint` | `#0b1424` | fond des encadrés |
+| `--bg` / `--surface` | `#000000` / `#0a0b0c` | fonds (`--bg` doit rester égal à `$body-bg`) |
 
-Changer une valeur ici la change partout, **y compris dans les schémas**. Le site
-est volontairement toujours clair (pas de mode sombre) : le fond animé est
-dessiné pour un fond clair.
+Changer une valeur ici la change partout, y compris dans les schémas.
 
-### Fond animé
+### Animations
 
-`partials/after-body.html`, inséré sur toutes les pages. Des densités en
-perspective dérivent lentement ; la zone au-delà du quantile à 95 % est ombrée
-en or, avec un trait au quantile. Toutes les ~18 s, un épisode de stress balaie
-la page : les densités s'élargissent, le quantile s'éloigne, la queue grossit.
-Réglages en tête du script : `N` (nombre de lignes), `PERIOD` (durée du cycle),
-`alpha` (intensité des traits), `GOLD` (couleur des queues). Le fond reste
-immobile pour les visiteurs qui ont désactivé les animations.
+Tout est dans `partials/after-body.html`, inséré sur toutes les pages.
 
-`--signal` ne doit jamais servir à du texte : son contraste sur blanc est
-insuffisant pour l'accessibilité. Filets, pastilles et marques de graphique
-seulement.
+- **Horizon de densité** (accueil) : une grande densité en poussière derrière
+  le titre, la queue au-delà du quantile à 95 % en bleu. Elle ne s'affiche que
+  sur une page qui contient un bloc `.home-hero`.
+- **Animations de méthodes** : à placer dans n'importe quelle page avec
+
+  ```markdown
+  ::: {.storm-anim data-anim="credit"}
+
+  :::
+  ```
+
+  `credit` = stress test de crédit (trois onglets), `rst` = reverse stress test
+  (seuil → exploration → point de rupture → voisinage → sélection),
+  `jeffreys` = test de calibration de Jeffreys, `eprocess` = surveillance en
+  continu d'un modèle (e-processus). Les textes suivent la langue de la page.
+  Les valeurs sont illustratives.
+- Elles sont actuellement sur l'accueil et sur la page Expertise (sections
+  « Stress testing » et « Validation et suivi des modèles », chacune avec son
+  sélecteur), et dans les notes « Stress tests de crédit » et « Reverse stress
+  testing ». Chacune démarre quand elle entre à l'écran.
+- Un sélecteur (`.anim-switch`) pilote les animations de son bloc
+  `.anim-group`.
+
+Toutes les animations restent immobiles pour les visiteurs qui ont désactivé
+les animations dans leur système.
 
 ### Forme des fiches
 
 `templates/fr/` et `templates/en/` — un fichier par type de fiche :
-`actualite`, `projet`, `publication`, `axe`, `note`, `schema`. Tous produisent
-des « lignes » (`.item`) : titre, méta, flèche.
+`actualite`, `projet`, `publication`, `axe`, `note`, `schema`. Ils produisent
+des « lignes » (`.item`) ; `axe` produit des cartes pour les méthodes.
 
 Deux règles à respecter :
 

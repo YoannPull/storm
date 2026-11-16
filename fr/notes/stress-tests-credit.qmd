@@ -75,6 +75,10 @@ où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long 
 
 :::
 
+::: {.storm-anim data-anim="credit"}
+
+:::
+
 ## 3. Mise en œuvre
 
 1. **Conserver le satellite de crédit interne.** Le cadre se branche sur le modèle déjà validé et n'en modifie ni la spécification ni la calibration.

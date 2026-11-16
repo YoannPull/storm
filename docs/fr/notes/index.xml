@@ -255,6 +255,9 @@
 <li><strong>Généralisable.</strong> Géopolitique, climat, taux, secteur, marché : changer de famille de scénarios ne change ni l’architecture, ni la gouvernance.</li>
 </ul>
 </div>
+<div class="storm-anim" data-anim="rst">
+
+</div>
 </section>
 <section id="mise-en-œuvre" class="level2">
 <h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
@@ -357,6 +360,9 @@
 <li><strong>Modularité.</strong> Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l’établissement sans toucher au reste.</li>
 <li><strong>Généralité.</strong> Le stress test géopolitique sur le crédit américain n’est qu’une preuve de concept : la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels.</li>
 </ul>
+</div>
+<div class="storm-anim" data-anim="credit">
+
 </div>
 </section>
 <section id="mise-en-œuvre" class="level2">

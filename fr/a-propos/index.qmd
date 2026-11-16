@@ -1,6 +1,6 @@
 ---
 pagetitle: "À propos — STORM"
-description: "Ce qu'est STORM, comment le collectif travaille, et comment le contacter."
+description: "STORM, une équipe de chercheurs et de consultants en recherche quantitative au sein de Square Management."
 page-layout: full
 ---
 
@@ -12,7 +12,7 @@ page-layout: full
 
 ::: {.position-line}
 
-STORM — *Scenario-based Testing & Optimization in Risk Modeling* — est le collectif de recherche quantitative de **Square Management**.
+STORM est un collectif de recherche quantitative de **Square Management** : une équipe de chercheurs et de consultants qui développe des méthodes pour mesurer, anticiper et piloter les risques.
 
 :::
 
@@ -20,23 +20,31 @@ STORM — *Scenario-based Testing & Optimization in Risk Modeling* — est le co
 
 :::: {.theme-body}
 
+## Qui nous sommes
+
+STORM réunit des chercheurs et des consultants aux profils complémentaires : statistique, économétrie, économie, data science et machine learning.
+
+Cette double culture, académique et opérationnelle, est au cœur de notre façon de travailler : les questions viennent du terrain, les réponses passent par la méthode.
+
 ## Ce que nous faisons
 
-Nous développons, étudions et appliquons des méthodologies statistiques, économétriques et d'apprentissage automatique à des problèmes de décision sous incertitude. Une grande part de nos travaux actuels trouve son origine dans la gestion des risques financiers — risque de crédit, validation et monitoring de modèles, stress testing, risques climatique et géopolitique — mais l'objectif est de produire des méthodes transférables à d'autres domaines.
+Nous développons des modèles et des méthodes quantitatives pour mesurer, anticiper et piloter les risques. Nos travaux portent aujourd'hui principalement sur les risques financiers, mais les méthodes sont pensées pour être transférables à d'autres domaines.
 
-Le collectif transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Cela se traduit par deux formats complémentaires : des **articles de recherche**, soumis et publiés dans des revues à comité de lecture, et des **notes techniques**, qui en restituent l'usage opérationnel pour les équipes de modélisation, de validation et de pilotage.
+Ils prennent deux formes complémentaires : des **articles de recherche**, soumis à des revues à comité de lecture, et des **notes techniques**, qui en restituent l'usage opérationnel.
 
 ## Comment nous travaillons
 
-Deux principes traversent l'ensemble de nos travaux.
+**La méthode d'abord.** Des outils rigoureux, aux garanties statistiques claires.
 
-**La moyenne n'est pas le risque.** La pratique standard propage un scénario le long de sa trajectoire centrale. Or le risque ne se lit pas dans la moyenne : il se concentre dans les queues. Nous propageons la distribution conditionnelle complète — ou nous inversons le problème et partons du seuil de rupture.
+**Pensé pour l'application.** Chaque méthode est mise à l'épreuve sur des problèmes réels et s'intègre aux dispositifs existants.
 
-**Des briques, pas des remplacements.** Nos cadres sont modulaires par construction. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement. Aucun re-développement n'est demandé : le dispositif existant produit davantage, au même coût de calcul.
+**Ouvert à la discussion.** Nos travaux sont publiés, présentés en conférence et soumis à la critique de la communauté académique. Nos méthodes sont aussi présentées aux équipes opérationnelles, qui les mettent à l'épreuve de leur pratique.
 
-## Nous écrire {#contact}
+## Travailler avec nous {#contact}
 
-Pour toute question sur nos travaux, une collaboration de recherche ou une demande de présentation, écrivez au collectif.
+Avec les équipes de conseil de Square Management, nous accompagnons les institutions financières sur leurs enjeux de modélisation et de gestion des risques : de la conception des modèles à leur validation, des stress tests à la formation des équipes.
+
+Un projet, une question, une demande de présentation : écrivez-nous.
 
 ::: {.linkrow}
 
@@ -51,4 +59,3 @@ STORM fait partie de Square Management et du Square Research Center.
 :::
 
 ::::
-

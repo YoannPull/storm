@@ -30,10 +30,10 @@ data/           actualités, projets, publications, axes, schémas ← le conten
 templates/      gabarits fr/ et en/ — la forme des fiches
 assets/
   brand/        logos STORM (Square Research Center retiré)
-  css/          storm.scss (système de design) + fonts.css
+  css/          storm.scss (système de design, thème noir) + fonts.css
   fonts/        Source Serif 4, Source Sans 3, IBM Plex Mono
   katex/        KaTeX auto-hébergé
-partials/       after-body.html — fond animé (distributions en mouvement)
+partials/       after-body.html — animations (horizon de l'accueil, stress test, reverse stress test)
 fr/  en/        pages rédigées
 _quarto.yml     réglages communs
 _quarto-fr.yml  navigation et langue — édition française

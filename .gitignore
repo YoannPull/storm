@@ -9,3 +9,6 @@ _site-en/
 
 # Anciennes pages (équipe, gabarits) : gardées en local, pas publiées
 _ancien/
+
+# Fichier de diagnostic laissé par Quarto en cas d’erreur SCSS
+_quarto_internal_scss_error.scss

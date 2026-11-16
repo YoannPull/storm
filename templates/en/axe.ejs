@@ -1,15 +1,25 @@
 <%
+/* Recherche : les méthodes sortent en cartes numérotées, les applications en
+   lignes. Une même liste peut mélanger les deux (accueil, page Recherche). */
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-function ext(h){ return /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : ""; }
-function arrow(h){ return /^https?:/.test(h) ? "↗" : "→"; }
-let out = '<div class="rows">';
-for (const it of items) {
-  out += '<a class="item" href="/en/' + esc(it.path_en || it.path) + '">';
-  out += '<span class="t">' + esc(it.title_en || it.title) + '</span>';
-  out += '<span class="d">' + esc(it.resume_en) + '</span>';
-  out += '<span class="go" aria-hidden="true">→</span></a>';
+const meth = items.filter(it => it.groupe === "methode"), apps = items.filter(it => it.groupe !== "methode");
+let out = "";
+if (meth.length) {
+  out += '<div class="methods">';
+  meth.forEach((it, i) => {
+    out += '<a class="mcard" href="/en/' + esc(it.path_en || it.path) + '"><span class="n">0' + (i + 1) + '</span>';
+    out += '<b>' + esc(it.title_en || it.title) + '</b><span class="x">' + esc(it.resume_en) + '</span><span class="go" aria-hidden="true">→</span></a>';
+  });
+  out += '</div>';
 }
-out += '</div>';
+if (apps.length) {
+  out += '<div class="rows">';
+  for (const it of apps) {
+    out += '<a class="item" href="/en/' + esc(it.path_en || it.path) + '"><span class="t">' + esc(it.title_en || it.title) + '</span>';
+    out += '<span class="d">' + esc(it.resume_en) + '</span><span class="go" aria-hidden="true">→</span></a>';
+  }
+  out += '</div>';
+}
 %>```{=html}
 <%= out %>
 ```

@@ -34,18 +34,20 @@ website:
   navbar:
     background: transparent
     pinned: true
-    # Menu complet dès 576 px de large (hamburger seulement sur téléphone)
-    collapse-below: sm
+    # Menu complet dès 768 px de large (bouton menu en dessous)
+    collapse-below: md
     logo: assets/brand/logo-storm-mark-navy.svg
     logo-alt: "STORM — Quantitative Risk Collective"
-    title: false
+    title: "STORM"
   page-footer:
     background: transparent
 
 format:
   html:
     theme: [cosmo, assets/css/storm.scss]
-    css: assets/css/fonts.css
+    css:
+      - assets/css/fonts.css
+      - assets/css/storm-dark.css
     # Fond animé (distributions en mouvement) + script des boutons de l'accueil
     include-after-body: partials/after-body.html
     toc: false

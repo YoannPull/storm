@@ -1,43 +1,75 @@
 # =============================================================================
-#  AXES DE RECHERCHE — les cartes affichées sur l'accueil et sur /recherche
+#  EXPERTISE — méthodes et applications (cartes et lignes de l'accueil)
 # =============================================================================
-#  Pour ajouter un axe : copier un bloc, puis créer la page correspondante
-#  fr/recherche/<slug>.qmd et en/research/<slug>.qmd.
-#  L'ordre du fichier est l'ordre d'affichage.
+#  Deux groupes, affichés sur l'accueil :
+#    groupe: "methode"      ce que nous développons (notre ADN)
+#    groupe: "application"  les domaines où nous les mettons à l'épreuve
+#  Chaque entrée renvoie vers sa section de la page Expertise
+#  (fr/expertise/index.qmd et en/expertise/index.qmd) : si vous ajoutez une
+#  entrée ici, ajoutez aussi sa section là-bas.
+#  L'ordre d'affichage suit le champ « ordre ».
 # =============================================================================
+
+# --- Méthodes ----------------------------------------------------------------
+
+- title: "Statistique et économétrie"
+  title_en: "Statistics and econometrics"
+  groupe: "methode"
+  slug: "statistique"
+  path: "expertise/index.html#statistique"
+  path_en: "expertise/index.html#statistics"
+  resume_fr: "Mesurer, tester et surveiller les modèles avec des garanties statistiques claires."
+  resume_en: "Measuring, testing and monitoring models with clear statistical guarantees."
+  ordre: 1
+
+- title: "Machine learning et intelligence artificielle"
+  title_en: "Machine learning and artificial intelligence"
+  groupe: "methode"
+  slug: "ml"
+  path: "expertise/index.html#machine-learning"
+  path_en: "expertise/index.html#machine-learning"
+  resume_fr: "Des modèles flexibles qui restent explicables, robustes et validables."
+  resume_en: "Flexible models that stay explainable, robust and validatable."
+  ordre: 2
+
+- title: "Stress testing et scénarios"
+  title_en: "Stress testing and scenarios"
+  groupe: "methode"
+  slug: "stress-testing"
+  path: "expertise/index.html#stress-testing"
+  path_en: "expertise/index.html#stress-testing"
+  resume_fr: "Propager des scénarios, ou remonter du seuil de rupture au scénario le plus plausible."
+  resume_en: "Propagating scenarios, or working back from the breaking threshold to the most plausible scenario."
+  ordre: 3
+
+# --- Applications ------------------------------------------------------------
 
 - title: "Risque de crédit"
   title_en: "Credit risk"
+  groupe: "application"
   slug: "credit"
-  path: "recherche/risque-de-credit.html"
-  path_en: "research/credit-risk.html"
-  resume_fr: "Calibration et validation des PD, IFRS 9, dégradation significative du risque, indicateurs d'alerte précoce, mesures de queue sous scénario."
-  resume_en: "PD calibration and validation, IFRS 9, significant increase in credit risk, early warning indicators, tail measures under scenario."
-  ordre: 1
-
-- title: "Risque climatique"
-  title_en: "Climate risk"
-  slug: "climat"
-  path: "recherche/risque-climatique.html"
-  path_en: "research/climate-risk.html"
-  resume_fr: "Downscaling statistique des projections, scénarios CRD6 et NGFS, copules climatiques, scores de vulnérabilité, stress tests climatiques."
-  resume_en: "Statistical downscaling of projections, CRD6 and NGFS scenarios, climate copulas, vulnerability scores, climate stress testing."
-  ordre: 2
-
-- title: "Risque géopolitique"
-  title_en: "Geopolitical risk"
-  slug: "geopolitique"
-  path: "recherche/risque-geopolitique.html"
-  path_en: "research/geopolitical-risk.html"
-  resume_fr: "Stress tests et reverse stress tests géopolitiques, propagation des chocs aux portefeuilles de crédit, indicateurs de risque géopolitique."
-  resume_en: "Geopolitical stress tests and reverse stress tests, shock propagation to credit portfolios, geopolitical risk indicators."
-  ordre: 3
-
-- title: "Méthodes et fondements"
-  title_en: "Methods and foundations"
-  slug: "methodes"
-  path: "recherche/methodes.html"
-  path_en: "research/methods.html"
-  resume_fr: "Inférence séquentielle et anytime-valid, e-values, méthodes bayésiennes, quantiles et mesures de queue, explicabilité, équité, réseaux de Kolmogorov–Arnold."
-  resume_en: "Sequential and anytime-valid inference, e-values, Bayesian methods, quantiles and tail measures, explainability, fairness, Kolmogorov–Arnold networks."
+  path: "expertise/index.html#credit"
+  path_en: "expertise/index.html#credit"
+  resume_fr: "Développer, valider et surveiller les modèles de crédit, et mesurer leur comportement sous stress."
+  resume_en: "Developing, validating and monitoring credit models, and measuring how they behave under stress."
   ordre: 4
+
+- title: "Risques climatiques"
+  title_en: "Climate risks"
+  groupe: "application"
+  slug: "climat"
+  path: "expertise/index.html#climat"
+  path_en: "expertise/index.html#climate"
+  resume_fr: "Intégrer les risques physiques et de transition dans l'évaluation des risques financiers."
+  resume_en: "Bringing physical and transition risks into the assessment of financial risk."
+  ordre: 5
+
+- title: "Risque géopolitique et macro-financier"
+  title_en: "Geopolitical and macro-financial risk"
+  groupe: "application"
+  slug: "geopolitique"
+  path: "expertise/index.html#geopolitique"
+  path_en: "expertise/index.html#geopolitical"
+  resume_fr: "Comprendre comment les chocs se propagent aux portefeuilles, et lesquels pourraient les mettre en difficulté."
+  resume_en: "Understanding how shocks spread to portfolios, and which ones could put them in difficulty."
+  ordre: 6

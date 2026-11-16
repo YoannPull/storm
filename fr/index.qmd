@@ -1,6 +1,6 @@
 ---
 pagetitle: "STORM — Quantitative Risk Collective"
-description: "STORM, le collectif de recherche quantitative de Square Management."
+description: "STORM, un collectif de recherche quantitative de Square Management."
 page-layout: full
 listing:
   - id: actualites
@@ -11,69 +11,80 @@ listing:
     sort: "date desc"
     date-format: "YYYY-MM-DD"
     max-items: 5
-  - id: axes
+  - id: methodes
     contents: ../data/axes.yml
     template: ../templates/fr/axe.ejs
+    include:
+      groupe: "methode"
+    sort: "ordre"
+  - id: applications
+    contents: ../data/axes.yml
+    template: ../templates/fr/axe.ejs
+    include:
+      groupe: "application"
     sort: "ordre"
 ---
 
-::::: {.hero}
+:::::: {.home-hero}
 
-:::: {.hero-text}
+::::: {.hero-in}
 
-![](../assets/brand/logo-storm-wordmark-navy.svg){.wordmark fig-alt="STORM — Quantitative Risk Collective"}
+```{=html}
+<div class="hero-title" role="heading" aria-level="1">Quantifier l’<em>incertitude</em>,<br>éclairer la décision.</div>
+```
 
-::: {.tagline}
+::: {.hero-sub}
 
-Un collectif de recherche de **Square Management**
-
-:::
-
-::::
-
-::: {.hero-mark}
-
-![](../assets/brand/logo-storm-mark-navy.svg){fig-alt=""}
+**STORM** est un collectif de recherche quantitative de [**Square Management**](https://www.square-management.com){target="_blank" rel="noopener"}. Nous développons des modèles et des méthodes pour mesurer, anticiper et piloter les risques.
 
 :::
+
+```{=html}
+<div class="hero-cta"><a class="btn-storm text" href="publications/index.html">Lire nos travaux</a><a class="btn-storm bright" href="a-propos/index.html#contact">Nous contacter</a></div>
+```
 
 :::::
 
-:::: {.about}
-
 ```{=html}
-<div class="pills" role="group" aria-label="Présentation">
-  <button type="button" aria-pressed="true" data-panel="bref">en bref</button>
-  <button type="button" aria-pressed="false" data-panel="plus">plus</button>
-  <button type="button" aria-pressed="false" data-panel="approche">approche</button>
-</div>
+<div class="pillars"><div class="pillars-in"><a href="expertise/index.html"><b>Modéliser</b><span>Modèles de risque de crédit, climatiques et macro-financiers</span></a><a href="expertise/index.html#stress-testing"><b>Stresser</b><span>Stress tests, scénarios et reverse stress tests</span></a><a href="expertise/index.html#statistique"><b>Surveiller</b><span>Validation, calibration et suivi en continu des modèles</span></a><a href="expertise/index.html#machine-learning"><b>Apprendre</b><span>Machine learning interprétable et modèles de fondation</span></a></div></div>
 ```
 
-::: {#panel-bref .panel}
+::::::
 
-Nous développons des méthodes quantitatives pour mesurer, suivre et stresser le risque — là où il se cache : dans les queues de distribution.
+:::: {.home-block}
+
+```{=html}
+<span class="kicker">Notre ADN : la méthode</span>
+<h2 class="big">Des méthodes quantitatives, pensées pour l’application</h2>
+```
+
+::: {.lede}
+
+Nous développons des méthodes, puis nous les mettons à l’épreuve sur des problèmes de risque réels.
 
 :::
 
-::: {#panel-plus .panel .is-hidden}
-
-STORM est le collectif de recherche quantitative de **Square Management**. Nous développons des méthodologies statistiques, économétriques et d'apprentissage automatique pour mesurer, suivre et stresser le risque.
-
-Nos travaux portent aujourd'hui sur les risques financiers : crédit, validation de modèles, stress testing, risques climatique et géopolitique.
-
-:::
-
-::: {#panel-approche .panel .is-hidden}
-
-**01 — La moyenne n'est pas le risque.** Nous propageons la distribution conditionnelle complète, ou nous partons du seuil de rupture.
-
-**02 — Des briques, pas des remplacements.** Chaque brique se branche sur le modèle interne déjà validé. Aucun re-développement.
+::: {#methodes}
 
 :::
 
 ::::
 
-:::: {.section-wide .home-section}
+::: {.home-block}
+
+```{=html}
+<span class="kicker">Une méthode, en mouvement</span>
+<div class="anim-group">
+<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Stress test de crédit</button><button type="button" data-pane="rst" aria-pressed="false">Reverse stress test</button><button type="button" data-pane="eprocess" aria-pressed="false">Surveillance en continu</button></div>
+<div class="anim-pane" data-pane="credit"><h2 class="big">Transmettre la distribution, pas seulement la trajectoire moyenne</h2><p class="lede-p">Le même stress test, en propageant un seul scénario central — ou toute la distribution.</p><div class="storm-anim" data-anim="credit"></div></div>
+<div class="anim-pane" data-pane="rst" hidden><h2 class="big">Partir du seuil de capital, pas du scénario</h2><p class="lede-p">Le reverse stress test inverse la question : quel est le scénario le plus plausible capable de franchir le seuil ?</p><div class="storm-anim" data-anim="rst"></div></div>
+<div class="anim-pane" data-pane="eprocess" hidden><h2 class="big">Détecter une dérive sans multiplier les fausses alertes</h2><p class="lede-p">Le même flux surveillé avec un test classique, puis avec une approche valide à tout instant.</p><div class="storm-anim" data-anim="eprocess"></div></div>
+</div>
+```
+
+:::
+
+:::: {.home-block}
 
 ```{=html}
 <div class="sh"><h2>Actualités</h2><a href="actualites/index.html">tout voir →</a></div>
@@ -84,10 +95,10 @@ Nos travaux portent aujourd'hui sur les risques financiers : crédit, validation
 :::
 
 ```{=html}
-<div class="sh"><h2>Recherche</h2><a href="recherche/index.html">les axes →</a></div>
+<div class="sh"><h2>Applications</h2><a href="expertise/index.html">toute l'expertise →</a></div>
 ```
 
-::: {#axes}
+::: {#applications}
 
 :::
 

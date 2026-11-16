@@ -13,12 +13,12 @@ $font-family-monospace:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, m
 $storm-ink:          #0a2d5a;
 $storm-primary:      #124489;
 
-$body-bg:    #f7f8fa !default;
-$body-color: #2b3440 !default;
-$link-color: $storm-primary !default;
+$body-bg:    #000000 !default;
+$body-color: #c7ccd3 !default;
+$link-color: #7aa9ff !default;
 
 $navbar-bg: transparent !default;
-$navbar-fg: $storm-ink !default;
+$navbar-fg: #ffffff !default;
 $footer-bg: transparent !default;
 
 /*-- scss:rules --*/
@@ -26,22 +26,24 @@ $footer-bg: transparent !default;
 /* ---- Tokens -------------------------------------------------------------- */
 
 :root {
-  --ink:          #0a2d5a;   /* logo navy — titres                       */
-  --body:         #2b3440;   /* texte courant                            */
-  --primary:      #124489;   /* couleur dominante des notes              */
-  --primary-soft: #5a7daa;
-  --muted:        #667180;
-  --faint:        #8a94a1;   /* décoratif seulement (flèches, filets)    */
-  --tint:         #e9eff6;
-  --tint-deep:    #d7e4f2;
-  --signal:       #bd8c42;   /* l'or des notes — queues de distribution  */
-  --signal-tint:  #f7efdf;
-  --bg:           #f7f8fa;   /* doit rester égal à $body-bg (fond animé) */
-  --surface:      #ffffff;
-  --line:         #e1e6ed;
-  --line-strong:  #c3d2e3;
+  /* Thème noir (refonte 2026). Le bleu STORM est éclairci pour rester lisible sur noir. */
+  --ink:          #ffffff;   /* titres                                    */
+  --body:         #c7ccd3;   /* texte courant                             */
+  --primary:      #7aa9ff;   /* liens, libellés                           */
+  --primary-soft: #5a7fb8;
+  --muted:        #8a9099;
+  --faint:        #5a6068;   /* décoratif seulement (flèches, filets)     */
+  --tint:         #0b1424;   /* fond des encadrés                         */
+  --tint-deep:    #13233d;
+  --signal:       #4d8dff;   /* bleu STORM — queues, extrêmes, ruptures   */
+  --signal-tint:  #08142a;
+  --bg:           #000000;   /* doit rester égal à $body-bg               */
+  --surface:      #0a0b0c;
+  --surface-2:    #111214;
+  --line:         #1a1b1e;
+  --line-strong:  #2a2c31;
 
-  --chart-1: #124489;
+  --chart-1: #7aa9ff;
   --chart-2: #4a9d5b;
   --chart-3: #e0a020;
   --chart-4: #d1495b;
@@ -828,3 +830,6 @@ main.content.column-page > .theme-head { max-width: var(--wide); padding-inline:
 /* Publications : intertitres de section (articles / notes) */
 .section-wide > .sh:first-child { margin-top: 1.6rem; }
 .sh[id] { scroll-margin-top: 5rem; }
+
+/* La suite du thème noir (ajustements, accueil, animations) est dans
+   assets/css/storm-dark.css — un fichier CSS simple, chargé après celui-ci. */
