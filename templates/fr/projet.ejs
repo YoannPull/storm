@@ -1,0 +1,17 @@
+<%
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function ext(h){ return /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : ""; }
+function arrow(h){ return /^https?:/.test(h) ? "↗" : "→"; }
+let out = '<div class="rows">';
+for (const it of items) {
+  out += '<div class="item proj">';
+  out += '<span class="t">' + esc(it.title) + '</span>';
+  out += '<span class="m"><span class="status is-' + esc(it.statut) + '">' + esc(it.statut_fr) + (it.horizon ? ' · ' + esc(it.horizon) : '') + '</span></span>';
+  out += '<span class="d">' + esc(it.resume_fr) + '</span>';
+  if (it.note) out += '<span class="links"><a class="note-link" href="/fr/' + esc(it.note) + '">Lire la note →</a></span>';
+  out += '</div>';
+}
+out += '</div>';
+%>```{=html}
+<%= out %>
+```

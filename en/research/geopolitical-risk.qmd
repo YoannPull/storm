@@ -1,0 +1,93 @@
+---
+pagetitle: "Geopolitical risk — STORM"
+description: "How STORM approaches geopolitical risk."
+page-layout: full
+listing:
+  - id: projects
+    contents: ../../data/projets.yml
+    include:
+      axe: "geopolitique"
+    template: ../../templates/en/projet.ejs
+  - id: publications
+    contents: ../../data/publications.yml
+    include:
+      axe: "geopolitique"
+    template: ../../templates/en/publication.ejs
+    sort: "date desc"
+---
+
+:::: {.theme-head}
+
+[Research area]{.kicker}
+
+# Geopolitical risk
+
+::: {.position-line}
+
+The regulator no longer only asks what a geopolitical scenario would cost. It asks which scenario would cost three hundred basis points of CET1.
+
+:::
+
+::::
+
+::::: {.theme-body}
+
+## How we approach it
+
+Geopolitical risk has a methodological peculiarity: it does not lend itself to a catalogue. A classical stress test only evaluates the scenarios someone thought to write down, and a combination of shocks dangerous for an institution's own profile may appear in no list. The ECB's 2026 thematic exercise acknowledges that limit by asking the question in reverse: identify the geopolitical events capable of eroding CET1 capital by at least three hundred basis points.
+
+**We treat that request as an optimisation problem, not a drafting exercise.** Reverse stress testing is formulated as a constrained plausibility search: among all scenarios that breach the threshold, retain the one the reference density makes most credible. The resulting breaking point is not the most severe — it is the most probable among the fatal scenarios, and that is precisely what makes it arguable in committee and defensible in validation. The exercise stops being a narrative: it produces a documented, quantified object, together with its neighbourhood of nearby scenarios.
+
+**The forward direction inherits the distributional argument.** Propagating a geopolitical shock through to a portfolio's default probabilities requires a macro-financial → credit satellite → mapping chain. There too, transmitting only the mean path understates PD levels and says nothing about the tail. The geopolitical stress test on US credit serves as our proof of concept; the mechanism owes nothing to geopolitics and applies unchanged to climate, monetary or sectoral scenarios.
+
+**The measure itself remains.** A narrative geopolitical risk index cannot be injected into a risk model. Building a usable measure — stable, interpretable, and whose dynamics genuinely transmit to credit — is a project in its own right, and the one on which demand from institutions is currently strongest.
+
+## Methods
+
+::: {.tags}
+
+[Constrained optimisation]{.tag} [Empirical likelihood]{.tag} [Bayesian VAR]{.tag} [Generalized impulse responses]{.tag} [Merton–Vasicek / ASRF]{.tag} [Plausibility measures]{.tag} [Risk indicators]{.tag}
+
+:::
+
+## Projects
+
+::: {#projects}
+
+:::
+
+## Papers and notes
+
+::: {#publications}
+
+:::
+
+## What we are exploring
+
+:::: {.open-questions}
+
+::: {.q}
+
+[Choosing the plausibility measure]{.title}
+Reference density or statistical distance: the breaking scenario depends on the choice. What criterion makes that choice defensible to a supervisor?
+
+:::
+
+::: {.q}
+
+[An indicator usable inside a model]{.title}
+How do we build a geopolitical risk measure whose dynamics genuinely transmit to credit risk, rather than a decorative narrative index?
+
+:::
+
+::: {.q}
+
+[Neighbourhood and robustness]{.title}
+An isolated breaking point is fragile. How should its neighbourhood be characterised so that it becomes an object of governance rather than an artefact of optimisation?
+
+:::
+
+::::
+
+:::::
+

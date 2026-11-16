@@ -1,0 +1,93 @@
+---
+pagetitle: "Climate risk — STORM"
+description: "How STORM approaches climate risk."
+page-layout: full
+listing:
+  - id: projects
+    contents: ../../data/projets.yml
+    include:
+      axe: "climat"
+    template: ../../templates/en/projet.ejs
+  - id: publications
+    contents: ../../data/publications.yml
+    include:
+      axe: "climat"
+    template: ../../templates/en/publication.ejs
+    sort: "date desc"
+---
+
+:::: {.theme-head}
+
+[Research area]{.kicker}
+
+# Climate risk
+
+::: {.position-line}
+
+Before measuring what a climate scenario does to a portfolio, the hazard must be correctly located, correctly bias-corrected, and its tail must have survived the treatment.
+
+:::
+
+::::
+
+::::: {.theme-body}
+
+## How we approach it
+
+The climate risk chain is long: an emissions scenario produces a macro-financial pathway and a field of physical hazards; those hazards strike localised exposures whose vulnerability determines damage; damage translates into losses, higher credit risk and heavier claims. Every link can destroy the information that matters.
+
+**Upstream, the data.** CMIP6 projections come from global models whose grid cells often exceed a hundred kilometres. At that resolution two sites tens of kilometres apart share the same simulated value, and spatial averaging flattens local peaks. Worse: the models demonstrably understate the magnitude and frequency of extreme events — precisely those that concentrate financial impact. Correcting this means rectifying the **shape** of the simulated law, not only its level. And a bias correction pursues two distinct objectives, with no guarantee that both are met: aligning the simulated distribution on the reference, and carrying the projected change signal through intact. Between two methods equally well fitted on the historical period, one can cut away a substantial part of the signal at extreme quantiles. That selection point is, in our view, the most underestimated in the whole chain.
+
+**Downstream, the measurement.** The same distributional argument as in credit risk applies to climate scenarios. Applied to NGFS pathways, the at-Risk approach shows that a scenario is not only more or less severe through its mean, but through the thickness and skewness of its adverse tail: rapid-transition scenarios generate markedly heavier tails in the short run, because of the abruptness of the required adjustments. Two neighbouring mean paths can hide vulnerabilities that differ by a factor of two.
+
+**A sovereignty constraint.** Bias-corrected projections exist, but are not always freely available. Relying on a third-party provider means recurring cost, dependency and a black-box effect hard to reconcile with the auditability requirements imposed on banks and insurers. Mastering these methods internally is as much about data sovereignty as about being able to justify the set-up to a supervisor.
+
+## Methods
+
+::: {.tags}
+
+[Statistical downscaling]{.tag} [Model Output Statistics]{.tag} [Bias correction]{.tag} [Copulas]{.tag} [NGFS scenarios]{.tag} [CRD6]{.tag} [Quantile regression]{.tag} [Skew-t distributions]{.tag}
+
+:::
+
+## Projects
+
+::: {#projects}
+
+:::
+
+## Papers and notes
+
+::: {#publications}
+
+:::
+
+## What we are exploring
+
+:::: {.open-questions}
+
+::: {.q}
+
+[Dependence between hazards]{.title}
+Analyses are run hazard by hazard. What the dependence structure — heatwave and drought, storm and flood — adds to a portfolio assessment remains to be quantified.
+
+:::
+
+::: {.q}
+
+[From corrected field to vulnerability score]{.title}
+Once the hazard is properly located, how do we move from a local distribution to an exposure vulnerability measure that is both defensible and usable inside a risk model?
+
+:::
+
+::: {.q}
+
+[Selection criteria for a correction]{.title}
+Preservation of the change signal appears in no standard goodness-of-fit metric. What formal criterion can be offered to internal validation?
+
+:::
+
+::::
+
+:::::
+

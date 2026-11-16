@@ -1,0 +1,93 @@
+---
+pagetitle: "Risque géopolitique — STORM"
+description: "Comment STORM aborde risque géopolitique."
+page-layout: full
+listing:
+  - id: projets
+    contents: ../../data/projets.yml
+    include:
+      axe: "geopolitique"
+    template: ../../templates/fr/projet.ejs
+  - id: publications
+    contents: ../../data/publications.yml
+    include:
+      axe: "geopolitique"
+    template: ../../templates/fr/publication.ejs
+    sort: "date desc"
+---
+
+:::: {.theme-head}
+
+[Axe de recherche]{.kicker}
+
+# Risque géopolitique
+
+::: {.position-line}
+
+Le régulateur ne demande plus seulement ce que coûterait un scénario géopolitique. Il demande quel scénario coûterait trois cents points de base de CET1.
+
+:::
+
+::::
+
+::::: {.theme-body}
+
+## Comment nous abordons le sujet
+
+Le risque géopolitique a une particularité méthodologique : il se prête mal au catalogue. Un exercice de stress testing classique n'évalue que les scénarios que l'on a pensé à écrire, et une combinaison de chocs dangereuse pour le profil propre d'un établissement peut ne figurer dans aucune liste. L'exercice thématique 2026 de la BCE prend acte de cette limite en posant la question à l'envers : identifier les événements géopolitiques susceptibles d'entamer le capital CET1 d'au moins trois cents points de base.
+
+**Nous traitons cette demande comme un problème d'optimisation, pas comme un exercice de rédaction.** Le reverse stress testing se formule comme une recherche de plausibilité sous contrainte : parmi tous les scénarios qui franchissent le seuil, retenir celui que la densité de référence rend le plus crédible. Le point de rupture qui en sort n'est pas le plus sévère — il est le plus probable parmi les scénarios fatals, et c'est précisément ce qui le rend discutable en comité et opposable en validation. L'exercice cesse d'être un récit : il produit un objet documenté, chiffré, assorti de son voisinage de scénarios proches.
+
+**La direction avant, elle, hérite de l'argument distributionnel.** Propager un choc géopolitique jusqu'aux probabilités de défaut d'un portefeuille suppose une chaîne macro-financier → satellite de crédit → cartographie. Là encore, transmettre la seule trajectoire moyenne sous-estime le niveau des PD et ne dit rien de la queue. Le stress test géopolitique sur le crédit américain nous sert de preuve de concept ; la mécanique ne doit rien au géopolitique et s'applique telle quelle aux scénarios climatiques, monétaires ou sectoriels.
+
+**Reste la mesure elle-même.** Un indice de risque géopolitique narratif ne s'injecte pas dans un modèle de risque. Construire une mesure exploitable — stable, interprétable, et dont la dynamique se transmet effectivement au crédit — est un chantier à part entière, et celui sur lequel la demande des établissements est aujourd'hui la plus forte.
+
+## Méthodes mobilisées
+
+::: {.tags}
+
+[Optimisation sous contrainte]{.tag} [Vraisemblance empirique]{.tag} [VAR bayésien]{.tag} [Fonctions de réponse généralisées]{.tag} [Merton–Vasicek / ASRF]{.tag} [Mesures de plausibilité]{.tag} [Indicateurs de risque]{.tag}
+
+:::
+
+## Projets
+
+::: {#projets}
+
+:::
+
+## Articles et notes
+
+::: {#publications}
+
+:::
+
+## Ce que nous explorons
+
+:::: {.open-questions}
+
+::: {.q}
+
+[Le choix de la mesure de plausibilité]{.title}
+Densité de référence ou distance statistique : le scénario de rupture dépend du choix. Quel critère rend ce choix défendable devant un superviseur ?
+
+:::
+
+::: {.q}
+
+[Un indicateur exploitable en modèle]{.title}
+Comment construire une mesure de risque géopolitique dont la dynamique se transmet effectivement au risque de crédit, plutôt qu'un indice narratif décoratif ?
+
+:::
+
+::: {.q}
+
+[Voisinage et robustesse]{.title}
+Un point de rupture isolé est fragile. Comment caractériser son voisinage de manière à en faire un objet de gouvernance et non un artefact d'optimisation ?
+
+:::
+
+::::
+
+:::::
+

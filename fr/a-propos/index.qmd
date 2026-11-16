@@ -1,0 +1,54 @@
+---
+pagetitle: "À propos — STORM"
+description: "Ce qu'est STORM, comment le collectif travaille, et comment le contacter."
+page-layout: full
+---
+
+:::: {.theme-head}
+
+[Le collectif]{.kicker}
+
+# À propos
+
+::: {.position-line}
+
+STORM — *Scenario-based Testing & Optimization in Risk Modeling* — est le collectif de recherche quantitative de **Square Management**.
+
+:::
+
+::::
+
+:::: {.theme-body}
+
+## Ce que nous faisons
+
+Nous développons, étudions et appliquons des méthodologies statistiques, économétriques et d'apprentissage automatique à des problèmes de décision sous incertitude. Une grande part de nos travaux actuels trouve son origine dans la gestion des risques financiers — risque de crédit, validation et monitoring de modèles, stress testing, risques climatique et géopolitique — mais l'objectif est de produire des méthodes transférables à d'autres domaines.
+
+Le collectif transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Cela se traduit par deux formats complémentaires : des **articles de recherche**, soumis et publiés dans des revues à comité de lecture, et des **notes techniques**, qui en restituent l'usage opérationnel pour les équipes de modélisation, de validation et de pilotage.
+
+## Comment nous travaillons
+
+Deux principes traversent l'ensemble de nos travaux.
+
+**La moyenne n'est pas le risque.** La pratique standard propage un scénario le long de sa trajectoire centrale. Or le risque ne se lit pas dans la moyenne : il se concentre dans les queues. Nous propageons la distribution conditionnelle complète — ou nous inversons le problème et partons du seuil de rupture.
+
+**Des briques, pas des remplacements.** Nos cadres sont modulaires par construction. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement. Aucun re-développement n'est demandé : le dispositif existant produit davantage, au même coût de calcul.
+
+## Nous écrire {#contact}
+
+Pour toute question sur nos travaux, une collaboration de recherche ou une demande de présentation, écrivez au collectif.
+
+::: {.linkrow}
+
+[contact@storm.example.org](mailto:contact@storm.example.org)
+
+:::
+
+::: {.partnership}
+
+STORM fait partie de Square Management et du Square Research Center.
+
+:::
+
+::::
+

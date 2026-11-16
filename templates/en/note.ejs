@@ -1,0 +1,26 @@
+<%
+/* Technical notes (currently in French). */
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function ext(h){ return /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : ""; }
+function arrow(h){ return /^https?:/.test(h) ? "↗" : "→"; }
+const MOIS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+/* Dates : « AAAA-MM-JJ » → « sept. 2026 ». Toute autre forme est affichée telle quelle. */
+function d8(v){ if(v==null) return ""; if(v instanceof Date) v=v.toISOString();
+  const m=String(v).match(/^(\d{4})-(\d{2})/); return m ? MOIS[+m[2]-1]+" "+m[1] : String(v); }
+function yr(v){ const m=String(v==null?"":(v instanceof Date?v.toISOString():v)).match(/^(\d{4})/); return m?m[1]:""; }
+let out = '<div class="news">';
+for (const it of items) {
+  const href = String(it.path || "").replace(/\.qmd$/, ".html");
+  const src = it.auteurs || it.author;
+  const au = Array.isArray(src) ? src.join(", ") : (src || "");
+  const cats = (it.categories || []).join(" · ");
+  out += '<a class="item" href="' + esc(href) + '">';
+  out += '<span class="t">' + esc(it.title) + ' <span class="langtag">FR</span></span>';
+  out += '<span class="m"><span class="k">Note</span>' + [d8(it.date), cats].filter(Boolean).map(esc).join(" · ") + '</span>';
+  if (au) out += '<span class="a">' + esc(au) + '</span>';
+  out += '<span class="go" aria-hidden="true">→</span></a>';
+}
+out += '</div>';
+%>```{=html}
+<%= out %>
+```

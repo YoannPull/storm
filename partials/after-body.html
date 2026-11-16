@@ -1,0 +1,137 @@
+<!-- =========================================================================
+     Fond animé + petits scripts communs. Inséré en fin de page sur tout le
+     site (clé include-after-body de _quarto.yml).
+
+     Le fond : des densités de probabilité en perspective qui dérivent
+     lentement. La zone au-delà du quantile à 95 % de chaque densité est
+     ombrée en or, avec un trait au quantile. Toutes les ~18 s, un épisode de
+     stress balaie la page de haut en bas : les densités s'élargissent et
+     penchent à droite, le quantile s'éloigne, la queue grossit, puis tout se
+     détend. Immobile sur les pages de lecture (notes, pages d'axe, à propos)
+     et si le visiteur a désactivé les animations.
+
+     Réglages rapides (dans le script ci-dessous) :
+       N      nombre de lignes          PERIOD  durée d'un cycle de stress (s)
+       alpha  intensité des traits      GOLD    couleur des queues
+     ========================================================================= -->
+<canvas id="storm-bg" aria-hidden="true"></canvas>
+<div class="storm-glow" aria-hidden="true"></div>
+<script>
+/* Accueil : boutons « en bref / plus / approche » */
+document.querySelectorAll('.pills [data-panel]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('.pills [data-panel]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('is-hidden', p.id !== 'panel-' + b.dataset.panel); });
+  });
+});
+</script>
+<script>
+/* ---- Moving distributions ------------------------------------------------
+   A ridgeline of conditional densities seen in perspective. Each line carries
+   two skewed densities that drift slowly. The area beyond each density's 95%
+   quantile is shaded in the notes' gold, with a thin tick at the quantile.
+   Every ~18 s a stress episode sweeps down the ridgeline: the densities widen
+   and skew right, the quantile slides out and the shaded tail grows, then
+   everything relaxes.                                                      */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+  const c=document.getElementById('storm-bg'), g=c.getContext('2d');
+  const BG=(getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#f7f8fa'), INK='18,68,137', GOLD='189,140,66';
+  const N=30, STEP=6, PERIOD=18;          // lines, x-step (px), stress cycle (s)
+  let W,H,lines=[],t=Math.random()*100,last=performance.now();
+
+  // erf approximation (Abramowitz–Stegun 7.1.26) for the skew-normal CDF part
+  function erf(x){const s=Math.sign(x);x=Math.abs(x);const k=1/(1+.3275911*x);
+    return s*(1-(((((1.061405429*k-1.453152027)*k)+1.421413741)*k-.284496736)*k+.254829592)*k*Math.exp(-x*x));}
+  // skew-normal density, peak-normalised so amplitude stays readable
+  function sn(z,a){return Math.exp(-z*z/2)*(1+erf(a*z/Math.SQRT2));}
+
+  function resize(){
+    const d=Math.min(devicePixelRatio||1,2);
+    W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;g.setTransform(d,0,0,d,0,0);
+    lines=[];
+    for(let i=0;i<N;i++){
+      const r=(i*0.6180339887)%1, depth=i/(N-1);           // 0 = far (top), 1 = near (bottom)
+      lines.push({
+        y:H*(.06+.94*Math.pow(depth,1.25)),
+        amp:(18+depth*95)*(H/900+.25),
+        alpha:.05+depth*.09,
+        bumps:[0,1].map(k=>({
+          base:(k?.68:.26)+(r-.5)*.22, drift:.035+.03*((r*7+k)%1), ph:r*6.28+k*2.1,
+          w:.045+.03*((r*3+k*.5)%1), h:k?.75+.25*r:1
+        }))
+      });
+    }
+  }
+
+  // stress intensity on line i at time t : a pulse that sweeps top -> bottom
+  function stress(i){
+    const p=((t/PERIOD)%1)*1.6-.3, d=i/(N-1)-p;
+    return Math.exp(-d*d/.012);
+  }
+
+  // 95% quantile of the (unnormalised) skew-normal, in z units — cached by skew
+  const qCache=new Map();
+  function q95(a){
+    const key=Math.round(a*20);if(qCache.has(key))return qCache.get(key);
+    const A=key/20,dz=.02;let tot=0;const cum=[];
+    for(let z=-4;z<=7;z+=dz){tot+=sn(z,A);cum.push([z,tot]);}
+    let q=cum[cum.length-1][0];for(const [z,v] of cum){if(v>=.95*tot){q=z;break;}}
+    qCache.set(key,q);return q;
+  }
+
+  function draw(){
+    g.fillStyle=BG;g.fillRect(0,0,W,H);
+    for(let i=0;i<N;i++){                     // back to front, each line hides what is behind
+      const L=lines[i], s=stress(i), depth=i/(N-1);
+      const a=1.2+5.5*s;                      // stress skews to the right tail…
+      const P=L.bumps.map(b=>({
+        mu:W*(b.base+.07*Math.sin(t*b.drift+b.ph)+.03*Math.sin(t*b.drift*2.3+i*.4)),
+        om:W*b.w*(1+.25*Math.sin(t*.05+b.ph)+.9*s),   // …and widens the density
+        h:b.h*(1-.25*s)
+      }));
+      const Y=x=>{let y=0;for(const p of P)y+=p.h*sn((x-p.mu)/p.om,a);return L.y-y*L.amp*.5;};
+      const pts=[];for(let x=-STEP;x<=W+STEP;x+=STEP)pts.push([x,Y(x)]);
+
+      // occlude the lines behind (classic ridgeline)
+      g.beginPath();g.moveTo(pts[0][0],H);for(const p of pts)g.lineTo(p[0],p[1]);g.lineTo(W+STEP,H);g.closePath();
+      g.fillStyle=BG;g.fill();
+
+      // tail beyond the 95% quantile: shaded area + tick
+      const k=.4+.6*depth, q=q95(a);
+      for(const p of P){
+        const xq=p.mu+q*p.om, xe=p.mu+4.2*p.om;
+        if(xe<0||xq>W)continue;
+        // only this density's own tail (not the neighbouring bump)
+        const Yb=x=>L.y-p.h*sn((x-p.mu)/p.om,a)*L.amp*.5;
+        g.beginPath();g.moveTo(xq,L.y);g.lineTo(xq,Yb(xq));
+        for(let x=Math.ceil(xq/STEP)*STEP;x<xe;x+=STEP)g.lineTo(x,Yb(x));
+        g.lineTo(xe,L.y);g.closePath();
+        g.fillStyle=`rgba(${GOLD},${(.06+.26*s)*k})`;g.fill();
+        g.beginPath();g.moveTo(xq,L.y+2);g.lineTo(xq,Yb(xq)-3);
+        g.strokeStyle=`rgba(${GOLD},${(.22+.6*s)*k})`;g.lineWidth=1;g.stroke();
+      }
+
+      // the density line itself
+      g.beginPath();pts.forEach((p,k)=>k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));
+      g.strokeStyle=`rgba(${INK},${L.alpha})`;g.lineWidth=1;g.stroke();
+    }
+  }
+  // Pages de lecture (notes, pages d'axe, à propos) : fond immobile, pour ne
+  // pas distraire. Le fond bouge sur l'accueil et les pages de liste.
+  const reading=!document.querySelector('main.column-page')||!!document.querySelector('.theme-body');
+  if(reading){resize();draw();addEventListener('resize',()=>{resize();draw();});return;}
+  function loop(now){t+=Math.min(.05,(now-last)/1000);last=now;draw();if(!reduce.matches)requestAnimationFrame(loop);}
+  resize();addEventListener('resize',()=>{resize();draw();});
+  draw();
+  if(!reduce.matches)requestAnimationFrame(loop);
+  reduce.addEventListener?.('change',()=>{if(!reduce.matches){last=performance.now();requestAnimationFrame(loop);}});
+
+  // soft glow following the cursor
+  const glow=document.querySelector('.storm-glow');let mx=0,my=0,gx=0,gy=0,run=false;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(reduce.matches)return;glow.classList.add('on');
+    if(!run){run=true;gx=mx;gy=my;(function f(){gx+=(mx-gx)*.08;gy+=(my-gy)*.08;glow.style.left=gx+'px';glow.style.top=gy+'px';requestAnimationFrame(f)})();}});
+  document.addEventListener('mouseleave',()=>glow.classList.remove('on'));
+})();
+
+</script>

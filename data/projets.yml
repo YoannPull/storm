@@ -1,0 +1,249 @@
+# =============================================================================
+#  PROJETS STORM
+# =============================================================================
+#  Source : feuille de route 2026, pôle Quantification des risques.
+#  Pour ajouter un projet : copier un bloc. Pour le retirer d'un axe : changer
+#  « axe ». Pour changer son état : changer « statut ».
+#
+#  Champs :
+#    title        nom du projet (obligatoire — c'est le champ que Quarto trie)
+#    title_en     même chose en anglais
+#    axe          credit | climat | geopolitique | methodes   (un seul)
+#    statut       a-demarrer | en-cours | relecture | termine
+#    statut_fr / statut_en   libellé affiché
+#    horizon      T1..T4, ou vide
+#    resume_fr/en 1 à 2 phrases
+#    equipe       liste de noms, tels qu'écrits dans membres.yml
+#    livrables    note | article | outil | fiche-reflexe | formation
+#    note         chemin vers la note associée, ou vide
+#    path         laisser vide : les projets n'ont pas de page propre pour l'instant
+# =============================================================================
+
+# --- Risque de crédit --------------------------------------------------------
+
+- title: "PD Lifetime — IFRS 9"
+  title_en: "Lifetime PD — IFRS 9"
+  axe: "credit"
+  statut: "a-demarrer"
+  statut_fr: "À démarrer"
+  statut_en: "Not started"
+  horizon: "T3"
+  resume_fr: "Projection des probabilités de défaut à maturité sous IFRS 9 : structure par terme, conditionnement macroéconomique et cohérence avec le cadre IRB."
+  resume_en: "Projecting lifetime default probabilities under IFRS 9: term structure, macroeconomic conditioning and consistency with the IRB framework."
+  equipe: ["Charles-Emmanuel Prost", "I. Starsinov"]
+  livrables: ["note"]
+  note: ""
+
+- title: "SICR — Dégradation significative du risque"
+  title_en: "SICR — Significant increase in credit risk"
+  axe: "credit"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T2"
+  resume_fr: "Critères de transition entre étapes IFRS 9 : ce que « significatif » veut dire quantitativement, et la sensibilité des provisions au seuil retenu."
+  resume_en: "Stage-transition criteria under IFRS 9: what \"significant\" means quantitatively, and how sensitive provisions are to the chosen threshold."
+  equipe: ["Quentin Lajaunie", "C. Bakri"]
+  livrables: ["note"]
+  note: ""
+
+- title: "Early Warning Indicators"
+  title_en: "Early Warning Indicators"
+  axe: "credit"
+  statut: "a-demarrer"
+  statut_fr: "À démarrer"
+  statut_en: "Not started"
+  horizon: "T3"
+  resume_fr: "Détection précoce de la dégradation du risque de contrepartie : construction, calibration et évaluation des indicateurs d'alerte."
+  resume_en: "Early detection of counterparty risk deterioration: construction, calibration and evaluation of warning indicators."
+  equipe: ["Quentin Lajaunie", "Yoann Pull"]
+  livrables: ["note", "fiche-reflexe"]
+  note: ""
+
+- title: "Monitoring anytime-valid de la calibration"
+  title_en: "Anytime-valid calibration monitoring"
+  axe: "credit"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: ""
+  resume_fr: "Suivi séquentiel de la calibration des PD par e-values : un test qui reste valide quel que soit le moment où on le regarde."
+  resume_en: "Sequential monitoring of PD calibration with e-values: a test that stays valid whenever you choose to look at it."
+  equipe: ["Yoann Pull", "Quentin Lajaunie"]
+  livrables: ["article"]
+  note: ""
+
+# --- Risque climatique -------------------------------------------------------
+
+- title: "CRD6 — Scénarios"
+  title_en: "CRD6 — Scenarios"
+  axe: "climat"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T2"
+  resume_fr: "Ce que la directive CRD6 attend en matière de scénarios climatiques, et comment un établissement peut y répondre avec ses modèles existants."
+  resume_en: "What the CRD6 directive expects in terms of climate scenarios, and how an institution can meet it with its existing models."
+  equipe: ["Quentin Lajaunie"]
+  livrables: ["fiche-reflexe"]
+  note: ""
+
+- title: "Downscaling statistique climatique"
+  title_en: "Statistical climate downscaling"
+  axe: "climat"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T3"
+  resume_fr: "Correction de biais des projections CMIP6 : aligner les lois marginales simulées sur une réanalyse de référence sans amputer le signal de changement."
+  resume_en: "Bias-correcting CMIP6 projections: aligning simulated marginals on a reference reanalysis without cutting into the change signal."
+  equipe: ["Charles-Emmanuel Prost"]
+  livrables: ["note"]
+  note: "notes/downscaling.html"
+
+- title: "Score de vulnérabilité"
+  title_en: "Vulnerability score"
+  axe: "climat"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T4"
+  resume_fr: "Mesurer la vulnérabilité d'une exposition à un aléa physique, une fois l'aléa correctement localisé et corrigé."
+  resume_en: "Measuring an exposure's vulnerability to a physical hazard, once that hazard is properly located and bias-corrected."
+  equipe: ["Quentin Lajaunie", "C. Bakri"]
+  livrables: []
+  note: ""
+
+- title: "Copules climatiques"
+  title_en: "Climate copulas"
+  axe: "climat"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T4"
+  resume_fr: "Dépendance entre aléas climatiques : ce que la structure de dépendance ajoute à une analyse conduite aléa par aléa."
+  resume_en: "Dependence between climate hazards: what the dependence structure adds to a hazard-by-hazard analysis."
+  equipe: ["Charles-Emmanuel Prost"]
+  livrables: ["note", "formation"]
+  note: ""
+
+- title: "Stress test climatique — atRisk"
+  title_en: "Climate stress testing — atRisk"
+  axe: "climat"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T4"
+  resume_fr: "L'approche at-Risk appliquée aux trajectoires NGFS : la queue de la distribution du risque sous scénario climatique, et non sa seule moyenne."
+  resume_en: "The at-Risk approach applied to NGFS pathways: the tail of the risk distribution under a climate scenario, not only its mean."
+  equipe: ["Quentin Lajaunie", "Charles-Emmanuel Prost", "Yoann Pull"]
+  livrables: ["article", "note"]
+  note: "notes/atrisk-climat.html"
+
+# --- Risque géopolitique -----------------------------------------------------
+
+- title: "Stress test géopolitique"
+  title_en: "Geopolitical stress testing"
+  axe: "geopolitique"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T2"
+  resume_fr: "Propager un choc géopolitique jusqu'aux probabilités de défaut d'un portefeuille de crédit, en transmettant la distribution et non la seule trajectoire moyenne."
+  resume_en: "Propagating a geopolitical shock through to portfolio default probabilities, transmitting the distribution rather than the mean path alone."
+  equipe: ["Quentin Lajaunie", "Yoann Pull"]
+  livrables: ["article", "note"]
+  note: "notes/stress-tests-credit.html"
+
+- title: "Reverse stress test géopolitique"
+  title_en: "Geopolitical reverse stress testing"
+  axe: "geopolitique"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T4"
+  resume_fr: "Partir d'un seuil de capital CET1 et remonter vers le scénario de rupture le plus plausible, assorti de son voisinage."
+  resume_en: "Starting from a CET1 capital threshold and working back to the most plausible breaking scenario, with its local neighbourhood."
+  equipe: ["Quentin Lajaunie", "Yoann Pull"]
+  livrables: ["article", "note"]
+  note: "notes/reverse-stress-test.html"
+
+- title: "Indicateur de risque géopolitique"
+  title_en: "Geopolitical risk indicator"
+  axe: "geopolitique"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: "T3"
+  resume_fr: "Construire une mesure de risque géopolitique exploitable dans un modèle de risque, plutôt qu'un simple indice narratif."
+  resume_en: "Building a geopolitical risk measure usable inside a risk model, rather than a narrative index."
+  equipe: ["Quentin Lajaunie", "Yoann Pull", "A. Le Corre", "A. Regazzoni", "I. Starsinov"]
+  livrables: ["outil", "note"]
+  note: ""
+
+# --- Méthodes et fondements --------------------------------------------------
+
+- title: "E-values et inférence anytime-valid"
+  title_en: "E-values and anytime-valid inference"
+  axe: "methodes"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: ""
+  resume_fr: "Tester en continu sans payer le prix des tests répétés : martingales de test, e-values et validité à tout instant d'arrêt."
+  resume_en: "Testing continuously without paying the price of repeated testing: test martingales, e-values and validity at any stopping time."
+  equipe: ["Yoann Pull", "Quentin Lajaunie"]
+  livrables: ["article"]
+  note: ""
+
+- title: "Réseaux de Kolmogorov–Arnold"
+  title_en: "Kolmogorov–Arnold Networks"
+  axe: "methodes"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  horizon: ""
+  resume_fr: "Ce que les architectures KAN apportent — ou non — à la modélisation de séries temporelles de risque."
+  resume_en: "What KAN architectures bring — or fail to bring — to risk time-series modelling."
+  equipe: ["Yoann Pull"]
+  livrables: []
+  note: ""
+
+- title: "atRisk multivarié"
+  title_en: "Multivariate atRisk"
+  axe: "methodes"
+  statut: "a-demarrer"
+  statut_fr: "À démarrer"
+  statut_en: "Not started"
+  horizon: ""
+  resume_fr: "Étendre l'approche at-Risk à plusieurs facteurs systémiques conjoints plutôt qu'à un facteur latent unique."
+  resume_en: "Extending the at-Risk approach to several joint systemic factors rather than a single latent factor."
+  equipe: ["Quentin Lajaunie", "Yoann Pull"]
+  livrables: []
+  note: ""
+
+- title: "Explicabilité"
+  title_en: "Explainability"
+  axe: "methodes"
+  statut: "a-demarrer"
+  statut_fr: "À démarrer"
+  statut_en: "Not started"
+  horizon: ""
+  resume_fr: "Ce que la validation interne peut réellement exiger d'un modèle de risque en matière d'explicabilité, et comment le mesurer."
+  resume_en: "What internal validation can genuinely require of a risk model in terms of explainability, and how to measure it."
+  equipe: ["Quentin Lajaunie"]
+  livrables: []
+  note: ""
+
+- title: "Équité"
+  title_en: "Fairness"
+  axe: "methodes"
+  statut: "a-demarrer"
+  statut_fr: "À démarrer"
+  statut_en: "Not started"
+  horizon: ""
+  resume_fr: "Mesures d'équité appliquées aux modèles de décision de crédit : ce qu'elles capturent, ce qu'elles arbitrent."
+  resume_en: "Fairness measures applied to credit decision models: what they capture, what they trade off."
+  equipe: ["Quentin Lajaunie"]
+  livrables: []
+  note: ""

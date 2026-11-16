@@ -1,0 +1,51 @@
+---
+pagetitle: "Publications — STORM"
+description: "Research papers and technical notes from STORM."
+page-layout: full
+listing:
+  - id: publications
+    contents: ../../data/publications.yml
+    template: ../../templates/en/publication.ejs
+    sort: "date desc"
+  - id: notes
+    contents: ../../data/_notes.yml
+    template: ../../templates/en/note.ejs
+    sort: "date desc"
+    date-format: "YYYY-MM-DD"
+---
+
+:::: {.theme-head}
+
+[Academic work]{.kicker}
+
+# Publications
+
+::: {.position-line}
+
+Two complementary formats: research papers, published or under review, and technical notes that carry them into practice.
+
+:::
+
+::::
+
+:::: {.section-wide}
+
+```{=html}
+<div class="sh" id="articles"><h2>Research papers</h2><a href="#notes-techniques">technical notes ↓</a></div>
+```
+
+::: {#publications}
+
+:::
+
+```{=html}
+<div class="sh" id="notes-techniques"><h2>Technical notes</h2><a href="../notes/index.xml">RSS</a></div>
+```
+
+::: {#notes}
+
+:::
+
+Technical notes are currently published in French (marked FR); English versions are in preparation.
+
+::::

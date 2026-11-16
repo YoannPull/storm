@@ -1,0 +1,11 @@
+.quarto/
+_site-fr/
+_site-en/
+.DS_Store
+
+/.quarto/
+
+**/*.quarto_ipynb
+
+# Anciennes pages (équipe, gabarits) : gardées en local, pas publiées
+_ancien/

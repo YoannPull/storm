@@ -1,0 +1,42 @@
+---
+pagetitle: "Notes — STORM"
+description: "Technical notes, methodological focus pieces and short perspectives from the STORM collective."
+page-layout: full
+listing:
+  - id: notes
+    contents: ../../data/_notes.yml
+    template: ../../templates/en/note.ejs
+    sort: "date desc"
+    date-format: "YYYY-MM-DD"
+    feed:
+      title: "STORM — Notes"
+---
+
+:::: {.theme-head}
+
+[Quantitative Insights]{.kicker}
+
+# Notes
+
+::: {.position-line}
+
+Technical notes, methodological focus pieces and short perspectives. Each note stands alone; those accompanying a research paper say so.
+
+:::
+
+::::
+
+:::: {.section-wide}
+
+::: {.partnership}
+
+Technical notes are currently published in French. English versions are in preparation; the links below open the French editions.
+
+:::
+
+::: {#notes}
+
+:::
+
+::::
+

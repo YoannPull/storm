@@ -1,0 +1,12 @@
+::: {.note-cta}
+
+**Discuter de ce travail ?** Une question, une application à votre portefeuille ou une demande de présentation : [écrivez au collectif →](../a-propos/index.qmd#contact)
+
+:::
+
+::: {.partnership}
+
+Cette note s'appuie sur les travaux conduits au sein du collectif STORM — *Scenario-based Testing & Optimization in Risk Modeling* — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s'appuient sur une collaboration avec le Master ESA de l'Université d'Orléans.
+
+:::
+

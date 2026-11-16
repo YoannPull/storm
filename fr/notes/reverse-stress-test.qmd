@@ -1,0 +1,120 @@
+---
+title: "Reverse stress testing : partir du seuil de capital, pas du scénario"
+subtitle: "Identifier le scénario le plus plausible capable de franchir un seuil CET1, avec les modèles internes existants"
+description: "Une architecture opérationnelle qui transforme un seuil de capital CET1 en scénario de rupture : la combinaison de chocs la plus plausible capable de franchir le seuil, assortie de son voisinage."
+date: 2026-09-08
+author:
+  - Mamadou Cherif Diallo
+  - Gwezheneg Ory
+  - Tony Pereira
+  - Yoann Pull
+categories: [Risque géopolitique, Stress testing, Optimisation]
+listing:
+  - id: schema
+    contents: ../../data/schemas.yml
+    include:
+      id: "reverse-st"
+    template: ../../templates/fr/schema.ejs
+---
+
+::: {.standfirst}
+
+[En bref]{.lede}
+Les stress tests classiques répondent à la question « combien coûterait ce scénario ? ». Le régulateur pose désormais aussi la question inverse : « quel scénario coûterait cela ? » L'exercice thématique 2026 de la BCE demande aux banques d'identifier les événements géopolitiques susceptibles d'entamer leur capital CET1 d'au moins 300 points de base. Cette note présente une architecture opérationnelle qui transforme un seuil de capital en scénario de rupture, en réutilisant les modèles internes existants.
+
+:::
+
+::: {.message}
+
+[Message central]{.label}
+
+Le reverse stress testing inverse la logique habituelle : au lieu de mesurer l'impact d'un scénario donné, on part de la condition de défaillance et on cherche, parmi tous les scénarios possibles, celui qui la produit **avec la plus grande plausibilité**.
+
+Formulé comme une recherche sous contrainte, l'exercice cesse d'être un récit : il produit un objet documenté, chiffré et challengeable. L'illustration géopolitique n'est qu'une preuve de concept ; la même architecture s'applique aux chocs macroéconomiques, climatiques, de taux, sectoriels ou de marché.
+
+:::
+
+## 1. Ce que les scénarios prescrits ne couvrent pas
+
+Le stress testing standard part d'un scénario prescrit et en mesure l'impact. Le reverse stress testing part du résultat qui compte — un franchissement de seuil — et remonte vers le scénario qui l'expliquerait. Les deux sont complémentaires.
+
+::: {.why}
+
+[Pourquoi c'est important]{.label}
+
+- **Un angle mort structurel.** Un exercice *forward* n'évalue que les scénarios que l'on a pensé à écrire ; une combinaison de chocs dangereuse pour le profil propre de l'établissement peut ne figurer dans aucun catalogue. Le reverse stress testing va la chercher directement.
+- **Une attente prudentielle explicite.** Les principes de stress testing du Comité de Bâle incluent le reverse stress testing, et l'exercice thématique 2026 de la BCE en fait une demande concrète, avec un seuil chiffré.
+- **Une exigence de plausibilité.** Sans mesure de plausibilité explicite, un scénario de rupture reste un récit : impossible à comparer, difficile à challenger en validation.
+
+:::
+
+## 2. Du seuil au scénario : une architecture en cinq briques
+
+Le seuil de capital entre par la gauche, un scénario documenté sort par la droite. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement.
+
+::: {#schema}
+
+:::
+
+**Une seule équation à retenir.** Le reverse stress test se formule comme une recherche de plausibilité sous contrainte :
+
+$$s^\star \in \arg\max_{s \in \mathcal{S}} f(s) \quad \text{sous contrainte} \quad R(s) \le R^\star$$
+
+où $f(s)$ mesure la plausibilité du scénario, $R(s)$ le ratio de capital sous ce scénario et $R^\star$ le seuil critique. Le point de rupture $s^\star$ est la façon **la plus crédible** de franchir le seuil, pas la plus sévère : c'est précisément ce qui le rend discutable en comité et opposable en validation.
+
+::: {.why}
+
+[Ce que le cadre apporte]{.label}
+
+- **Aucun re-développement.** Le moteur de crédit interne (Merton–Vasicek / ASRF, déjà validé) et les cartographies PD/LGD existantes sont réutilisés tels quels ; seule la couche de recherche s'ajoute.
+- **Une plausibilité explicite.** Chaque scénario de rupture est assorti d'une mesure de crédibilité — densité de référence ou distance statistique — comparable d'un exercice à l'autre.
+- **Un objet de gouvernance.** Un point de rupture documenté et son voisinage, plutôt qu'une bibliothèque de récits non hiérarchisés.
+- **Généralisable.** Géopolitique, climat, taux, secteur, marché : changer de famille de scénarios ne change ni l'architecture, ni la gouvernance.
+
+:::
+
+## 3. Mise en œuvre
+
+1. **Fixer la condition de défaillance.** Un seuil de capital explicite, par exemple un ratio CET1 minimal, ou une perte maximale tolérée.
+2. **Décrire l'espace de scénarios et sa plausibilité.** Un petit nombre de facteurs de risque et une densité de référence suffisent pour rendre la recherche interprétable.
+3. **Réutiliser la chaîne de transmission interne.** Cartographies PD/LGD, pertes, RWA et capital : le dispositif existant fournit $R(s)$ sans modification.
+
+::: {.retenir}
+
+[À retenir pour chaque équipe]{.label}
+
+- **Modélisation.** La plausibilité doit être définie avant la recherche, pas après : c'est elle qui distingue un scénario de rupture d'un récit sévère.
+- **Validation.** Le point de rupture et son voisinage sont documentés et reproductibles, donc opposables.
+- **Pilotage.** L'exercice répond directement à la demande prudentielle 2026 sans nouvelle infrastructure de modèles.
+
+:::
+
+## Article de recherche associé
+
+Hurlin, C., Lajaunie, Q. & Pull, Y. (2026). *Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational Framework.*
+[arXiv:2601.03983](https://arxiv.org/abs/2601.03983)
+
+{{< include ../_partenariat.qmd >}}
+
+## Références
+
+::: {.refs}
+
+BCBS (2009). *Principles for sound stress testing practices and supervision.* BCBS155, Comité de Bâle.
+
+BCBS (2018). *Stress testing principles.* D450, Comité de Bâle.
+
+ECB (2025). *ECB to assess banks' stress testing capabilities to capture geopolitical risk.* Communiqué, supervision bancaire, 12 décembre 2025.
+
+Glasserman, P., Kang, C. & Kang, W. (2015). Stress scenario selection by empirical likelihood. *Quantitative Finance*, 15(1), 25–41.
+
+Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. *Journal of Financial Intermediation*, 12(3), 199–232.
+
+Grundke, P. (2011). Reverse stress tests with bottom-up approaches. *Journal of Risk Model Validation*, 5(3), 71–90.
+
+Kopeliovich, Y., Novosyolov, A., Satchkov, D. & Schachter, B. (2015). Robust risk estimation and hedging: A reverse stress testing approach. *The Journal of Derivatives*, 22(4), 10–25.
+
+Vasicek, O. (2002). The distribution of loan portfolio value. *Risk*, 15(12), 160–162.
+
+:::
+

@@ -1,0 +1,24 @@
+<%
+/* Une publication par ligne : titre, auteurs · revue, résumé, état + liens,
+   et la note technique associée quand elle existe. */
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function ext(h){ return /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : ""; }
+function arrow(h){ return /^https?:/.test(h) ? "↗" : "→"; }
+const LIENS = {arxiv:"arXiv", ssrn:"SSRN", journal:"Revue", pdf:"PDF", code:"Code"};
+let out = '<div class="rows">';
+for (const it of items) {
+  const lk = it.liens || {};
+  out += '<div class="item pub">';
+  out += it.path ? '<a class="t" href="' + esc(it.path) + '"' + ext(it.path) + '>' + esc(it.title) + '</a>'
+                 : '<span class="t">' + esc(it.title) + '</span>';
+  out += '<span class="m">' + esc((it.auteurs||[]).join(", ")) + (it.revue ? ' · <em>' + esc(it.revue) + '</em>' : '') + (it.reference ? ' · ' + esc(it.reference) : '') + '</span>';
+  if (it.resume_fr) out += '<span class="d">' + esc(it.resume_fr) + '</span>';
+  out += '<span class="links"><span class="state is-' + esc(it.etat) + '">' + esc(it.etat_fr) + '</span>';
+  out += Object.keys(lk).map(k => '<a href="' + esc(lk[k]) + '"' + ext(lk[k]) + '>' + esc(LIENS[k] || k) + '</a>').join("");
+  if (it.note) out += '<a class="note-link" href="/fr/' + esc(it.note) + '">Note technique →</a>';
+  out += '</span></div>';
+}
+out += '</div>';
+%>```{=html}
+<%= out %>
+```

@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>STORM — Notes</title>
+<link>https://storm.example.org/fr/fr/notes/</link>
+<atom:link href="https://storm.example.org/fr/fr/notes/index.xml" rel="self" type="application/rss+xml"/>
+<description>Notes techniques, focus méthodologiques et perspectives courtes du collectif STORM.</description>
+<generator>quarto-1.8.26</generator>
+<lastBuildDate>Tue, 08 Sep 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Risque de crédit et scénarios climatiques : capter l’information complète de la distribution sous stress</title>
+  <dc:creator>Mèdéssè Agongnon</dc:creator>
+  <dc:creator>Quentin Lajaunie</dc:creator>
+  <dc:creator>Pétronie Nkoussol Nsangou</dc:creator>
+  <dc:creator>Charles-Emmanuel Prost</dc:creator>
+  <link>https://storm.example.org/fr/fr/notes/atrisk-climat.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="standfirst">
+<p><span class="lede">En bref</span> Les exercices de stress testing du risque de crédit reposent traditionnellement sur une projection en valeur centrale : à partir d’un scénario macroéconomique donné, une trajectoire attendue de probabilités de défaut est dérivée, dont la moyenne résume l’exposition future. Cette approche demeure incomplète : le risque ne se révèle pas dans la moyenne, il se concentre dans les états de stress sévère. Deux scénarios peuvent produire des trajectoires moyennes proches tout en masquant des niveaux de vulnérabilité très différents dans les queues de distribution.</p>
+</div>
+<div class="message">
+<p><span class="label">Message central</span></p>
+<p>L’approche at-Risk ne se substitue pas aux cadres de stress testing existants : elle les prolonge en révélant la <strong>forme complète</strong> de la distribution du risque sous scénario. Appliquée aux trajectoires climatiques du NGFS, elle démontre qu’un scénario n’est pas seulement plus ou moins sévère par sa moyenne, mais par l’épaisseur et l’asymétrie de sa queue défavorable. Les scénarios de transition rapide — <em>Below 2°C</em>, <em>Net Zero 2050</em> — génèrent des queues de risque nettement plus épaisses à court terme, en raison de la brutalité des réajustements monétaires requis.</p>
+<p>L’outil trouve une application directe au titre du Pilier 2 (ICAAP) et des exigences de la directive CRD 6.</p>
+</div>
+<section id="une-asymétrie-des-risques-masquée-par-la-moyenne" class="level2">
+<h2 class="anchored" data-anchor-id="une-asymétrie-des-risques-masquée-par-la-moyenne">1. Une asymétrie des risques masquée par la moyenne</h2>
+<p>La modélisation du risque de crédit s’inscrit traditionnellement dans le cadre structurel Merton–Vasicek / ASRF, où les probabilités de défaut dépendent d’un facteur systémique latent <img src="https://latex.codecogs.com/png.latex?z_t"> résumant l’état macro-financier. Les approches classiques souffrent d’une limite structurelle : elles projettent uniquement la trajectoire centrale de ce facteur. Or les vulnérabilités économiques et financières agissent de manière asymétrique et se lisent principalement dans les queues de distribution.</p>
+<div class="why">
+<p><span class="label">Pourquoi c’est important</span></p>
+<ul>
+<li><strong>Aveuglement à la sévérité extrême.</strong> Deux scénarios aux trajectoires moyennes identiques peuvent masquer des niveaux de risque de queue du simple au double.</li>
+<li><strong>Impact des politiques de transition.</strong> Les chocs macro-financiers de court terme liés aux politiques climatiques affectent la volatilité et l’asymétrie du risque bien plus que son niveau moyen.</li>
+<li><strong>Mesures de queue pour IFRS 9 et l’ICAAP.</strong> L’évaluation des provisions et l’estimation du capital interne exigent des métriques dynamiques centrées sur la queue défavorable, hors de portée d’une projection en valeur centrale.</li>
+<li><strong>Cohérence structurelle des mesures.</strong> Le cadre garantit la monotonie stricte des quantiles et le respect de la hiérarchie du risque : l’expected shortfall est, par construction, toujours supérieur à la VaR.</li>
+</ul>
+</div>
+</section>
+<section id="du-taux-de-défaut-à-la-distribution-at-risk-larchitecture" class="level2">
+<h2 class="anchored" data-anchor-id="du-taux-de-défaut-à-la-distribution-at-risk-larchitecture">2. Du taux de défaut à la distribution at-Risk : l’architecture</h2>
+<div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
+<figure class="arch figure"><svg viewbox="0 0 1160 300" aria-label="Approche at-Risk"><defs><marker id="ah-atrisk" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="105" y="140" text-anchor="middle">INVERSION ASRF</text><text class="arch-in-s" x="105" y="162" text-anchor="middle">Extraction du facteur</text><text class="arch-in-s" x="105" y="180" text-anchor="middle">systémique z</text><line class="arch-arrow" x1="200" y1="148" x2="220" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="224" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="248" cy="96" r="13"></circle><text class="arch-brick-numt" x="248" y="101" text-anchor="middle">2</text><text class="arch-title" x="313" y="140" text-anchor="middle">QUANTILES</text><text class="arch-sub" x="313" y="162" text-anchor="middle">Conditionnement au</text><text class="arch-sub" x="313" y="180" text-anchor="middle">scénario</text><line class="arch-arrow" x1="408" y1="148" x2="428" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="432" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="456" cy="96" r="13"></circle><text class="arch-brick-numt" x="456" y="101" text-anchor="middle">3</text><text class="arch-title" x="521" y="140" text-anchor="middle">LISSAGE SKEW-T</text><text class="arch-sub" x="521" y="162" text-anchor="middle">Distribution continue</text><text class="arch-sub" x="521" y="180" text-anchor="middle">et flexible</text><line class="arch-arrow" x1="616" y1="148" x2="636" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="640" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="664" cy="96" r="13"></circle><text class="arch-brick-numt" x="664" y="101" text-anchor="middle">4</text><text class="arch-title" x="729" y="140" text-anchor="middle">CONVERSION</text><text class="arch-sub" x="729" y="162" text-anchor="middle">Rétrotransformation z</text><text class="arch-sub" x="729" y="180" text-anchor="middle">→ PD</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 72, 842 72" marker-end="url(#ah-atrisk)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">PD moyenne</text><text class="arch-out-s" x="866" y="90">valeur centrale</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 150, 842 150" marker-end="url(#ah-atrisk)"></path><rect class="arch-out is-tail" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">VaR-at-Risk</text><text class="arch-out-s" x="866" y="168">quantile de queue (95 %)</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 228, 842 228" marker-end="url(#ah-atrisk)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">Expected shortfall</text><text class="arch-out-s" x="866" y="246">moyenne au-delà de la VaR</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Architecture modulaire en quatre étapes : extraction du facteur latent, projection quantile sous scénario NGFS, lissage paramétrique skew-t et rétrotransformation analytique en métriques de risque.</figcaption></figure>
+<div class="listing-no-matching d-none">Aucun article correspondant</div>
+</div>
+<p>L’extraction du facteur systémique procède par inversion de la formule ASRF à partir des taux de défaut observés <img src="https://latex.codecogs.com/png.latex?DR_t">, de la PD de long terme et de la corrélation <img src="https://latex.codecogs.com/png.latex?%5Crho"> :</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_t%20=%20%5Cfrac%7B%5CPhi%5E%7B-1%7D(PD_%7BLT%7D)%20-%20%5Csqrt%7B1-%5Crho%7D%5C,%5CPhi%5E%7B-1%7D(DR_t)%7D%7B%5Csqrt%7B%5Crho%7D%7D"></p>
+<p>La rétrotransformation en probabilités de défaut emprunte le chemin inverse, par la fonction ASRF :</p>
+<p><img src="https://latex.codecogs.com/png.latex?PD(z)%20=%20%5CPhi%5C!%5Cleft(%5Cfrac%7B%5CPhi%5E%7B-1%7D(PD_%7BLT%7D)%20-%20%5Csqrt%7B%5Crho%7D%5C,z%7D%7B%5Csqrt%7B1-%5Crho%7D%7D%5Cright)"></p>
+<div class="why">
+<p><span class="label">Ce que le cadre apporte</span></p>
+<ul>
+<li><strong>Information complète.</strong> Il délivre simultanément la PD moyenne, la VaR-at-Risk à 95 % et l’expected shortfall à 95 %.</li>
+<li><strong>Ancrage réglementaire et académique.</strong> Il réutilise le moteur Merton–Vasicek / ASRF tout en intégrant les avancées de l’économétrie quantile issues du <em>Growth-at-Risk</em>.</li>
+<li><strong>Flexibilité paramétrique.</strong> La loi skew-t capte l’asymétrie et l’épaississement des queues en période de crise, que la loi gaussienne ignore.</li>
+</ul>
+</div>
+</section>
+<section id="mise-en-œuvre" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<ol type="1">
+<li><strong>Extraction.</strong> Inversion de la formule ASRF / Merton–Vasicek sur l’historique des défauts internes.</li>
+<li><strong>Estimation.</strong> Calibration des régressions quantiles et ajustement de la loi skew-t sur la grille de quantiles estimés.</li>
+<li><strong>Projection.</strong> Injection des trajectoires de scénarios — NGFS, BCE, internes — pour alimenter les métriques de queue.</li>
+</ol>
+<div class="retenir">
+<p><span class="label">À retenir pour chaque équipe</span></p>
+<ul>
+<li><strong>Modélisation.</strong> La sévérité d’un scénario ne se lit pas dans sa moyenne mais dans la forme de sa queue défavorable.</li>
+<li><strong>Validation.</strong> Monotonie des quantiles et hiérarchie VaR / ES sont garanties par construction, donc vérifiables.</li>
+<li><strong>Pilotage.</strong> Le cadre fournit une métrique chiffrée pour challenger la solidité des fonds propres face à des trajectoires alternatives au scénario central imposé.</li>
+</ul>
+</div>
+</section>
+<section id="article-de-recherche-associé" class="level2">
+<h2 class="anchored" data-anchor-id="article-de-recherche-associé">Article de recherche associé</h2>
+<p>Flament, G., Hurlin, C. &amp; Lajaunie, Q. (2026). <em>The at-Risk Approach: A New Tool for Stress Tests and Overlays.</em> <strong>Annals of Operations Research</strong>, 361, 27–60.</p>
+<div class="note-cta">
+<p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/index.html#contact">écrivez au collectif →</a></p>
+</div>
+<div class="partnership">
+<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+</div>
+</section>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
+<div class="refs">
+<p>Adrian, T., Boyarchenko, N. &amp; Giannone, D. (2019). Vulnerable growth. <em>American Economic Review</em>, 109(4), 1263–1289.</p>
+<p>Aydemir, R., Atik, Z. &amp; Guloglu, B. (2024). Macro stress testing the credit risk of conventional and participation banks in Turkey: a nonparametric quantile regression approach. <em>Eastern European Economics</em>, 62(6), 727–761.</p>
+<p>Azzalini, A. &amp; Capitanio, A. (2003). Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t-distribution. <em>JRSS Series B</em>, 65(2), 367–389.</p>
+<p>Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. <em>Journal of Financial Intermediation</em>, 12(3), 199–232.</p>
+<p>Schechtman, R. &amp; Gaglianone, W. P. (2012). Macro stress testing of credit risk focused on the tails. <em>Journal of Financial Stability</em>, 8(3), 174–192.</p>
+<p>Vasicek, O. A. (1987). <em>Probability of loss on loan portfolio.</em> KMV.</p>
+</div>
+
+
+
+</section>
+
+ ]]></description>
+  <category>Risque climatique</category>
+  <category>Risque de crédit</category>
+  <category>Stress testing</category>
+  <category>Quantiles</category>
+  <guid>https://storm.example.org/fr/fr/notes/atrisk-climat.html</guid>
+  <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique</title>
+  <dc:creator>Sabiha Zarhouni Jaures</dc:creator>
+  <dc:creator>Ève-Roxane Doffou</dc:creator>
+  <dc:creator>Charles-Emmanuel Prost</dc:creator>
+  <link>https://storm.example.org/fr/fr/notes/downscaling.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="standfirst">
+<p><span class="lede">En bref</span> L’évaluation prospective des risques physiques s’appuie sur les projections climatiques produites par la communauté scientifique internationale, dont la génération la plus récente est le CMIP6. Ces projections sont produites par des modèles globaux conçus pour l’étude du système climatique à l’échelle planétaire : leurs sorties brutes ne peuvent pas être utilisées directement pour évaluer un aléa sur des expositions localisées. Les méthodes de downscaling statistique <em>distribution-wise</em> y répondent en alignant les lois marginales simulées sur celles d’une réanalyse de référence.</p>
+</div>
+<div class="message">
+<p><span class="label">Message central</span></p>
+<p>Une correction de biais poursuit <strong>deux objectifs distincts</strong> : ramener la distribution simulée sur celle de la référence, et transporter intact le changement que le modèle projette entre la période historique et le futur. Rien ne garantit qu’une méthode satisfaisant le premier réussisse sur le second.</p>
+<p>Entre deux méthodes aux performances d’ajustement quasi identiques sur l’historique, l’une peut amputer une part sensible du signal de changement climatique aux quantiles extrêmes, quand l’autre le préserve intégralement. La qualité d’ajustement est un <strong>préalable</strong>, pas un critère de sélection à lui seul : dans un exercice prospectif, la préservation du signal prend le pas.</p>
+</div>
+<section id="pourquoi-les-sorties-brutes-ne-suffisent-pas" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-les-sorties-brutes-ne-suffisent-pas">1. Pourquoi les sorties brutes ne suffisent pas</h2>
+<p>L’intensification des aléas physiques se transmet aux bilans financiers par une chaîne documentée : l’aléa frappe des expositions localisées — collatéral immobilier, sites industriels, contreparties agricoles — dont la vulnérabilité détermine un dommage physique qui se traduit en pertes financières, hausse du risque de crédit pour les banques et alourdissement de la sinistralité pour les assureurs.</p>
+<div class="why">
+<p><span class="label">Pourquoi c’est important</span></p>
+<ul>
+<li><strong>La résolution spatiale.</strong> La maille des modèles globaux dépasse fréquemment la centaine de kilomètres : deux sites distants de plusieurs dizaines de kilomètres partagent la même valeur simulée. L’interpolation lisse les valeurs sans créer d’information locale nouvelle.</li>
+<li><strong>Le biais de distribution.</strong> Les modèles CMIP sous-estiment l’ampleur et la fréquence des événements extrêmes — précisément ceux qui concentrent les impacts économiques et financiers.</li>
+<li><strong>L’agrégation multi-modèles ne suffit pas.</strong> Un ensemble de modèles rend compte de leur divergence, non de ce qu’ils partagent : un biais commun se retrouve aussi bien dans la médiane que dans les bornes de l’enveloppe d’incertitude.</li>
+<li><strong>Souveraineté et auditabilité.</strong> Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d’auditabilité qui s’imposent aux établissements.</li>
+</ul>
+</div>
+</section>
+<section id="les-méthodes-distribution-wise-principe-et-variantes" class="level2">
+<h2 class="anchored" data-anchor-id="les-méthodes-distribution-wise-principe-et-variantes">2. Les méthodes distribution-wise : principe et variantes</h2>
+<p>Les approches <em>Model Output Statistics</em> établissent une relation statistique directe entre les sorties brutes d’un modèle climatique et une référence locale — typiquement une réanalyse telle qu’ERA5-Land, de résolution native de 9 km. La relation, apprise sur la période historique, est ensuite appliquée aux projections du même modèle.</p>
+<div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
+<figure class="arch figure"><svg viewbox="0 0 1160 232" aria-label="Downscaling statistique"><defs><marker id="ah-downscaling" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="58" r="13"></circle><text class="arch-brick-numt" x="40" y="63" text-anchor="middle">1</text><text class="arch-in-t" x="147.5" y="102" text-anchor="middle">REGRIDDING</text><text class="arch-in-s" x="147.5" y="124" text-anchor="middle">Alignement spatial des grilles</text><line class="arch-arrow" x1="285" y1="110" x2="305" y2="110" marker-end="url(#ah-downscaling)"></line><rect class="arch-brick" x="309" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="333" cy="58" r="13"></circle><text class="arch-brick-numt" x="333" y="63" text-anchor="middle">2</text><text class="arch-title" x="440.5" y="102" text-anchor="middle">APPRENTISSAGE</text><text class="arch-sub" x="440.5" y="124" text-anchor="middle">Méthodes candidates sur</text><text class="arch-sub" x="440.5" y="142" text-anchor="middle">l'historique</text><line class="arch-arrow" x1="578" y1="110" x2="598" y2="110" marker-end="url(#ah-downscaling)"></line><rect class="arch-brick" x="602" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="626" cy="58" r="13"></circle><text class="arch-brick-numt" x="626" y="63" text-anchor="middle">3</text><text class="arch-title" x="733.5" y="102" text-anchor="middle">SÉLECTION</text><text class="arch-sub" x="733.5" y="124" text-anchor="middle">Échantillon de test indépendant</text><line class="arch-arrow" x1="871" y1="110" x2="891" y2="110" marker-end="url(#ah-downscaling)"></line><rect class="arch-brick" x="895" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="919" cy="58" r="13"></circle><text class="arch-brick-numt" x="919" y="63" text-anchor="middle">4</text><text class="arch-title" x="1026.5" y="102" text-anchor="middle">APPLICATION</text><text class="arch-sub" x="1026.5" y="124" text-anchor="middle">Recalibrage puis projections</text><text class="arch-sub" x="1026.5" y="142" text-anchor="middle">futures</text></svg><figcaption class="caption"><strong>Figure 1.</strong> La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d'ajustement : la préservation du signal de changement prime dans un exercice prospectif.</figcaption></figure>
+<div class="listing-no-matching d-none">Aucun article correspondant</div>
+</div>
+<div class="why">
+<p><span class="label">Ce que la correction apporte</span></p>
+<ul>
+<li><strong>Une loi marginale réaliste.</strong> La distribution corrigée retrouve la structure bimodale — régimes hivernal et estival — que les sorties brutes aplatissent.</li>
+<li><strong>Des extrêmes exploitables.</strong> Les quantiles hauts et bas cessent d’être systématiquement sous-estimés, ce qui conditionne toute mesure de risque physique.</li>
+<li><strong>Un coût de mise en œuvre modeste.</strong> Aucune simulation climatique à fine échelle n’est requise.</li>
+<li><strong>Une maîtrise interne.</strong> La méthode est explicite, documentable et justifiable auprès du superviseur.</li>
+</ul>
+</div>
+</section>
+<section id="mise-en-œuvre" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<ol type="1">
+<li><strong>Aligner les grilles.</strong> Regridding des sorties du modèle sur la grille de la réanalyse de référence.</li>
+<li><strong>Apprendre et sélectionner.</strong> Estimer plusieurs méthodes candidates sur un échantillon d’apprentissage, puis les départager sur un échantillon de test indépendant.</li>
+<li><strong>Recalibrer et projeter.</strong> Réestimer sur l’intégralité de l’historique, puis appliquer aux scénarios futurs.</li>
+</ol>
+<div class="retenir">
+<p><span class="label">À retenir pour chaque équipe</span></p>
+<ul>
+<li><strong>Modélisation.</strong> Deux critères, pas un : ajustement sur l’historique <strong>et</strong> préservation du signal de changement aux quantiles extrêmes.</li>
+<li><strong>Validation.</strong> La méthode retenue doit être justifiée sur le second critère, qui n’apparaît dans aucune métrique d’ajustement standard.</li>
+<li><strong>Pilotage.</strong> Maîtriser la correction en interne relève autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif.</li>
+</ul>
+</div>
+<div class="note-cta">
+<p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/index.html#contact">écrivez au collectif →</a></p>
+</div>
+<div class="partnership">
+<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+</div>
+</section>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
+<div class="refs">
+<p>Caisse Centrale de Réassurance (2023). <em>Conséquences du changement climatique sur le coût des catastrophes naturelles en France à horizon 2050.</em></p>
+<p>Lenderink, G., Buishand, A. &amp; van Deursen, W. (2007). Estimates of future discharges of the river Rhine using two scenario methodologies. <em>Hydrology and Earth System Sciences</em>, 11(3), 1145–1159.</p>
+<p>Maraun, D. &amp; Widmann, M. (2018). <em>Statistical Downscaling and Bias Correction for Climate Research.</em> Cambridge University Press.</p>
+<p>Michelangeli, P.-A., Vrac, M. &amp; Loukos, H. (2009). Probabilistic downscaling approaches. <em>Geophysical Research Letters</em>, 36(11).</p>
+<p>Vautard, R. et al.&nbsp;(2020). Human contribution to the record-breaking June and July 2019 heatwaves in Western Europe. <em>Environmental Research Letters</em>, 15(9), 094077.</p>
+</div>
+
+
+
+</section>
+
+ ]]></description>
+  <category>Risque climatique</category>
+  <category>Downscaling</category>
+  <category>Risque physique</category>
+  <guid>https://storm.example.org/fr/fr/notes/downscaling.html</guid>
+  <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Reverse stress testing : partir du seuil de capital, pas du scénario</title>
+  <dc:creator>Mamadou Cherif Diallo</dc:creator>
+  <dc:creator>Gwezheneg Ory</dc:creator>
+  <dc:creator>Tony Pereira</dc:creator>
+  <dc:creator>Yoann Pull</dc:creator>
+  <link>https://storm.example.org/fr/fr/notes/reverse-stress-test.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="standfirst">
+<p><span class="lede">En bref</span> Les stress tests classiques répondent à la question « combien coûterait ce scénario ? ». Le régulateur pose désormais aussi la question inverse : « quel scénario coûterait cela ? » L’exercice thématique 2026 de la BCE demande aux banques d’identifier les événements géopolitiques susceptibles d’entamer leur capital CET1 d’au moins 300 points de base. Cette note présente une architecture opérationnelle qui transforme un seuil de capital en scénario de rupture, en réutilisant les modèles internes existants.</p>
+</div>
+<div class="message">
+<p><span class="label">Message central</span></p>
+<p>Le reverse stress testing inverse la logique habituelle : au lieu de mesurer l’impact d’un scénario donné, on part de la condition de défaillance et on cherche, parmi tous les scénarios possibles, celui qui la produit <strong>avec la plus grande plausibilité</strong>.</p>
+<p>Formulé comme une recherche sous contrainte, l’exercice cesse d’être un récit : il produit un objet documenté, chiffré et challengeable. L’illustration géopolitique n’est qu’une preuve de concept ; la même architecture s’applique aux chocs macroéconomiques, climatiques, de taux, sectoriels ou de marché.</p>
+</div>
+<section id="ce-que-les-scénarios-prescrits-ne-couvrent-pas" class="level2">
+<h2 class="anchored" data-anchor-id="ce-que-les-scénarios-prescrits-ne-couvrent-pas">1. Ce que les scénarios prescrits ne couvrent pas</h2>
+<p>Le stress testing standard part d’un scénario prescrit et en mesure l’impact. Le reverse stress testing part du résultat qui compte — un franchissement de seuil — et remonte vers le scénario qui l’expliquerait. Les deux sont complémentaires.</p>
+<div class="why">
+<p><span class="label">Pourquoi c’est important</span></p>
+<ul>
+<li><strong>Un angle mort structurel.</strong> Un exercice <em>forward</em> n’évalue que les scénarios que l’on a pensé à écrire ; une combinaison de chocs dangereuse pour le profil propre de l’établissement peut ne figurer dans aucun catalogue. Le reverse stress testing va la chercher directement.</li>
+<li><strong>Une attente prudentielle explicite.</strong> Les principes de stress testing du Comité de Bâle incluent le reverse stress testing, et l’exercice thématique 2026 de la BCE en fait une demande concrète, avec un seuil chiffré.</li>
+<li><strong>Une exigence de plausibilité.</strong> Sans mesure de plausibilité explicite, un scénario de rupture reste un récit : impossible à comparer, difficile à challenger en validation.</li>
+</ul>
+</div>
+</section>
+<section id="du-seuil-au-scénario-une-architecture-en-cinq-briques" class="level2">
+<h2 class="anchored" data-anchor-id="du-seuil-au-scénario-une-architecture-en-cinq-briques">2. Du seuil au scénario : une architecture en cinq briques</h2>
+<p>Le seuil de capital entre par la gauche, un scénario documenté sort par la droite. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement.</p>
+<div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
+<figure class="arch figure"><svg viewbox="0 0 1160 232" aria-label="Reverse stress testing"><defs><marker id="ah-reverse-st" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="58" r="13"></circle><text class="arch-brick-numt" x="40" y="63" text-anchor="middle">1</text><text class="arch-in-t" x="118" y="102" text-anchor="middle">SEUIL</text><text class="arch-in-s" x="118" y="124" text-anchor="middle">Ratio CET1 minimal R*</text><line class="arch-arrow" x1="226" y1="110" x2="246" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="250" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="274" cy="58" r="13"></circle><text class="arch-brick-numt" x="274" y="63" text-anchor="middle">2</text><text class="arch-title" x="352" y="102" text-anchor="middle">SCÉNARIOS</text><text class="arch-sub" x="352" y="124" text-anchor="middle">Macro-financiers et</text><text class="arch-sub" x="352" y="142" text-anchor="middle">géopolitiques</text><line class="arch-arrow" x1="460" y1="110" x2="480" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="484" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="508" cy="58" r="13"></circle><text class="arch-brick-numt" x="508" y="63" text-anchor="middle">3</text><text class="arch-title" x="586" y="102" text-anchor="middle">TRANSMISSION</text><text class="arch-sub" x="586" y="124" text-anchor="middle">PD/LGD → pertes → RWA/CET1</text><line class="arch-arrow" x1="694" y1="110" x2="714" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="718" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="742" cy="58" r="13"></circle><text class="arch-brick-numt" x="742" y="63" text-anchor="middle">4</text><text class="arch-title" x="820" y="102" text-anchor="middle">RUPTURE</text><text class="arch-sub" x="820" y="124" text-anchor="middle">Point s* le plus plausible</text><line class="arch-arrow" x1="928" y1="110" x2="948" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="952" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="976" cy="58" r="13"></circle><text class="arch-brick-numt" x="976" y="63" text-anchor="middle">5</text><text class="arch-title" x="1054" y="102" text-anchor="middle">GOUVERNANCE</text><text class="arch-sub" x="1054" y="124" text-anchor="middle">Voisinage local et</text><text class="arch-sub" x="1054" y="142" text-anchor="middle">robustesse</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement.</figcaption></figure>
+<div class="listing-no-matching d-none">Aucun article correspondant</div>
+</div>
+<p><strong>Une seule équation à retenir.</strong> Le reverse stress test se formule comme une recherche de plausibilité sous contrainte :</p>
+<p><img src="https://latex.codecogs.com/png.latex?s%5E%5Cstar%20%5Cin%20%5Carg%5Cmax_%7Bs%20%5Cin%20%5Cmathcal%7BS%7D%7D%20f(s)%20%5Cquad%20%5Ctext%7Bsous%20contrainte%7D%20%5Cquad%20R(s)%20%5Cle%20R%5E%5Cstar"></p>
+<p>où <img src="https://latex.codecogs.com/png.latex?f(s)"> mesure la plausibilité du scénario, <img src="https://latex.codecogs.com/png.latex?R(s)"> le ratio de capital sous ce scénario et <img src="https://latex.codecogs.com/png.latex?R%5E%5Cstar"> le seuil critique. Le point de rupture <img src="https://latex.codecogs.com/png.latex?s%5E%5Cstar"> est la façon <strong>la plus crédible</strong> de franchir le seuil, pas la plus sévère : c’est précisément ce qui le rend discutable en comité et opposable en validation.</p>
+<div class="why">
+<p><span class="label">Ce que le cadre apporte</span></p>
+<ul>
+<li><strong>Aucun re-développement.</strong> Le moteur de crédit interne (Merton–Vasicek / ASRF, déjà validé) et les cartographies PD/LGD existantes sont réutilisés tels quels ; seule la couche de recherche s’ajoute.</li>
+<li><strong>Une plausibilité explicite.</strong> Chaque scénario de rupture est assorti d’une mesure de crédibilité — densité de référence ou distance statistique — comparable d’un exercice à l’autre.</li>
+<li><strong>Un objet de gouvernance.</strong> Un point de rupture documenté et son voisinage, plutôt qu’une bibliothèque de récits non hiérarchisés.</li>
+<li><strong>Généralisable.</strong> Géopolitique, climat, taux, secteur, marché : changer de famille de scénarios ne change ni l’architecture, ni la gouvernance.</li>
+</ul>
+</div>
+</section>
+<section id="mise-en-œuvre" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<ol type="1">
+<li><strong>Fixer la condition de défaillance.</strong> Un seuil de capital explicite, par exemple un ratio CET1 minimal, ou une perte maximale tolérée.</li>
+<li><strong>Décrire l’espace de scénarios et sa plausibilité.</strong> Un petit nombre de facteurs de risque et une densité de référence suffisent pour rendre la recherche interprétable.</li>
+<li><strong>Réutiliser la chaîne de transmission interne.</strong> Cartographies PD/LGD, pertes, RWA et capital : le dispositif existant fournit <img src="https://latex.codecogs.com/png.latex?R(s)"> sans modification.</li>
+</ol>
+<div class="retenir">
+<p><span class="label">À retenir pour chaque équipe</span></p>
+<ul>
+<li><strong>Modélisation.</strong> La plausibilité doit être définie avant la recherche, pas après : c’est elle qui distingue un scénario de rupture d’un récit sévère.</li>
+<li><strong>Validation.</strong> Le point de rupture et son voisinage sont documentés et reproductibles, donc opposables.</li>
+<li><strong>Pilotage.</strong> L’exercice répond directement à la demande prudentielle 2026 sans nouvelle infrastructure de modèles.</li>
+</ul>
+</div>
+</section>
+<section id="article-de-recherche-associé" class="level2">
+<h2 class="anchored" data-anchor-id="article-de-recherche-associé">Article de recherche associé</h2>
+<p>Hurlin, C., Lajaunie, Q. &amp; Pull, Y. (2026). <em>Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational Framework.</em> <a href="https://arxiv.org/abs/2601.03983">arXiv:2601.03983</a></p>
+<div class="note-cta">
+<p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/index.html#contact">écrivez au collectif →</a></p>
+</div>
+<div class="partnership">
+<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+</div>
+</section>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
+<div class="refs">
+<p>BCBS (2009). <em>Principles for sound stress testing practices and supervision.</em> BCBS155, Comité de Bâle.</p>
+<p>BCBS (2018). <em>Stress testing principles.</em> D450, Comité de Bâle.</p>
+<p>ECB (2025). <em>ECB to assess banks’ stress testing capabilities to capture geopolitical risk.</em> Communiqué, supervision bancaire, 12 décembre 2025.</p>
+<p>Glasserman, P., Kang, C. &amp; Kang, W. (2015). Stress scenario selection by empirical likelihood. <em>Quantitative Finance</em>, 15(1), 25–41.</p>
+<p>Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. <em>Journal of Financial Intermediation</em>, 12(3), 199–232.</p>
+<p>Grundke, P. (2011). Reverse stress tests with bottom-up approaches. <em>Journal of Risk Model Validation</em>, 5(3), 71–90.</p>
+<p>Kopeliovich, Y., Novosyolov, A., Satchkov, D. &amp; Schachter, B. (2015). Robust risk estimation and hedging: A reverse stress testing approach. <em>The Journal of Derivatives</em>, 22(4), 10–25.</p>
+<p>Vasicek, O. (2002). The distribution of loan portfolio value. <em>Risk</em>, 15(12), 160–162.</p>
+</div>
+
+
+
+</section>
+
+ ]]></description>
+  <category>Risque géopolitique</category>
+  <category>Stress testing</category>
+  <category>Optimisation</category>
+  <guid>https://storm.example.org/fr/fr/notes/reverse-stress-test.html</guid>
+  <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne</title>
+  <dc:creator>Inès Bordais</dc:creator>
+  <dc:creator>Léane Chevrier</dc:creator>
+  <dc:creator>Quentin Lajaunie</dc:creator>
+  <dc:creator>Yoann Pull</dc:creator>
+  <link>https://storm.example.org/fr/fr/notes/stress-tests-credit.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="standfirst">
+<p><span class="lede">En bref</span> Les stress tests de crédit disposent déjà d’un pont entre scénario macro-financier et probabilités de défaut : les modèles satellites. Mais ce pont ne transmet, le plus souvent, qu’une trajectoire moyenne. Lorsque la PD est une fonction non linéaire d’un facteur de crédit incertain, cette transmission partielle écarte l’incertitude prédictive : elle sous-estime les niveaux projetés de PD — jusqu’à 8 % dans notre application — et ne dit rien de la queue de distribution, là où se décident provisions et capital.</p>
+</div>
+<div class="message">
+<p><span class="label">Message central</span></p>
+<p>Il ne s’agit pas de remplacer les satellites existants, mais de leur faire produire davantage. En propageant la distribution complète du facteur de crédit, et non sa seule trajectoire moyenne, le même dispositif corrige la PD moyenne pour tenir compte de l’incertitude prédictive, puis délivre <strong>en forme close, sans simulation lourde et sans re-développement</strong>, deux mesures de queue complémentaires : le PD-at-Risk et l’expected shortfall — la mesure vers laquelle les régulateurs ont déjà fait basculer le risque de marché.</p>
+<p>Une correction de niveau et trois lectures du risque au prix d’une.</p>
+</div>
+<section id="ce-que-la-trajectoire-moyenne-ne-transmet-pas" class="level2">
+<h2 class="anchored" data-anchor-id="ce-que-la-trajectoire-moyenne-ne-transmet-pas">1. Ce que la trajectoire moyenne ne transmet pas</h2>
+<p>Le stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s’élargit chaque année. L’architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.</p>
+<p>La marge de progrès est dans la façon dont le scénario traverse cette chaîne. En pratique, il est propagé comme une trajectoire moyenne, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Utile, cette approche devient incomplète dès que la PD est non linéaire dans les conditions de crédit : la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. En écartant l’incertitude prédictive, l’approximation joue, par convexité, toujours dans le même sens — elle sous-estime le niveau des PD.</p>
+<div class="why">
+<p><span class="label">Pourquoi c’est important</span></p>
+<ul>
+<li><strong>Des niveaux de PD sous-estimés.</strong> Le <em>plug-in</em> (PD évaluée sur la trajectoire moyenne) et la <em>perfect foresight</em> (chemin supposé connu) écartent tout ou partie de l’incertitude prédictive : dans notre application, les PD à trois ans sont sous-estimées de 7 à 8 %, un biais direct sur provisions et capital.</li>
+<li><strong>Pas de mesure de queue.</strong> Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.</li>
+<li><strong>Une hypothèse peu documentée.</strong> La dispersion du facteur de crédit est écartée sans justification explicite, un point d’attention croissant pour la validation interne comme pour le superviseur.</li>
+</ul>
+</div>
+</section>
+<section id="corriger-le-niveau-révéler-la-queue-larchitecture" class="level2">
+<h2 class="anchored" data-anchor-id="corriger-le-niveau-révéler-la-queue-larchitecture">2. Corriger le niveau, révéler la queue : l’architecture</h2>
+<p>Le cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l’incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c’est là le point décisif en pratique : <strong>chaque bloc est remplaçable par le modèle interne déjà validé de l’établissement.</strong></p>
+<div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
+<figure class="arch figure"><svg viewbox="0 0 1160 300" aria-label="Stress tests de crédit"><defs><marker id="ah-stress-credit" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="105" y="140" text-anchor="middle">CHOC</text><text class="arch-in-s" x="105" y="162" text-anchor="middle">Innovation</text><text class="arch-in-s" x="105" y="180" text-anchor="middle">macro-financière</text><line class="arch-arrow" x1="200" y1="148" x2="220" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="224" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="248" cy="96" r="13"></circle><text class="arch-brick-numt" x="248" y="101" text-anchor="middle">2</text><text class="arch-title" x="313" y="140" text-anchor="middle">VAR MACRO</text><text class="arch-sub" x="313" y="162" text-anchor="middle">Propage le choc dans</text><text class="arch-sub" x="313" y="180" text-anchor="middle">l'économie</text><line class="arch-arrow" x1="408" y1="148" x2="428" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="432" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="456" cy="96" r="13"></circle><text class="arch-brick-numt" x="456" y="101" text-anchor="middle">3</text><text class="arch-title" x="521" y="140" text-anchor="middle">SATELLITE</text><text class="arch-sub" x="521" y="162" text-anchor="middle">Facteur de crédit</text><text class="arch-sub" x="521" y="180" text-anchor="middle">systémique Z</text><line class="arch-arrow" x1="616" y1="148" x2="636" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="640" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="664" cy="96" r="13"></circle><text class="arch-brick-numt" x="664" y="101" text-anchor="middle">4</text><text class="arch-title" x="729" y="140" text-anchor="middle">CARTOGRAPHIE</text><text class="arch-sub" x="729" y="162" text-anchor="middle">Merton–Vasicek π(Z)</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 72, 842 72" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">PD moyenne</text><text class="arch-out-s" x="866" y="90">corrigée de l'incertitude prédictive</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 150, 842 150" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out is-tail" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">PD-at-Risk</text><text class="arch-out-s" x="866" y="168">quantile de queue</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 228, 842 228" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">Expected shortfall</text><text class="arch-out-s" x="866" y="246">moyenne au-delà du seuil</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l'établissement.</figcaption></figure>
+<div class="listing-no-matching d-none">Aucun article correspondant</div>
+</div>
+<p><strong>Une seule équation, déjà familière aux équipes de crédit.</strong> Le cœur du satellite est le modèle de Merton–Vasicek, socle du cadre IRB de Bâle, qui relie le facteur systémique <img src="https://latex.codecogs.com/png.latex?Z_t"> à la PD conditionnelle du portefeuille :</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpi(Z_t)%20%5C;=%5C;%20%5CPhi%5C!%5Cleft(%5Cfrac%7B%5CPhi%5E%7B-1%7D(p)%20-%20%5Csqrt%7B%5Crho%7D%5C,Z_t%7D%7B%5Csqrt%7B1-%5Crho%7D%7D%5Cright)"></p>
+<p>où <img src="https://latex.codecogs.com/png.latex?%5CPhi"> est la fonction de répartition de la loi normale, <img src="https://latex.codecogs.com/png.latex?p"> la PD de long terme et <img src="https://latex.codecogs.com/png.latex?%5Crho"> la corrélation d’actifs. Rien de nouveau ici : c’est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.</p>
+<div class="why">
+<p><span class="label">Ce que le cadre apporte</span></p>
+<ul>
+<li><strong>Une correction de niveau.</strong> La PD moyenne intègre la distribution complète du facteur de crédit au lieu de sa seule espérance — le biais de convexité disparaît.</li>
+<li><strong>Deux mesures de queue, gratuitement.</strong> PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.</li>
+<li><strong>Modularité.</strong> Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l’établissement sans toucher au reste.</li>
+<li><strong>Généralité.</strong> Le stress test géopolitique sur le crédit américain n’est qu’une preuve de concept : la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels.</li>
+</ul>
+</div>
+</section>
+<section id="mise-en-œuvre" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<ol type="1">
+<li><strong>Conserver le satellite de crédit interne.</strong> Le cadre se branche sur le modèle déjà validé et n’en modifie ni la spécification ni la calibration.</li>
+<li><strong>Brancher un bloc macro-financier dynamique en amont.</strong> Un VAR bayésien estimé sur l’historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.</li>
+<li><strong>Produire les trois sorties pour chaque scénario du catalogue.</strong> PD moyenne corrigée, PD-at-Risk et expected shortfall, pour chaque horizon de projection.</li>
+</ol>
+<div class="retenir">
+<p><span class="label">À retenir pour chaque équipe</span></p>
+<ul>
+<li><strong>Modélisation.</strong> Le biais de convexité est systématique et signé : la trajectoire moyenne sous-estime toujours la PD. Le corriger ne coûte rien de plus qu’un changement d’objet propagé.</li>
+<li><strong>Validation.</strong> L’hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.</li>
+<li><strong>Pilotage.</strong> Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement.</li>
+</ul>
+</div>
+</section>
+<section id="article-de-recherche-associé" class="level2">
+<h2 class="anchored" data-anchor-id="article-de-recherche-associé">Article de recherche associé</h2>
+<p>Flament, G., Hurlin, C., Lajaunie, Q. &amp; Pull, Y. (2026). <em>Generalized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical Risk.</em> <a href="https://arxiv.org/abs/2608.04469">arXiv:2608.04469</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7106918">SSRN</a></p>
+<div class="note-cta">
+<p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/index.html#contact">écrivez au collectif →</a></p>
+</div>
+<div class="partnership">
+<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+</div>
+</section>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
+<div class="refs">
+<p>Adrian, T., Boyarchenko, N. &amp; Giannone, D. (2019). Vulnerable growth. <em>American Economic Review</em>, 109(4), 1263–1289.</p>
+<p>Caldara, D. &amp; Iacoviello, M. (2022). Measuring geopolitical risk. <em>American Economic Review</em>, 112(4), 1194–1225.</p>
+<p>Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. <em>Journal of Financial Intermediation</em>, 12(3), 199–232.</p>
+<p>Merton, R. C. (1974). On the pricing of corporate debt: The risk structure of interest rates. <em>The Journal of Finance</em>, 29(2), 449–470.</p>
+<p>Vasicek, O. (2002). The distribution of loan portfolio value. <em>Risk</em>, 15(12), 160–162.</p>
+<p>Wilson, T. C. (1997). Portfolio credit risk. <em>RISK</em>, 10(10), 56–61.</p>
+</div>
+
+
+
+</section>
+
+ ]]></description>
+  <category>Risque de crédit</category>
+  <category>Stress testing</category>
+  <category>Quantiles</category>
+  <guid>https://storm.example.org/fr/fr/notes/stress-tests-credit.html</guid>
+  <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

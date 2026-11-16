@@ -1,0 +1,36 @@
+---
+pagetitle: "Notes — STORM"
+description: "Notes techniques, focus méthodologiques et perspectives courtes du collectif STORM."
+page-layout: full
+listing:
+  - id: notes
+    contents: "*.qmd"
+    template: ../../templates/fr/note.ejs
+    sort: "date desc"
+    date-format: "YYYY-MM-DD"
+    feed:
+      title: "STORM — Notes"
+---
+
+:::: {.theme-head}
+
+[Notes techniques]{.kicker}
+
+# Notes
+
+::: {.position-line}
+
+Notes techniques, focus méthodologiques et perspectives courtes. Chaque note se lit seule ; celles qui accompagnent un article de recherche le signalent.
+
+:::
+
+::::
+
+:::: {.section-wide}
+
+::: {#notes}
+
+:::
+
+::::
+

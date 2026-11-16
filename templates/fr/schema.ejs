@@ -1,0 +1,68 @@
+<%
+/* Schema d'architecture modulaire.
+   Donnees : data/schemas.yml — on decrit les etapes, le dessin est calcule ici.
+   Tout est emis sur UNE seule ligne : Pandoc laisse alors le SVG intact. */
+const LEG = "legende_fr";
+function esc(s) {
+return String(s == null ? "" : s)
+.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function wrap(txt, n) {
+if (!txt) return [];
+const words = String(txt).split(/\s+/);
+const lines = []; let cur = "";
+for (const w of words) {
+if ((cur + " " + w).trim().length > n && cur) { lines.push(cur); cur = w; }
+else { cur = (cur + " " + w).trim(); }
+}
+if (cur) lines.push(cur);
+return lines.slice(0, 2);
+}
+function ext(h){ return /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : ""; }
+let out = "";
+for (const item of items) {
+const steps = item.etapes || [];
+const outs = item.sorties || [];
+const N = steps.length, M = outs.length;
+if (!N) continue;
+const W = 1160, gap = 30;
+const H = M ? 300 : 232;
+const areaW = M ? 800 : 1140;
+const boxW = Math.round((areaW - gap * (N - 1)) / N);
+const boxH = 104, boxY = M ? 96 : 58;
+const outX = 846, outW = 300;
+const outH = M ? Math.round((220 - (M - 1) * 14) / M) : 0;
+const lastX = 16 + (N - 1) * (boxW + gap) + boxW;
+const mid = boxY + boxH / 2;
+const uid = esc(item.id || "schema");
+let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(item.alt || item.title) + '">';
+s += '<defs><marker id="ah-' + uid + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"/></marker></defs>';
+steps.forEach(function (st, i) {
+const x = 16 + i * (boxW + gap);
+const cx = x + boxW / 2;
+const isIn = (i === 0 && item.premier_plein !== false);
+s += '<rect class="' + (isIn ? 'arch-in' : 'arch-brick') + '" x="' + x + '" y="' + boxY + '" width="' + boxW + '" height="' + boxH + '" rx="8"/>';
+s += '<circle class="arch-brick-num" cx="' + (x + 24) + '" cy="' + boxY + '" r="13"/>';
+s += '<text class="arch-brick-numt" x="' + (x + 24) + '" y="' + (boxY + 5) + '" text-anchor="middle">' + (i + 1) + '</text>';
+s += '<text class="' + (isIn ? 'arch-in-t' : 'arch-title') + '" x="' + cx + '" y="' + (boxY + 44) + '" text-anchor="middle">' + esc(st.titre) + '</text>';
+wrap(st.sous_titre, Math.round(boxW / 8)).forEach(function (line, k) {
+s += '<text class="' + (isIn ? 'arch-in-s' : 'arch-sub') + '" x="' + cx + '" y="' + (boxY + 66 + k * 18) + '" text-anchor="middle">' + esc(line) + '</text>';
+});
+if (i < N - 1) {
+s += '<line class="arch-arrow" x1="' + (x + boxW + 6) + '" y1="' + mid + '" x2="' + (x + boxW + gap - 4) + '" y2="' + mid + '" marker-end="url(#ah-' + uid + ')"/>';
+}
+});
+outs.forEach(function (o, j) {
+const y = 40 + j * (outH + 14);
+const cy = y + outH / 2;
+s += '<path class="arch-arrow" d="M ' + (lastX + 6) + ' ' + mid + ' C ' + (lastX + 26) + ' ' + mid + ', ' + (outX - 24) + ' ' + cy + ', ' + (outX - 4) + ' ' + cy + '" marker-end="url(#ah-' + uid + ')"/>';
+s += '<rect class="arch-out' + (o.queue ? ' is-tail' : '') + '" x="' + outX + '" y="' + y + '" width="' + outW + '" height="' + outH + '" rx="8"/>';
+s += '<text class="arch-out-t" x="' + (outX + 20) + '" y="' + (y + outH / 2 - 2) + '">' + esc(o.titre) + '</text>';
+s += '<text class="arch-out-s" x="' + (outX + 20) + '" y="' + (y + outH / 2 + 18) + '">' + esc(o.sous_titre) + '</text>';
+});
+s += '</svg>';
+out += '<figure class="arch">' + s + '<figcaption class="caption"><strong>' + esc(item.figure || "Figure 1.") + '</strong> ' + esc(item[LEG]) + '</figcaption></figure>';
+}
+%>```{=html}
+<%= out %>
+```

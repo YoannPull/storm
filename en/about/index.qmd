@@ -1,0 +1,54 @@
+---
+pagetitle: "About — STORM"
+description: "What STORM is, how the collective works, and how to reach it."
+page-layout: full
+---
+
+:::: {.theme-head}
+
+[The collective]{.kicker}
+
+# About
+
+::: {.position-line}
+
+STORM — *Scenario-based Testing & Optimization in Risk Modeling* — is the quantitative research collective of **Square Management**.
+
+:::
+
+::::
+
+:::: {.theme-body}
+
+## What we do
+
+We develop, study and apply statistical, econometric and machine-learning methodologies to problems of decision under uncertainty. Much of our current work originates in financial risk management — credit risk, model validation and monitoring, stress testing, climate and geopolitical risk — but the aim is to produce methods that transfer to other domains.
+
+The collective turns quantitative research into concrete methodological building blocks for institutions' risk teams. This takes two complementary forms: **research papers**, submitted to and published in peer-reviewed journals, and **technical notes**, which carry the same work into practice for modelling, validation and steering teams.
+
+## How we work
+
+Two principles run through everything we do.
+
+**The mean is not the risk.** Standard practice propagates a scenario along its central path. But risk is not read in the mean: it concentrates in the tails. We propagate the full conditional distribution, or we invert the problem and start from the breaking threshold.
+
+**Building blocks, not replacements.** Our frameworks are modular by construction. Each block is independent and replaceable by the institution's already-validated internal model. No redevelopment is asked for: the existing set-up produces more, at the same computational cost.
+
+## Get in touch {#contact}
+
+For questions about our work, research collaboration or a request for a presentation, write to the collective.
+
+::: {.linkrow}
+
+[contact@storm.example.org](mailto:contact@storm.example.org)
+
+:::
+
+::: {.partnership}
+
+STORM is part of Square Management and the Square Research Center.
+
+:::
+
+::::
+

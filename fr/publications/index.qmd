@@ -1,0 +1,49 @@
+---
+pagetitle: "Publications — STORM"
+description: "Articles de recherche et notes techniques de STORM."
+page-layout: full
+listing:
+  - id: publications
+    contents: ../../data/publications.yml
+    template: ../../templates/fr/publication.ejs
+    sort: "date desc"
+  - id: notes
+    contents: ../../data/_notes.yml
+    template: ../../templates/fr/note.ejs
+    sort: "date desc"
+    date-format: "YYYY-MM-DD"
+---
+
+:::: {.theme-head}
+
+[Travaux académiques]{.kicker}
+
+# Publications
+
+::: {.position-line}
+
+Deux formats complémentaires : des articles de recherche, publiés ou en cours d'évaluation, et des notes techniques qui en restituent l'usage opérationnel.
+
+:::
+
+::::
+
+:::: {.section-wide}
+
+```{=html}
+<div class="sh" id="articles"><h2>Articles de recherche</h2><a href="#notes-techniques">notes techniques ↓</a></div>
+```
+
+::: {#publications}
+
+:::
+
+```{=html}
+<div class="sh" id="notes-techniques"><h2>Notes techniques</h2><a href="../notes/index.xml">RSS</a></div>
+```
+
+::: {#notes}
+
+:::
+
+::::

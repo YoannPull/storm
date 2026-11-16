@@ -1,0 +1,43 @@
+# =============================================================================
+#  AXES DE RECHERCHE — les cartes affichées sur l'accueil et sur /recherche
+# =============================================================================
+#  Pour ajouter un axe : copier un bloc, puis créer la page correspondante
+#  fr/recherche/<slug>.qmd et en/research/<slug>.qmd.
+#  L'ordre du fichier est l'ordre d'affichage.
+# =============================================================================
+
+- title: "Risque de crédit"
+  title_en: "Credit risk"
+  slug: "credit"
+  path: "recherche/risque-de-credit.html"
+  path_en: "research/credit-risk.html"
+  resume_fr: "Calibration et validation des PD, IFRS 9, dégradation significative du risque, indicateurs d'alerte précoce, mesures de queue sous scénario."
+  resume_en: "PD calibration and validation, IFRS 9, significant increase in credit risk, early warning indicators, tail measures under scenario."
+  ordre: 1
+
+- title: "Risque climatique"
+  title_en: "Climate risk"
+  slug: "climat"
+  path: "recherche/risque-climatique.html"
+  path_en: "research/climate-risk.html"
+  resume_fr: "Downscaling statistique des projections, scénarios CRD6 et NGFS, copules climatiques, scores de vulnérabilité, stress tests climatiques."
+  resume_en: "Statistical downscaling of projections, CRD6 and NGFS scenarios, climate copulas, vulnerability scores, climate stress testing."
+  ordre: 2
+
+- title: "Risque géopolitique"
+  title_en: "Geopolitical risk"
+  slug: "geopolitique"
+  path: "recherche/risque-geopolitique.html"
+  path_en: "research/geopolitical-risk.html"
+  resume_fr: "Stress tests et reverse stress tests géopolitiques, propagation des chocs aux portefeuilles de crédit, indicateurs de risque géopolitique."
+  resume_en: "Geopolitical stress tests and reverse stress tests, shock propagation to credit portfolios, geopolitical risk indicators."
+  ordre: 3
+
+- title: "Méthodes et fondements"
+  title_en: "Methods and foundations"
+  slug: "methodes"
+  path: "recherche/methodes.html"
+  path_en: "research/methods.html"
+  resume_fr: "Inférence séquentielle et anytime-valid, e-values, méthodes bayésiennes, quantiles et mesures de queue, explicabilité, équité, réseaux de Kolmogorov–Arnold."
+  resume_en: "Sequential and anytime-valid inference, e-values, Bayesian methods, quantiles and tail measures, explainability, fairness, Kolmogorov–Arnold networks."
+  ordre: 4

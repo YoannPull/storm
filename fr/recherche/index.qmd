@@ -1,0 +1,33 @@
+---
+pagetitle: "Recherche — STORM"
+description: "Les quatre axes de recherche du collectif STORM."
+page-layout: full
+listing:
+  - id: axes
+    contents: ../../data/axes.yml
+    template: ../../templates/fr/axe.ejs
+    sort: "ordre"
+---
+
+:::: {.theme-head}
+
+[Axes de recherche]{.kicker}
+
+# Recherche
+
+::: {.position-line}
+
+Trois domaines d'application, un socle méthodologique qui les traverse tous. Les méthodes circulent d'un axe à l'autre : c'est le même argument distributionnel qui sert au crédit, au climat et au géopolitique.
+
+:::
+
+::::
+
+:::: {.section-wide}
+
+::: {#axes}
+
+:::
+
+::::
+

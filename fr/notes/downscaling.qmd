@@ -1,0 +1,103 @@
+---
+title: "Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physique"
+subtitle: "Pourquoi les sorties brutes des modèles climatiques ne suffisent pas à l'analyse des risques physiques, et comment les corriger"
+description: "Pourquoi les sorties brutes des modèles CMIP6 ne suffisent pas à l'analyse du risque physique, et comment les corriger sans amputer le signal de changement climatique aux quantiles extrêmes."
+date: 2026-09-08
+author:
+  - Sabiha Zarhouni Jaures
+  - Ève-Roxane Doffou
+  - Charles-Emmanuel Prost
+categories: [Risque climatique, Downscaling, Risque physique]
+listing:
+  - id: schema
+    contents: ../../data/schemas.yml
+    include:
+      id: "downscaling"
+    template: ../../templates/fr/schema.ejs
+---
+
+::: {.standfirst}
+
+[En bref]{.lede}
+L'évaluation prospective des risques physiques s'appuie sur les projections climatiques produites par la communauté scientifique internationale, dont la génération la plus récente est le CMIP6. Ces projections sont produites par des modèles globaux conçus pour l'étude du système climatique à l'échelle planétaire : leurs sorties brutes ne peuvent pas être utilisées directement pour évaluer un aléa sur des expositions localisées. Les méthodes de downscaling statistique *distribution-wise* y répondent en alignant les lois marginales simulées sur celles d'une réanalyse de référence.
+
+:::
+
+::: {.message}
+
+[Message central]{.label}
+
+Une correction de biais poursuit **deux objectifs distincts** : ramener la distribution simulée sur celle de la référence, et transporter intact le changement que le modèle projette entre la période historique et le futur. Rien ne garantit qu'une méthode satisfaisant le premier réussisse sur le second.
+
+Entre deux méthodes aux performances d'ajustement quasi identiques sur l'historique, l'une peut amputer une part sensible du signal de changement climatique aux quantiles extrêmes, quand l'autre le préserve intégralement. La qualité d'ajustement est un **préalable**, pas un critère de sélection à lui seul : dans un exercice prospectif, la préservation du signal prend le pas.
+
+:::
+
+## 1. Pourquoi les sorties brutes ne suffisent pas
+
+L'intensification des aléas physiques se transmet aux bilans financiers par une chaîne documentée : l'aléa frappe des expositions localisées — collatéral immobilier, sites industriels, contreparties agricoles — dont la vulnérabilité détermine un dommage physique qui se traduit en pertes financières, hausse du risque de crédit pour les banques et alourdissement de la sinistralité pour les assureurs.
+
+::: {.why}
+
+[Pourquoi c'est important]{.label}
+
+- **La résolution spatiale.** La maille des modèles globaux dépasse fréquemment la centaine de kilomètres : deux sites distants de plusieurs dizaines de kilomètres partagent la même valeur simulée. L'interpolation lisse les valeurs sans créer d'information locale nouvelle.
+- **Le biais de distribution.** Les modèles CMIP sous-estiment l'ampleur et la fréquence des événements extrêmes — précisément ceux qui concentrent les impacts économiques et financiers.
+- **L'agrégation multi-modèles ne suffit pas.** Un ensemble de modèles rend compte de leur divergence, non de ce qu'ils partagent : un biais commun se retrouve aussi bien dans la médiane que dans les bornes de l'enveloppe d'incertitude.
+- **Souveraineté et auditabilité.** Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d'auditabilité qui s'imposent aux établissements.
+
+:::
+
+## 2. Les méthodes distribution-wise : principe et variantes
+
+Les approches *Model Output Statistics* établissent une relation statistique directe entre les sorties brutes d'un modèle climatique et une référence locale — typiquement une réanalyse telle qu'ERA5-Land, de résolution native de 9 km. La relation, apprise sur la période historique, est ensuite appliquée aux projections du même modèle.
+
+::: {#schema}
+
+:::
+
+::: {.why}
+
+[Ce que la correction apporte]{.label}
+
+- **Une loi marginale réaliste.** La distribution corrigée retrouve la structure bimodale — régimes hivernal et estival — que les sorties brutes aplatissent.
+- **Des extrêmes exploitables.** Les quantiles hauts et bas cessent d'être systématiquement sous-estimés, ce qui conditionne toute mesure de risque physique.
+- **Un coût de mise en œuvre modeste.** Aucune simulation climatique à fine échelle n'est requise.
+- **Une maîtrise interne.** La méthode est explicite, documentable et justifiable auprès du superviseur.
+
+:::
+
+## 3. Mise en œuvre
+
+1. **Aligner les grilles.** Regridding des sorties du modèle sur la grille de la réanalyse de référence.
+2. **Apprendre et sélectionner.** Estimer plusieurs méthodes candidates sur un échantillon d'apprentissage, puis les départager sur un échantillon de test indépendant.
+3. **Recalibrer et projeter.** Réestimer sur l'intégralité de l'historique, puis appliquer aux scénarios futurs.
+
+::: {.retenir}
+
+[À retenir pour chaque équipe]{.label}
+
+- **Modélisation.** Deux critères, pas un : ajustement sur l'historique **et** préservation du signal de changement aux quantiles extrêmes.
+- **Validation.** La méthode retenue doit être justifiée sur le second critère, qui n'apparaît dans aucune métrique d'ajustement standard.
+- **Pilotage.** Maîtriser la correction en interne relève autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif.
+
+:::
+
+{{< include ../_partenariat.qmd >}}
+
+## Références
+
+::: {.refs}
+
+Caisse Centrale de Réassurance (2023). *Conséquences du changement climatique sur le coût des catastrophes naturelles en France à horizon 2050.*
+
+Lenderink, G., Buishand, A. & van Deursen, W. (2007). Estimates of future discharges of the river Rhine using two scenario methodologies. *Hydrology and Earth System Sciences*, 11(3), 1145–1159.
+
+Maraun, D. & Widmann, M. (2018). *Statistical Downscaling and Bias Correction for Climate Research.* Cambridge University Press.
+
+Michelangeli, P.-A., Vrac, M. & Loukos, H. (2009). Probabilistic downscaling approaches. *Geophysical Research Letters*, 36(11).
+
+Vautard, R. et al. (2020). Human contribution to the record-breaking June and July 2019 heatwaves in Western Europe. *Environmental Research Letters*, 15(9), 094077.
+
+:::
+

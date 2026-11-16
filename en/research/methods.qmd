@@ -1,0 +1,102 @@
+---
+pagetitle: "Methods and foundations — STORM"
+description: "How STORM approaches methods and foundations."
+page-layout: full
+listing:
+  - id: projects
+    contents: ../../data/projets.yml
+    include:
+      axe: "methodes"
+    template: ../../templates/en/projet.ejs
+  - id: publications
+    contents: ../../data/publications.yml
+    include:
+      axe: "methodes"
+    template: ../../templates/en/publication.ejs
+    sort: "date desc"
+---
+
+:::: {.theme-head}
+
+[Research area]{.kicker}
+
+# Methods and foundations
+
+::: {.position-line}
+
+The applied areas ask the questions. This one builds the tools — and reserves the right to build them without an immediate application.
+
+:::
+
+::::
+
+::::: {.theme-body}
+
+## How we approach it
+
+This area exists for a precise reason: the other three share more methods than they share subjects. The same distributional argument serves credit, climate and geopolitics; the same validation question arises wherever a model goes into production. Isolating the methodological core avoids reinventing it area by area — and leaves room for work whose application is not yet written.
+
+**Sequential and anytime-valid inference.** Validating a risk model is traditionally a one-off exercise: fix a date, test, conclude. Real monitoring is continuous, and looking at the same test repeatedly destroys its guarantee. E-values and test martingales offer an alternative: a statistic that can be consulted at any time, including at a stopping time chosen after the fact, without invalidating type-I error control. Applied to PD calibration monitoring, this changes the nature of the exercise — from an annual photograph to continuous surveillance.
+
+**Bayesian methods and validation.** The Jeffreys test, adopted by supervisors to validate probability-of-default calibration, is a Bayesian object and deserves to be treated as one. Re-examining it in an explicit frame allows us to say in which portfolio configurations it can be trusted, and in which it should not carry the decision.
+
+**Quantiles and tail measures.** The at-Risk toolkit — quantile regression, parametric smoothing, analytical back-transformation — is generic machinery of which credit is only one use case. Its multivariate extension is open.
+
+**Machine learning, with conditions.** Explainability and fairness are not afterthoughts when a model decides on a loan: they are properties internal validation must be able to require and measure. As for recent architectures — Kolmogorov–Arnold networks, for instance — we evaluate them without presupposition: the question is what they bring, or fail to bring, to risk time-series modelling.
+
+## Methods
+
+::: {.tags}
+
+[E-values]{.tag} [Test martingales]{.tag} [Anytime-valid inference]{.tag} [Bayesian methods]{.tag} [Jeffreys test]{.tag} [Quantile regression]{.tag} [Copulas]{.tag} [Explainability]{.tag} [Fairness]{.tag} [Kolmogorov–Arnold networks]{.tag}
+
+:::
+
+## Projects
+
+::: {#projects}
+
+:::
+
+## Papers and notes
+
+::: {#publications}
+
+:::
+
+## What we are exploring
+
+:::: {.open-questions}
+
+::: {.q}
+
+[Sequential tests with delayed responses]{.title}
+In credit, default is observed with a lag. What becomes of an anytime-valid procedure when information arrives delayed?
+
+:::
+
+::: {.q}
+
+[Multivariate atRisk]{.title}
+Extending the approach to several joint systemic factors, to distinguish sources of stress rather than aggregate them into a single latent factor.
+
+:::
+
+::: {.q}
+
+[What explainability can guarantee]{.title}
+Explainability methods produce attributions, not guarantees. What can internal validation genuinely require of them?
+
+:::
+
+::: {.q}
+
+[Beyond financial risk]{.title}
+The methods in this core owe nothing to finance. Macro, health, energy: which domains still rest on central-value projections?
+
+:::
+
+::::
+
+:::::
+

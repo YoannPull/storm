@@ -1,0 +1,233 @@
+[
+  {
+    "objectID": "en/news/index.html",
+    "href": "en/news/index.html",
+    "title": "News",
+    "section": "",
+    "text": "Quantitative Insights\n\nNews\n\nTechnical notes, publications and talks from the collective.\n\n\n\n\n\nTechnical notes are currently published in French (marked FR). English versions are in preparation.\n\n\n2026Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosInvited talkOct 2026 · ESRB — Annual Stress Test Workshop, National Bank of Poland, KrakówYoann Pull↗Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress FRNoteSep 2026 · Risque climatiqueMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physique FRNoteSep 2026 · Risque climatiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénario FRNoteSep 2026 · Risque géopolitiqueMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne FRNoteSep 2026 · Risque de créditInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→Siham joins STORM as a researcherTeamSep 2026 · Square Management, Paris→Research visit to the Department of Statistics, Stanford UniversityResearch visitSep 2026 · Sequential and anytime-valid inference, hosted by Aaditya RamdasYoann Pull↗Generalized Impulse Responses of Portfolio Default ProbabilitiesPaper submittedAug 2026 · arXiv:2608.04469Guillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull↗18th Annual SoFiE ConferenceConferenceJun 2026 · Society for Financial Econometrics, University of MacauYoann Pull↗A Bayesian Approach to Probability Default Model CalibrationPublishedJun 2026 · European Journal of Operational ResearchChristophe Hurlin, Yoann Pull↗19th Financial Risks International ForumConferenceMar 2026 · Institut Louis Bachelier, ParisYoann Pull↗The at-Risk Approach: A New Tool for Stress Tests and OverlaysPublishedMar 2026 · Annals of Operations ResearchGuillaume Flament, Christophe Hurlin, Quentin Lajaunie→Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosWorking paperJan 2026 · arXiv:2601.03983Christophe Hurlin, Quentin Lajaunie, Yoann Pull↗2025LEO research seminarSeminarNov 2025 · Laboratoire d'Économie d'Orléans, University of OrléansYoann Pull→QFFE 2025 — Quantitative Finance and Financial EconometricsConferenceJun 2025 · Aix-Marseille School of Economics, MarseilleYoann Pull→2024ARAE — Association for Research in Applied EconometricsConferenceDec 2024 · Université Paris Dauphine-PSL, ParisYoann Pull→\nNo matching items\n\n\nAll technical notes · Publications · RSS"
+  },
+  {
+    "objectID": "en/index.html",
+    "href": "en/index.html",
+    "title": "STORM",
+    "section": "",
+    "text": "A research collective of Square Management\n\n\n\n\n\n\n\n\n  in brief\n  more\n  approach\n\n\nWe develop quantitative methods to measure, monitor and stress-test risk — where it actually hides: in the tails of the distribution.\n\n\nSTORM is the quantitative research collective of Square Management. We develop statistical, econometric and machine-learning methodologies for measuring, monitoring and stress-testing risk.\nOur current work focuses on financial risk: credit, model validation, stress testing, climate and geopolitical risk.\n\n\n01 — The mean is not the risk. We propagate the full conditional distribution, or start from the breaking threshold.\n02 — Building blocks, not replacements. Each block plugs into the institution’s already-validated internal model. No redevelopment.\n\n\n\nNewssee all →\n\n2026Reverse Stress Testing Geopolitical Risk in Corporate Credit PortfoliosInvited talkOct 2026 · ESRB — Annual Stress Test Workshop, National Bank of Poland, KrakówYoann Pull↗Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress FRNoteSep 2026 · Risque climatiqueMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physique FRNoteSep 2026 · Risque climatiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénario FRNoteSep 2026 · Risque géopolitiqueMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne FRNoteSep 2026 · Risque de créditInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nNo matching items\n\nResearchthe areas →\n\nCredit riskPD calibration and validation, IFRS 9, significant increase in credit risk, early warning indicators, tail measures under scenario.→Climate riskStatistical downscaling of projections, CRD6 and NGFS scenarios, climate copulas, vulnerability scores, climate stress testing.→Geopolitical riskGeopolitical stress tests and reverse stress tests, shock propagation to credit portfolios, geopolitical risk indicators.→Methods and foundationsSequential and anytime-valid inference, e-values, Bayesian methods, quantiles and tail measures, explainability, fairness, Kolmogorov–Arnold networks.→\nNo matching items"
+  },
+  {
+    "objectID": "en/publications/index.html",
+    "href": "en/publications/index.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Academic work\n\nPublications\n\nTwo complementary formats: research papers, published or under review, and technical notes that carry them into practice.\n\n\n\n\nResearch paperstechnical notes ↓\n\nGeneralized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical RiskGuillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2608.04469A modular two-block framework that propagates the full distribution of the credit factor: it corrects mean PD for predictive uncertainty and delivers, in closed form, a tail quantile and an expected shortfall.SubmittedarXivSSRNTechnical note (FR) →A Bayesian Approach to Probability Default Model Calibration: Theoretical and Empirical Insights on the Jeffreys TestChristophe Hurlin, Yoann Pull · European Journal of Operational ResearchA Bayesian reappraisal of the Jeffreys test used by supervisors to validate probability-of-default calibration, with theoretical results and empirical evidence on when the test can be trusted.PublishedJournalSSRNThe at-Risk Approach: A New Tool for Stress Tests and OverlaysGuillaume Flament, Christophe Hurlin, Quentin Lajaunie · Annals of Operations Research · 361, 27–60A framework that reconstructs the full conditional distribution of the risk factor under scenario, via quantile regression and parametric smoothing, to derive tail measures directly.PublishedTechnical note (FR) →Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational FrameworkChristophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2601.03983Reverse stress testing formulated as a constrained plausibility search: start from a capital threshold and identify the most credible combination of shocks able to breach it.Working paperarXivTechnical note (FR) →\nNo matching items\n\nTechnical notesRSS\n\nRisque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress FRNoteSep 2026 · Risque climatique · Risque de crédit · Stress testing · QuantilesMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physique FRNoteSep 2026 · Risque climatique · Downscaling · Risque physiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénario FRNoteSep 2026 · Risque géopolitique · Stress testing · OptimisationMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne FRNoteSep 2026 · Risque de crédit · Stress testing · QuantilesInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nNo matching items\n\nTechnical notes are currently published in French (marked FR); English versions are in preparation."
+  },
+  {
+    "objectID": "en/research/methods.html",
+    "href": "en/research/methods.html",
+    "title": "Methods and foundations",
+    "section": "",
+    "text": "Research area\n\n\n\nThe applied areas ask the questions. This one builds the tools — and reserves the right to build them without an immediate application."
+  },
+  {
+    "objectID": "en/research/methods.html#how-we-approach-it",
+    "href": "en/research/methods.html#how-we-approach-it",
+    "title": "Methods and foundations",
+    "section": "How we approach it",
+    "text": "How we approach it\nThis area exists for a precise reason: the other three share more methods than they share subjects. The same distributional argument serves credit, climate and geopolitics; the same validation question arises wherever a model goes into production. Isolating the methodological core avoids reinventing it area by area — and leaves room for work whose application is not yet written.\nSequential and anytime-valid inference. Validating a risk model is traditionally a one-off exercise: fix a date, test, conclude. Real monitoring is continuous, and looking at the same test repeatedly destroys its guarantee. E-values and test martingales offer an alternative: a statistic that can be consulted at any time, including at a stopping time chosen after the fact, without invalidating type-I error control. Applied to PD calibration monitoring, this changes the nature of the exercise — from an annual photograph to continuous surveillance.\nBayesian methods and validation. The Jeffreys test, adopted by supervisors to validate probability-of-default calibration, is a Bayesian object and deserves to be treated as one. Re-examining it in an explicit frame allows us to say in which portfolio configurations it can be trusted, and in which it should not carry the decision.\nQuantiles and tail measures. The at-Risk toolkit — quantile regression, parametric smoothing, analytical back-transformation — is generic machinery of which credit is only one use case. Its multivariate extension is open.\nMachine learning, with conditions. Explainability and fairness are not afterthoughts when a model decides on a loan: they are properties internal validation must be able to require and measure. As for recent architectures — Kolmogorov–Arnold networks, for instance — we evaluate them without presupposition: the question is what they bring, or fail to bring, to risk time-series modelling."
+  },
+  {
+    "objectID": "en/research/methods.html#methods",
+    "href": "en/research/methods.html#methods",
+    "title": "Methods and foundations",
+    "section": "Methods",
+    "text": "Methods\n\nE-values Test martingales Anytime-valid inference Bayesian methods Jeffreys test Quantile regression Copulas Explainability Fairness Kolmogorov–Arnold networks"
+  },
+  {
+    "objectID": "en/research/methods.html#projects",
+    "href": "en/research/methods.html#projects",
+    "title": "Methods and foundations",
+    "section": "Projects",
+    "text": "Projects\n\nE-values and anytime-valid inferenceIn progressTesting continuously without paying the price of repeated testing: test martingales, e-values and validity at any stopping time.Kolmogorov–Arnold NetworksIn progressWhat KAN architectures bring — or fail to bring — to risk time-series modelling.Multivariate atRiskNot startedExtending the at-Risk approach to several joint systemic factors rather than a single latent factor.ExplainabilityNot startedWhat internal validation can genuinely require of a risk model in terms of explainability, and how to measure it.FairnessNot startedFairness measures applied to credit decision models: what they capture, what they trade off.\nNo matching items"
+  },
+  {
+    "objectID": "en/research/methods.html#papers-and-notes",
+    "href": "en/research/methods.html#papers-and-notes",
+    "title": "Methods and foundations",
+    "section": "Papers and notes",
+    "text": "Papers and notes\n\n\nNo matching items"
+  },
+  {
+    "objectID": "en/research/methods.html#what-we-are-exploring",
+    "href": "en/research/methods.html#what-we-are-exploring",
+    "title": "Methods and foundations",
+    "section": "What we are exploring",
+    "text": "What we are exploring\n\n\nSequential tests with delayed responses In credit, default is observed with a lag. What becomes of an anytime-valid procedure when information arrives delayed?\n\n\nMultivariate atRisk Extending the approach to several joint systemic factors, to distinguish sources of stress rather than aggregate them into a single latent factor.\n\n\nWhat explainability can guarantee Explainability methods produce attributions, not guarantees. What can internal validation genuinely require of them?\n\n\nBeyond financial risk The methods in this core owe nothing to finance. Macro, health, energy: which domains still rest on central-value projections?"
+  },
+  {
+    "objectID": "en/research/index.html",
+    "href": "en/research/index.html",
+    "title": "Research",
+    "section": "",
+    "text": "Research areas\n\nResearch\n\nThree application domains and one methodological core running through all of them. Methods circulate between areas: the same distributional argument serves credit, climate and geopolitics.\n\n\n\n\n\nCredit riskPD calibration and validation, IFRS 9, significant increase in credit risk, early warning indicators, tail measures under scenario.→Climate riskStatistical downscaling of projections, CRD6 and NGFS scenarios, climate copulas, vulnerability scores, climate stress testing.→Geopolitical riskGeopolitical stress tests and reverse stress tests, shock propagation to credit portfolios, geopolitical risk indicators.→Methods and foundationsSequential and anytime-valid inference, e-values, Bayesian methods, quantiles and tail measures, explainability, fairness, Kolmogorov–Arnold networks.→\nNo matching items"
+  },
+  {
+    "objectID": "en/research/geopolitical-risk.html",
+    "href": "en/research/geopolitical-risk.html",
+    "title": "Geopolitical risk",
+    "section": "",
+    "text": "Research area\n\n\n\nThe regulator no longer only asks what a geopolitical scenario would cost. It asks which scenario would cost three hundred basis points of CET1."
+  },
+  {
+    "objectID": "en/research/geopolitical-risk.html#how-we-approach-it",
+    "href": "en/research/geopolitical-risk.html#how-we-approach-it",
+    "title": "Geopolitical risk",
+    "section": "How we approach it",
+    "text": "How we approach it\nGeopolitical risk has a methodological peculiarity: it does not lend itself to a catalogue. A classical stress test only evaluates the scenarios someone thought to write down, and a combination of shocks dangerous for an institution’s own profile may appear in no list. The ECB’s 2026 thematic exercise acknowledges that limit by asking the question in reverse: identify the geopolitical events capable of eroding CET1 capital by at least three hundred basis points.\nWe treat that request as an optimisation problem, not a drafting exercise. Reverse stress testing is formulated as a constrained plausibility search: among all scenarios that breach the threshold, retain the one the reference density makes most credible. The resulting breaking point is not the most severe — it is the most probable among the fatal scenarios, and that is precisely what makes it arguable in committee and defensible in validation. The exercise stops being a narrative: it produces a documented, quantified object, together with its neighbourhood of nearby scenarios.\nThe forward direction inherits the distributional argument. Propagating a geopolitical shock through to a portfolio’s default probabilities requires a macro-financial → credit satellite → mapping chain. There too, transmitting only the mean path understates PD levels and says nothing about the tail. The geopolitical stress test on US credit serves as our proof of concept; the mechanism owes nothing to geopolitics and applies unchanged to climate, monetary or sectoral scenarios.\nThe measure itself remains. A narrative geopolitical risk index cannot be injected into a risk model. Building a usable measure — stable, interpretable, and whose dynamics genuinely transmit to credit — is a project in its own right, and the one on which demand from institutions is currently strongest."
+  },
+  {
+    "objectID": "en/research/geopolitical-risk.html#methods",
+    "href": "en/research/geopolitical-risk.html#methods",
+    "title": "Geopolitical risk",
+    "section": "Methods",
+    "text": "Methods\n\nConstrained optimisation Empirical likelihood Bayesian VAR Generalized impulse responses Merton–Vasicek / ASRF Plausibility measures Risk indicators"
+  },
+  {
+    "objectID": "en/research/geopolitical-risk.html#projects",
+    "href": "en/research/geopolitical-risk.html#projects",
+    "title": "Geopolitical risk",
+    "section": "Projects",
+    "text": "Projects\n\nGeopolitical stress testingIn progress · T2Propagating a geopolitical shock through to portfolio default probabilities, transmitting the distribution rather than the mean path alone.Read the note (FR) →Geopolitical reverse stress testingIn progress · T4Starting from a CET1 capital threshold and working back to the most plausible breaking scenario, with its local neighbourhood.Read the note (FR) →Geopolitical risk indicatorIn progress · T3Building a geopolitical risk measure usable inside a risk model, rather than a narrative index.\nNo matching items"
+  },
+  {
+    "objectID": "en/research/geopolitical-risk.html#papers-and-notes",
+    "href": "en/research/geopolitical-risk.html#papers-and-notes",
+    "title": "Geopolitical risk",
+    "section": "Papers and notes",
+    "text": "Papers and notes\n\nGeneralized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical RiskGuillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2608.04469A modular two-block framework that propagates the full distribution of the credit factor: it corrects mean PD for predictive uncertainty and delivers, in closed form, a tail quantile and an expected shortfall.SubmittedarXivSSRNTechnical note (FR) →Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios: A Formal and Operational FrameworkChristophe Hurlin, Quentin Lajaunie, Yoann Pull · arXiv:2601.03983Reverse stress testing formulated as a constrained plausibility search: start from a capital threshold and identify the most credible combination of shocks able to breach it.Working paperarXivTechnical note (FR) →\nNo matching items"
+  },
+  {
+    "objectID": "en/research/geopolitical-risk.html#what-we-are-exploring",
+    "href": "en/research/geopolitical-risk.html#what-we-are-exploring",
+    "title": "Geopolitical risk",
+    "section": "What we are exploring",
+    "text": "What we are exploring\n\n\nChoosing the plausibility measure Reference density or statistical distance: the breaking scenario depends on the choice. What criterion makes that choice defensible to a supervisor?\n\n\nAn indicator usable inside a model How do we build a geopolitical risk measure whose dynamics genuinely transmit to credit risk, rather than a decorative narrative index?\n\n\nNeighbourhood and robustness An isolated breaking point is fragile. How should its neighbourhood be characterised so that it becomes an object of governance rather than an artefact of optimisation?"
+  },
+  {
+    "objectID": "en/research/credit-risk.html",
+    "href": "en/research/credit-risk.html",
+    "title": "Credit risk",
+    "section": "",
+    "text": "Research area\n\n\n\nA bank’s credit engine is known, validated and stable. What it lacks is not a new model: it is the distribution it was never taught to transmit."
+  },
+  {
+    "objectID": "en/research/credit-risk.html#how-we-approach-it",
+    "href": "en/research/credit-risk.html#how-we-approach-it",
+    "title": "Credit risk",
+    "section": "How we approach it",
+    "text": "How we approach it\nThe architecture of credit stress testing is well established. A macro-financial model propagates the scenario, a credit satellite translates it into portfolio risk, and the Merton–Vasicek mapping — the foundation of the Basel IRB framework — converts a latent systemic factor into a default probability. That chain works, it is documented, and it is already internally validated in most institutions.\nThe room for improvement is therefore not in the blocks. It is in what the scenario loses while passing through them. In practice the scenario is propagated as a mean path, or as a path assumed known, and the credit mapping is then evaluated along it. As soon as PD is non-linear in credit conditions — and it always is — the mapping applied to the mean gives neither the mean of the PD nor its tail. By convexity the approximation always errs in the same direction: it understates PD levels.\nTwo consequences, both measurable. The first is a level bias, straight through to provisions and capital: in our application, three-year PDs are understated by 7 to 8 %. The second is an absence: no PD quantile, no expected shortfall, while risk materialises precisely in the tail, which is more reactive than the centre.\nOur line of work is to recover that information without replacing anything. The satellite stays the satellite; the mapping stays Merton–Vasicek. What changes is the object propagated: the full conditional distribution of the credit factor rather than its expectation alone.\nValidation follows the same logic. Validating a PD calibration means deciding whether an observed gap between predicted and realised defaults is compatible with the model. The Jeffreys test adopted by supervisors deserves re-examination in an explicit Bayesian frame: it is not equally reliable across portfolio configurations. And once monitoring becomes continuous rather than annual, the validity of the test itself must be reconsidered — that is the object of our work on e-values."
+  },
+  {
+    "objectID": "en/research/credit-risk.html#methods",
+    "href": "en/research/credit-risk.html#methods",
+    "title": "Credit risk",
+    "section": "Methods",
+    "text": "Methods\n\nMerton–Vasicek / ASRF Quantile regression Skew-t distributions Bayesian VAR Generalized impulse responses Bayesian testing E-values IFRS 9 IRB framework"
+  },
+  {
+    "objectID": "en/research/credit-risk.html#projects",
+    "href": "en/research/credit-risk.html#projects",
+    "title": "Credit risk",
+    "section": "Projects",
+    "text": "Projects\n\nLifetime PD — IFRS 9Not started · T3Projecting lifetime default probabilities under IFRS 9: term structure, macroeconomic conditioning and consistency with the IRB framework.SICR — Significant increase in credit riskIn progress · T2Stage-transition criteria under IFRS 9: what \"significant\" means quantitatively, and how sensitive provisions are to the chosen threshold.Early Warning IndicatorsNot started · T3Early detection of counterparty risk deterioration: construction, calibration and evaluation of warning indicators.Anytime-valid calibration monitoringIn progressSequential monitoring of PD calibration with e-values: a test that stays valid whenever you choose to look at it.\nNo matching items"
+  },
+  {
+    "objectID": "en/research/credit-risk.html#papers-and-notes",
+    "href": "en/research/credit-risk.html#papers-and-notes",
+    "title": "Credit risk",
+    "section": "Papers and notes",
+    "text": "Papers and notes\n\nA Bayesian Approach to Probability Default Model Calibration: Theoretical and Empirical Insights on the Jeffreys TestChristophe Hurlin, Yoann Pull · European Journal of Operational ResearchA Bayesian reappraisal of the Jeffreys test used by supervisors to validate probability-of-default calibration, with theoretical results and empirical evidence on when the test can be trusted.PublishedJournalSSRNThe at-Risk Approach: A New Tool for Stress Tests and OverlaysGuillaume Flament, Christophe Hurlin, Quentin Lajaunie · Annals of Operations Research · 361, 27–60A framework that reconstructs the full conditional distribution of the risk factor under scenario, via quantile regression and parametric smoothing, to derive tail measures directly.PublishedTechnical note (FR) →\nNo matching items"
+  },
+  {
+    "objectID": "en/research/credit-risk.html#what-we-are-exploring",
+    "href": "en/research/credit-risk.html#what-we-are-exploring",
+    "title": "Credit risk",
+    "section": "What we are exploring",
+    "text": "What we are exploring\n\n\nMultivariate atRisk The at-Risk approach currently rests on a single latent systemic factor. Extended to several joint factors, it would distinguish sources of stress rather than aggregate them.\n\n\nWhat internal validation can require The dispersion of the credit factor is currently discarded without explicit justification. Beyond what threshold does that assumption become a supervisory concern?\n\n\nTransferability beyond credit The mechanism — propagate the distribution rather than the mean — owes nothing to credit. Which other decision domains still rest on central-value projections?"
+  },
+  {
+    "objectID": "en/research/climate-risk.html",
+    "href": "en/research/climate-risk.html",
+    "title": "Climate risk",
+    "section": "",
+    "text": "Research area\n\n\n\nBefore measuring what a climate scenario does to a portfolio, the hazard must be correctly located, correctly bias-corrected, and its tail must have survived the treatment."
+  },
+  {
+    "objectID": "en/research/climate-risk.html#how-we-approach-it",
+    "href": "en/research/climate-risk.html#how-we-approach-it",
+    "title": "Climate risk",
+    "section": "How we approach it",
+    "text": "How we approach it\nThe climate risk chain is long: an emissions scenario produces a macro-financial pathway and a field of physical hazards; those hazards strike localised exposures whose vulnerability determines damage; damage translates into losses, higher credit risk and heavier claims. Every link can destroy the information that matters.\nUpstream, the data. CMIP6 projections come from global models whose grid cells often exceed a hundred kilometres. At that resolution two sites tens of kilometres apart share the same simulated value, and spatial averaging flattens local peaks. Worse: the models demonstrably understate the magnitude and frequency of extreme events — precisely those that concentrate financial impact. Correcting this means rectifying the shape of the simulated law, not only its level. And a bias correction pursues two distinct objectives, with no guarantee that both are met: aligning the simulated distribution on the reference, and carrying the projected change signal through intact. Between two methods equally well fitted on the historical period, one can cut away a substantial part of the signal at extreme quantiles. That selection point is, in our view, the most underestimated in the whole chain.\nDownstream, the measurement. The same distributional argument as in credit risk applies to climate scenarios. Applied to NGFS pathways, the at-Risk approach shows that a scenario is not only more or less severe through its mean, but through the thickness and skewness of its adverse tail: rapid-transition scenarios generate markedly heavier tails in the short run, because of the abruptness of the required adjustments. Two neighbouring mean paths can hide vulnerabilities that differ by a factor of two.\nA sovereignty constraint. Bias-corrected projections exist, but are not always freely available. Relying on a third-party provider means recurring cost, dependency and a black-box effect hard to reconcile with the auditability requirements imposed on banks and insurers. Mastering these methods internally is as much about data sovereignty as about being able to justify the set-up to a supervisor."
+  },
+  {
+    "objectID": "en/research/climate-risk.html#methods",
+    "href": "en/research/climate-risk.html#methods",
+    "title": "Climate risk",
+    "section": "Methods",
+    "text": "Methods\n\nStatistical downscaling Model Output Statistics Bias correction Copulas NGFS scenarios CRD6 Quantile regression Skew-t distributions"
+  },
+  {
+    "objectID": "en/research/climate-risk.html#projects",
+    "href": "en/research/climate-risk.html#projects",
+    "title": "Climate risk",
+    "section": "Projects",
+    "text": "Projects\n\nCRD6 — ScenariosIn progress · T2What the CRD6 directive expects in terms of climate scenarios, and how an institution can meet it with its existing models.Statistical climate downscalingIn progress · T3Bias-correcting CMIP6 projections: aligning simulated marginals on a reference reanalysis without cutting into the change signal.Read the note (FR) →Vulnerability scoreIn progress · T4Measuring an exposure's vulnerability to a physical hazard, once that hazard is properly located and bias-corrected.Climate copulasIn progress · T4Dependence between climate hazards: what the dependence structure adds to a hazard-by-hazard analysis.Climate stress testing — atRiskIn progress · T4The at-Risk approach applied to NGFS pathways: the tail of the risk distribution under a climate scenario, not only its mean.Read the note (FR) →\nNo matching items"
+  },
+  {
+    "objectID": "en/research/climate-risk.html#papers-and-notes",
+    "href": "en/research/climate-risk.html#papers-and-notes",
+    "title": "Climate risk",
+    "section": "Papers and notes",
+    "text": "Papers and notes\n\n\nNo matching items"
+  },
+  {
+    "objectID": "en/research/climate-risk.html#what-we-are-exploring",
+    "href": "en/research/climate-risk.html#what-we-are-exploring",
+    "title": "Climate risk",
+    "section": "What we are exploring",
+    "text": "What we are exploring\n\n\nDependence between hazards Analyses are run hazard by hazard. What the dependence structure — heatwave and drought, storm and flood — adds to a portfolio assessment remains to be quantified.\n\n\nFrom corrected field to vulnerability score Once the hazard is properly located, how do we move from a local distribution to an exposure vulnerability measure that is both defensible and usable inside a risk model?\n\n\nSelection criteria for a correction Preservation of the change signal appears in no standard goodness-of-fit metric. What formal criterion can be offered to internal validation?"
+  },
+  {
+    "objectID": "en/about/index.html",
+    "href": "en/about/index.html",
+    "title": "About",
+    "section": "",
+    "text": "The collective\n\n\n\nSTORM — Scenario-based Testing & Optimization in Risk Modeling — is the quantitative research collective of Square Management."
+  },
+  {
+    "objectID": "en/about/index.html#what-we-do",
+    "href": "en/about/index.html#what-we-do",
+    "title": "About",
+    "section": "What we do",
+    "text": "What we do\nWe develop, study and apply statistical, econometric and machine-learning methodologies to problems of decision under uncertainty. Much of our current work originates in financial risk management — credit risk, model validation and monitoring, stress testing, climate and geopolitical risk — but the aim is to produce methods that transfer to other domains.\nThe collective turns quantitative research into concrete methodological building blocks for institutions’ risk teams. This takes two complementary forms: research papers, submitted to and published in peer-reviewed journals, and technical notes, which carry the same work into practice for modelling, validation and steering teams."
+  },
+  {
+    "objectID": "en/about/index.html#how-we-work",
+    "href": "en/about/index.html#how-we-work",
+    "title": "About",
+    "section": "How we work",
+    "text": "How we work\nTwo principles run through everything we do.\nThe mean is not the risk. Standard practice propagates a scenario along its central path. But risk is not read in the mean: it concentrates in the tails. We propagate the full conditional distribution, or we invert the problem and start from the breaking threshold.\nBuilding blocks, not replacements. Our frameworks are modular by construction. Each block is independent and replaceable by the institution’s already-validated internal model. No redevelopment is asked for: the existing set-up produces more, at the same computational cost."
+  },
+  {
+    "objectID": "en/about/index.html#contact",
+    "href": "en/about/index.html#contact",
+    "title": "About",
+    "section": "Get in touch",
+    "text": "Get in touch\nFor questions about our work, research collaboration or a request for a presentation, write to the collective.\n\ncontact@storm.example.org\n\n\nSTORM is part of Square Management and the Square Research Center."
+  },
+  {
+    "objectID": "en/notes/index.html",
+    "href": "en/notes/index.html",
+    "title": "Notes",
+    "section": "",
+    "text": "Quantitative Insights\n\nNotes\n\nTechnical notes, methodological focus pieces and short perspectives. Each note stands alone; those accompanying a research paper say so.\n\n\n\n\n\nTechnical notes are currently published in French. English versions are in preparation; the links below open the French editions.\n\n\nRisque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress FRNoteSep 2026 · Risque climatique · Risque de crédit · Stress testing · QuantilesMèdéssè Agongnon, Quentin Lajaunie, Pétronie Nkoussol Nsangou, Charles-Emmanuel Prost→Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physique FRNoteSep 2026 · Risque climatique · Downscaling · Risque physiqueSabiha Zarhouni Jaures, Ève-Roxane Doffou, Charles-Emmanuel Prost→Reverse stress testing : partir du seuil de capital, pas du scénario FRNoteSep 2026 · Risque géopolitique · Stress testing · OptimisationMamadou Cherif Diallo, Gwezheneg Ory, Tony Pereira, Yoann Pull→Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne FRNoteSep 2026 · Risque de crédit · Stress testing · QuantilesInès Bordais, Léane Chevrier, Quentin Lajaunie, Yoann Pull→\nNo matching items"
+  }
+]

@@ -1,0 +1,32 @@
+# --- English edition ---------------------------------------------------------
+project:
+  output-dir: _site-en
+  render:
+    - en/**
+
+website:
+  title: "STORM"
+  description: "STORM — Quantitative Risk Collective. The quantitative research collective of Square Management."
+  site-url: "https://storm.example.org/en/"
+  navbar:
+    logo-href: /en/index.html
+    left:
+      - text: "Research"
+        href: /en/research/index.html
+      - text: "News"
+        href: /en/news/index.html
+      - text: "Publications"
+        href: /en/publications/index.html
+      - text: "About"
+        href: /en/about/index.html
+    right:
+      - text: "FR"
+        href: /fr/index.html
+  page-footer:
+    left: "**STORM** — Quantitative Risk Collective · a Square Management collective"
+    right:
+      - text: "Contact"
+        href: /en/about/index.html#contact
+      - text: "RSS"
+        href: /en/notes/index.xml
+

@@ -1,0 +1,58 @@
+# =============================================================================
+#  Réglages partagés par les deux éditions (FR et EN).
+#  Ce qui change d'une langue à l'autre est dans _quarto-fr.yml / _quarto-en.yml
+#
+#  Construire :   quarto render                  → édition française
+#                 quarto render --profile en     → édition anglaise
+#                 bash build.sh                  → les deux
+# =============================================================================
+
+project:
+  type: website
+  resources:
+    - assets/**
+  pre-render:
+    # Extrait les en-têtes des notes FR vers data/_notes.yml, que les deux
+    # éditions lisent pour leurs listes d'actualités (Quarto ne sait pas lire
+    # les en-têtes des fichiers qu'il ne rend pas).
+    - bash scripts/collect.sh
+  post-render:
+    # Lancé via « bash » : le script n'a pas besoin d'être exécutable, ce qui
+    # évite une erreur « Permission denied » après un clone ou une copie.
+    - bash scripts/assemble.sh
+
+# `quarto render` sans option construit l'édition française.
+profile:
+  default: fr
+
+website:
+  favicon: assets/brand/favicon-512.png
+  open-graph: true
+  search:
+    location: navbar
+    type: overlay
+  navbar:
+    background: transparent
+    pinned: true
+    # Menu complet dès 576 px de large (hamburger seulement sur téléphone)
+    collapse-below: sm
+    logo: assets/brand/logo-storm-mark-navy.svg
+    logo-alt: "STORM — Quantitative Risk Collective"
+    title: false
+  page-footer:
+    background: transparent
+
+format:
+  html:
+    theme: [cosmo, assets/css/storm.scss]
+    css: assets/css/fonts.css
+    # Fond animé (distributions en mouvement) + script des boutons de l'accueil
+    include-after-body: partials/after-body.html
+    toc: false
+    anchor-sections: true
+    # Pas de link-external-newwindow : Quarto prend les liens internes écrits
+    # en absolu (/fr/…) pour des liens externes et les ouvre dans un nouvel
+    # onglet. Les gabarits marquent eux-mêmes les vrais liens externes.
+    html-math-method:
+      method: katex
+      url: "assets/katex/"

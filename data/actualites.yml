@@ -1,0 +1,157 @@
+# =============================================================================
+#  ACTUALITÉS — tout ce qui n'est pas une note technique
+# =============================================================================
+#  Les notes techniques (fr/notes/*.qmd) apparaissent toutes seules dans les
+#  Actualités : inutile de les recopier ici. Ce fichier sert pour le reste :
+#  publications, interventions, conférences, séminaires, presse…
+#
+#  Pour ajouter une actualité : copier un bloc, remplir, enregistrer. Le tri
+#  se fait automatiquement par « date » (du plus récent au plus ancien).
+#
+#  Champs :
+#    type       publication | intervention | evenement | presse
+#               (le libellé affiché — « Publication », « Intervention »… — est
+#               choisi automatiquement, en français et en anglais)
+#    etiquette / etiquette_en   facultatif : remplace le libellé automatique
+#               (ex. « Article soumis », « Séminaire »)
+#    title      titre en français (obligatoire)
+#    title_en   titre en anglais (facultatif : sinon le titre français)
+#    qui        qui intervient / qui part / les auteurs (ex. "Yoann Pull")
+#    date       AAAA-MM-JJ
+#    lieu / lieu_en   revue, conférence, ville… (une ligne courte)
+#    path       lien : page du site (/fr/…) ou adresse externe (https://…)
+#    path_en    facultatif : lien pour l'édition anglaise
+#
+#  Exemple d'intervention (retirer les « # » pour l'activer) :
+#
+# - type: "intervention"
+#   title: "Stress tests de crédit : propager la distribution"
+#   title_en: "Credit stress testing: propagating the distribution"
+#   qui: "Prénom Nom"
+#   date: "2026-11-20"
+#   lieu: "Conférence XYZ, Paris"
+#   lieu_en: "XYZ Conference, Paris"
+#   path: "https://exemple.org/programme"
+# =============================================================================
+
+- type: "evenement"
+  etiquette: "Équipe"
+  etiquette_en: "Team"
+  title: "Siham rejoint STORM en tant que chercheuse"
+  title_en: "Siham joins STORM as a researcher"
+  date: "2026-09-01"
+  lieu: "Square Management, Paris"
+  lieu_en: "Square Management, Paris"
+  path: "/fr/a-propos/index.html"
+  path_en: "/en/about/index.html"
+
+- type: "intervention"
+  etiquette: "Intervention invitée"
+  etiquette_en: "Invited talk"
+  title: "Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios"
+  qui: "Yoann Pull"
+  date: "2026-10-23"
+  lieu: "ESRB — Annual Stress Test Workshop, Banque nationale de Pologne, Cracovie"
+  lieu_en: "ESRB — Annual Stress Test Workshop, National Bank of Poland, Kraków"
+  path: "https://arxiv.org/abs/2601.03983"
+
+- type: "evenement"
+  etiquette: "Séjour de recherche"
+  etiquette_en: "Research visit"
+  title: "Séjour de recherche au département de statistique de Stanford University"
+  title_en: "Research visit to the Department of Statistics, Stanford University"
+  qui: "Yoann Pull"
+  date: "2026-09-01"
+  lieu: "Inférence séquentielle et anytime-valid, avec Aaditya Ramdas"
+  lieu_en: "Sequential and anytime-valid inference, hosted by Aaditya Ramdas"
+  path: "https://statistics.stanford.edu"
+
+- type: "intervention"
+  etiquette: "Conférence"
+  etiquette_en: "Conference"
+  title: "18th Annual SoFiE Conference"
+  title_en: "18th Annual SoFiE Conference"
+  qui: "Yoann Pull"
+  date: "2026-06-01"
+  lieu: "Society for Financial Econometrics, University of Macau"
+  path: "https://sofie.stern.nyu.edu"
+
+- type: "intervention"
+  etiquette: "Conférence"
+  etiquette_en: "Conference"
+  title: "19e Financial Risks International Forum"
+  title_en: "19th Financial Risks International Forum"
+  qui: "Yoann Pull"
+  date: "2026-03-01"
+  lieu: "Institut Louis Bachelier, Paris"
+  path: "https://www.institutlouisbachelier.org"
+
+- type: "intervention"
+  etiquette: "Séminaire"
+  etiquette_en: "Seminar"
+  title: "Séminaire de recherche du LEO"
+  title_en: "LEO research seminar"
+  qui: "Yoann Pull"
+  date: "2025-11-01"
+  lieu: "Laboratoire d'Économie d'Orléans, Université d'Orléans"
+  lieu_en: "Laboratoire d'Économie d'Orléans, University of Orléans"
+  path: "/fr/publications/index.html"
+  path_en: "/en/publications/index.html"
+
+- type: "intervention"
+  etiquette: "Conférence"
+  etiquette_en: "Conference"
+  title: "QFFE 2025 — Quantitative Finance and Financial Econometrics"
+  qui: "Yoann Pull"
+  date: "2025-06-01"
+  lieu: "Aix-Marseille School of Economics, Marseille"
+  path: "/fr/publications/index.html"
+  path_en: "/en/publications/index.html"
+
+- type: "intervention"
+  etiquette: "Conférence"
+  etiquette_en: "Conference"
+  title: "Congrès de l'ARAE — Association for Research in Applied Econometrics"
+  title_en: "ARAE — Association for Research in Applied Econometrics"
+  qui: "Yoann Pull"
+  date: "2024-12-01"
+  lieu: "Université Paris Dauphine-PSL, Paris"
+  path: "/fr/publications/index.html"
+  path_en: "/en/publications/index.html"
+
+- type: "publication"
+  etiquette: "Article soumis"
+  etiquette_en: "Paper submitted"
+  title: "Generalized Impulse Responses of Portfolio Default Probabilities"
+  qui: "Guillaume Flament, Christophe Hurlin, Quentin Lajaunie, Yoann Pull"
+  date: "2026-08-01"
+  lieu: "arXiv:2608.04469"
+  path: "https://arxiv.org/abs/2608.04469"
+
+- type: "publication"
+  etiquette: "Publié"
+  etiquette_en: "Published"
+  title: "A Bayesian Approach to Probability Default Model Calibration"
+  qui: "Christophe Hurlin, Yoann Pull"
+  date: "2026-06-01"
+  lieu: "European Journal of Operational Research"
+  path: "https://www.sciencedirect.com/science/article/abs/pii/S0377221726004509"
+
+- type: "publication"
+  etiquette: "Publié"
+  etiquette_en: "Published"
+  title: "The at-Risk Approach: A New Tool for Stress Tests and Overlays"
+  qui: "Guillaume Flament, Christophe Hurlin, Quentin Lajaunie"
+  date: "2026-03-01"
+  lieu: "Annals of Operations Research"
+  path: "/fr/publications/index.html"
+  path_en: "/en/publications/index.html"
+
+- type: "publication"
+  etiquette: "Document de travail"
+  etiquette_en: "Working paper"
+  title: "Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios"
+  qui: "Christophe Hurlin, Quentin Lajaunie, Yoann Pull"
+  date: "2026-01-01"
+  lieu: "arXiv:2601.03983"
+  path: "https://arxiv.org/abs/2601.03983"

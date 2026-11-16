@@ -1,0 +1,118 @@
+---
+title: "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne"
+subtitle: "Exploiter pleinement les modèles satellites existants : PD moyenne, PD-at-Risk et expected shortfall au même coût de calcul"
+description: "Les modèles satellites existants ne transmettent qu'une trajectoire moyenne. En propageant la distribution complète du facteur de crédit, le même dispositif corrige le niveau des PD et livre deux mesures de queue supplémentaires, au même coût de calcul."
+date: 2026-09-08
+author:
+  - Inès Bordais
+  - Léane Chevrier
+  - Quentin Lajaunie
+  - Yoann Pull
+categories: [Risque de crédit, Stress testing, Quantiles]
+listing:
+  - id: schema
+    contents: ../../data/schemas.yml
+    include:
+      id: "stress-credit"
+    template: ../../templates/fr/schema.ejs
+---
+
+::: {.standfirst}
+
+[En bref]{.lede}
+Les stress tests de crédit disposent déjà d'un pont entre scénario macro-financier et probabilités de défaut : les modèles satellites. Mais ce pont ne transmet, le plus souvent, qu'une trajectoire moyenne. Lorsque la PD est une fonction non linéaire d'un facteur de crédit incertain, cette transmission partielle écarte l'incertitude prédictive : elle sous-estime les niveaux projetés de PD — jusqu'à 8 % dans notre application — et ne dit rien de la queue de distribution, là où se décident provisions et capital.
+
+:::
+
+::: {.message}
+
+[Message central]{.label}
+
+Il ne s'agit pas de remplacer les satellites existants, mais de leur faire produire davantage. En propageant la distribution complète du facteur de crédit, et non sa seule trajectoire moyenne, le même dispositif corrige la PD moyenne pour tenir compte de l'incertitude prédictive, puis délivre **en forme close, sans simulation lourde et sans re-développement**, deux mesures de queue complémentaires : le PD-at-Risk et l'expected shortfall — la mesure vers laquelle les régulateurs ont déjà fait basculer le risque de marché.
+
+Une correction de niveau et trois lectures du risque au prix d'une.
+
+:::
+
+## 1. Ce que la trajectoire moyenne ne transmet pas
+
+Le stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s'élargit chaque année. L'architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.
+
+La marge de progrès est dans la façon dont le scénario traverse cette chaîne. En pratique, il est propagé comme une trajectoire moyenne, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Utile, cette approche devient incomplète dès que la PD est non linéaire dans les conditions de crédit : la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. En écartant l'incertitude prédictive, l'approximation joue, par convexité, toujours dans le même sens — elle sous-estime le niveau des PD.
+
+::: {.why}
+
+[Pourquoi c'est important]{.label}
+
+- **Des niveaux de PD sous-estimés.** Le *plug-in* (PD évaluée sur la trajectoire moyenne) et la *perfect foresight* (chemin supposé connu) écartent tout ou partie de l'incertitude prédictive : dans notre application, les PD à trois ans sont sous-estimées de 7 à 8 %, un biais direct sur provisions et capital.
+- **Pas de mesure de queue.** Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.
+- **Une hypothèse peu documentée.** La dispersion du facteur de crédit est écartée sans justification explicite, un point d'attention croissant pour la validation interne comme pour le superviseur.
+
+:::
+
+## 2. Corriger le niveau, révéler la queue : l'architecture
+
+Le cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l'incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c'est là le point décisif en pratique : **chaque bloc est remplaçable par le modèle interne déjà validé de l'établissement.**
+
+::: {#schema}
+
+:::
+
+**Une seule équation, déjà familière aux équipes de crédit.** Le cœur du satellite est le modèle de Merton–Vasicek, socle du cadre IRB de Bâle, qui relie le facteur systémique $Z_t$ à la PD conditionnelle du portefeuille :
+
+$$\pi(Z_t) \;=\; \Phi\!\left(\frac{\Phi^{-1}(p) - \sqrt{\rho}\,Z_t}{\sqrt{1-\rho}}\right)$$
+
+où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long terme et $\rho$ la corrélation d'actifs. Rien de nouveau ici : c'est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.
+
+::: {.why}
+
+[Ce que le cadre apporte]{.label}
+
+- **Une correction de niveau.** La PD moyenne intègre la distribution complète du facteur de crédit au lieu de sa seule espérance — le biais de convexité disparaît.
+- **Deux mesures de queue, gratuitement.** PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.
+- **Modularité.** Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l'établissement sans toucher au reste.
+- **Généralité.** Le stress test géopolitique sur le crédit américain n'est qu'une preuve de concept : la même mécanique s'applique aux scénarios climatiques, monétaires ou sectoriels.
+
+:::
+
+## 3. Mise en œuvre
+
+1. **Conserver le satellite de crédit interne.** Le cadre se branche sur le modèle déjà validé et n'en modifie ni la spécification ni la calibration.
+2. **Brancher un bloc macro-financier dynamique en amont.** Un VAR bayésien estimé sur l'historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.
+3. **Produire les trois sorties pour chaque scénario du catalogue.** PD moyenne corrigée, PD-at-Risk et expected shortfall, pour chaque horizon de projection.
+
+::: {.retenir}
+
+[À retenir pour chaque équipe]{.label}
+
+- **Modélisation.** Le biais de convexité est systématique et signé : la trajectoire moyenne sous-estime toujours la PD. Le corriger ne coûte rien de plus qu'un changement d'objet propagé.
+- **Validation.** L'hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.
+- **Pilotage.** Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement.
+
+:::
+
+## Article de recherche associé
+
+Flament, G., Hurlin, C., Lajaunie, Q. & Pull, Y. (2026). *Generalized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical Risk.*
+[arXiv:2608.04469](https://arxiv.org/abs/2608.04469) · [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7106918)
+
+{{< include ../_partenariat.qmd >}}
+
+## Références
+
+::: {.refs}
+
+Adrian, T., Boyarchenko, N. & Giannone, D. (2019). Vulnerable growth. *American Economic Review*, 109(4), 1263–1289.
+
+Caldara, D. & Iacoviello, M. (2022). Measuring geopolitical risk. *American Economic Review*, 112(4), 1194–1225.
+
+Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. *Journal of Financial Intermediation*, 12(3), 199–232.
+
+Merton, R. C. (1974). On the pricing of corporate debt: The risk structure of interest rates. *The Journal of Finance*, 29(2), 449–470.
+
+Vasicek, O. (2002). The distribution of loan portfolio value. *Risk*, 15(12), 160–162.
+
+Wilson, T. C. (1997). Portfolio credit risk. *RISK*, 10(10), 56–61.
+
+:::
+

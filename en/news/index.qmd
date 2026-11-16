@@ -1,0 +1,47 @@
+---
+pagetitle: "News — STORM"
+description: "Technical notes, publications and talks from the STORM collective."
+page-layout: full
+listing:
+  - id: news
+    contents:
+      - ../../data/_notes.yml
+      - ../../data/actualites.yml
+    template: ../../templates/en/actualite.ejs
+    sort: "date desc"
+    date-format: "YYYY-MM-DD"
+---
+
+:::: {.theme-head}
+
+[Quantitative Insights]{.kicker}
+
+# News
+
+::: {.position-line}
+
+Technical notes, publications and talks from the collective.
+
+:::
+
+::::
+
+:::: {.section-wide .news-page}
+
+::: {.partnership}
+
+Technical notes are currently published in French (marked FR). English versions are in preparation.
+
+:::
+
+::: {#news}
+
+:::
+
+::: {.more-links}
+
+[All technical notes](../publications/index.qmd#notes-techniques) · [Publications](../publications/index.qmd) · [RSS](../notes/index.xml)
+
+:::
+
+::::

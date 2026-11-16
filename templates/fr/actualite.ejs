@@ -1,0 +1,34 @@
+<%
+/* Actualités : notes techniques (data/_notes.yml) + data/actualites.yml.
+   Une ligne par élément. Les intertitres d'année ne s'affichent que sur la
+   page Actualités (classe .news-page), pas sur l'accueil. */
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function ext(h){ return /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : ""; }
+function arrow(h){ return /^https?:/.test(h) ? "↗" : "→"; }
+const MOIS = ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+/* Dates : « AAAA-MM-JJ » → « sept. 2026 ». Toute autre forme est affichée telle quelle. */
+function d8(v){ if(v==null) return ""; if(v instanceof Date) v=v.toISOString();
+  const m=String(v).match(/^(\d{4})-(\d{2})/); return m ? MOIS[+m[2]-1]+" "+m[1] : String(v); }
+function yr(v){ const m=String(v==null?"":(v instanceof Date?v.toISOString():v)).match(/^(\d{4})/); return m?m[1]:""; }
+const TYPES = { note:"Note", publication:"Publication", intervention:"Intervention", evenement:"Événement", presse:"Presse" };
+let out = '<div class="news">', last = "";
+for (const it of items) {
+  const type = it.type || "note";
+  const lab = it.etiquette || TYPES[type] || type;
+  const href = String(it.path || "").replace(/\.qmd$/, ".html");
+  const y = yr(it.date);
+  if (y && y !== last) { out += '<div class="news-year">' + esc(y) + '</div>'; last = y; }
+  const cat = (it.categories && it.categories.length) ? it.categories[0] : "";
+  const meta = [d8(it.date), it.lieu || cat].filter(Boolean).map(esc).join(" · ");
+  out += '<a class="item item-' + esc(type) + '" href="' + esc(href) + '"' + ext(href) + '>';
+  out += '<span class="t">' + esc(it.title) + '</span>';
+  out += '<span class="m"><span class="k">' + esc(lab) + '</span>' + meta + '</span>';
+  /* qui : intervenant(s) ou auteurs — champ « qui », ou auteurs de la note */
+  const au = it.qui || (Array.isArray(it.auteurs) ? it.auteurs.join(", ") : (Array.isArray(it.author) ? it.author.join(", ") : (it.auteurs || it.author || "")));
+  if (au) out += '<span class="a">' + esc(au) + '</span>';
+  out += '<span class="go" aria-hidden="true">' + arrow(href) + '</span></a>';
+}
+out += '</div>';
+%>```{=html}
+<%= out %>
+```
