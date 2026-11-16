@@ -16,6 +16,8 @@ mkdir -p docs
 touch docs/.nojekyll
 # Domaine personnalisé (GitHub Pages) — à garder en phase avec Settings → Pages
 echo "squaremanagement-storm.com" > docs/CNAME
+# Icône d’onglet à la racine (certains navigateurs la demandent toujours là)
+[ -f assets/brand/favicon.ico ] && cp assets/brand/favicon.ico docs/favicon.ico
 rm -rf "docs/$PROF"
 cp -R "$OUT/$PROF" "docs/$PROF"
 
