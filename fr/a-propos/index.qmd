@@ -46,10 +46,9 @@ Avec les équipes de conseil de Square Management, nous accompagnons les institu
 
 Un projet, une question, une demande de présentation : écrivez-nous.
 
-::: {.contacts}
+::: {.linkrow}
 
-- **Quentin Lajaunie** — [quentin.laujaunie@square-management.com](mailto:quentin.laujaunie@square-management.com)
-- **Yoann Pull** — [yoann.pull@square-management.com](mailto:yoann.pull@square-management.com)
+[quentin.laujaunie@square-management.com](mailto:quentin.laujaunie@square-management.com) [yoann.pull@square-management.com](mailto:yoann.pull@square-management.com) [charles-emmanuel.prost@square-management.com](mailto:charles-emmanuel.prost@square-management.com)
 
 :::
 

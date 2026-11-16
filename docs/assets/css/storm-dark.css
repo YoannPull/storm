@@ -215,9 +215,3 @@ body { overflow-x: clip; }
 /* Sélecteur à trois onglets : passe à la ligne sur téléphone */
 .anim-switch { flex-wrap: wrap; max-width: 100%; }
 @media (max-width: 560px) { .anim-switch { border-radius: 16px; } }
-
-/* À propos : contacts */
-.contacts ul { list-style: none; padding: 0; margin: .4rem 0 1.4rem; }
-.contacts li { padding: .55rem 0; border-bottom: 1px solid var(--line); font-family: var(--sans); color: var(--muted); }
-.contacts li strong { color: #fff; font-weight: 500; margin-right: .3rem; }
-.contacts a { color: var(--primary); }
