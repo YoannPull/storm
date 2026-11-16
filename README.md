@@ -127,4 +127,3 @@ _ancien/        old pages (team, former research pages) — not published, not i
 ## To do
 
 - English translations of the four technical notes
-- Check the spelling of the contact address `quentin.laujaunie@…`
