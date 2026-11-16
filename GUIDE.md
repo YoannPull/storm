@@ -288,10 +288,7 @@ Quarto ne sait lire les en-têtes que des fichiers qu’il rend : sans lui, les
 listes de l’édition anglaise sortiraient vides. Ne le modifiez jamais à la
 main — modifiez la note concernée, il suivra.
 
-**Adresses de contact et domaine.** `storm.example.org` et
-`contact@storm.example.org` sont des valeurs d'attente, à remplacer dans
-`_quarto-fr.yml`, `_quarto-en.yml`, `fr/a-propos/index.qmd` et
-`en/about/index.qmd`.
+**Adresses de contact et domaine.** Les contacts sont dans `fr/a-propos/index.qmd` et `en/about/index.qmd` (section « Travailler avec nous »). L'adresse du site (`site-url`, utilisée pour le flux RSS et le plan du site) est dans `_quarto-fr.yml` et `_quarto-en.yml` : `https://yoannpull.github.io/storm/`.
 
 **Notes en anglais.** Les quatre notes existent en français. Les pages anglaises
 les listent en signalant la langue. Pour en traduire une : copier le `.qmd` dans

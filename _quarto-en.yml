@@ -7,7 +7,7 @@ project:
 website:
   title: "STORM"
   description: "STORM — Quantitative Risk Collective. The quantitative research collective of Square Management."
-  site-url: "https://storm.example.org/en/"
+  site-url: "https://yoannpull.github.io/storm/en/"
   navbar:
     logo-href: /en/index.html
     left:

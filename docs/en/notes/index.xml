@@ -6,50 +6,50 @@
       version="2.0">
 <channel>
 <title>STORM — Notes</title>
-<link>https://storm.example.org/en/en/notes/</link>
-<atom:link href="https://storm.example.org/en/en/notes/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://yoannpull.github.io/storm/en/en/notes/</link>
+<atom:link href="https://yoannpull.github.io/storm/en/en/notes/index.xml" rel="self" type="application/rss+xml"/>
 <description>Technical notes, methodological focus pieces and short perspectives from the STORM collective.</description>
 <generator>quarto-1.8.26</generator>
 <lastBuildDate>Tue, 08 Sep 2026 07:00:00 GMT</lastBuildDate>
 <item>
   <title>Risque de crédit et scénarios climatiques : capter l&#39;information complète de la distribution sous stress</title>
-  <link>https://storm.example.org/en/</link>
+  <link>https://yoannpull.github.io/storm/en/</link>
   <description>L&#39;approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall.</description>
   <category>Risque climatique</category>
   <category>Risque de crédit</category>
   <category>Stress testing</category>
   <category>Quantiles</category>
-  <guid>https://storm.example.org/en/</guid>
+  <guid>https://yoannpull.github.io/storm/en/</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Downscaling statistique des projections climatiques : corriger les biais avant d&#39;évaluer le risque physique</title>
-  <link>https://storm.example.org/en/</link>
+  <link>https://yoannpull.github.io/storm/en/</link>
   <description>Pourquoi les sorties brutes des modèles CMIP6 ne suffisent pas à l&#39;analyse du risque physique, et comment les corriger sans amputer le signal de changement climatique aux quantiles extrêmes.</description>
   <category>Risque climatique</category>
   <category>Downscaling</category>
   <category>Risque physique</category>
-  <guid>https://storm.example.org/en/</guid>
+  <guid>https://yoannpull.github.io/storm/en/</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Reverse stress testing : partir du seuil de capital, pas du scénario</title>
-  <link>https://storm.example.org/en/</link>
+  <link>https://yoannpull.github.io/storm/en/</link>
   <description>Une architecture opérationnelle qui transforme un seuil de capital CET1 en scénario de rupture : la combinaison de chocs la plus plausible capable de franchir le seuil, assortie de son voisinage.</description>
   <category>Risque géopolitique</category>
   <category>Stress testing</category>
   <category>Optimisation</category>
-  <guid>https://storm.example.org/en/</guid>
+  <guid>https://yoannpull.github.io/storm/en/</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne</title>
-  <link>https://storm.example.org/en/</link>
+  <link>https://yoannpull.github.io/storm/en/</link>
   <description>Les modèles satellites existants ne transmettent qu&#39;une trajectoire moyenne. En propageant la distribution complète du facteur de crédit, le même dispositif corrige le niveau des PD et livre deux mesures de queue supplémentaires, au même coût de calcul.</description>
   <category>Risque de crédit</category>
   <category>Stress testing</category>
   <category>Quantiles</category>
-  <guid>https://storm.example.org/en/</guid>
+  <guid>https://yoannpull.github.io/storm/en/</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 </channel>

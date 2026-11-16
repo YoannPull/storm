@@ -46,9 +46,10 @@ Avec les équipes de conseil de Square Management, nous accompagnons les institu
 
 Un projet, une question, une demande de présentation : écrivez-nous.
 
-::: {.linkrow}
+::: {.contacts}
 
-[contact@storm.example.org](mailto:contact@storm.example.org)
+- **Quentin Lajaunie** — [quentin.laujaunie@square-management.com](mailto:quentin.laujaunie@square-management.com)
+- **Yoann Pull** — [yoann.pull@square-management.com](mailto:yoann.pull@square-management.com)
 
 :::
 
