@@ -14,6 +14,8 @@ OUT="${QUARTO_PROJECT_OUTPUT_DIR:-_site-$PROF}"
 mkdir -p docs
 # GitHub Pages : désactive Jekyll (sinon certains fichiers peuvent être ignorés)
 touch docs/.nojekyll
+# Domaine personnalisé (GitHub Pages) — à garder en phase avec Settings → Pages
+echo "squaremanagement-storm.com" > docs/CNAME
 rm -rf "docs/$PROF"
 cp -R "$OUT/$PROF" "docs/$PROF"
 

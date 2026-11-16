@@ -6,8 +6,8 @@
       version="2.0">
 <channel>
 <title>STORM — Notes</title>
-<link>https://yoannpull.github.io/storm/fr/fr/notes/</link>
-<atom:link href="https://yoannpull.github.io/storm/fr/fr/notes/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://squaremanagement-storm.com/fr/fr/notes/</link>
+<atom:link href="https://squaremanagement-storm.com/fr/fr/notes/index.xml" rel="self" type="application/rss+xml"/>
 <description>Notes techniques, focus méthodologiques et perspectives courtes du collectif STORM.</description>
 <generator>quarto-1.8.26</generator>
 <lastBuildDate>Tue, 08 Sep 2026 07:00:00 GMT</lastBuildDate>
@@ -17,7 +17,7 @@
   <dc:creator>Quentin Lajaunie</dc:creator>
   <dc:creator>Pétronie Nkoussol Nsangou</dc:creator>
   <dc:creator>Charles-Emmanuel Prost</dc:creator>
-  <link>https://yoannpull.github.io/storm/fr/fr/notes/atrisk-climat.html</link>
+  <link>https://squaremanagement-storm.com/fr/fr/notes/atrisk-climat.html</link>
   <description><![CDATA[ 
 
 
@@ -109,7 +109,7 @@
   <category>Risque de crédit</category>
   <category>Stress testing</category>
   <category>Quantiles</category>
-  <guid>https://yoannpull.github.io/storm/fr/fr/notes/atrisk-climat.html</guid>
+  <guid>https://squaremanagement-storm.com/fr/fr/notes/atrisk-climat.html</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 <item>
@@ -117,7 +117,7 @@
   <dc:creator>Sabiha Zarhouni Jaures</dc:creator>
   <dc:creator>Ève-Roxane Doffou</dc:creator>
   <dc:creator>Charles-Emmanuel Prost</dc:creator>
-  <link>https://yoannpull.github.io/storm/fr/fr/notes/downscaling.html</link>
+  <link>https://squaremanagement-storm.com/fr/fr/notes/downscaling.html</link>
   <description><![CDATA[ 
 
 
@@ -201,7 +201,7 @@
   <category>Risque climatique</category>
   <category>Downscaling</category>
   <category>Risque physique</category>
-  <guid>https://yoannpull.github.io/storm/fr/fr/notes/downscaling.html</guid>
+  <guid>https://squaremanagement-storm.com/fr/fr/notes/downscaling.html</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 <item>
@@ -210,7 +210,7 @@
   <dc:creator>Gwezheneg Ory</dc:creator>
   <dc:creator>Tony Pereira</dc:creator>
   <dc:creator>Yoann Pull</dc:creator>
-  <link>https://yoannpull.github.io/storm/fr/fr/notes/reverse-stress-test.html</link>
+  <link>https://squaremanagement-storm.com/fr/fr/notes/reverse-stress-test.html</link>
   <description><![CDATA[ 
 
 
@@ -306,7 +306,7 @@
   <category>Risque géopolitique</category>
   <category>Stress testing</category>
   <category>Optimisation</category>
-  <guid>https://yoannpull.github.io/storm/fr/fr/notes/reverse-stress-test.html</guid>
+  <guid>https://squaremanagement-storm.com/fr/fr/notes/reverse-stress-test.html</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 <item>
@@ -315,7 +315,7 @@
   <dc:creator>Léane Chevrier</dc:creator>
   <dc:creator>Quentin Lajaunie</dc:creator>
   <dc:creator>Yoann Pull</dc:creator>
-  <link>https://yoannpull.github.io/storm/fr/fr/notes/stress-tests-credit.html</link>
+  <link>https://squaremanagement-storm.com/fr/fr/notes/stress-tests-credit.html</link>
   <description><![CDATA[ 
 
 
@@ -410,7 +410,7 @@
   <category>Risque de crédit</category>
   <category>Stress testing</category>
   <category>Quantiles</category>
-  <guid>https://yoannpull.github.io/storm/fr/fr/notes/stress-tests-credit.html</guid>
+  <guid>https://squaremanagement-storm.com/fr/fr/notes/stress-tests-credit.html</guid>
   <pubDate>Tue, 08 Sep 2026 07:00:00 GMT</pubDate>
 </item>
 </channel>

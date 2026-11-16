@@ -1,1 +1,1 @@
-Sitemap: https://yoannpull.github.io/storm/en/sitemap.xml
+Sitemap: https://squaremanagement-storm.com/en/sitemap.xml

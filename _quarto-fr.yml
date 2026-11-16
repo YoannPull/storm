@@ -7,7 +7,7 @@ project:
 website:
   title: "STORM"
   description: "STORM — Quantitative Risk Collective. Le collectif de recherche quantitative de Square Management."
-  site-url: "https://yoannpull.github.io/storm/fr/"
+  site-url: "https://squaremanagement-storm.com/fr/"
   navbar:
     logo-href: /fr/index.html
     left:
