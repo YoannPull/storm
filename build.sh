@@ -17,4 +17,4 @@ quarto render
 quarto render --profile en
 
 echo
-echo "✓ site construit dans docs/  →  ouvrir docs/fr/index.html"
+echo "✓ site construit dans docs/  →  aperçu local : python3 -m http.server -d docs  puis http://localhost:8000"

@@ -39,7 +39,7 @@ Deux formats complémentaires : des articles de recherche, publiés ou en cours 
 :::
 
 ```{=html}
-<div class="sh" id="notes-techniques"><h2>Notes techniques</h2><a href="../notes/index.xml">RSS</a></div>
+<div class="sh" id="notes-techniques"><h2>Notes techniques</h2></div>
 ```
 
 ::: {#notes}

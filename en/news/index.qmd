@@ -40,7 +40,7 @@ Technical notes are currently published in French (marked FR). English versions 
 
 ::: {.more-links}
 
-[All technical notes](../publications/index.qmd#notes-techniques) · [Publications](../publications/index.qmd) · [RSS](../notes/index.xml)
+[All technical notes](../publications/index.qmd#notes-techniques) · [Publications](../publications/index.qmd)
 
 :::
 

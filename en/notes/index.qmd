@@ -8,8 +8,6 @@ listing:
     template: ../../templates/en/note.ejs
     sort: "date desc"
     date-format: "YYYY-MM-DD"
-    feed:
-      title: "STORM — Notes"
 ---
 
 :::: {.theme-head}

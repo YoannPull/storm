@@ -29,6 +29,4 @@ website:
     right:
       - text: "Contact"
         href: /en/about/index.html#contact
-      - text: "RSS"
-        href: /en/notes/index.xml
 

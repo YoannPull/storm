@@ -24,6 +24,13 @@ into `docs/` (see `scripts/assemble.sh`), which also writes `docs/CNAME`
 
 After publishing, reload with **Cmd + Shift + R** to bypass the browser cache.
 
+**Clean URLs.** After each render, `scripts/clean_urls.py` rewrites internal
+links so they no longer show `index.html` or `.html`
+(`/fr/expertise/` instead of `/fr/expertise/index.html`). As a consequence,
+opening `docs/fr/index.html` straight from the disk no longer lets you click
+from page to page; preview locally with `python3 -m http.server -d docs`
+(then <http://localhost:8000>) or `quarto preview`.
+
 ## Editing content
 
 **→ See [GUIDE.md](GUIDE.md)** (in French) for step-by-step instructions.
@@ -101,7 +108,7 @@ fr/  en/        pages (French and English editions)
 _quarto.yml     shared settings
 _quarto-fr.yml  French navigation, footer, site URL
 _quarto-en.yml  English navigation, footer, site URL
-scripts/        collect.py (before render) + assemble.sh (after render)
+scripts/        collect.py (before render), assemble.sh + clean_urls.py (after render)
 build.sh        builds both editions
 docs/           built site, served by GitHub Pages (branch main, folder /docs)
 _ancien/        old pages (team, former research pages) — not published, not in git

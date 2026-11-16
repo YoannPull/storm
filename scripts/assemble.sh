@@ -49,13 +49,19 @@ PY
   fi
 fi
 
+# Adresses propres : les liens internes ne montrent plus « index.html » ni
+# « .html » (GitHub Pages sert /fr/expertise/ et /fr/notes/downscaling tout seul).
+if command -v python3 >/dev/null 2>&1; then
+  PROF="$PROF" python3 scripts/clean_urls.py
+fi
+
 cat > docs/index.html <<'HTML'
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
 <title>STORM — Quantitative Risk Collective</title>
-<link rel="canonical" href="fr/index.html">
-<meta http-equiv="refresh" content="0; url=fr/index.html">
-</head><body><p>Redirection vers <a href="fr/index.html">STORM</a>…</p></body></html>
+<link rel="canonical" href="fr/">
+<meta http-equiv="refresh" content="0; url=fr/">
+</head><body><p>Redirection vers <a href="fr/">STORM</a>…</p></body></html>
 HTML
 
 echo "assemble: édition $PROF copiée dans docs/$PROF"

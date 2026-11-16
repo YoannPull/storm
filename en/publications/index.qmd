@@ -39,7 +39,7 @@ Two complementary formats: research papers, published or under review, and techn
 :::
 
 ```{=html}
-<div class="sh" id="notes-techniques"><h2>Technical notes</h2><a href="../notes/index.xml">RSS</a></div>
+<div class="sh" id="notes-techniques"><h2>Technical notes</h2></div>
 ```
 
 ::: {#notes}
