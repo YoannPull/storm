@@ -26,7 +26,7 @@ profile:
   default: fr
 
 website:
-  favicon: assets/brand/favicon-512.png
+  favicon: assets/brand/favicon-storm.png
   open-graph: true
   search:
     location: navbar
