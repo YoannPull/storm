@@ -834,7 +834,7 @@ function initRST(root,TX,VIS){
   const neigh=[];
   while(neigh.length<NEIGH){const r=RN*Math.pow(R(),.62),th=R()*2*Math.PI;const [u,v]=off(S,r*Math.cos(th),r*Math.sin(th));
     if(!breach(u,v)||u>U||v>U)continue;
-    neigh.push({u,v,br:true,p:plaus(maha(u,v)),t0:B[3]+.4+R()*2.0,e:el('circle',{cx:px(u),cy:py(v),r:2.1,fill:BLUE,opacity:0},G.dots)});}
+    neigh.push({u,v,br:true,p:plaus(maha(u,v)),t0:14.2+R()*2.0,e:el('circle',{cx:px(u),cy:py(v),r:2.1,fill:BLUE,opacity:0},G.dots)});}
   const PMIN=Math.min(...neigh.map(p=>p.p));
   // selection: a finite, diverse set among the breaching scenarios (farthest-point sampling)
   const cand=neigh.filter(p=>p.br);
@@ -1122,10 +1122,12 @@ function watch(el){const V={on:false,heard:false};
     setTimeout(()=>{if(!V.heard){const r=el.getBoundingClientRect();V.on=r.bottom>0&&r.top<innerHeight&&r.height>0;}},1500);}
   else V.on=true;
   return V;}
-document.querySelectorAll('.storm-anim[data-anim="credit"]').forEach(el=>initFlow(el,FLOW_TX[LANG],watch(el)));
-document.querySelectorAll('.storm-anim[data-anim="rst"]').forEach(el=>initRST(el,RST_TX[LANG],watch(el)));
-document.querySelectorAll('.storm-anim[data-anim="jeffreys"]').forEach(el=>initJeffreys(el,VA_TX[LANG].jeff,watch(el)));
-document.querySelectorAll('.storm-anim[data-anim="eprocess"]').forEach(el=>initEprocess(el,VA_TX[LANG].eproc,watch(el)));
+// one failing animation must never break the others (nor the switches below)
+const safe=(f,el)=>{try{f(el);}catch(e){console.error('STORM animation',el.dataset.anim,e);}};
+document.querySelectorAll('.storm-anim[data-anim="credit"]').forEach(el=>safe(el=>initFlow(el,FLOW_TX[LANG],watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="rst"]').forEach(el=>safe(el=>initRST(el,RST_TX[LANG],watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="jeffreys"]').forEach(el=>safe(el=>initJeffreys(el,VA_TX[LANG].jeff,watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="eprocess"]').forEach(el=>safe(el=>initEprocess(el,VA_TX[LANG].eproc,watch(el)),el));
 // switches between animations: each switch drives the panes of its own group
 document.querySelectorAll('.anim-switch').forEach(sw=>{
   const grp=sw.closest('.anim-group')||document;
