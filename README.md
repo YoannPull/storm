@@ -1,6 +1,6 @@
 # Site STORM
 
-Site du collectif STORM — *Quantitative Risk Collective*, le collectif de
+Site de la team STORM — *Quantitative Risk Collective*, la team de
 recherche quantitative de Square Management. Deux éditions (française et anglaise) construites avec
 [Quarto](https://quarto.org).
 
