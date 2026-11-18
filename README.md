@@ -48,8 +48,8 @@ Most content lives in `data/` and never requires touching HTML:
 | Navigation and footer | `_quarto-fr.yml`, `_quarto-en.yml` |
 
 `data/_notes.yml` is generated before each build by `scripts/collect.py`; do
-not edit it by hand. `data/projets.yml` is kept for reference but is no longer
-displayed.
+not edit it by hand. Projects in `data/projets.yml` marked
+`rubrique: "recherche-en-cours"` appear under **Research in progress** on the Publications page.
 
 ## Site structure
 
@@ -78,7 +78,9 @@ displayed.
     neighbourhood → selection);
   - `jeffreys` — Jeffreys calibration test on a low-default portfolio;
   - `eprocess` — continuous monitoring, classic test vs anytime-valid
-    approach (in-house method, not yet published).
+    approach (in-house method, not yet published);
+  - `tfm` — a pretrained tabular model estimating one-year default risk from
+    prior borrower outcomes and a new loan file.
 
   To place one in a page:
 

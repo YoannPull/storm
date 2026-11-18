@@ -11,6 +11,7 @@
 #    axe          credit | climat | geopolitique | methodes   (un seul)
 #    statut       a-demarrer | en-cours | relecture | termine
 #    statut_fr / statut_en   libellé affiché
+#    rubrique     « recherche-en-cours » pour afficher le projet dans Publications
 #    horizon      T1..T4, ou vide
 #    resume_fr/en 1 à 2 phrases
 #    equipe       liste de noms, tels qu'écrits dans membres.yml
@@ -60,15 +61,26 @@
   livrables: ["note", "fiche-reflexe"]
   note: ""
 
-- title: "Monitoring anytime-valid de la calibration"
-  title_en: "Anytime-valid calibration monitoring"
+- title: "Modèles de fondation tabulaires (TFM) pour le risque de crédit"
+  title_en: "Tabular foundation models (TFMs) for credit risk"
+  axe: "credit"
+  rubrique: "recherche-en-cours"
+  statut: "en-cours"
+  statut_fr: "En cours"
+  statut_en: "In progress"
+  resume_fr: "Un modèle préentraîné sur des données tabulaires peut-il mieux classer les emprunteurs par risque de défaut qu’une régression logistique ? Nous étudions aussi la calibration des probabilités de défaut sur de nouvelles cohortes."
+  resume_en: "Can a model pretrained on tabular data rank borrowers by default risk more accurately than logistic regression? We also study how well its predicted probabilities of default hold up on new cohorts."
+
+- title: "E-calibration des probabilités de défaut"
+  title_en: "E-calibration of probabilities of default"
+  rubrique: "recherche-en-cours"
   axe: "credit"
   statut: "en-cours"
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: ""
-  resume_fr: "Suivi séquentiel de la calibration des PD par e-values : un test qui reste valide quel que soit le moment où on le regarde."
-  resume_en: "Sequential monitoring of PD calibration with e-values: a test that stays valid whenever you choose to look at it."
+  resume_fr: "À mesure que les défauts sont observés, nous utilisons des e-values pour tester la calibration des probabilités de défaut prévues. Nous étudions comment détecter une sous-estimation du risque tout en maîtrisant les fausses alertes au fil des revues."
+  resume_en: "As defaults are observed, we use e-values to test the calibration of predicted default probabilities. We study how to detect underestimated risk while controlling false alarms across repeated reviews."
   equipe: ["Yoann Pull", "Quentin Lajaunie"]
   livrables: ["article"]
   note: ""

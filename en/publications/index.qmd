@@ -1,12 +1,17 @@
 ---
 pagetitle: "Publications — STORM"
-description: "Research papers and technical notes from STORM."
+description: "Research papers, technical notes and research in progress at STORM."
 page-layout: full
 listing:
   - id: publications
     contents: ../../data/publications.yml
     template: ../../templates/en/publication.ejs
     sort: "date desc"
+  - id: projets
+    contents: ../../data/projets.yml
+    template: ../../templates/en/projet.ejs
+    include:
+      rubrique: "recherche-en-cours"
   - id: notes
     contents: ../../data/_notes.yml
     template: ../../templates/en/note.ejs
@@ -16,13 +21,13 @@ listing:
 
 :::: {.theme-head}
 
-[Academic work]{.kicker}
+[Our work]{.kicker}
 
 # Publications
 
 ::: {.position-line}
 
-Two complementary formats: research papers, published or under review, and technical notes that carry them into practice.
+Explore our published papers, papers under review, and current research projects. Each technical note explains how to apply a method and can be read independently of a paper.
 
 :::
 
@@ -35,6 +40,14 @@ Two complementary formats: research papers, published or under review, and techn
 ```
 
 ::: {#publications}
+
+:::
+
+```{=html}
+<div class="sh" id="research-in-progress"><h2>Research in progress</h2></div>
+```
+
+::: {#projets}
 
 :::
 

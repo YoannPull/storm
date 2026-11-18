@@ -296,9 +296,10 @@ window.Quarto = {
 <div class="home-block">
 <span class="kicker">Une méthode, en mouvement</span>
 <div class="anim-group">
-<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Stress test de crédit</button><button type="button" data-pane="eprocess" aria-pressed="false">Surveillance en continu</button></div>
-<div class="anim-pane" data-pane="credit"><h2 class="big anchored">Transmettre la distribution, pas seulement la trajectoire moyenne</h2><p class="lede-p">Le même stress test, en propageant un seul scénario central — ou toute la distribution.</p><div class="storm-anim" data-anim="credit"></div></div>
+<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Stress test de crédit</button><button type="button" data-pane="eprocess" aria-pressed="false">Surveillance en continu</button><button type="button" data-pane="tfm" aria-pressed="false">Tabular foundation models</button></div>
+<div class="anim-pane" data-pane="credit"><h2 class="big anchored">Transmettre la distribution, pas seulement la trajectoire moyenne</h2><p class="lede-p">Le même stress test, en propageant un seul scénario central — ou toute la distribution.</p><div class="storm-anim" data-anim="credit" data-sequence="home"></div></div>
 <div class="anim-pane" data-pane="eprocess" hidden=""><h2 class="big anchored">Détecter une dérive sans multiplier les fausses alertes</h2><p class="lede-p">Le même flux surveillé avec un test classique, puis avec une approche valide à tout instant.</p><div class="storm-anim" data-anim="eprocess"></div></div>
+<div class="anim-pane" data-pane="tfm" hidden=""><h2 class="big anchored">Estimer le risque de défaut d’un nouvel emprunteur</h2><div class="storm-anim" data-anim="tfm"></div></div>
 </div>
 </div>
 <div class="home-block">
@@ -333,8 +334,9 @@ window.Quarto = {
           :::
           data-anim="jeffreys"  test de Jeffreys (calibration des PD)
           data-anim="eprocess"  surveillance en continu (e-processus)
+          data-anim="tfm"       modèle de fondation tabulaire
         Les textes suivent la langue de la page (fr / en).
-     3. Sur l'accueil : le sélecteur entre les deux animations.
+     3. Sur l'accueil : le sélecteur entre les trois animations.
      Chaque animation démarre quand elle entre à l'écran, et se met en pause
      quand elle en sort.
      ========================================================================= -->
@@ -348,7 +350,6 @@ window.Quarto = {
 .sf-tabs button:hover{color:var(--ink)}
 .sf-tabs button[aria-pressed="true"]{background:#fff;color:#000}
 .sf-tabs button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
-.sf-tag{font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.02em}
 .sf-svg{display:block;width:100%;height:auto;overflow:visible}
 .sf-node rect{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.2;transition:stroke .3s,fill .3s}
 .sf-node.on rect{stroke:#fff;fill:var(--surface-2)}
@@ -387,7 +388,6 @@ window.Quarto = {
 .rst-steps span{padding:3px 10px;border-radius:999px;border:1px solid var(--line-strong);color:var(--faint);transition:all .3s}
 .rst-steps span.on{color:#000;background:#fff;border-color:#fff}
 .rst-steps span.done{color:var(--muted);border-color:var(--line-strong)}
-.rst-tag{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
 .rst svg{display:block;width:100%;height:auto}
 .rst .ax{stroke:var(--line-strong);stroke-width:1}
 .rst .axl{font-family:var(--sans);font-size:12px;fill:var(--muted)}
@@ -502,11 +502,33 @@ window.Quarto = {
 .sf-phase span.on::after{background:var(--signal)}
 @media (max-width:600px){.sf-phase{gap:10px;font-size:10px;letter-spacing:0}}
 
+.tfm svg { margin:.6rem 0; text-anchor:middle; }
+.tfm text { font-family:var(--sans); }
+.tfm .tfm-label { font-size:14px; font-weight:600; fill:var(--ink); }
+.tfm .tfm-detail,.tfm .tfm-outcome { font-size:12px; fill:var(--muted); }
+.tfm .tfm-outcome { font-family:var(--mono); font-size:10.5px; }
+.tfm .tfm-box,.tfm .tfm-chip { fill:var(--surface-2); stroke:var(--line-strong); }
+.tfm .tfm-input,.tfm .tfm-dial { fill:var(--signal-tint); stroke:var(--line-strong); }
+.tfm .tfm-input,.tfm .tfm-chip.active { stroke:var(--signal); }
+.tfm .tfm-pattern { fill:none; stroke:var(--signal); stroke-width:2; stroke-dasharray:1; }
+.tfm .tfm-default .tfm-avatar { stroke:var(--signal); }
+.tfm .tfm-default .tfm-outcome { fill:var(--signal); }
+.tfm .tfm-avatar { fill:var(--surface); stroke:var(--line-strong); }
+.tfm .tfm-person { stroke:var(--body); fill:none; stroke-width:1.5; stroke-linecap:round; }
+.tfm .tfm-applicant .tfm-person { stroke:var(--signal); }
+.tfm .tfm-track,.tfm .tfm-wire { fill:none; stroke:var(--line-strong); stroke-width:1.6; }
+.tfm .tfm-wire { stroke:var(--signal); stroke-dasharray:1; }
+.tfm .tfm-wire-0 { stroke:var(--muted); }
+.tfm .tfm-layers { fill:var(--signal-tint); stroke:var(--signal); stroke-width:1.4; }
+.tfm .tfm-name,.tfm .tfm-value { font:500 21px var(--mono); fill:var(--ink); }
+.tfm .tfm-value { fill:var(--signal); font-size:25px; }
+.tfm .tfm-share { stroke:var(--signal); stroke-width:3; fill:none; stroke-linecap:round; }
+
 </style>
 <script>
 /* ---- Density horizon ------------------------------------------------------
    One large right-skewed density drawn in fine dust behind the hero. The dust
-   drifts slowly along the curve; dots beyond the 95 % quantile glow gold and a
+   drifts slowly along the curve; dots beyond the 95 % quantile glow blue and a
    thin tick marks the quantile. Every ~24 s the tail gently thickens, the
    quantile slides out, then everything relaxes. Fades out as you scroll.   */
 (function(){
@@ -525,9 +547,8 @@ window.Quarto = {
   const content=hero.querySelector('.hero-in'), pillars=hero.querySelector('.pillars');
   function shape(){
     const s=stress(), wide=W>=900;
-    const pil=getComputedStyle(pillars).position==='absolute'?pillars.offsetHeight:0;
-    const base=H-pil-26-BAND()*.5, top=content.offsetTop+content.offsetHeight+30;
-    return {mu:(wide?.44:.40)*W, om:((wide?.085:.12)+.03*s)*W, a:2.4+3.4*s, base, amp:Math.max(80,base-top)*(1-.1*s), s};
+    const base=pillars.offsetTop-26-BAND()*.5, top=content.offsetTop+content.offsetHeight+32;
+    return {mu:(wide?.44:.40)*W, om:((wide?.09:.126)+.03*s)*W, a:2.4+3.4*s, base, amp:Math.max(0,base-top)*(1-.1*s), s};
   }
   let peak=1, q95z=1.6;
   function calib(S){ // peak height + 95 % quantile in z units for current skew
@@ -554,7 +575,10 @@ window.Quarto = {
   // a ribbon seen in perspective: depth spreads the dust vertically and widens it
   const BAND=()=>W>=900?22:14;
   function px(p,S){const cx=W*.5;return cx+(p.x-cx)*(.88+.24*p.d)+mx*14*p.d;}
-  function py(p,S,x){return curveY(p.x,S)+(p.d-.5)*BAND()+p.j*(1+.25*Math.sin(t*.6+p.ph))+my*6*p.d;}
+  function py(p,S){
+    const height=sn((p.x-S.mu)/S.om,S.a)/peak;
+    return S.base-S.amp*height+(p.d-.5)*(BAND()+12*height)+p.j*(1+.25*Math.sin(t*.6+p.ph))+my*6*p.d;
+  }
   function stroke(S,x0,x1,rgb,w,a){
     g.beginPath();for(let x=x0;x<=x1;x+=4){const y=curveY(x,S);x===x0?g.moveTo(x,y):g.lineTo(x,y);}
     g.strokeStyle=`rgba(${rgb},${a})`;g.lineWidth=w;g.lineCap='round';g.stroke();
@@ -584,7 +608,7 @@ window.Quarto = {
     const yq=curveY(xq,S);
     g.strokeStyle=`rgba(${BLUE},${(.55+.35*S.s)*fade})`;g.lineWidth=1;
     g.beginPath();g.moveTo(xq+.5,S.base+BAND()*.5+8);g.lineTo(xq+.5,yq-14);g.stroke();
-    g.fillStyle=`rgba(${BLUE},${(.75+.25*S.s)*fade})`;g.font='500 11px "IBM Plex Mono", monospace';
+    g.fillStyle=`rgba(${BLUE},${fade})`;g.font='500 12px "IBM Plex Mono", monospace';
     g.fillText('q95',xq+7,S.base+BAND()*.5+18);
   }
   function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;draw(dt);requestAnimationFrame(loop);}
@@ -600,30 +624,32 @@ const LANG=(document.documentElement.lang||'fr').slice(0,2)==='en'?'en':'fr';
 const FLOW_TX={
  fr:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-phase" aria-hidden="true"><span data-m="moyenne">1 · Pratique standard</span><span data-m="distribution">2 · Approche STORM</span><span data-m="briques">3 · Vos modèles</span></div></div>
    <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
-   <div class="sf-foot">D'après <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026). <span class="sf-tag">· valeurs illustratives</span></div></div>`,
+   <div class="sf-foot">D'après <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
   steps:[{t:'Choc',s:'Scénario macro-financier',k:'scénario',c:'Un choc frappe l’économie.'},
    {t:'Économie',s:'Propagation du choc',k:'propagation',c:'Le choc se propage dans l’économie.'},
    {t:'Crédit',s:'Conditions de crédit du portefeuille',k:'facteur de risque',c:'Il se traduit en conditions de crédit.'},
    {t:'Défauts',s:'Probabilités de défaut',k:'probabilités',c:'Elles deviennent des probabilités de défaut.'}],
   outs:[{t:'Risque moyen',n:'Risque moyen',tail:false},{t:'Risque extrême',n:'Risque extrême',tail:true},{t:'Moyenne des extrêmes',n:'Moyenne des extrêmes',tail:true}],
-  end:{moyenne:'La pratique standard ne fait passer qu’un scénario central : un risque moyen sous-estimé, et rien sur les extrêmes.',
-   distribution:'Toute la distribution traverse le dispositif : le risque moyen est corrigé et les extrêmes deviennent mesurables — au même coût de calcul.',
-   briques:'Les briques 2 et 3 se remplacent par vos modèles déjà validés. Aucun re-développement.'},
+  end:({path,mean,es})=>({
+    moyenne:`Ce scénario donne une probabilité de défaut de ${path}. Le risque extrême reste à quantifier.`,
+    distribution:`La probabilité de défaut moyenne atteint ${mean} sur l’ensemble des scénarios et ${es} dans les 5 % les plus sévères.`,
+    briques:'Vous pouvez utiliser vos modèles validés pour les blocs Économie (2) et Crédit (3).'}),
   yours:'votre modèle', here:' — ici, votre modèle validé.', central:'scénario central', notmeasured:'non mesuré',
-  vs:' % vs central', intro:{moyenne:'Pratique standard : un seul scénario central traverse le dispositif.',distribution:'Approche STORM : toute la distribution traverse le même dispositif.',briques:'Les briques 2 et 3 peuvent être vos propres modèles.'}, thr:'seuil à 95 %', beyond:'au-delà du seuil', num:x=>x.replace('.',',')},
+  vs:' % vs central', intro:{moyenne:'Le scénario central sert de référence pour évaluer le risque du portefeuille.',distribution:'Pour le même choc, STORM évalue toute la gamme des conditions de crédit possibles.',briques:'Le modèle macroéconomique transmet le choc au modèle de crédit du portefeuille.'}, thr:'seuil à 95 %', beyond:'au-delà du seuil', num:x=>x.replace('.',',')},
  en:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-phase" aria-hidden="true"><span data-m="moyenne">1 · Standard practice</span><span data-m="distribution">2 · STORM approach</span><span data-m="briques">3 · Your models</span></div></div>
    <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
-   <div class="sf-foot">Based on <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026). <span class="sf-tag">· illustrative values</span></div></div>`,
+   <div class="sf-foot">Based on <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
   steps:[{t:'Shock',s:'Macro-financial scenario',k:'scenario',c:'A shock hits the economy.'},
    {t:'Economy',s:'Shock propagation',k:'propagation',c:'The shock spreads through the economy.'},
    {t:'Credit',s:'Portfolio credit conditions',k:'risk factor',c:'It translates into credit conditions.'},
    {t:'Defaults',s:'Default probabilities',k:'probabilities',c:'They become default probabilities.'}],
   outs:[{t:'Average risk',n:'Average risk',tail:false},{t:'Extreme risk',n:'Extreme risk',tail:true},{t:'Mean of extremes',n:'Mean of extremes',tail:true}],
-  end:{moyenne:'Standard practice only passes a central scenario through: average risk is understated, and nothing is said about extremes.',
-   distribution:'The whole distribution goes through: average risk is corrected and extremes become measurable — at the same computational cost.',
-   briques:'Blocks 2 and 3 can be replaced by your already-validated models. No redevelopment.'},
+  end:({path,mean,es})=>({
+    moyenne:`The central scenario puts default probability at ${path}. Tail risk remains unmeasured.`,
+    distribution:`Default probability averages ${mean} across all scenarios and ${es} in the most adverse 5%.`,
+    briques:'You can use your validated models for the Economy (2) and Credit (3) blocks.'}),
   yours:'your model', here:' — here, your validated model.', central:'central scenario', notmeasured:'not measured',
-  vs:' % vs central', intro:{moyenne:'Standard practice: a single central scenario goes through the set-up.',distribution:'STORM approach: the whole distribution goes through the same set-up.',briques:'Blocks 2 and 3 can be your own models.'}, thr:'95 % threshold', beyond:'beyond the threshold', num:x=>x}
+  vs:' % vs central', intro:{moyenne:'The central scenario provides a baseline for portfolio risk.',distribution:'For the same shock, STORM assesses the full range of possible credit conditions.',briques:'The macroeconomic model passes the shock through to the portfolio’s credit model.'}, thr:'95 % threshold', beyond:'beyond the threshold', num:x=>x}
 };
 const RST_TX={
  fr:{markup:u=>`<div class="rst"><div class="rst-top"><div class="rst-steps"><span data-s="0">1 · Seuil</span><span data-s="1">2 · Explorer</span><span data-s="2">3 · Rupture</span><span data-s="3">4 · Voisinage</span><span data-s="4">5 · Sélection</span></div></div>
@@ -633,7 +659,7 @@ const RST_TX={
    <div data-r="2"><b>Voisinage</b><span class="v2">—</span><i>plausibilité</i></div>
    <div data-r="3"><b>Sélection</b><span class="v3">—</span><i>scénarios retenus</i></div></div>
    <div class="rst-cap" aria-live="polite"></div>
-   <div class="rst-foot">D'après <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026). <span class="rst-tag">· valeurs illustratives</span></div></div>`,
+   <div class="rst-foot">D'après <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
   ax:'Choc économique →', ay:'Choc géopolitique →', flab:'Seuil de capital · ratio de 7 %', hood:'Voisinage', central:'Scénario central', breakpt:'Point de rupture',
   caps:p=>['On fixe d’abord le seuil : le ratio de capital ne doit pas passer sous 7 %.',
     'On explore les scénarios autour du scénario central : chaque anneau est un niveau de plausibilité.',
@@ -647,7 +673,7 @@ const RST_TX={
    <div data-r="2"><b>Neighbourhood</b><span class="v2">—</span><i>plausibility</i></div>
    <div data-r="3"><b>Selection</b><span class="v3">—</span><i>scenarios kept</i></div></div>
    <div class="rst-cap" aria-live="polite"></div>
-   <div class="rst-foot">Based on <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026). <span class="rst-tag">· illustrative values</span></div></div>`,
+   <div class="rst-foot">Based on <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
   ax:'Economic shock →', ay:'Geopolitical shock →', flab:'Capital threshold · ratio of 7 %', hood:'Neighbourhood', central:'Central scenario', breakpt:'Breaking point',
   caps:p=>['First, set the threshold: the capital ratio must not fall below 7 %.',
     'Explore scenarios around the central one: each ring is a level of plausibility.',
@@ -689,7 +715,8 @@ function initFlow(root,TX,VIS){
   const pct=v=>TX.num((100*v).toFixed(2))+' %';
 
   /* ---------- contenu ---------- */
-  const STEPS=TX.steps, OUTS=TX.outs, END=TX.end;
+  const STEPS=TX.steps, OUTS=TX.outs;
+  const END=TX.end({path:pct(V.path),mean:pct(V.mean),es:pct(V.es)});
 
   /* ---------- mise en page (horizontale / verticale) ---------- */
   let L, nodes=[], outs=[], parts=[], minis={};
@@ -776,26 +803,38 @@ function initFlow(root,TX,VIS){
     return {x:lerp(sx,o.x,f),y:lerp(sy,o.y,f),k,tail};
   }
 
-  /* ---------- légende tapée ---------- */
-  let sayTxt='', sayT=0, sayEl=null;
-  function say(txt){
-    sayTxt=txt; sayT=performance.now();
-    cap.innerHTML='<span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span>';
-    sayEl=cap.querySelector('.x'); if(reduce) sayEl.textContent=txt;
+  /* Particle travel and caption reading time are independent. */
+  const travelMs=6500, charMs=26;
+  const captionDuration=text=>text.length*charMs+Math.max(3000,text.split(/\s+/).length*285);
+  const home=root.dataset.sequence==='home';
+  if(home) root.querySelector('[data-m="briques"]').remove();
+  const labels=[...root.querySelectorAll('.sf-phase [data-m]')];
+  const phases=labels.map(label=>{
+    const mode=label.dataset.m;
+    const resultAt=Math.max(travelMs,captionDuration(TX.intro[mode]));
+    const resultEnd=resultAt+captionDuration(END[mode]);
+    const swapAt=home&&mode==='distribution'?resultEnd:Infinity;
+    const duration=resultEnd+(Number.isFinite(swapAt)?captionDuration(END.briques):0);
+    return {mode,resultAt,swapAt,duration};
+  });
+  cap.removeAttribute('aria-live');
+  cap.innerHTML='<span aria-hidden="true"><span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span></span><span class="visually-hidden" aria-live="polite"></span>';
+  const typed=cap.querySelector('.x'), announced=cap.querySelector('[aria-live]');
+  function caption(text,age){
+    if(announced.textContent!==text) announced.textContent=text;
+    const visible=reduce?text:text.slice(0,Math.floor(age/charMs));
+    if(typed.textContent!==visible) typed.textContent=visible;
   }
-  function typeTick(now){ if(sayEl) sayEl.textContent=sayTxt.slice(0,Math.floor((now-sayT)/38)); }
 
-  /* ---------- boucle ---------- */
-  let mode='distribution', t0=performance.now(), lastStep=-1, userPicked=false, cycles=0;
-  const DUR=13000;                                        // ms par cycle
-  function setMode(m,byUser){
-    mode=m;userPicked=userPicked||byUser;t0=performance.now();lastStep=-1;
-    root.querySelectorAll('.sf-phase span').forEach(b=>b.classList.toggle('on',b.dataset.m===m));(root._fit||[]).forEach(f=>f&&f());
-    nodes.forEach((n,i)=>n.classList.toggle('swap',m==='briques'&&(i===1||i===2)));
+  let phaseIndex=reduce&&home?1:0, mode=phases[phaseIndex].mode;
+  let elapsed=reduce?phases[phaseIndex].duration:0, lastStep=-1;
+  function resetDiagram(){
+    mode=phases[phaseIndex].mode;
+    lastStep=-1;
+    labels.forEach(label=>label.classList.toggle('on',label.dataset.m===mode));
     outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});
     Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));
   }
-  root.querySelectorAll('.sf-tabs button').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode,true)));
 
   function fill(){
     const set=(i,v,d,off)=>{const o=outs[i];o.classList.toggle('on',!off);o.classList.toggle('off',!!off);o.querySelector('.v').textContent=v;o.querySelector('.d').textContent=d;};
@@ -804,25 +843,21 @@ function initFlow(root,TX,VIS){
       set(0,pct(V.mean),'+'+gain+TX.vs);set(1,pct(V.q95),TX.thr);set(2,pct(V.es),TX.beyond);}
   }
 
-  let lastNow=performance.now(), seen=false;
-  function frame(now){
-    if(!reduce&&!VIS.on){t0+=now-lastNow;lastNow=now;requestAnimationFrame(frame);return;}
-    if(!seen){seen=true;t0=now;lastStep=-1;}
-    lastNow=now;
-    let u=(now-t0)/DUR;
-    if(u>=1){cycles++;if(!userPicked){const order=['moyenne','distribution','briques'];setMode(order[(order.indexOf(mode)+1)%3]);}
-      else{t0=now;lastStep=-1;outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));}
-      u=0;}
-    const run=Math.min(1,u/.5);                         // fin de cycle : pause sur les résultats
-    // briques allumées + légende
+  function render(){
+    const phase=phases[phaseIndex], run=Math.min(1,elapsed/travelMs);
     const step=run<.75?Math.min(3,Math.floor(run/.75*3+.15)):4;
-    nodes.forEach((n,i)=>n.classList.toggle('on',i<=step&&step<4||step===4));
-    if(step!==lastStep){lastStep=step;
-      if(step===0)say(TX.intro[mode]);
-      else{say(END[mode]);fill();}
+    if(step!==lastStep){
+      lastStep=step;
+      nodes.forEach((n,i)=>n.classList.toggle('on',i<=step));
+      if(step===4) fill();
       if(step>=2&&mode!=='moyenne')minis.z.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
       if(step>=3&&mode!=='moyenne')minis.pd.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
     }
+    const finale=elapsed>=phase.swapAt;
+    nodes.forEach((n,i)=>n.classList.toggle('swap',(mode==='briques'||finale)&&(i===1||i===2)));
+    if(finale) caption(END.briques,elapsed-phase.swapAt);
+    else if(elapsed>=phase.resultAt) caption(END[mode],elapsed-phase.resultAt);
+    else caption(TX.intro[mode],elapsed);
     // particules
     for(const p of parts){
       const show=mode==='moyenne'?p.solo:!p.solo;
@@ -834,14 +869,37 @@ function initFlow(root,TX,VIS){
       p.e.setAttribute('opacity',fade);
       p.e.setAttribute('fill',mode!=='moyenne'&&q.k>=1?BLUE:WHITE);   // les flux vers les deux mesures de queue sont bleus
     }
-    if(!reduce){typeTick(now);requestAnimationFrame(frame);}
   }
 
-  layout();setMode('moyenne');try{document.fonts.ready.then(()=>(root._fit||[]).forEach(f=>f&&f()));}catch(e){}
-  if(reduce){ // image fixe : résultats directement
-    lastStep=-1;frame(t0+DUR*.95);
-  }else requestAnimationFrame(frame);
-  let rw=root.clientWidth;addEventListener('resize',()=>{if(Math.abs(root.clientWidth-rw)>40){rw=root.clientWidth;layout();setMode(mode);}});
+  let lastNow=null;
+  function frame(now){
+    if(VIS.on&&!document.hidden){
+      if(lastNow!==null) elapsed+=now-lastNow;
+      if(elapsed>=phases[phaseIndex].duration){
+        phaseIndex=(phaseIndex+1)%phases.length;
+        elapsed=0;
+        resetDiagram();
+      }
+      render();
+      lastNow=now;
+    }else lastNow=null;
+    requestAnimationFrame(frame);
+  }
+  document.addEventListener('visibilitychange',()=>{lastNow=null;});
+  function redraw(){
+    layout();
+    resetDiagram();
+    (root._fit||[]).forEach(f=>f());
+    render();
+  }
+  redraw();
+  document.fonts.ready.then(()=>(root._fit||[]).forEach(f=>f()));
+  if(!reduce) requestAnimationFrame(frame);
+  addEventListener('resize',()=>{
+    if(!root.clientWidth) return;
+    if((root.clientWidth<560)!==L.narrow) redraw();
+    else (root._fit||[]).forEach(f=>f()); // titles may have been measured in a hidden pane
+  });
 
 }
 let RST_N=0;
@@ -1135,6 +1193,10 @@ function initEprocess(root,TX,VIS){
   loopWhenVisible(VIS,reduce,T*2,(now,t)=>render(now,t),11);
 }
 
+const IN_HOUSE_CREDIT={
+  fr:'Méthode développée en interne par STORM — travaux non encore publiés.',
+  en:'Method developed in-house by STORM — not yet published.'
+};
 const VA_TX={
  fr:{
   jeff:{markup:`<div class="va"><svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
@@ -1152,7 +1214,7 @@ const VA_TX={
    <div class="va-read"><div class="boxF"><b>Fausses alertes</b><span class="vF">0</span><i>avant tout changement</i></div>
    <div class="boxD"><b>Détection du changement</b><span class="vD">—</span><i>après la rupture</i></div></div>
    <div class="va-cap" aria-live="polite"></div>
-   <div class="va-foot">Méthode développée en interne par STORM — travaux non encore publiés.</div></div>`,
+   <div class="va-foot">${IN_HOUSE_CREDIT.fr}</div></div>`,
    stream:'Indicateur surveillé · flux de données en temps réel', gauge:'Niveau d\u2019alerte', change:'changement de régime', alarm:'Alerte', falseAlarm:'fausse alerte',
    delay:n=>`${n} observations`,
    capsClassic:['Un modèle surveille un flux de données en continu.',
@@ -1180,7 +1242,7 @@ const VA_TX={
    <div class="va-read"><div class="boxF"><b>False alarms</b><span class="vF">0</span><i>before any change</i></div>
    <div class="boxD"><b>Change detection</b><span class="vD">—</span><i>after the break</i></div></div>
    <div class="va-cap" aria-live="polite"></div>
-   <div class="va-foot">Method developed in-house by STORM — not yet published.</div></div>`,
+   <div class="va-foot">${IN_HOUSE_CREDIT.en}</div></div>`,
    stream:'Monitored indicator · real-time data stream', gauge:'Alert level', change:'regime change', alarm:'Alert', falseAlarm:'false alarm',
    delay:n=>`${n} observations`,
    capsClassic:['A model monitors a continuous data stream.',
@@ -1195,6 +1257,163 @@ const VA_TX={
 };
 
 
+const TFM_TX={
+  fr:{
+    stages:['Préentraînement','Portefeuille A','Portefeuille B'],
+    training:'Tâches synthétiques', paid:'Sans défaut', defaulted:'Défaut',
+    applicant:'Dossier 024', income:'Revenu 3 100 €/mois', payment:'Mensualité 940 €',
+    learning:'Apprentissage', frozen:'Poids fixes', risk:'PD à un an', percent:n=>n+' %',
+    captions:(a,b)=>['Sur des jeux de données synthétiques, le modèle apprend à prédire des résultats masqués.',
+      `Avec les dossiers de référence du portefeuille A, le modèle estime la PD à un an à ${a}.`,
+      `À profil comparable, les défauts sont plus fréquents dans B. Pour le même emprunteur, la PD passe de ${a} à ${b}.`]
+  },
+  en:{
+    stages:['Pretraining','Portfolio A','Portfolio B'],
+    training:'Synthetic tasks', paid:'No default', defaulted:'Default',
+    applicant:'Applicant 024', income:'Income €3,100/month', payment:'Monthly payment €940',
+    learning:'Learning', frozen:'Fixed weights', risk:'One-year PD', percent:n=>n+'%',
+    captions:(a,b)=>['Across synthetic datasets, the model learns to predict hidden outcomes.',
+      `With Portfolio A as its reference, the model estimates a one-year probability of default of ${a}.`,
+      `Comparable borrowers default more often in Portfolio B. For the same applicant, the estimate rises from ${a} to ${b}.`]
+  }
+};
+
+function initTFM(root,tx,vis){
+  const firstPD=4, secondPD=8;
+  const captions=tx.captions(tx.percent(firstPD),tx.percent(secondPD));
+  root.innerHTML=`<div class="va tfm"><div class="sf-phase" aria-hidden="true">${tx.stages.map((s,i)=>`<span>${i+1} · ${s}</span>`).join('')}</div>
+    <svg role="img" aria-label="${captions.join(' ')}"></svg>
+    <div class="va-cap"></div><div class="va-foot">${IN_HOUSE_CREDIT[LANG]}</div></div>`;
+  const svg=root.querySelector('svg'), caption=root.querySelector('.va-cap');
+  const labels=[...root.querySelectorAll('.sf-phase span')];
+  const motion=matchMedia('(prefers-reduced-motion: reduce)');
+  const firstPortfolio=4200, secondPortfolio=11600, cycle=20400;
+  let elapsed=0, lastTime=null, phase=-1, narrow;
+  let tasks, cases, historyTitle, modelStatus, previous, query, wires, value, chip, result;
+
+  function person(x,y,showOutcome=false){
+    return `<g transform="translate(${x} ${y})">
+      <circle class="tfm-avatar" r="18"/><g class="tfm-person"><circle cy="-4" r="4"/>
+      <path d="M-9 8c0-9 18-9 18 0"/></g>
+      ${showOutcome?'<text class="tfm-outcome" y="32"></text>':''}</g>`;
+  }
+
+  function layout(compact){
+    narrow=compact;
+    // On phones the two inputs feed the model from above. The output stays beside it.
+    const hx=8, hy=10, hw=compact?284:230, hh=104;
+    const qx=compact?102:18, qy=compact?138:167, qw=compact?190:216, qh=76;
+    const mx=compact?12:306, my=compact?241:90, mw=compact?130:140, mh=108;
+    const rx=compact?236:556, ry=my+mh/2;
+    const paths=compact
+      ? ['M57 114V241','M184 214C184 232 112 218 112 241',`M142 ${ry}H197`]
+      : ['M238 60C279 60 270 119 306 119','M234 201C272 201 269 168 306 168',`M446 ${ry}H517`];
+    svg.setAttribute('viewBox',compact?'0 0 300 382':'0 0 640 258');
+    svg.innerHTML=`
+      ${paths.map((d,i)=>`<path class="tfm-track" d="${d}"/><path class="tfm-wire tfm-wire-${i}" d="${d}" pathLength="1"/>`).join('')}
+      <g transform="translate(${hx} ${hy})"><rect class="tfm-box" width="${hw}" height="${hh}" rx="12"/>
+        <text class="tfm-label tfm-history-title" x="${hw/2}" y="23"></text>
+        <g class="tfm-tasks">${['M-17 10L-7 7L3 1L16-9','M-17-6Q0 20 16-7','M-17 10H-4V1H6V-8H16'].map((curve,i)=>
+          `<g transform="translate(${hw*(i+.5)/3} 61)"><rect class="tfm-avatar" x="-25" y="-21" width="50" height="42" rx="6"/>
+          <path class="tfm-pattern" d="${curve}" pathLength="1"/></g>`).join('')}</g>
+        <g class="tfm-cases">${[0,1,2].map(i=>person(hw*(i+.5)/3,56,true)).join('')}</g>
+      </g>
+      <g transform="translate(${qx} ${qy})"><g class="tfm-applicant">
+        <rect class="tfm-input" width="${qw}" height="${qh}" rx="12"/>${person(29,34)}
+        <text class="tfm-label" x="57" y="25" text-anchor="start">${tx.applicant}</text>
+        <text class="tfm-detail" x="57" y="44" text-anchor="start">${tx.income}</text>
+        <text class="tfm-detail" x="57" y="60" text-anchor="start">${tx.payment}</text>
+      </g></g>
+      <g transform="translate(${mx} ${my})"><rect class="tfm-chip" width="${mw}" height="${mh}" rx="13"/>
+        <g class="tfm-layers" transform="translate(${mw/2} 24)">
+          <path d="m-21 11 21 9 21-9-21-9z"/><path d="m-21 5 21 9 21-9-21-9z"/>
+          <path d="m-21-1 21 9 21-9-21-9z"/>
+        </g>
+        <text class="tfm-name" x="${mw/2}" y="69">TFM</text>
+        <text class="tfm-detail tfm-model-status" x="${mw/2}" y="89"></text>
+      </g>
+      <g transform="translate(${rx} ${ry})">
+        <circle class="tfm-dial" r="39"/><circle class="tfm-share" r="39" pathLength="100" transform="rotate(-90)"/>
+        <text class="tfm-value" y="8">—</text><text class="tfm-label" y="60">${tx.risk}</text>
+        <text class="tfm-detail tfm-comparison" y="77"></text>
+      </g>`;
+    tasks=svg.querySelector('.tfm-tasks');
+    cases=svg.querySelector('.tfm-cases');
+    historyTitle=svg.querySelector('.tfm-history-title');
+    modelStatus=svg.querySelector('.tfm-model-status');
+    previous=svg.querySelector('.tfm-comparison');
+    query=svg.querySelector('.tfm-applicant');
+    wires=[...svg.querySelectorAll('.tfm-wire')];
+    value=svg.querySelector('.tfm-value');
+    chip=svg.querySelector('.tfm-chip');
+    result=svg.querySelector('.tfm-share');
+    phase=-1;
+  }
+
+  const ramp=(t,start,duration)=>Math.max(0,Math.min(1,(t-start)/duration));
+  function draw(t){
+    const stage=t<firstPortfolio?0:t<secondPortfolio?1:2;
+    const age=t-[0,firstPortfolio,secondPortfolio][stage];
+    if(stage!==phase){
+      phase=stage;
+      labels.forEach((label,i)=>label.classList.toggle('on',i===stage));
+      caption.textContent=captions[stage];
+      historyTitle.textContent=stage===0?tx.training:tx.stages[stage];
+      tasks.style.display=stage===0?'':'none';
+      cases.style.display=stage===0?'none':'';
+      query.style.opacity=stage===0?0:1;
+      modelStatus.textContent=stage===0?tx.learning:tx.frozen;
+      chip.classList.toggle('active',stage>0);
+      cases.querySelectorAll('.tfm-outcome').forEach((label,i)=>{
+        const defaulted=stage===2?i>=1:i===2;
+        label.textContent=defaulted?tx.defaulted:tx.paid;
+        label.parentNode.classList.toggle('tfm-default',defaulted);
+      });
+    }
+
+    // Only the reference cases re-enter at the A/B switch. The model and applicant stay put.
+    if(stage===0) tasks.style.strokeDashoffset=1-ramp(age,120,1200);
+    else cases.style.opacity=.25+.75*ramp(age,0,550);
+    wires[0].style.strokeDashoffset=1-ramp(age,350,1050);
+    wires[1].style.strokeDashoffset=stage===0?1:stage===1?1-ramp(age,350,1050):0;
+    wires[2].style.strokeDashoffset=stage===0?1:1-ramp(age,1400,700);
+    const scored=stage>0&&age>=2100;
+    const pd=stage===1?firstPD:secondPD;
+    const display=scored?tx.percent(pd):'—';
+    if(value.textContent!==display) value.textContent=display;
+    const comparison=scored&&stage===2?`A ${tx.percent(firstPD)} → B ${tx.percent(secondPD)}`:'';
+    if(previous.textContent!==comparison) previous.textContent=comparison;
+    result.style.strokeDasharray=`${scored?pd*ramp(age,2100,400):0} 100`;
+    result.style.opacity=scored?1:0;
+  }
+
+  function size(){
+    if(!root.clientWidth) return;
+    const compact=root.clientWidth<540;
+    if(compact!==narrow){layout(compact);draw(motion.matches?cycle:elapsed);}
+  }
+  size();
+  new ResizeObserver(size).observe(root);
+  document.addEventListener('visibilitychange',()=>{lastTime=null;});
+  let frameId;
+  function frame(now){
+    if(vis.on&&!document.hidden&&tasks){
+      if(lastTime!==null) elapsed=(elapsed+now-lastTime)%cycle;
+      draw(elapsed);
+      lastTime=now;
+    }else lastTime=null;
+    frameId=requestAnimationFrame(frame);
+  }
+  function applyMotionPreference(){
+    cancelAnimationFrame(frameId);
+    lastTime=null;
+    if(motion.matches){if(tasks) draw(cycle);}
+    else frameId=requestAnimationFrame(frame);
+  }
+  motion.addEventListener('change',applyMotionPreference);
+  applyMotionPreference();
+}
+
 // each animation starts when it scrolls into view, and pauses when it leaves
 function watch(el){const V={on:false,heard:false};
   if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{V.heard=true;V.on=e.isIntersecting;}),{threshold:.35}).observe(el);
@@ -1208,6 +1427,7 @@ document.querySelectorAll('.storm-anim[data-anim="credit"]').forEach(el=>safe(el
 document.querySelectorAll('.storm-anim[data-anim="rst"]').forEach(el=>safe(el=>initRST(el,RST_TX[LANG],watch(el)),el));
 document.querySelectorAll('.storm-anim[data-anim="jeffreys"]').forEach(el=>safe(el=>initJeffreys(el,VA_TX[LANG].jeff,watch(el)),el));
 document.querySelectorAll('.storm-anim[data-anim="eprocess"]').forEach(el=>safe(el=>initEprocess(el,VA_TX[LANG].eproc,watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="tfm"]').forEach(el=>safe(el=>initTFM(el,TFM_TX[LANG],watch(el)),el));
 // switches between animations: each switch drives the panes of its own group
 document.querySelectorAll('.anim-switch').forEach(sw=>{
   const grp=sw.closest('.anim-group')||document;

@@ -56,11 +56,10 @@ Le libellé (« Intervention », « Talk »…) se choisit tout seul selon `type
 `etiquette` / `etiquette_en` le remplacent si besoin (« Séminaire »…).
 L'accueil montre les cinq plus récentes.
 
-### Projets internes
+### Travaux de recherche en cours
 
-`data/projets.yml` n'est plus affiché sur le site (choix de la refonte : le site
-reste général, les articles et les notes portent le détail). Le fichier est
-conservé pour mémoire.
+Dans `data/projets.yml`, ajouter `rubrique: "recherche-en-cours"` aux projets à
+présenter dans Publications. Renseigner le titre dans les deux langues.
 
 ### Ajouter une publication
 
@@ -228,7 +227,8 @@ Tout est dans `partials/after-body.html`, inséré sur toutes les pages.
   `credit` = stress test de crédit (trois onglets), `rst` = reverse stress test
   (seuil → exploration → point de rupture → voisinage → sélection),
   `jeffreys` = test de calibration de Jeffreys, `eprocess` = surveillance en
-  continu d'un modèle (e-processus). Les textes suivent la langue de la page.
+  continu d'un modèle (e-processus), `tfm` = estimation du risque de défaut
+  par un modèle de fondation tabulaire. Les textes suivent la langue de la page.
   Les valeurs sont illustratives.
 - Elles sont actuellement sur l'accueil et sur la page Expertise (sections
   « Stress testing » et « Validation et suivi des modèles », chacune avec son

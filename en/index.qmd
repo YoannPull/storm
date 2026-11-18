@@ -75,9 +75,10 @@ We develop methods, then put them to the test on real risk problems.
 ```{=html}
 <span class="kicker">A method, in motion</span>
 <div class="anim-group">
-<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Credit stress test</button><button type="button" data-pane="eprocess" aria-pressed="false">Continuous monitoring</button></div>
-<div class="anim-pane" data-pane="credit"><h2 class="big">Pass on the distribution, not just the mean path</h2><p class="lede-p">The same stress test, propagating a single central scenario — or the whole distribution.</p><div class="storm-anim" data-anim="credit"></div></div>
+<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Credit stress test</button><button type="button" data-pane="eprocess" aria-pressed="false">Continuous monitoring</button><button type="button" data-pane="tfm" aria-pressed="false">Tabular foundation models</button></div>
+<div class="anim-pane" data-pane="credit"><h2 class="big">Pass on the distribution, not just the mean path</h2><p class="lede-p">The same stress test, propagating a single central scenario — or the whole distribution.</p><div class="storm-anim" data-anim="credit" data-sequence="home"></div></div>
 <div class="anim-pane" data-pane="eprocess" hidden><h2 class="big">Detect drift without piling up false alarms</h2><p class="lede-p">The same stream monitored with a classic test, then with an anytime-valid approach.</p><div class="storm-anim" data-anim="eprocess"></div></div>
+<div class="anim-pane" data-pane="tfm" hidden><h2 class="big">Estimating default risk for a new borrower</h2><div class="storm-anim" data-anim="tfm"></div></div>
 </div>
 ```
 

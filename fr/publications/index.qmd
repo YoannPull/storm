@@ -1,12 +1,17 @@
 ---
 pagetitle: "Publications — STORM"
-description: "Articles de recherche et notes techniques de STORM."
+description: "Articles de recherche, notes techniques et travaux en cours de STORM."
 page-layout: full
 listing:
   - id: publications
     contents: ../../data/publications.yml
     template: ../../templates/fr/publication.ejs
     sort: "date desc"
+  - id: projets
+    contents: ../../data/projets.yml
+    template: ../../templates/fr/projet.ejs
+    include:
+      rubrique: "recherche-en-cours"
   - id: notes
     contents: ../../data/_notes.yml
     template: ../../templates/fr/note.ejs
@@ -16,13 +21,13 @@ listing:
 
 :::: {.theme-head}
 
-[Travaux académiques]{.kicker}
+[Nos travaux]{.kicker}
 
 # Publications
 
 ::: {.position-line}
 
-Deux formats complémentaires : des articles de recherche, publiés ou en cours d'évaluation, et des notes techniques qui en restituent l'usage opérationnel.
+Retrouvez nos articles de recherche, publiés ou en cours d’évaluation, et les projets sur lesquels nous travaillons. Nos notes techniques expliquent comment appliquer une méthode et peuvent se lire indépendamment de tout article.
 
 :::
 
@@ -35,6 +40,14 @@ Deux formats complémentaires : des articles de recherche, publiés ou en cours 
 ```
 
 ::: {#publications}
+
+:::
+
+```{=html}
+<div class="sh" id="recherche-en-cours"><h2>Travaux de recherche en cours</h2></div>
+```
+
+::: {#projets}
 
 :::
 
