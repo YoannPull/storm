@@ -72,7 +72,8 @@ displayed.
   their code *and* styles (so they are never stale in the browser cache).
   Texts for each language are grouped at the top of each animation's code.
   - the density "horizon" behind the homepage hero;
-  - `credit` — credit stress test (standard practice vs STORM approach);
+  - `credit` — credit stress test, played in three automatic phases
+    (standard practice → STORM approach → your models);
   - `rst` — reverse stress test (threshold → exploration → breaking point →
     neighbourhood → selection);
   - `jeffreys` — Jeffreys calibration test on a low-default portfolio;

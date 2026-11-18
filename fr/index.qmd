@@ -75,9 +75,8 @@ Nous développons des méthodes, puis nous les mettons à l’épreuve sur des p
 ```{=html}
 <span class="kicker">Une méthode, en mouvement</span>
 <div class="anim-group">
-<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Stress test de crédit</button><button type="button" data-pane="rst" aria-pressed="false">Reverse stress test</button><button type="button" data-pane="eprocess" aria-pressed="false">Surveillance en continu</button></div>
+<div class="anim-switch" role="group"><button type="button" data-pane="credit" aria-pressed="true">Stress test de crédit</button><button type="button" data-pane="eprocess" aria-pressed="false">Surveillance en continu</button></div>
 <div class="anim-pane" data-pane="credit"><h2 class="big">Transmettre la distribution, pas seulement la trajectoire moyenne</h2><p class="lede-p">Le même stress test, en propageant un seul scénario central — ou toute la distribution.</p><div class="storm-anim" data-anim="credit"></div></div>
-<div class="anim-pane" data-pane="rst" hidden><h2 class="big">Partir du seuil de capital, pas du scénario</h2><p class="lede-p">Le reverse stress test inverse la question : quel est le scénario le plus plausible capable de franchir le seuil ?</p><div class="storm-anim" data-anim="rst"></div></div>
 <div class="anim-pane" data-pane="eprocess" hidden><h2 class="big">Détecter une dérive sans multiplier les fausses alertes</h2><p class="lede-p">Le même flux surveillé avec un test classique, puis avec une approche valide à tout instant.</p><div class="storm-anim" data-anim="eprocess"></div></div>
 </div>
 ```

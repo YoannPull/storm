@@ -447,6 +447,13 @@ window.Quarto = {
 .va .va-gthr{stroke:#fff;stroke-width:1.2}
 .va .va-lab tspan{font-size:11px}
 
+.sf-phase{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;pointer-events:none}
+.sf-phase span{position:relative;padding:0 0 5px;color:var(--faint);transition:color .4s}
+.sf-phase span::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--line);transition:background .4s}
+.sf-phase span.on{color:#fff}
+.sf-phase span.on::after{background:var(--signal)}
+@media (max-width:600px){.sf-phase{gap:10px;font-size:10px;letter-spacing:0}}
+
 </style>
 <script>
 /* ---- Density horizon ------------------------------------------------------
@@ -472,7 +479,7 @@ window.Quarto = {
     const s=stress(), wide=W>=900;
     const pil=getComputedStyle(pillars).position==='absolute'?pillars.offsetHeight:0;
     const base=H-pil-26-BAND()*.5, top=content.offsetTop+content.offsetHeight+30;
-    return {mu:(wide?.44:.40)*W, om:((wide?.15:.17)+.04*s)*W, a:2.4+3.4*s, base, amp:Math.max(80,base-top)*(1-.1*s), s};
+    return {mu:(wide?.44:.40)*W, om:((wide?.085:.12)+.03*s)*W, a:2.4+3.4*s, base, amp:Math.max(80,base-top)*(1-.1*s), s};
   }
   let peak=1, q95z=1.6;
   function calib(S){ // peak height + 95 % quantile in z units for current skew
@@ -485,19 +492,19 @@ window.Quarto = {
   let mx=0,my=0,tx=0,ty=0;
   addEventListener('mousemove',e=>{tx=e.clientX/innerWidth*2-1;ty=e.clientY/innerHeight*2-1;},{passive:true});
   function resize(){
-    dpr=Math.min(devicePixelRatio||1,2);W=hero.clientWidth;H=hero.clientHeight;
+    dpr=Math.min(devicePixelRatio||1,3);W=hero.clientWidth;H=hero.clientHeight;
     c.width=W*dpr;c.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(Math.min(9000,W*6.5));P=[];
+    const n=Math.round(Math.min(12000,W*8));P=[];
     for(let i=0;i<n;i++){
       const d=Math.pow(Math.random(),.8);                       // depth: 0 far … 1 near
-      const haze=Math.random()<.14;
+      const haze=Math.random()<.05;
       P.push({x:Math.random()*W*1.2-W*.1, v:5+Math.random()*9, d,
-        j:(haze?16:1.6)*(Math.random()+Math.random()+Math.random()-1.5), ph:Math.random()*6.28,
-        r:.55+d*1.7, a:(haze?.10:.22)+d*.55});
+        j:(haze?10:1.0)*(Math.random()+Math.random()+Math.random()-1.5), ph:Math.random()*6.28,
+        r:.45+d*1.15, a:(haze?.08:.26)+d*.6});
     }
   }
   // a ribbon seen in perspective: depth spreads the dust vertically and widens it
-  const BAND=()=>W>=900?46:26;
+  const BAND=()=>W>=900?22:14;
   function px(p,S){const cx=W*.5;return cx+(p.x-cx)*(.88+.24*p.d)+mx*14*p.d;}
   function py(p,S,x){return curveY(p.x,S)+(p.d-.5)*BAND()+p.j*(1+.25*Math.sin(t*.6+p.ph))+my*6*p.d;}
   function stroke(S,x0,x1,rgb,w,a){
@@ -543,38 +550,32 @@ window.Quarto = {
 
 const LANG=(document.documentElement.lang||'fr').slice(0,2)==='en'?'en':'fr';
 const FLOW_TX={
- fr:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-tabs" role="group" aria-label="Mode du schéma">
-   <button type="button" data-mode="moyenne" aria-pressed="false">Pratique standard</button>
-   <button type="button" data-mode="distribution" aria-pressed="true">Approche STORM</button>
-   <button type="button" data-mode="briques" aria-pressed="false">Vos modèles</button></div></div>
+ fr:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-phase" aria-hidden="true"><span data-m="moyenne">1 · Pratique standard</span><span data-m="distribution">2 · Approche STORM</span><span data-m="briques">3 · Vos modèles</span></div></div>
    <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
    <div class="sf-foot">D'après <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026). <span class="sf-tag">· valeurs illustratives</span></div></div>`,
   steps:[{t:'Choc',s:'Scénario macro-financier',k:'scénario',c:'Un choc frappe l’économie.'},
    {t:'Économie',s:'Propagation du choc',k:'propagation',c:'Le choc se propage dans l’économie.'},
    {t:'Crédit',s:'Conditions de crédit du portefeuille',k:'facteur de risque',c:'Il se traduit en conditions de crédit.'},
    {t:'Défauts',s:'Probabilités de défaut',k:'probabilités',c:'Elles deviennent des probabilités de défaut.'}],
-  outs:[{t:'Risque moyen',n:'Risque moyen',tail:false},{t:'Risque extrême',n:'Risque extrême',tail:true},{t:'Moyenne des extrêmes',n:'Moy. extrêmes',tail:true}],
+  outs:[{t:'Risque moyen',n:'Risque moyen',tail:false},{t:'Risque extrême',n:'Risque extrême',tail:true},{t:'Moyenne des extrêmes',n:'Moyenne des extrêmes',tail:true}],
   end:{moyenne:'La pratique standard ne fait passer qu’un scénario central : un risque moyen sous-estimé, et rien sur les extrêmes.',
    distribution:'Toute la distribution traverse le dispositif : le risque moyen est corrigé et les extrêmes deviennent mesurables — au même coût de calcul.',
    briques:'Les briques 2 et 3 se remplacent par vos modèles déjà validés. Aucun re-développement.'},
   yours:'votre modèle', here:' — ici, votre modèle validé.', central:'scénario central', notmeasured:'non mesuré',
-  vs:' % vs scénario central', thr:'seuil à 95 %', beyond:'au-delà du seuil', num:x=>x.replace('.',',')},
- en:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-tabs" role="group" aria-label="Diagram mode">
-   <button type="button" data-mode="moyenne" aria-pressed="false">Standard practice</button>
-   <button type="button" data-mode="distribution" aria-pressed="true">STORM approach</button>
-   <button type="button" data-mode="briques" aria-pressed="false">Your models</button></div></div>
+  vs:' % vs central', intro:{moyenne:'Pratique standard : un seul scénario central traverse le dispositif.',distribution:'Approche STORM : toute la distribution traverse le même dispositif.',briques:'Les briques 2 et 3 peuvent être vos propres modèles.'}, thr:'seuil à 95 %', beyond:'au-delà du seuil', num:x=>x.replace('.',',')},
+ en:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-phase" aria-hidden="true"><span data-m="moyenne">1 · Standard practice</span><span data-m="distribution">2 · STORM approach</span><span data-m="briques">3 · Your models</span></div></div>
    <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
    <div class="sf-foot">Based on <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026). <span class="sf-tag">· illustrative values</span></div></div>`,
   steps:[{t:'Shock',s:'Macro-financial scenario',k:'scenario',c:'A shock hits the economy.'},
    {t:'Economy',s:'Shock propagation',k:'propagation',c:'The shock spreads through the economy.'},
    {t:'Credit',s:'Portfolio credit conditions',k:'risk factor',c:'It translates into credit conditions.'},
    {t:'Defaults',s:'Default probabilities',k:'probabilities',c:'They become default probabilities.'}],
-  outs:[{t:'Average risk',n:'Average risk',tail:false},{t:'Extreme risk',n:'Extreme risk',tail:true},{t:'Mean of extremes',n:'Mean extremes',tail:true}],
+  outs:[{t:'Average risk',n:'Average risk',tail:false},{t:'Extreme risk',n:'Extreme risk',tail:true},{t:'Mean of extremes',n:'Mean of extremes',tail:true}],
   end:{moyenne:'Standard practice only passes a central scenario through: average risk is understated, and nothing is said about extremes.',
    distribution:'The whole distribution goes through: average risk is corrected and extremes become measurable — at the same computational cost.',
    briques:'Blocks 2 and 3 can be replaced by your already-validated models. No redevelopment.'},
   yours:'your model', here:' — here, your validated model.', central:'central scenario', notmeasured:'not measured',
-  vs:' % vs central scenario', thr:'95 % threshold', beyond:'beyond the threshold', num:x=>x}
+  vs:' % vs central', intro:{moyenne:'Standard practice: a single central scenario goes through the set-up.',distribution:'STORM approach: the whole distribution goes through the same set-up.',briques:'Blocks 2 and 3 can be your own models.'}, thr:'95 % threshold', beyond:'beyond the threshold', num:x=>x}
 };
 const RST_TX={
  fr:{markup:u=>`<div class="rst"><div class="rst-top"><div class="rst-steps"><span data-s="0">1 · Seuil</span><span data-s="1">2 · Explorer</span><span data-s="2">3 · Rupture</span><span data-s="3">4 · Voisinage</span><span data-s="4">5 · Sélection</span></div></div>
@@ -702,7 +703,7 @@ function initFlow(root,TX,VIS){
     OUTS.forEach((o,i)=>{
       const g=el('g',{class:'sf-out'+(o.tail?' tail':'')}),p=L.outs[i];
       el('rect',{x:p.x,y:p.y,width:L.ow,height:L.oh,rx:9},g);
-      el('text',{class:'t',x:p.x+12,y:p.y+19},g).textContent=L.narrow?o.n:o.t;
+      {const tt=el('text',{class:'t',x:p.x+12,y:p.y+19},g);tt.textContent=o.t;(root._fit=root._fit||[])[i]=()=>{try{const v=g.querySelector('.v'),d=g.querySelector('.d'),y1=p.y+(L.narrow?44:41),y2=p.y+(L.narrow?62:55);tt.removeAttribute('font-size');tt.setAttribute('y',p.y+19);tt.textContent=o.t;v&&v.setAttribute('y',y1);d&&d.setAttribute('y',y2);const w=tt.getComputedTextLength(),m=L.ow-22;if(!w||w<=m)return;const sp=o.t.lastIndexOf(' ',Math.ceil(o.t.length/2)+2);if(L.narrow&&sp>0){tt.textContent='';tt.setAttribute('y',p.y+17);[o.t.slice(0,sp),o.t.slice(sp+1)].forEach((x,k)=>{const ts=el('tspan',{x:p.x+12,dy:k?14:0},tt);ts.textContent=x;});v&&v.setAttribute('y',p.y+52);d&&d.setAttribute('y',p.y+69);}else tt.setAttribute('font-size',(12.5*m/w).toFixed(2)+'px');}catch(e){}};}
       el('text',{class:'v',x:p.x+12,y:p.y+(L.narrow?44:41)},g).textContent='—';
       el('text',{class:'d',x:p.x+12,y:p.y+(L.narrow?62:55)},g).textContent='';
       outs.push(g);
@@ -734,14 +735,14 @@ function initFlow(root,TX,VIS){
     cap.innerHTML='<span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span>';
     sayEl=cap.querySelector('.x'); if(reduce) sayEl.textContent=txt;
   }
-  function typeTick(now){ if(sayEl) sayEl.textContent=sayTxt.slice(0,Math.floor((now-sayT)/25)); }
+  function typeTick(now){ if(sayEl) sayEl.textContent=sayTxt.slice(0,Math.floor((now-sayT)/38)); }
 
   /* ---------- boucle ---------- */
   let mode='distribution', t0=performance.now(), lastStep=-1, userPicked=false, cycles=0;
-  const DUR=20000;                                        // ms par cycle
+  const DUR=13000;                                        // ms par cycle
   function setMode(m,byUser){
     mode=m;userPicked=userPicked||byUser;t0=performance.now();lastStep=-1;
-    root.querySelectorAll('.sf-tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+    root.querySelectorAll('.sf-phase span').forEach(b=>b.classList.toggle('on',b.dataset.m===m));(root._fit||[]).forEach(f=>f&&f());
     nodes.forEach((n,i)=>n.classList.toggle('swap',m==='briques'&&(i===1||i===2)));
     outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});
     Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));
@@ -761,15 +762,15 @@ function initFlow(root,TX,VIS){
     if(!seen){seen=true;t0=now;lastStep=-1;}
     lastNow=now;
     let u=(now-t0)/DUR;
-    if(u>=1){cycles++;if(!userPicked&&cycles%2===0){const order=['distribution','moyenne','briques'];setMode(order[(order.indexOf(mode)+1)%3]);}
+    if(u>=1){cycles++;if(!userPicked){const order=['moyenne','distribution','briques'];setMode(order[(order.indexOf(mode)+1)%3]);}
       else{t0=now;lastStep=-1;outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));}
       u=0;}
-    const run=Math.min(1,u/.84);                         // fin de cycle : pause sur les résultats
+    const run=Math.min(1,u/.5);                         // fin de cycle : pause sur les résultats
     // briques allumées + légende
     const step=run<.75?Math.min(3,Math.floor(run/.75*3+.15)):4;
     nodes.forEach((n,i)=>n.classList.toggle('on',i<=step&&step<4||step===4));
     if(step!==lastStep){lastStep=step;
-      if(step<4)say(mode==='briques'&&(step===1||step===2)?STEPS[step].c+TX.here:STEPS[step].c);
+      if(step===0)say(TX.intro[mode]);
       else{say(END[mode]);fill();}
       if(step>=2&&mode!=='moyenne')minis.z.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
       if(step>=3&&mode!=='moyenne')minis.pd.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
@@ -788,7 +789,7 @@ function initFlow(root,TX,VIS){
     if(!reduce){typeTick(now);requestAnimationFrame(frame);}
   }
 
-  layout();setMode('distribution');
+  layout();setMode('moyenne');try{document.fonts.ready.then(()=>(root._fit||[]).forEach(f=>f&&f()));}catch(e){}
   if(reduce){ // image fixe : résultats directement
     lastStep=-1;frame(t0+DUR*.95);
   }else requestAnimationFrame(frame);

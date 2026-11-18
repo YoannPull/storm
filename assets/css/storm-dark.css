@@ -226,3 +226,10 @@ body { overflow-x: clip; }
 /* Sélecteur à trois onglets : passe à la ligne sur téléphone */
 .anim-switch { flex-wrap: wrap; max-width: 100%; }
 @media (max-width: 560px) { .anim-switch { border-radius: 16px; } }
+
+/* Expertise : chaque méthode = titre, description, puis ses animations */
+.mblock { padding-bottom: 1.6rem; border-bottom: 1px solid var(--line); scroll-margin-top: 5rem; }
+.mblock .xblock { border-bottom: 0; padding-bottom: .6rem; }
+.mblock .xblock p.more { grid-column: 2; margin-top: .5rem; color: #a3a9b2; }
+.mblock .anim-group { margin-top: .6rem; }
+.mblock .storm-anim { margin: .8rem 0 0; }
