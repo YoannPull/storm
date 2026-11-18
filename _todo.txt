@@ -4,4 +4,7 @@ TODO (DO NOT PUSH ON GITHUB)
 - Maybe emphasize some paper in the home page
 - Translate the note from the student in English
 - Maybe emphasize on an article or a note when it's a member from STORM or not
-- For the contact I think we need only one email because it had more friction
+- For work in progress add a little blue dot on the right
+- For the hero curve, maybe highlight the curve more (brighter)
+- On the home page when we click at the bottom on "Application" I dont like it, it's like exppertise before
+-> Also concerning application, we may want to have like more general application I guess (than climate risk blabla blabla...)
