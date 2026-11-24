@@ -10,6 +10,11 @@ function d8(v){ if(v==null) return ""; if(v instanceof Date) v=v.toISOString();
   const m=String(v).match(/^(\d{4})-(\d{2})/); return m ? MOIS[+m[2]-1]+" "+m[1] : String(v); }
 function yr(v){ const m=String(v==null?"":(v instanceof Date?v.toISOString():v)).match(/^(\d{4})/); return m?m[1]:""; }
 const TYPES = { note:"Note", publication:"Publication", intervention:"Talk", evenement:"Event", presse:"Press" };
+/* Note categories are written in French in the notes: English labels here. */
+const CAT_EN = { "Risque climatique":"Climate risk", "Risque de crédit":"Credit risk", "Risque physique":"Physical risk",
+  "Risque géopolitique":"Geopolitical risk", "Optimisation":"Optimisation", "Stress testing":"Stress testing",
+  "Quantiles":"Quantiles", "Downscaling":"Downscaling" };
+const catEn = c => CAT_EN[c] || c;
 let out = '<div class="news">', last = "";
 for (const it of items) {
   const type = it.type || "note";
@@ -17,7 +22,7 @@ for (const it of items) {
   const href = String(it.path_en || it.path || "").replace(/\.qmd$/, ".html");
   const y = yr(it.date);
   if (y && y !== last) { out += '<div class="news-year">' + esc(y) + '</div>'; last = y; }
-  const cat = (it.categories && it.categories.length) ? it.categories[0] : "";
+  const cat = (it.categories && it.categories.length) ? catEn(it.categories[0]) : "";
   const meta = [d8(it.date), it.lieu_en || it.lieu || cat].filter(Boolean).map(esc).join(" · ");
   const fr = /^\/fr\//.test(href) && type === "note" ? ' <span class="langtag">FR</span>' : "";
   out += '<a class="item item-' + esc(type) + '" href="' + esc(href) + '"' + ext(href) + '>';

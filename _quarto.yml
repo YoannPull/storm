@@ -29,6 +29,8 @@ website:
   site-url: "https://squaremanagement-storm.com/"
   favicon: assets/brand/favicon-storm.png
   open-graph: true
+  twitter-card:
+    card-style: summary_large_image
   search:
     location: navbar
     type: overlay

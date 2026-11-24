@@ -55,7 +55,7 @@
   statut_fr: "À démarrer"
   statut_en: "Not started"
   horizon: "T3"
-  resume_fr: "Détection précoce de la dégradation du risque de contrepartie : construction, calibration et évaluation des indicateurs d'alerte."
+  resume_fr: "Détection précoce de la dégradation du risque de contrepartie : construction, calibration et évaluation des indicateurs d’alerte."
   resume_en: "Early detection of counterparty risk deterioration: construction, calibration and evaluation of warning indicators."
   equipe: ["Quentin Lajaunie", "Yoann Pull"]
   livrables: ["note", "fiche-reflexe"]
@@ -120,7 +120,7 @@
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: "T4"
-  resume_fr: "Mesurer la vulnérabilité d'une exposition à un aléa physique, une fois l'aléa correctement localisé et corrigé."
+  resume_fr: "Mesurer la vulnérabilité d’une exposition à un aléa physique, une fois l’aléa correctement localisé et corrigé."
   resume_en: "Measuring an exposure's vulnerability to a physical hazard, once that hazard is properly located and bias-corrected."
   equipe: ["Quentin Lajaunie", "C. Bakri"]
   livrables: []
@@ -146,7 +146,7 @@
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: "T4"
-  resume_fr: "L'approche at-Risk appliquée aux trajectoires NGFS : la queue de la distribution du risque sous scénario climatique, et non sa seule moyenne."
+  resume_fr: "L’approche at-Risk appliquée aux trajectoires NGFS : la queue de la distribution du risque sous scénario climatique, et non sa seule moyenne."
   resume_en: "The at-Risk approach applied to NGFS pathways: the tail of the risk distribution under a climate scenario, not only its mean."
   equipe: ["Quentin Lajaunie", "Charles-Emmanuel Prost", "Yoann Pull"]
   livrables: ["article", "note"]
@@ -161,7 +161,7 @@
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: "T2"
-  resume_fr: "Propager un choc géopolitique jusqu'aux probabilités de défaut d'un portefeuille de crédit, en transmettant la distribution et non la seule trajectoire moyenne."
+  resume_fr: "Propager un choc géopolitique jusqu’aux probabilités de défaut d’un portefeuille de crédit, en transmettant la distribution et non la seule trajectoire moyenne."
   resume_en: "Propagating a geopolitical shock through to portfolio default probabilities, transmitting the distribution rather than the mean path alone."
   equipe: ["Quentin Lajaunie", "Yoann Pull"]
   livrables: ["article", "note"]
@@ -174,7 +174,7 @@
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: "T4"
-  resume_fr: "Partir d'un seuil de capital CET1 et remonter vers le scénario de rupture le plus plausible, assorti de son voisinage."
+  resume_fr: "Partir d’un seuil de capital CET1 et remonter vers le scénario de rupture le plus plausible, assorti de son voisinage."
   resume_en: "Starting from a CET1 capital threshold and working back to the most plausible breaking scenario, with its local neighbourhood."
   equipe: ["Quentin Lajaunie", "Yoann Pull"]
   livrables: ["article", "note"]
@@ -187,7 +187,7 @@
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: "T3"
-  resume_fr: "Construire une mesure de risque géopolitique exploitable dans un modèle de risque, plutôt qu'un simple indice narratif."
+  resume_fr: "Construire une mesure de risque géopolitique exploitable dans un modèle de risque, plutôt qu’un simple indice narratif."
   resume_en: "Building a geopolitical risk measure usable inside a risk model, rather than a narrative index."
   equipe: ["Quentin Lajaunie", "Yoann Pull", "A. Le Corre", "A. Regazzoni", "I. Starsinov"]
   livrables: ["outil", "note"]
@@ -202,7 +202,7 @@
   statut_fr: "En cours"
   statut_en: "In progress"
   horizon: ""
-  resume_fr: "Tester en continu sans payer le prix des tests répétés : martingales de test, e-values et validité à tout instant d'arrêt."
+  resume_fr: "Tester en continu sans payer le prix des tests répétés : martingales de test, e-values et validité à tout instant d’arrêt."
   resume_en: "Testing continuously without paying the price of repeated testing: test martingales, e-values and validity at any stopping time."
   equipe: ["Yoann Pull", "Quentin Lajaunie"]
   livrables: ["article"]
@@ -228,7 +228,7 @@
   statut_fr: "À démarrer"
   statut_en: "Not started"
   horizon: ""
-  resume_fr: "Étendre l'approche at-Risk à plusieurs facteurs systémiques conjoints plutôt qu'à un facteur latent unique."
+  resume_fr: "Étendre l’approche at-Risk à plusieurs facteurs systémiques conjoints plutôt qu’à un facteur latent unique."
   resume_en: "Extending the at-Risk approach to several joint systemic factors rather than a single latent factor."
   equipe: ["Quentin Lajaunie", "Yoann Pull"]
   livrables: []
@@ -241,7 +241,7 @@
   statut_fr: "À démarrer"
   statut_en: "Not started"
   horizon: ""
-  resume_fr: "Ce que la validation interne peut réellement exiger d'un modèle de risque en matière d'explicabilité, et comment le mesurer."
+  resume_fr: "Ce que la validation interne peut réellement exiger d’un modèle de risque en matière d’explicabilité, et comment le mesurer."
   resume_en: "What internal validation can genuinely require of a risk model in terms of explainability, and how to measure it."
   equipe: ["Quentin Lajaunie"]
   livrables: []
@@ -254,7 +254,7 @@
   statut_fr: "À démarrer"
   statut_en: "Not started"
   horizon: ""
-  resume_fr: "Mesures d'équité appliquées aux modèles de décision de crédit : ce qu'elles capturent, ce qu'elles arbitrent."
+  resume_fr: "Mesures d’équité appliquées aux modèles de décision de crédit : ce qu’elles capturent, ce qu’elles arbitrent."
   resume_en: "Fairness measures applied to credit decision models: what they capture, what they trade off."
   equipe: ["Quentin Lajaunie"]
   livrables: []

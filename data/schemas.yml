@@ -17,21 +17,21 @@
     - titre: "CHOC"
       sous_titre: "Innovation macro-financière"
     - titre: "VAR MACRO"
-      sous_titre: "Propage le choc dans l'économie"
+      sous_titre: "Propage le choc dans l’économie"
     - titre: "SATELLITE"
       sous_titre: "Facteur de crédit systémique Z"
     - titre: "CARTOGRAPHIE"
       sous_titre: "Merton–Vasicek π(Z)"
   sorties:
     - titre: "PD moyenne"
-      sous_titre: "corrigée de l'incertitude prédictive"
+      sous_titre: "corrigée de l’incertitude prédictive"
     - titre: "PD-at-Risk"
       sous_titre: "quantile de queue"
       queue: true
     - titre: "Expected shortfall"
       sous_titre: "moyenne au-delà du seuil"
       queue: true
-  legende_fr: "Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l'établissement."
+  legende_fr: "Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l’établissement."
   legende_en: "A modular architecture with two blocks and three closed-form outputs. Blocks 2 and 3 can be replaced by the institution's already-validated internal models."
 
 - title: "Reverse stress testing"
@@ -47,7 +47,7 @@
       sous_titre: "Point s* le plus plausible"
     - titre: "GOUVERNANCE"
       sous_titre: "Voisinage local et robustesse"
-  legende_fr: "Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l'établissement."
+  legende_fr: "Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement."
   legende_en: "From the capital threshold to the breaking scenario and its neighbourhood. Each block is independent and replaceable by the institution's validated internal model."
 
 - title: "Approche at-Risk"
@@ -79,11 +79,11 @@
     - titre: "REGRIDDING"
       sous_titre: "Alignement spatial des grilles"
     - titre: "APPRENTISSAGE"
-      sous_titre: "Méthodes candidates sur l'historique"
+      sous_titre: "Méthodes candidates sur l’historique"
     - titre: "SÉLECTION"
       sous_titre: "Échantillon de test indépendant"
     - titre: "APPLICATION"
       sous_titre: "Recalibrage puis projections futures"
   premier_plein: true
-  legende_fr: "La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d'ajustement : la préservation du signal de changement prime dans un exercice prospectif."
+  legende_fr: "La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d’ajustement : la préservation du signal de changement prime dans un exercice prospectif."
   legende_en: "The four-step distribution-wise procedure. Selection is not on goodness of fit alone: preserving the change signal takes precedence in a forward-looking exercise."

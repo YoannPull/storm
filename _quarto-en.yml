@@ -6,6 +6,9 @@ project:
 
 website:
   title: "STORM"
+  # Image shown when a page is shared (LinkedIn, X, Slack…). 1200×630.
+  image: assets/brand/og-storm-en.png
+  image-alt: "STORM — Quantifying uncertainty, informing decisions."
   description: "STORM — Quantitative Risk Collective. The quantitative research collective of Square Management."
   navbar:
     logo-href: /en/index.html

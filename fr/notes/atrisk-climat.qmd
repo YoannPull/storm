@@ -1,7 +1,7 @@
 ---
-title: "Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress"
-subtitle: "S'appuyer sur la distribution conditionnelle du risque systémique pour évaluer l'impact des scénarios climatiques sur les probabilités de défaut"
-description: "L'approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall."
+title: "Risque de crédit et scénarios climatiques : capter l’information complète de la distribution sous stress"
+subtitle: "S’appuyer sur la distribution conditionnelle du risque systémique pour évaluer l’impact des scénarios climatiques sur les probabilités de défaut"
+description: "L’approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall."
 date: 2026-09-08
 author:
   - Mèdéssè Agongnon
@@ -20,7 +20,7 @@ listing:
 ::: {.standfirst}
 
 [En bref]{.lede}
-Les exercices de stress testing du risque de crédit reposent traditionnellement sur une projection en valeur centrale : à partir d'un scénario macroéconomique donné, une trajectoire attendue de probabilités de défaut est dérivée, dont la moyenne résume l'exposition future. Cette approche demeure incomplète : le risque ne se révèle pas dans la moyenne, il se concentre dans les états de stress sévère. Deux scénarios peuvent produire des trajectoires moyennes proches tout en masquant des niveaux de vulnérabilité très différents dans les queues de distribution.
+Les exercices de stress testing du risque de crédit reposent traditionnellement sur une projection en valeur centrale : à partir d’un scénario macroéconomique donné, une trajectoire attendue de probabilités de défaut est dérivée, dont la moyenne résume l’exposition future. Cette approche demeure incomplète : le risque ne se révèle pas dans la moyenne, il se concentre dans les états de stress sévère. Deux scénarios peuvent produire des trajectoires moyennes proches tout en masquant des niveaux de vulnérabilité très différents dans les queues de distribution.
 
 :::
 
@@ -28,34 +28,34 @@ Les exercices de stress testing du risque de crédit reposent traditionnellement
 
 [Message central]{.label}
 
-L'approche at-Risk ne se substitue pas aux cadres de stress testing existants : elle les prolonge en révélant la **forme complète** de la distribution du risque sous scénario. Appliquée aux trajectoires climatiques du NGFS, elle démontre qu'un scénario n'est pas seulement plus ou moins sévère par sa moyenne, mais par l'épaisseur et l'asymétrie de sa queue défavorable. Les scénarios de transition rapide — *Below 2°C*, *Net Zero 2050* — génèrent des queues de risque nettement plus épaisses à court terme, en raison de la brutalité des réajustements monétaires requis.
+L’approche at-Risk ne se substitue pas aux cadres de stress testing existants : elle les prolonge en révélant la **forme complète** de la distribution du risque sous scénario. Appliquée aux trajectoires climatiques du NGFS, elle démontre qu’un scénario n’est pas seulement plus ou moins sévère par sa moyenne, mais par l’épaisseur et l’asymétrie de sa queue défavorable. Les scénarios de transition rapide — *Below 2°C*, *Net Zero 2050* — génèrent des queues de risque nettement plus épaisses à court terme, en raison de la brutalité des réajustements monétaires requis.
 
-L'outil trouve une application directe au titre du Pilier 2 (ICAAP) et des exigences de la directive CRD 6.
+L’outil trouve une application directe au titre du Pilier 2 (ICAAP) et des exigences de la directive CRD 6.
 
 :::
 
 ## 1. Une asymétrie des risques masquée par la moyenne
 
-La modélisation du risque de crédit s'inscrit traditionnellement dans le cadre structurel Merton–Vasicek / ASRF, où les probabilités de défaut dépendent d'un facteur systémique latent $z_t$ résumant l'état macro-financier. Les approches classiques souffrent d'une limite structurelle : elles projettent uniquement la trajectoire centrale de ce facteur. Or les vulnérabilités économiques et financières agissent de manière asymétrique et se lisent principalement dans les queues de distribution.
+La modélisation du risque de crédit s’inscrit traditionnellement dans le cadre structurel Merton–Vasicek / ASRF, où les probabilités de défaut dépendent d’un facteur systémique latent $z_t$ résumant l’état macro-financier. Les approches classiques souffrent d’une limite structurelle : elles projettent uniquement la trajectoire centrale de ce facteur. Or les vulnérabilités économiques et financières agissent de manière asymétrique et se lisent principalement dans les queues de distribution.
 
 ::: {.why}
 
-[Pourquoi c'est important]{.label}
+[Pourquoi c’est important]{.label}
 
 - **Aveuglement à la sévérité extrême.** Deux scénarios aux trajectoires moyennes identiques peuvent masquer des niveaux de risque de queue du simple au double.
-- **Impact des politiques de transition.** Les chocs macro-financiers de court terme liés aux politiques climatiques affectent la volatilité et l'asymétrie du risque bien plus que son niveau moyen.
-- **Mesures de queue pour IFRS 9 et l'ICAAP.** L'évaluation des provisions et l'estimation du capital interne exigent des métriques dynamiques centrées sur la queue défavorable, hors de portée d'une projection en valeur centrale.
-- **Cohérence structurelle des mesures.** Le cadre garantit la monotonie stricte des quantiles et le respect de la hiérarchie du risque : l'expected shortfall est, par construction, toujours supérieur à la VaR.
+- **Impact des politiques de transition.** Les chocs macro-financiers de court terme liés aux politiques climatiques affectent la volatilité et l’asymétrie du risque bien plus que son niveau moyen.
+- **Mesures de queue pour IFRS 9 et l’ICAAP.** L’évaluation des provisions et l’estimation du capital interne exigent des métriques dynamiques centrées sur la queue défavorable, hors de portée d’une projection en valeur centrale.
+- **Cohérence structurelle des mesures.** Le cadre garantit la monotonie stricte des quantiles et le respect de la hiérarchie du risque : l’expected shortfall est, par construction, toujours supérieur à la VaR.
 
 :::
 
-## 2. Du taux de défaut à la distribution at-Risk : l'architecture
+## 2. Du taux de défaut à la distribution at-Risk : l’architecture
 
 ::: {#schema}
 
 :::
 
-L'extraction du facteur systémique procède par inversion de la formule ASRF à partir des taux de défaut observés $DR_t$, de la PD de long terme et de la corrélation $\rho$ :
+L’extraction du facteur systémique procède par inversion de la formule ASRF à partir des taux de défaut observés $DR_t$, de la PD de long terme et de la corrélation $\rho$ :
 
 $$z_t = \frac{\Phi^{-1}(PD_{LT}) - \sqrt{1-\rho}\,\Phi^{-1}(DR_t)}{\sqrt{\rho}}$$
 
@@ -67,15 +67,15 @@ $$PD(z) = \Phi\!\left(\frac{\Phi^{-1}(PD_{LT}) - \sqrt{\rho}\,z}{\sqrt{1-\rho}}\
 
 [Ce que le cadre apporte]{.label}
 
-- **Information complète.** Il délivre simultanément la PD moyenne, la VaR-at-Risk à 95 % et l'expected shortfall à 95 %.
-- **Ancrage réglementaire et académique.** Il réutilise le moteur Merton–Vasicek / ASRF tout en intégrant les avancées de l'économétrie quantile issues du *Growth-at-Risk*.
-- **Flexibilité paramétrique.** La loi skew-t capte l'asymétrie et l'épaississement des queues en période de crise, que la loi gaussienne ignore.
+- **Information complète.** Il délivre simultanément la PD moyenne, la VaR-at-Risk à 95 % et l’expected shortfall à 95 %.
+- **Ancrage réglementaire et académique.** Il réutilise le moteur Merton–Vasicek / ASRF tout en intégrant les avancées de l’économétrie quantile issues du *Growth-at-Risk*.
+- **Flexibilité paramétrique.** La loi skew-t capte l’asymétrie et l’épaississement des queues en période de crise, que la loi gaussienne ignore.
 
 :::
 
 ## 3. Mise en œuvre
 
-1. **Extraction.** Inversion de la formule ASRF / Merton–Vasicek sur l'historique des défauts internes.
+1. **Extraction.** Inversion de la formule ASRF / Merton–Vasicek sur l’historique des défauts internes.
 2. **Estimation.** Calibration des régressions quantiles et ajustement de la loi skew-t sur la grille de quantiles estimés.
 3. **Projection.** Injection des trajectoires de scénarios — NGFS, BCE, internes — pour alimenter les métriques de queue.
 
@@ -83,7 +83,7 @@ $$PD(z) = \Phi\!\left(\frac{\Phi^{-1}(PD_{LT}) - \sqrt{\rho}\,z}{\sqrt{1-\rho}}\
 
 [À retenir pour chaque équipe]{.label}
 
-- **Modélisation.** La sévérité d'un scénario ne se lit pas dans sa moyenne mais dans la forme de sa queue défavorable.
+- **Modélisation.** La sévérité d’un scénario ne se lit pas dans sa moyenne mais dans la forme de sa queue défavorable.
 - **Validation.** Monotonie des quantiles et hiérarchie VaR / ES sont garanties par construction, donc vérifiables.
 - **Pilotage.** Le cadre fournit une métrique chiffrée pour challenger la solidité des fonds propres face à des trajectoires alternatives au scénario central imposé.
 

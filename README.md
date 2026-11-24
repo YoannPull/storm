@@ -45,6 +45,8 @@ Most content lives in `data/` and never requires touching HTML:
 | Technical notes | `fr/notes/*.qmd` (French only for now) |
 | Expertise page | `fr/expertise/index.qmd`, `en/expertise/index.qmd` |
 | About page and contacts | `fr/a-propos/index.qmd`, `en/about/index.qmd` |
+| Page not found (404) | `scripts/404.html` (copied to `docs/404.html` at each build) |
+| Link-preview images (LinkedIn, X…) | `assets/brand/og-storm-fr.png`, `og-storm-en.png` (1200×630), set in `_quarto-fr.yml` / `_quarto-en.yml` |
 | Navigation and footer | `_quarto-fr.yml`, `_quarto-en.yml` |
 
 `data/_notes.yml` is generated before each build by `scripts/collect.py`; do

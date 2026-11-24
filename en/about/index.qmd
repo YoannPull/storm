@@ -1,5 +1,5 @@
 ---
-pagetitle: "About — STORM"
+pagetitle: "About"
 description: "STORM, a team of researchers and consultants in quantitative research within Square Management."
 page-layout: full
 ---
@@ -24,13 +24,13 @@ STORM is a quantitative research collective of **Square Management**: a team of 
 
 STORM brings together researchers and consultants with complementary backgrounds: statistics, econometrics, economics, data science and machine learning.
 
-We use quantitative methods to answer questions that arise in risk management.
+This dual culture, academic and operational, is at the heart of how we work: the questions come from the field, the answers come through method.
 
 ## What we do
 
 We develop quantitative models and methods to measure, anticipate and manage risk. Our current work focuses mainly on financial risk, but the methods are designed to transfer to other fields.
 
-It takes two complementary forms: **research papers**, submitted to peer-reviewed journals, and **technical notes**, which carry the work into practice.
+We submit **research papers** to peer-reviewed journals and publish **technical notes** that explain how to apply our methods.
 
 ## How we work
 
@@ -42,7 +42,7 @@ It takes two complementary forms: **research papers**, submitted to peer-reviewe
 
 ## Work with us {#contact}
 
-Together with Square Management's consulting teams, we support financial institutions on their risk modelling and risk management challenges: from model design to validation, from stress testing to team training.
+Together with Square Management’s consulting teams, we support financial institutions on their risk modelling and risk management challenges: from model design to validation, from stress testing to team training.
 
 A project, a question, a presentation request: write to us.
 

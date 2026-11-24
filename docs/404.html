@@ -1,0 +1,68 @@
+<!doctype html>
+<!-- Page « introuvable » servie par GitHub Pages pour toute adresse inconnue.
+     Copiée à la racine de docs/ par scripts/assemble.sh. Autonome : styles en
+     ligne, chemins absolus (elle peut être servie depuis n’importe quel dossier). -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page introuvable – STORM</title>
+<link rel="icon" href="/favicon.ico">
+<style>
+@font-face{font-family:"Source Sans 3";font-weight:200 900;font-display:swap;src:url("/assets/fonts/source-sans-3-latin-wght-normal.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url("/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2")}
+:root{--ink:#fff;--body:#c7ccd3;--muted:#8a9099;--signal:#4d8dff;--line:#1f2227}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--body);font-family:"Source Sans 3",system-ui,sans-serif}
+a{color:inherit}
+header{display:flex;align-items:center;gap:.6rem;padding:1rem 1.5rem;border-bottom:1px solid var(--line)}
+header img{height:26px;filter:brightness(0) invert(1)}
+header b{color:var(--ink);font-size:1.1rem;letter-spacing:.02em}
+main{max-width:760px;margin:0 auto;padding:clamp(2rem,8vh,5rem) 1.5rem 3rem;text-align:center}
+.code{font-family:"IBM Plex Mono",monospace;font-size:.85rem;letter-spacing:.12em;color:var(--signal)}
+h1{color:var(--ink);font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin:.6rem 0 .4rem}
+h1 em{font-style:normal;color:var(--signal)}
+p{font-size:1.1rem;line-height:1.55;margin:.3rem 0}
+p.en{color:var(--muted);font-size:1rem}
+svg{display:block;width:100%;max-width:560px;height:auto;margin:2.2rem auto 1.6rem}
+.cta{display:flex;justify-content:center;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem}
+.cta a{text-decoration:none;font-weight:600;padding:.65rem 1.25rem;border-radius:999px;border:1px solid #3a3f46;color:var(--ink)}
+.cta a.primary{background:#fff;color:#000;border-color:#fff}
+.cta a:hover{border-color:var(--signal)}
+.cta a:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><img src="/assets/brand/logo-storm-mark-navy.svg" alt=""><b>STORM</b></header>
+<main>
+  <div class="code">404</div>
+  <h1>Cette page se trouve <em>hors de la distribution</em>.</h1>
+  <p>Elle n’existe pas, ou elle a été déplacée.</p>
+  <p class="en" lang="en">This page lies outside the distribution: it does not exist, or it has moved.</p>
+  <svg viewBox="0 0 560 170" aria-hidden="true">
+    <defs><linearGradient id="t" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#4d8dff" stop-opacity=".55"/><stop offset="1" stop-color="#4d8dff" stop-opacity=".05"/></linearGradient></defs>
+    <line x1="10" y1="150" x2="550" y2="150" stroke="#2a2e34"/>
+    <path id="bell" fill="none" stroke="#e9edf3" stroke-width="2"/>
+    <path id="tail" fill="url(#t)"/>
+    <line id="q" y1="40" y2="150" stroke="#4d8dff" stroke-dasharray="4 4"/>
+    <circle id="you" r="5" fill="#4d8dff"/>
+    <text id="lab" font-family="IBM Plex Mono, monospace" font-size="12" fill="#4d8dff" text-anchor="middle">vous êtes ici</text>
+  </svg>
+  <div class="cta">
+    <a class="primary" href="/fr/">Retour à l’accueil</a>
+    <a href="/en/" lang="en">English home page</a>
+  </div>
+</main>
+<script>
+// bell curve with its tail beyond the 95 % quantile; "you are here" far in the tail
+(function(){var f=function(u){return Math.exp(-.5*Math.pow((u-.38)/.11,2));},X=function(u){return 10+u*540;},Y=function(u){return 150-120*f(u);};
+var d='',dt='',q=.38+1.645*.11;for(var k=0;k<=200;k++){var u=k/200;d+=(k?'L':'M')+X(u).toFixed(1)+' '+Y(u).toFixed(1);}
+dt='M'+X(q)+' 150';for(k=0;k<=100;k++){u=q+(1-q)*k/100;dt+='L'+X(u).toFixed(1)+' '+Y(u).toFixed(1);}dt+='L'+X(1)+' 150Z';
+var $=function(i){return document.getElementById(i);};$('bell').setAttribute('d',d);$('tail').setAttribute('d',dt);
+$('q').setAttribute('x1',X(q));$('q').setAttribute('x2',X(q));var ux=.93;$('you').setAttribute('cx',X(ux));$('you').setAttribute('cy',Y(ux)-6);
+$('lab').setAttribute('x',X(ux)-18);$('lab').setAttribute('y',Y(ux)-20);
+if(/^en\b/i.test(navigator.language||'')){document.documentElement.lang='en';$('lab').textContent='you are here';}})();
+</script>
+</body>
+</html>

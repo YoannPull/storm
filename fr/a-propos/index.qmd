@@ -1,5 +1,5 @@
 ---
-pagetitle: "À propos — STORM"
+pagetitle: "À propos"
 description: "STORM, une équipe de chercheurs et de consultants en recherche quantitative au sein de Square Management."
 page-layout: full
 ---
@@ -28,17 +28,17 @@ Cette double culture, académique et opérationnelle, est au cœur de notre faç
 
 ## Ce que nous faisons
 
-Nous développons des modèles et des méthodes quantitatives pour mesurer, anticiper et piloter les risques. Nos travaux portent aujourd'hui principalement sur les risques financiers, mais les méthodes sont pensées pour être transférables à d'autres domaines.
+Nous développons des modèles et des méthodes quantitatives pour mesurer, anticiper et piloter les risques. Nos travaux portent aujourd’hui principalement sur les risques financiers, mais les méthodes sont pensées pour être transférables à d’autres domaines.
 
 Nous soumettons des **articles de recherche** à des revues à comité de lecture et publions des **notes techniques** qui expliquent comment appliquer nos méthodes.
 
 ## Comment nous travaillons
 
-**La méthode d'abord.** Des outils rigoureux, aux garanties statistiques claires.
+**La méthode d’abord.** Des outils rigoureux, aux garanties statistiques claires.
 
-**Pensé pour l'application.** Chaque méthode est mise à l'épreuve sur des problèmes réels et s'intègre aux dispositifs existants.
+**Pensé pour l’application.** Chaque méthode est mise à l’épreuve sur des problèmes réels et s’intègre aux dispositifs existants.
 
-**Ouvert à la discussion.** Nos travaux sont publiés, présentés en conférence et soumis à la critique de la communauté académique. Nos méthodes sont aussi présentées aux équipes opérationnelles, qui les mettent à l'épreuve de leur pratique.
+**Ouvert à la discussion.** Nos travaux sont publiés, présentés en conférence et soumis à la critique de la communauté académique. Nos méthodes sont aussi présentées aux équipes opérationnelles, qui les mettent à l’épreuve de leur pratique.
 
 ## Travailler avec nous {#contact}
 

@@ -1,5 +1,5 @@
 ---
-pagetitle: "Expertise — STORM"
+pagetitle: "Expertise"
 description: "Les méthodes quantitatives de STORM et leurs applications."
 page-layout: full
 ---
@@ -12,7 +12,7 @@ page-layout: full
 
 ::: {.position-line}
 
-Des méthodes quantitatives, pensées pour l'application. Le détail de nos travaux se trouve dans nos publications et nos notes.
+Des méthodes quantitatives, pensées pour l’application. Le détail de nos travaux se trouve dans nos publications et nos notes.
 
 :::
 
@@ -28,7 +28,7 @@ Des méthodes quantitatives, pensées pour l'application. Le détail de nos trav
 </div>
 <div class="mblock" id="stress-testing"><div class="xblock"><span class="n">03</span><h3>Stress testing et scénarios</h3><p>Nous concevons des stress tests pour mesurer l’impact de scénarios défavorables sur les portefeuilles. Nous identifions les expositions les plus vulnérables et les facteurs qui expliquent les pertes.</p></div><div class="anim-group"><div class="anim-switch" role="group"><button type="button" data-pane="rst" aria-pressed="true">Reverse stress test</button><button type="button" data-pane="credit" aria-pressed="false">Stress test de crédit</button></div><div class="anim-pane" data-pane="rst"><div class="storm-anim" data-anim="rst"></div></div><div class="anim-pane" data-pane="credit" hidden><div class="storm-anim" data-anim="credit"></div></div></div></div>
 <div class="sh"><h2>Applications</h2></div>
-<div class="xblocks"><div class="xblock app" id="credit"><h3>Risque de crédit</h3><p>Développer, valider et surveiller les modèles de crédit, et mesurer leur comportement sous stress.</p></div><div class="xblock app" id="climat"><h3>Risques climatiques</h3><p>Intégrer les risques physiques et de transition dans l'évaluation des risques financiers.</p></div><div class="xblock app" id="geopolitique"><h3>Risque géopolitique et macro-financier</h3><p>Comprendre comment les chocs se propagent aux portefeuilles, et lesquels pourraient les mettre en difficulté.</p></div></div>
+<div class="xblocks"><div class="xblock app" id="credit"><h3>Risque de crédit</h3><p>Développer, valider et surveiller les modèles de crédit, et mesurer leur comportement sous stress.</p></div><div class="xblock app" id="climat"><h3>Risques climatiques</h3><p>Intégrer les risques physiques et de transition dans l’évaluation des risques financiers.</p></div><div class="xblock app" id="geopolitique"><h3>Risque géopolitique et macro-financier</h3><p>Comprendre comment les chocs se propagent aux portefeuilles, et lesquels pourraient les mettre en difficulté.</p></div></div>
 <div class="sh"><h2>Pour aller plus loin</h2></div>
 ```
 

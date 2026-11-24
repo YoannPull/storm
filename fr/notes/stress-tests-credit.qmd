@@ -1,7 +1,7 @@
 ---
 title: "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne"
 subtitle: "Exploiter pleinement les modèles satellites existants : PD moyenne, PD-at-Risk et expected shortfall au même coût de calcul"
-description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l'incertitude prédictive et deux mesures de queue, au même coût de calcul."
+description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l’incertitude prédictive et deux mesures de queue, au même coût de calcul."
 date: 2026-09-08
 author:
   - Inès Bordais
@@ -20,7 +20,7 @@ listing:
 ::: {.standfirst}
 
 [En bref]{.lede}
-Dans les stress tests de crédit, les modèles satellites traduisent les scénarios macro-financiers en probabilités de défaut (PD). Ils sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. Cette approximation écarte l'incertitude prédictive, qui peut influer sur la PD moyenne lorsque la relation entre la PD et le facteur est non linéaire. Dans notre application, les approximations usuelles sous-estiment les PD projetées de 8 % au maximum. Propager la distribution complète du facteur permet aussi d'estimer le risque de queue.
+Dans les stress tests de crédit, les modèles satellites traduisent les scénarios macro-financiers en probabilités de défaut (PD). Ils sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. Cette approximation écarte l’incertitude prédictive, qui peut influer sur la PD moyenne lorsque la relation entre la PD et le facteur est non linéaire. Dans notre application, les approximations usuelles sous-estiment les PD projetées de 8 % au maximum. Propager la distribution complète du facteur permet aussi d’estimer le risque de queue.
 
 :::
 
@@ -28,31 +28,31 @@ Dans les stress tests de crédit, les modèles satellites traduisent les scénar
 
 [Message central]{.label}
 
-Il ne s'agit pas de remplacer les satellites existants, mais de leur faire produire davantage. En propageant la distribution complète du facteur de crédit, et non sa seule trajectoire moyenne, le même dispositif corrige la PD moyenne pour tenir compte de l'incertitude prédictive, puis délivre **en forme close, sans simulation lourde et sans re-développement**, deux mesures de queue complémentaires : le PD-at-Risk et l'expected shortfall — la mesure vers laquelle les régulateurs ont déjà fait basculer le risque de marché.
+Il ne s’agit pas de remplacer les satellites existants, mais de leur faire produire davantage. En propageant la distribution complète du facteur de crédit, et non sa seule trajectoire moyenne, le même dispositif corrige la PD moyenne pour tenir compte de l’incertitude prédictive, puis délivre **en forme close, sans simulation lourde et sans re-développement**, deux mesures de queue complémentaires : le PD-at-Risk et l’expected shortfall — la mesure vers laquelle les régulateurs ont déjà fait basculer le risque de marché.
 
-Une correction de niveau et trois lectures du risque au prix d'une.
+Une correction de niveau et trois lectures du risque au prix d’une.
 
 :::
 
 ## 1. Ce que la trajectoire moyenne ne transmet pas
 
-Le stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s'élargit chaque année. L'architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.
+Le stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s’élargit chaque année. L’architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.
 
-En pratique, on évalue souvent la PD le long de la trajectoire moyenne du facteur de crédit ou d'une trajectoire supposée connue. Lorsque la PD dépend de façon non linéaire du facteur, la PD évaluée à sa moyenne peut différer de la moyenne des PD calculées sur l'ensemble de sa distribution. Si la fonction de PD est convexe sur le support du facteur, l'évaluation à la moyenne donne une borne inférieure de la PD moyenne projetée.
+En pratique, on évalue souvent la PD le long de la trajectoire moyenne du facteur de crédit ou d’une trajectoire supposée connue. Lorsque la PD dépend de façon non linéaire du facteur, la PD évaluée à sa moyenne peut différer de la moyenne des PD calculées sur l’ensemble de sa distribution. Si la fonction de PD est convexe sur le support du facteur, l’évaluation à la moyenne donne une borne inférieure de la PD moyenne projetée.
 
 ::: {.why}
 
-[Pourquoi c'est important]{.label}
+[Pourquoi c’est important]{.label}
 
-- **Effet sur la PD à trois ans.** Le *plug-in* (PD évaluée sur la trajectoire moyenne) et la *perfect foresight* (trajectoire supposée connue) écartent tout ou partie de l'incertitude prédictive. Dans notre application, ces approximations sous-estiment de 7 à 8 % la PD moyenne projetée à trois ans.
+- **Effet sur la PD à trois ans.** Le *plug-in* (PD évaluée sur la trajectoire moyenne) et la *perfect foresight* (trajectoire supposée connue) écartent tout ou partie de l’incertitude prédictive. Dans notre application, ces approximations sous-estiment de 7 à 8 % la PD moyenne projetée à trois ans.
 - **Pas de mesure de queue.** Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.
-- **Une hypothèse peu documentée.** La dispersion du facteur de crédit est écartée sans justification explicite, un point d'attention croissant pour la validation interne comme pour le superviseur.
+- **Une hypothèse peu documentée.** La dispersion du facteur de crédit est écartée sans justification explicite, un point d’attention croissant pour la validation interne comme pour le superviseur.
 
 :::
 
-## 2. Corriger le niveau, révéler la queue : l'architecture
+## 2. Corriger le niveau, révéler la queue : l’architecture
 
-Le cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l'incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c'est là le point décisif en pratique : **chaque bloc est remplaçable par le modèle interne déjà validé de l'établissement.**
+Le cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l’incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c’est là le point décisif en pratique : **chaque bloc est remplaçable par le modèle interne déjà validé de l’établissement.**
 
 ::: {#schema}
 
@@ -62,16 +62,16 @@ Le cadre se lit comme une chaîne de transmission : un choc macro-financier entr
 
 $$\pi(Z_t) \;=\; \Phi\!\left(\frac{\Phi^{-1}(p) - \sqrt{\rho}\,Z_t}{\sqrt{1-\rho}}\right)$$
 
-où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long terme et $\rho$ la corrélation d'actifs. Rien de nouveau ici : c'est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.
+où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long terme et $\rho$ la corrélation d’actifs. Rien de nouveau ici : c’est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.
 
 ::: {.why}
 
 [Ce que le cadre apporte]{.label}
 
-- **Une moyenne qui intègre l'incertitude prédictive.** Le calcul de la PD moyenne tient compte de la distribution complète du facteur de crédit.
+- **Une moyenne qui intègre l’incertitude prédictive.** Le calcul de la PD moyenne tient compte de la distribution complète du facteur de crédit.
 - **Deux mesures de queue, gratuitement.** PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.
-- **Modularité.** Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l'établissement sans toucher au reste.
-- **Généralité.** Le stress test géopolitique sur le crédit américain n'est qu'une preuve de concept : la même mécanique s'applique aux scénarios climatiques, monétaires ou sectoriels.
+- **Modularité.** Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l’établissement sans toucher au reste.
+- **Généralité.** Le stress test géopolitique sur le crédit américain n’est qu’une preuve de concept : la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels.
 
 :::
 
@@ -81,8 +81,8 @@ où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long 
 
 ## 3. Mise en œuvre
 
-1. **Conserver le satellite de crédit interne.** Le cadre se branche sur le modèle déjà validé et n'en modifie ni la spécification ni la calibration.
-2. **Brancher un bloc macro-financier dynamique en amont.** Un VAR bayésien estimé sur l'historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.
+1. **Conserver le satellite de crédit interne.** Le cadre se branche sur le modèle déjà validé et n’en modifie ni la spécification ni la calibration.
+2. **Brancher un bloc macro-financier dynamique en amont.** Un VAR bayésien estimé sur l’historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.
 3. **Produire les trois sorties pour chaque scénario du catalogue.** PD moyenne corrigée, PD-at-Risk et expected shortfall, pour chaque horizon de projection.
 
 ::: {.retenir}
@@ -90,7 +90,7 @@ où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long 
 [À retenir pour chaque équipe]{.label}
 
 - **Modélisation.** Pour calculer la PD moyenne, appliquer le modèle de crédit à la distribution prédictive du facteur et calculer la moyenne des PD obtenues.
-- **Validation.** L'hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.
+- **Validation.** L’hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.
 - **Pilotage.** Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement.
 
 :::

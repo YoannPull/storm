@@ -1,5 +1,5 @@
 ---
-pagetitle: "Expertise — STORM"
+pagetitle: "Expertise"
 description: "STORM's quantitative methods and their applications."
 page-layout: full
 ---

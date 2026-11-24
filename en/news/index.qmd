@@ -1,5 +1,5 @@
 ---
-pagetitle: "News — STORM"
+pagetitle: "News"
 description: "Technical notes, publications and talks from the STORM collective."
 page-layout: full
 listing:
@@ -14,7 +14,7 @@ listing:
 
 :::: {.theme-head}
 
-[Quantitative Insights]{.kicker}
+[Latest from the collective]{.kicker}
 
 # News
 

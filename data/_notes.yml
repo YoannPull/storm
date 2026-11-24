@@ -1,18 +1,18 @@
 # Fichier produit automatiquement par scripts/collect.py.
 # Ne pas modifier à la main : il est réécrit à chaque construction.
 
-- title: "Risque de crédit et scénarios climatiques : capter l'information complète de la distribution sous stress"
+- title: "Risque de crédit et scénarios climatiques : capter l’information complète de la distribution sous stress"
   path: "/fr/notes/atrisk-climat.html"
   date: "2026-09-08"
   auteurs: ["Mèdéssè Agongnon", "Quentin Lajaunie", "Pétronie Nkoussol Nsangou", "Charles-Emmanuel Prost"]
-  description: "L'approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall."
+  description: "L’approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall."
   categories: ["Risque climatique", "Risque de crédit", "Stress testing", "Quantiles"]
 
-- title: "Downscaling statistique des projections climatiques : corriger les biais avant d'évaluer le risque physique"
+- title: "Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique"
   path: "/fr/notes/downscaling.html"
   date: "2026-09-08"
   auteurs: ["Sabiha Zarhouni Jaures", "Ève-Roxane Doffou", "Charles-Emmanuel Prost"]
-  description: "Pourquoi les sorties brutes des modèles CMIP6 ne suffisent pas à l'analyse du risque physique, et comment les corriger sans amputer le signal de changement climatique aux quantiles extrêmes."
+  description: "Pourquoi les sorties brutes des modèles CMIP6 ne suffisent pas à l’analyse du risque physique, et comment les corriger sans amputer le signal de changement climatique aux quantiles extrêmes."
   categories: ["Risque climatique", "Downscaling", "Risque physique"]
 
 - title: "Reverse stress testing : partir du seuil de capital, pas du scénario"
@@ -26,5 +26,5 @@
   path: "/fr/notes/stress-tests-credit.html"
   date: "2026-09-08"
   auteurs: ["Inès Bordais", "Léane Chevrier", "Quentin Lajaunie", "Yoann Pull"]
-  description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l'incertitude prédictive et deux mesures de queue, au même coût de calcul."
+  description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l’incertitude prédictive et deux mesures de queue, au même coût de calcul."
   categories: ["Risque de crédit", "Stress testing", "Quantiles"]

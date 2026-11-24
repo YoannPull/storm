@@ -1,5 +1,5 @@
 ---
-pagetitle: "Notes — STORM"
+pagetitle: "Notes"
 description: "Notes techniques, focus méthodologiques et perspectives courtes du collectif STORM."
 page-layout: full
 listing:

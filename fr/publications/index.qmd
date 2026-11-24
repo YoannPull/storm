@@ -1,5 +1,5 @@
 ---
-pagetitle: "Publications — STORM"
+pagetitle: "Publications"
 description: "Articles de recherche, notes techniques et travaux en cours de STORM."
 page-layout: full
 listing:

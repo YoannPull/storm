@@ -1,5 +1,5 @@
 ---
-pagetitle: "Notes — STORM"
+pagetitle: "Notes"
 description: "Technical notes, methodological focus pieces and short perspectives from the STORM collective."
 page-layout: full
 listing:
@@ -12,7 +12,7 @@ listing:
 
 :::: {.theme-head}
 
-[Quantitative Insights]{.kicker}
+[Technical notes]{.kicker}
 
 # Notes
 

@@ -1,5 +1,10 @@
 ---
-pagetitle: "STORM — Quantitative Risk Collective"
+pagetitle: "Quantitative Risk Collective"
+# Real <h1> for search engines and screen readers; visually hidden (the hero shows it)
+title: "Quantifying uncertainty, informing decisions"
+body-classes: home-page
+open-graph:
+  title: "STORM — Quantitative Risk Collective"
 description: "STORM, a quantitative research collective of Square Management."
 page-layout: full
 listing:
@@ -30,7 +35,7 @@ listing:
 ::::: {.hero-in}
 
 ```{=html}
-<div class="hero-title" role="heading" aria-level="1">Quantifying <em>uncertainty</em>,<br>informing decisions.</div>
+<div class="hero-title" aria-hidden="true">Quantifying <em>uncertainty</em>,<br>informing decisions.</div>
 ```
 
 ::: {.hero-sub}

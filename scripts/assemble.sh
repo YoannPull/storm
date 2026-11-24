@@ -18,6 +18,8 @@ touch docs/.nojekyll
 echo "squaremanagement-storm.com" > docs/CNAME
 # Icône d’onglet à la racine (certains navigateurs la demandent toujours là)
 [ -f assets/brand/favicon.ico ] && cp assets/brand/favicon.ico docs/favicon.ico
+# Page « introuvable » (GitHub Pages la sert pour toute adresse inconnue)
+[ -f scripts/404.html ] && cp scripts/404.html docs/404.html
 rm -rf "docs/$PROF"
 cp -R "$OUT/$PROF" "docs/$PROF"
 
