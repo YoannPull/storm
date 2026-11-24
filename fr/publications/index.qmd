@@ -1,5 +1,7 @@
 ---
 pagetitle: "Publications"
+open-graph:
+  title: "Publications – STORM"
 description: "Articles de recherche, notes techniques et travaux en cours de STORM."
 page-layout: full
 listing:

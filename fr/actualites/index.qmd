@@ -1,5 +1,7 @@
 ---
 pagetitle: "Actualités"
+open-graph:
+  title: "Actualités – STORM"
 description: "Notes techniques, publications et interventions du collectif STORM."
 page-layout: full
 listing:

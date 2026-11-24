@@ -7,7 +7,8 @@ project:
 website:
   title: "STORM"
   # Image shown when a page is shared (LinkedIn, X, Slack…). 1200×630.
-  image: assets/brand/og-storm-fr.png
+  # Absolute address: otherwise Quarto resolves it page by page (broken on sub-pages)
+  image: "https://squaremanagement-storm.com/assets/brand/og-storm-fr.png"
   image-alt: "STORM — Quantifier l’incertitude, éclairer la décision."
   description: "STORM — Quantitative Risk Collective. Un collectif de recherche quantitative de Square Management."
   navbar:

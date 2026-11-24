@@ -1,5 +1,7 @@
 ---
 pagetitle: "Expertise"
+open-graph:
+  title: "Expertise – STORM"
 description: "Les méthodes quantitatives de STORM et leurs applications."
 page-layout: full
 ---

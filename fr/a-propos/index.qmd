@@ -1,5 +1,7 @@
 ---
 pagetitle: "À propos"
+open-graph:
+  title: "À propos – STORM"
 description: "STORM, une équipe de chercheurs et de consultants en recherche quantitative au sein de Square Management."
 page-layout: full
 ---

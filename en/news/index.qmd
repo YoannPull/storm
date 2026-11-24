@@ -1,5 +1,7 @@
 ---
 pagetitle: "News"
+open-graph:
+  title: "News – STORM"
 description: "Technical notes, publications and talks from the STORM collective."
 page-layout: full
 listing:

@@ -1,5 +1,7 @@
 ---
 pagetitle: "Notes"
+open-graph:
+  title: "Notes – STORM"
 description: "Notes techniques, focus méthodologiques et perspectives courtes du collectif STORM."
 page-layout: full
 listing:
