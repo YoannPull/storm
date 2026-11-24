@@ -288,7 +288,7 @@ Quarto ne sait lire les en-têtes que des fichiers qu’il rend : sans lui, les
 listes de l’édition anglaise sortiraient vides. Ne le modifiez jamais à la
 main — modifiez la note concernée, il suivra.
 
-**Adresses de contact et domaine.** Les contacts sont dans `fr/a-propos/index.qmd` et `en/about/index.qmd` (section « Travailler avec nous »). L'adresse du site (`site-url`, utilisée pour le plan du site et les aperçus de liens) est dans `_quarto-fr.yml` et `_quarto-en.yml` : `https://squaremanagement-storm.com/`. Le fichier `docs/CNAME` (domaine personnalisé GitHub Pages) est recréé à chaque construction par `scripts/assemble.sh`.
+**Adresses de contact et domaine.** Les contacts sont dans `fr/a-propos/index.qmd` et `en/about/index.qmd` (section « Travailler avec nous »). L'adresse commune (`site-url`) est dans `_quarto.yml`. Le fichier `docs/CNAME` (domaine personnalisé GitHub Pages) est recréé à chaque construction par `scripts/assemble.sh`. Après chaque rendu, `scripts/clean_urls.py` utilise ce domaine pour générer `docs/sitemap.xml` et `docs/robots.txt` à partir des éditions présentes dans `docs/`.
 
 **Notes en anglais.** Les quatre notes existent en français. Les pages anglaises
 les listent en signalant la langue. Pour en traduire une : copier le `.qmd` dans

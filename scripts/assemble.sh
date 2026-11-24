@@ -25,10 +25,6 @@ cp -R "$OUT/$PROF" "docs/$PROF"
 mkdir -p docs/site_libs
 [ -d "$OUT/site_libs" ] && cp -R "$OUT/site_libs/." docs/site_libs/
 
-for f in robots.txt sitemap.xml; do
-  [ -f "$OUT/$f" ] && cp "$OUT/$f" "docs/$f"
-done
-
 # Index de recherche : un par édition, fusionnés en un seul pour tout le site.
 if [ -f "$OUT/search.json" ]; then
   cp "$OUT/search.json" "docs/search-$PROF.json"
@@ -51,8 +47,11 @@ fi
 
 # Adresses propres : les liens internes ne montrent plus « index.html » ni
 # « .html » (GitHub Pages sert /fr/expertise/ et /fr/notes/downscaling tout seul).
+# Le plan du site reprend ces adresses pour les deux éditions présentes dans docs/.
 if command -v python3 >/dev/null 2>&1; then
   PROF="$PROF" python3 scripts/clean_urls.py
+else
+  echo "assemble: python3 absent — plan du site non régénéré"
 fi
 
 cat > docs/index.html <<'HTML'

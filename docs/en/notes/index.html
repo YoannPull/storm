@@ -446,6 +446,22 @@ window.Quarto = {
 .tfm .tfm-value { fill:var(--signal); font-size:25px; }
 .tfm .tfm-share { stroke:var(--signal); stroke-width:3; fill:none; stroke-linecap:round; }
 
+.va-ep canvas{display:block;width:100%}
+.va-ep .ep-bars{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);transition:opacity .3s}
+.va-ep .ep-bars p{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:0 0 8px}
+.va-ep .ep-row{display:grid;grid-template-columns:minmax(0,9.5em) 1fr 3.6em;align-items:center;gap:10px;margin:6px 0}
+.va-ep .ep-row span{font-family:var(--sans);font-size:12.5px;font-weight:600;color:#fff}
+.va-ep .ep-row b{font-family:var(--mono);font-size:14px;font-weight:500;color:#fff;text-align:right}
+.va-ep .ep-row.a b{color:var(--signal)}
+.va-ep .ep-row.c b{color:#ff5d6e}
+.va-ep .ep-bar{position:relative;height:10px;border-radius:5px;background:rgba(255,255,255,.05)}
+.va-ep .ep-in{transition:width .08s linear}
+.va-ep .ep-in{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:5px;background:#ff5d6e;box-shadow:0 0 12px rgba(255,93,110,.55)}
+.va-ep .ep-row.a .ep-in{background:var(--signal);box-shadow:0 0 10px rgba(77,141,255,.6)}
+.va-ep .ep-lim{position:absolute;left:5%;top:-4px;bottom:-4px;border-left:1px dashed var(--signal)}
+.va-ep .ep-limt{display:flex;align-items:center;justify-content:flex-end;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--signal);margin-top:4px}
+.va-ep .ep-limt i{display:inline-block;height:11px;border-left:1px dashed var(--signal)}
+@media (max-width:480px){.va-ep .ep-row{grid-template-columns:7.5em 1fr 3.2em}}
 </style>
 <script>
 /* ---- Density horizon ------------------------------------------------------
@@ -978,9 +994,10 @@ function initRST(root,TX,VIS){
      (Gaussian) test already rejects the model, the Jeffreys test does not.
      Repeated over 100 years where the model is right, the normal test rejects
      wrongly about one year in five; Jeffreys stays close to its nominal level.
-   initEprocess : in-house method (not yet published). A high-frequency data
-     stream; an evidence signal against the model updates at each tick. A
-     regime change (volatility jump) is detected within a few observations.
+   initEprocess : in-house method (not yet published). 200 monitoring paths
+     of a model that is right: the classic test redone at every observation
+     raises false alarms on most of them, the anytime-valid approach on almost
+     none; then the model drifts and every path detects it.
    Illustrative values only.                                                  */
 function mkTyper(cap,reduce,speed){let txt='',t0=0,x=null;
   return {say(t,now){txt=t;t0=now;cap.innerHTML='<span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span>';x=cap.querySelector('.x');if(reduce)x.textContent=t;},
@@ -1042,81 +1059,148 @@ function initJeffreys(root,TX,VIS){
 }
 
 function initEprocess(root,TX,VIS){
+  /* Two methods monitor the same simulated stream before and after a mean
+     shift. The final bars show the share of 200 simulated streams with at
+     least one false alarm before the shift, for each method.
+     Colours: red = false alarm (the test rejects a model that is right),
+     blue = correct alert after the shift. */
   root.innerHTML=TX.markup;
-  const svg=root.querySelector('svg'), el=svgEl(svg), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ty=mkTyper(root.querySelector('.va-cap'),reduce,25);
-  const vF=root.querySelector('.vF'), vD=root.querySelector('.vD'), boxF=root.querySelector('.boxF'), boxD=root.querySelector('.boxD');
-  const R=[0.832, -1.372, 0.476, -1.517, -0.476, -1.442, -0.877, 1.732, -0.426, -1.084, 1.179, 0.71, 1.135, 0.907, 1.235, -0.432, 1.488, -0.239, 0.025, 0.807, -1.305, -0.693, -1.312, -0.441, -1.07, 0.288, -0.916, -0.464, 0.87, 0.751, 2.11, 0.748, 0.801, 0.17, 0.931, 1.058, -0.508, -0.634, 0.637, 0.335, 0.384, -0.974, 0.837, 1.746, 1.892, 1.045, 1.906, 0.065, 0.458, 0.264, 0.999, -0.771, -0.854, 0.402, -0.067, 0.152, 0.354, -0.566, 0.659, -0.805, -0.239, -1.095, 0.025, 0.445, -0.263, 2.272, 1.495, 0.366, -0.215, -0.894, -0.445, 0.547, 0.691, -1.252, 0.756, 0.658, -0.408, -1.419, 0.734, 0.608, -1.026, 0.364, 0.897, -0.204, 0.447, 0.014, -0.851, 1.858, 0.087, -0.875, -0.242, 0.079, -0.336, 0.086, 0.117, -1.135, 1.013, -0.438, 0.393, 0.713, 0.582, -0.636, -1.04, -0.233, -1.73, -0.018, 0.193, 0.343, -0.92, -0.963, -0.073, -0.323, -2.033, -0.486, 0.201, 1.613, 1.216, -0.344, -1.555, -1.976, 0.014, -0.959, 1.072, -0.705, -0.711, 0.823, 0.294, -1.372, -0.616, 0.672, -0.198, 0.082, 0.098, 1.283, -0.253, 0.609, -0.078, 0.065, -2.653, 0.225, -1.45, 0.098, -0.128, -1.975, -1.254, -1.177, 0.947, -0.307, -1.116, 0.931, -1.841, 1.323, -0.884, 0.175, -0.485, -0.669, 0.315, -1.236, -0.606, -1.554, -0.033, 0.797, -0.976, 0.716, 0.327, -0.814, -0.389, 0.092, 0.22, -2.107, -0.951, -0.627, 0.73, 0.52, 0.298, -0.703, -0.763, 0.176, -0.165, 1.864, 1.203, -0.734, 0.56, -1.039, -1.06, -0.658, -0.985, 0.493, 0.923, 1.231, 2.702, 1.807, -0.379, 0.866, -0.304, -0.188, -1.518, -0.441, 1.959, 0.024, 2.042, 1.168, 0.705, -0.356, 0.467, -0.17, 1.809, 1.448, 1.273, -0.276, 2.296, -0.565, -0.477, -0.564, -0.662, -2.059, 0.562, -1.92, 2.121, -0.633, 1.079, -1.848, -0.419, -1.333, -0.226, 0.531, 0.751, 1.705, 0.905, -0.111, 0.001, 0.356, -0.4, 0.308, -0.27, -0.19, -0.329, 0.144, 1.53, 0.781, -0.705, -0.053, 0.791, -0.856, 0.576, -0.535, 1.031, 0.67, 0.253, 0.267, 0.638, -0.894, 1.097, 1.689, -0.582, 0.028, 0.721, -1.104, 0.611, 0.9, 0.303, -1.7, 0.998, -1.895, 0.63, -0.711, -0.144, -0.879, 0.664, 0.857, -0.031, -0.047, 1.193, -0.495, -0.491, 0.05, -1.13, 0.507, 0.712, 0.068, -0.349, -0.418, -0.606, -0.014, -0.84, -0.673, 0.446, -0.173, -0.297, -1.051, 1.119, 0.458, -1.959, -0.427, -0.385, -0.346, -1.378, 0.305, -0.847, 0.113, 0.032, -0.432, 0.051, 0.713, -0.956, -0.667, -0.812, -0.152, 1.287, -1.749, -1.09, -1.111, 0.201, 2.094, 0.099, -0.924, -0.466, 0.818, -0.957, -0.096, -0.258, -1.515, 0.478, -0.509, 0.103, -0.23, -0.61, 0.862, 1.483, 0.439, -1.675, 0.457, -0.53, -0.033, 0.374, 0.63, 0.046, 1.526, 0.609, 1.045, 0.041, -0.384, -0.552, 1.189, 0.19, -0.141, -0.565, 0.334, -0.212, 0.483, -0.352, 0.896, -1.494, -1.378, 0.276, -1.452, 1.939, 1.514, 1.795, -0.053, -0.188, 1.495, 0.511, -0.56, -0.746, -2.326, -0.611, -0.175, -0.001, -0.417, -1.755, 2.315, -1.002, -0.667, -0.455, 0.737, 2.369, -1.501, -0.176, 0.17, -1.265, -1.589, 0.621, 0.445, -1.021, -0.15, -0.116, -2.37, 1.694, -0.549, -1.215, 0.992, 0.774, 2.151, -0.148, -0.713, -0.929, 0.738, 0.275, -0.413, 0.702, 0.093, 0.995, 1.248, -1.093, 0.562, 0.168, 0.758, -0.658, 1.43, 1.093, -0.14, -0.39, -0.205, -0.74, -0.535, 1.229, 0.9, 1.674, -0.917, -0.185, 0.672, 0.458, 0.622, -0.643, 0.149, 0.148, -1.487, -0.048, 0.844, -1.507, -0.345, 1.341, 0.813, -0.603, 1.014, 0.705, 0.118, -0.459, 0.361, 1.51, -0.087, -0.173, 0.303, 0.177, 1.152, -0.659, -1.19, 0.101, 0.044, 1.449, -0.647, -2.278, 0.568, -0.375, 0.383, -0.093, 0.201, -0.149, -0.407, -0.171, -2.038, 0.624, -1.28, -1.156, 0.744, 0.249, -0.694, -2.119, 0.247, 0.879, 0.319, -0.227, -0.866, -2.802, -0.835, 1.049, -0.065, -1.94, -1.11, 4.887, 0.119, -0.604, -1.016, 1.929, 0.865, 2.862, 2.337, -3.149, 1.889, 4.481, -2.04, 1.148, 1.701, 0.87, 2.055, -0.893, -3.562, -0.842, -3.019, -0.412, 0.198, -2.81, -0.569, 5.922, 3.024, 0.885, 2.255, -0.938, 0.751, -2.492, -0.554, -2.263, -2.045, 3.486, -0.454, 2.33, -2.235, 1.552, 0.674, 5.093, 2.293, 1.061, 1.609, -0.209, -0.855, 2.408, -0.673, 3.297, 0.151, -1.395, -0.572, 1.295, 3.451, -2.168, 4.727, -1.166, 2.91, -0.855, 0.678, -1.876, 2.317, 0.849, 2.698, -1.143, -2.635, 1.125, 0.131, 4.976, -1.565, -0.537, -1.933, -1.918, -0.512, -1.617, 1.632, 1.516, -0.387, 1.149, -0.942, 0.754, -0.069, 0.345, 2.912, 1.447, -1.97, -1.077, 0.129, 0.732, -1.848, 3.171, -1.982, -0.662, -0.167, -3.861, -2.46, 3.102, -1.745, 3.029, 0.156, -0.891, -1.384, 0.831, 0.273, -1.816, 1.272, -1.193, 0.727, 1.241, -1.393, 1.329, -3.152, 3.538, -0.375, 0.663, 0.787, -2.249, 3.848, 0.772, 2.392, -0.283, -3.029, 1.043, 2.305, 1.882, 1.207, -2.034, -0.131, -2.771, -0.271, 2.319, 0.21, -1.763, -0.078, -1.065, 0.049, -1.063, -1.232, -0.416, -0.18, 0.098, 0.166, 0.135, 1.938, 1.258, -0.447, 1.647, 2.343, -0.087, 1.261, 0.447, 0.623, -0.422, 0.85, -0.464, 1.417, 1.57, -2.034, 0.989, -2.32, 2.001, 0.006, -0.232, -1.516, 0.138, 0.057, -2.495, 1.642, 2.295, 0.742, 1.464, 2.208, 0.618, -1.338, -1.422, 0.067, 1.887, -0.543, 1.647, -3.979, -0.816, -2.795, -2.867, 2.732, -0.605, 0.208, -1.123, 0.991, -1.819, 1.656, -0.746, 0.151, -1.004, -2.228, -0.218, -3.926, -0.731, 1.702, 1.934, 1.235, 0.027, -2.293, -3.8, 0.557, -0.302, 0.111, 1.857, -1.54, 1.167, -1.806, -1.188, 0.268, 0.97, -2.249, -0.529, -1.052, -1.556, -1.078, 0.307, -0.984, -0.448, 3.211, 0.719, 0.014, 0.651, -1.676, -1.391, 2.234, -0.979, -0.738, 0.105, 0.784, -3.162, 3.581, 0.378, -2.785, -2.005, 1.989, 1.672, -0.941, 1.24, 3.021, 2.081, -3.955, 3.244, 0.724, 1.263, 0.319, 0.81, 0.684, 0.457, -2.419, 0.648, 1.237, 3.338, -1.664, 0.117, 0.563, 2.158, 5.778, 0.856, -1.036, -1.606, 0.003, 0.2, -0.353, 1.083, -2.524, 0.665, 1.984, 2.504, 1.195, 3.762, -4.021, -2.041, 0.905, 0.453, -1.018, -0.42, 1.999, 1.863, -3.1, -1.083, 2.631, -3.821, 1.087, 2.937, -2.204, -0.179, -2.228, 0.579, 3.346, -0.384, -1.401, 0.711, -2.379, 1.831, 0.559, 0.314, -0.297, -3.603, -0.759, 0.712, 0.726, 2.43, 2.267, -0.435, 1.26, 0.424, 3.169, 1.491, 0.41, -0.051, -0.568, 0.132, 2.361, 3.348, 2.003, 0.718, 0.367], NPTS=R.length, CH=470, S1=1.8, THR=Math.log(20), W=30, CTHR=1.459;
-  const P=[100];for(let i=1;i<NPTS;i++)P.push(P[i-1]*Math.exp(.0045*R[i]));
-  // anytime-valid evidence (hidden: only its level is shown, as a thin gauge)
-  const E=[];let l=0;for(const x of R){l=Math.max(0,l)+(-Math.log(S1)-x*x/2*(1/(S1*S1)-1));E.push(l);}
-  const ALARM=E.findIndex((v,i)=>i>=CH&&v>=THR);
-  // classic test redone at every observation (rolling window, 5 % level)
-  const C=[],F=[];for(let i=0;i<NPTS;i++){let s=0,n=0;for(let j=Math.max(0,i-W+1);j<=i;j++){s+=R[j]*R[j];n++;}C.push(s/n);F.push(i>=W&&s/n>CTHR);}
-  const EPS=F.map((f,i)=>f&&!F[i-1]?i:-1).filter(i=>i>=0);          // starts of classic alerts
-  const CALARM=EPS.find(i=>i>=CH);
-  const WIN=260, X0=14, X1=546, PY0=212, PY1=40, GY=238, GH=6;
-  const defs=el('defs',{});const gid='va-g'+Math.random().toString(36).slice(2,7);
-  const gr=el('linearGradient',{id:gid,x1:0,y1:0,x2:0,y2:1},defs);el('stop',{offset:0,'stop-color':'rgba(233,237,243,.20)'},gr);el('stop',{offset:1,'stop-color':'rgba(233,237,243,0)'},gr);
-  el('text',{class:'va-lab',x:X0,y:12}).textContent=TX.stream;
-  const area=el('path',{fill:`url(#${gid})`}), pl=el('path',{class:'va-price'});
-  const chL=el('line',{class:'va-drift',y1:PY1,y2:PY0,opacity:0}), chT=el('text',{class:'va-dl',y:PY0-8,opacity:0});chT.textContent=TX.change;
-  // alert flags on the stream
-  const flags=[...Array(12)].map(()=>{const g=el('g',{opacity:0});
-    return {g,line:el('line',{class:'va-flagl'},g),dot:el('rect',{class:'va-flag',width:8,height:8,rx:1.5},g),lab:el('text',{class:'va-flagt'},g)};});
-  const head=el('circle',{r:3.2,fill:'#fff'}), headG=el('circle',{r:10,fill:'rgba(255,255,255,.18)'});
-  // thin alert gauge
-  el('text',{class:'va-lab',x:X0,y:GY-6}).textContent=TX.gauge;
-  el('rect',{class:'va-gbg',x:X0,y:GY,width:X1-X0,height:GH,rx:3});
-  const gfill=el('rect',{class:'va-gfill',x:X0,y:GY,width:0,height:GH,rx:3});
-  el('line',{class:'va-gthr',x1:X1,y1:GY-3,x2:X1,y2:GY+GH+3});
-  // tabs
-  let mode='classic', user=false, lastCycle=0, last=-1, restart=false, offset=0;
-  const tabs=[...root.querySelectorAll('.va-tabs button')];
-  function setMode(m,byUser){mode=m;user=user||byUser;last=-1;tabs.forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));}
-  tabs.forEach(b=>b.addEventListener('click',()=>{setMode(b.dataset.mode,true);restart=true;}));
-  setMode('classic');
-  const T=17, RATE=NPTS/16;
-  function render(now,tt){
-    if(restart){offset=tt;restart=false;}
-    const t=((tt-offset)%T+T)%T, cyc=Math.floor((tt-offset)/T);
-    if(cyc!==lastCycle){lastCycle=cyc;if(!user)setMode(mode==='classic'?'anytime':'classic');}
-    const cl=mode==='classic', h=Math.min(NPTS-1,Math.floor(t*RATE)), a=Math.max(0,h-WIN);
-    const step=h<140?0:h<280?1:h<CH?2:3;
-    if(step!==last){last=step;ty.say((cl?TX.capsClassic:TX.capsAnytime)[step],now);}
-    let lo=1e9,hi=-1e9;for(let i=a;i<=h;i++){lo=Math.min(lo,P[i]);hi=Math.max(hi,P[i]);}
-    const pad=(hi-lo)*.18+.5;lo-=pad;hi+=pad;
-    const x=i=>X1-(h-i)/WIN*(X1-X0), yP=v=>PY0-(v-lo)/(hi-lo)*(PY0-PY1);
-    let d='';for(let i=a;i<=h;i++)d+=(i>a?'L':'M')+x(i).toFixed(1)+' '+yP(P[i]).toFixed(1);
-    pl.setAttribute('d',d);area.setAttribute('d',d+`L${x(h).toFixed(1)} ${PY0}L${x(a).toFixed(1)} ${PY0}Z`);
-    head.setAttribute('cx',x(h));head.setAttribute('cy',yP(P[h]));headG.setAttribute('cx',x(h));headG.setAttribute('cy',yP(P[h]));
-    const showCh=h>=CH&&h-CH<WIN;chL.setAttribute('x1',x(CH));chL.setAttribute('x2',x(CH));chL.setAttribute('opacity',showCh?.6:0);
-    chT.setAttribute('x',x(CH)+5);chT.setAttribute('opacity',showCh?1:0);
-    // flags visible in the window
-    const list=(cl?EPS:[ALARM]).filter(i=>i<=h&&i>=a);
-    let lastLab=-1e9;
-    flags.forEach((f,k)=>{const i=list[k];if(i==null){f.g.setAttribute('opacity',0);return;}
-      const fx=x(i), fy=yP(P[i]), isFalse=i<CH, age=h-i;
-      const showLab=fx-lastLab>78;if(showLab)lastLab=fx;f.lab.setAttribute('opacity',showLab?1:0);
-      f.g.setAttribute('opacity',Math.min(1,age/6+.2));
-      f.line.setAttribute('x1',fx);f.line.setAttribute('x2',fx);f.line.setAttribute('y1',fy);f.line.setAttribute('y2',PY1);
-      f.dot.setAttribute('x',fx-4);f.dot.setAttribute('y',PY1-4);
-      f.lab.setAttribute('x',fx-3);f.lab.setAttribute('y',PY1-9);f.lab.textContent=isFalse?TX.falseAlarm:TX.alarm;
-      f.g.setAttribute('class',isFalse?'va-fl false':'va-fl true');});
-    // gauge
-    const lvl=cl?C[h]/CTHR:E[h]/THR;
-    gfill.setAttribute('width',Math.max(0,Math.min(1,lvl))*(X1-X0));gfill.setAttribute('class','va-gfill'+(lvl>=1?' on':''));
-    // boxes
-    const nFalse=cl?EPS.filter(i=>i<=h&&i<CH).length:0, AL=cl?CALARM:ALARM, det=h>=AL;
-    vF.textContent=String(nFalse);boxF.classList.toggle('alert',nFalse>0);
-    vD.textContent=det?TX.delay(AL-CH):'—';boxD.classList.toggle('alert',det);
-    ty.tick(now);
+  const cv=root.querySelector('canvas'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ty=mkTyper(root.querySelector('.va-cap'),reduce,32);
+  const BLUE='#4d8dff', RED='#ff5d6e', INK='#e9edf3';
+  const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;};
+  // ---- simulation (seeded: the same story at every visit)
+  const N=200, T=240, CH=170, MU=1.8, TAU=.3, W=40, CT=1.645, ET=Math.log(20), PATH=3;
+  let s=TX.seed||4;const rnd=()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const gauss=()=>{let u=0;while(!u)u=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*rnd());};
+  let nC=0,nA=0;const del=[];let X,Z,E;
+  for(let i=0;i<N;i++){
+    const x=new Float32Array(T),z=new Float32Array(T),e=new Float32Array(T);for(let t=0;t<T;t++)x[t]=gauss()+(t>=CH?MU:0);
+    let c=0,S=0,a=-1,b=-1,d=-1;const cum=[0];
+    for(let t=0;t<T;t++){c+=x[t];cum.push(c);const lo=Math.max(0,t-W+1);z[t]=(cum[t+1]-cum[lo])/Math.sqrt(t-lo+1);
+      if(a<0&&t>=10&&z[t]>CT)a=t;S+=x[t];const n=t+1;e[t]=-.5*Math.log(1+n*TAU)+TAU*S*S/(2*(1+n*TAU));
+      if(e[t]>=ET){if(t<CH){if(b<0)b=t;}else if(d<0)d=t;}}
+    if(a>=0&&a<CH)nC++;if(b>=0)nA++;if(d>=0)del.push(d-CH);
+    if(i===PATH){X=x;Z=z;E=e;}}
+  del.sort((p,q)=>p-q);
+  const FAC=nC/N, FAA=nA/N, MED=del[Math.floor(del.length/2)], pc=v=>TX.pct(Math.round(100*v));
+  // the monitored path: smoothed indicator, classic alarm onsets, anytime-valid alert
+  const SM=new Float32Array(T);for(let t=0;t<T;t++){let a=0,n=0;for(let j=Math.max(0,t-5);j<=t;j++){a+=X[j];n++;}SM[t]=a/n;}
+  // alarm episodes: a new alarm once the statistic has stayed below the threshold for a while
+  const ONS=[];{let last=-99,prev=false;for(let t=0;t<T;t++){const up=t>=10&&Z[t]>CT;if(up&&!prev&&t-last>=8)ONS.push(t);if(up)last=t;prev=up;}}
+  const FALSE=ONS.filter(t=>t<CH), DET=[...E].findIndex((v,t)=>t>=CH&&v>=ET);
+  // display scale of each lane: the threshold sits at 55 % of the lane height; what lies above it is
+  // stretched so that every crossing shows clearly
+  const TH=.55, cl=v=>Math.max(0,Math.min(1,v));
+  const lvC=t=>{const z=Z[t];return z<CT?TH*cl((z+2)/(CT+2)):TH+(1-TH)*cl((z-CT)/.42);};
+  const lvA=t=>{const e=E[t];return e<ET?TH*cl((e+1.5)/(ET+1.5)):TH+(1-TH)*cl((e-ET)/2.5);};
+  // ---- layout (CSS pixels)
+  const css=getComputedStyle(root), SANS=(css.getPropertyValue('--sans')||'sans-serif').trim(), MONO=(css.getPropertyValue('--mono')||'monospace').trim();
+  let w=0,H=0,dpr=1,G={};
+  function size(){w=cv.clientWidth||560;dpr=Math.min(2.5,window.devicePixelRatio||1);
+    const HS=w<480?84:104, LB=w<480?40:46;G={s0:26,s1:26+HS};const HG=w<480?50:36;G.dv=G.s1+22;G.l1h=G.s1+58;G.l1a=G.l1h+HG;G.l1b=G.l1a+LB;G.l2h=G.l1b+34;G.l2a=G.l2h+HG;G.l2b=G.l2a+LB;H=G.l2b+26;
+    cv.width=Math.round(w*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
+  size();let rw=w;addEventListener('resize',()=>{if(Math.abs(cv.clientWidth-rw)>20){rw=cv.clientWidth;size();}});
+  const c=cv.getContext('2d');
+  const X_=t=>t/(T-1)*w;
+  function rr(x,y,ww,hh,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+ww,y,x+ww,y+hh,r);c.arcTo(x+ww,y+hh,x,y+hh,r);c.arcTo(x,y+hh,x,y,r);c.arcTo(x,y,x+ww,y,r);c.closePath();}
+  function glowLine(pts,col,lw,blur){c.save();c.shadowColor=col;c.shadowBlur=blur;c.strokeStyle=col;c.lineWidth=lw;c.lineJoin='round';c.beginPath();pts.forEach((p,k)=>k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();c.restore();}
+  function arrow(x,y,col,size){c.save();c.shadowColor=col;c.shadowBlur=10;c.fillStyle=col;c.beginPath();c.moveTo(x,y);c.lineTo(x-size*.75,y-size*1.3);c.lineTo(x+size*.75,y-size*1.3);c.closePath();c.fill();c.restore();}
+  function chip(x,y,txt,bg,fg,side){c.font='600 10.5px '+MONO;const tw=c.measureText(txt).width+12;let xx=side?x+9:x-tw/2;if(side&&xx+tw>w-2)xx=x-9-tw;xx=Math.min(w-tw-1,Math.max(1,xx));
+    c.save();c.shadowColor=bg;c.shadowBlur=12;c.fillStyle=bg;rr(xx,y-15,tw,16,8);c.fill();c.restore();c.fillStyle=fg;c.textAlign='left';c.fillText(txt,xx+6,y-4);}
+  // lane header: title, then what the curve is (line 2); the counter goes where it fits
+  function head(txt,sub,y,right,rcol){c.textAlign='left';c.font='600 13.5px '+SANS;c.fillStyle='#fff';c.fillText(txt,0,y);const tw=c.measureText(txt).width;
+    c.font='500 12px '+MONO;const rwd=c.measureText(right).width;c.fillStyle=rcol;c.textAlign='right';
+    c.font='10.5px '+MONO;const sw=c.measureText(sub).width;c.font='500 12px '+MONO;
+    if(tw+rwd+14<w)c.fillText(right,w,y);else if(sw+rwd+14<w)c.fillText(right,w,y+16);else c.fillText(right,w,y+31);
+    c.textAlign='left';c.font='10.5px '+MONO;c.fillStyle='#8a9099';c.fillText(sub,0,y+16);}
+  // a lane: the statistic, the threshold, what lies above it in colour
+  function lane(h,y0,y1,lv,base,hot,tint){
+    const hi=Math.floor(h), yv=l=>y1-l*(y1-y0), yT=yv(TH);
+    const bg=c.createLinearGradient(0,y0,0,y1);bg.addColorStop(0,'rgba(255,255,255,.045)');bg.addColorStop(1,'rgba(255,255,255,.015)');
+    c.fillStyle=bg;rr(0,y0-4,w,y1-y0+4,6);c.fill();
+    if(tint>0){c.save();c.globalAlpha=tint;c.strokeStyle=BLUE;c.shadowColor=BLUE;c.shadowBlur=14;rr(0,y0-4,w,y1-y0+4,6);c.stroke();c.restore();}
+    const pts=[];for(let t=0;t<=hi;t++)pts.push([X_(t),yv(lv(t))]);
+    // area below the curve
+    const ga=c.createLinearGradient(0,y0,0,y1);ga.addColorStop(0,rgba(base,.22));ga.addColorStop(1,rgba(base,0));
+    c.beginPath();c.moveTo(0,y1);pts.forEach(p=>c.lineTo(p[0],p[1]));c.lineTo(X_(hi),y1);c.closePath();c.fillStyle=ga;c.fill();
+    glowLine(pts,rgba(base,.85),1.4,4);
+    // above the threshold: coloured by who is right (hot(t) gives the colour)
+    c.save();c.beginPath();c.rect(0,y0-6,w,yT-y0+6);c.clip();
+    let t=0;while(t<=hi){const col=hot(t);let u=t;while(u<=hi&&hot(u)===col)u++;
+      if(col){const seg=pts.slice(t,Math.min(u+1,pts.length));c.beginPath();c.moveTo(seg[0][0],yT);seg.forEach(p=>c.lineTo(p[0],p[1]));c.lineTo(seg[seg.length-1][0],yT);c.closePath();
+        c.fillStyle=rgba(col,.45);c.fill();glowLine(seg,col,2,10);}
+      t=u;}
+    c.restore();
+    c.strokeStyle=rgba(BLUE,.9);c.lineWidth=1;c.setLineDash([4,4]);c.beginPath();c.moveTo(0,yT);c.lineTo(w,yT);c.stroke();c.setLineDash([]);
+    c.font='9.5px '+MONO;c.fillStyle=rgba(BLUE,.9);c.textAlign='right';c.fillText(TX.thr||'seuil',w-6,yT-4);c.textAlign='left';
+    return {yT,yv};}
+  function draw(h,alpha,tt){
+    c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,H);c.globalAlpha=alpha;
+    const hi=Math.floor(h), xh=X_(h), Y0=-3.4, Y1=4.8, ys=v=>G.s1-(v-Y0)/(Y1-Y0)*(G.s1-G.s0), det=DET>=0&&DET<=h;
+    // grid
+    c.strokeStyle='rgba(255,255,255,.035)';c.lineWidth=1;for(let t=0;t<T;t+=20){c.beginPath();c.moveTo(X_(t)+.5,G.s0);c.lineTo(X_(t)+.5,G.l2b);c.stroke();}
+    // stream
+    c.font='12px '+SANS;c.fillStyle='#8a9099';c.textAlign='left';c.fillText(TX.stream,0,13);
+    c.strokeStyle='rgba(255,255,255,.14)';c.setLineDash([2,4]);c.beginPath();c.moveTo(0,ys(0));c.lineTo(w,ys(0));c.stroke();c.setLineDash([]);
+    if(h>=CH){const g=c.createLinearGradient(0,ys(MU),0,ys(0));g.addColorStop(0,rgba(BLUE,.16));g.addColorStop(1,rgba(BLUE,0));
+      c.fillStyle=g;c.fillRect(X_(CH),ys(MU),xh-X_(CH),ys(0)-ys(MU));
+      c.strokeStyle=rgba(BLUE,.7);c.setLineDash([4,4]);c.beginPath();c.moveTo(X_(CH),ys(MU));c.lineTo(xh,ys(MU));c.stroke();c.setLineDash([]);}
+    const sp=[];for(let t=0;t<=hi;t++)sp.push([X_(t),ys(SM[t])]);glowLine(sp,INK,1.7,8);
+    // regime change
+    if(h>=CH){c.strokeStyle='rgba(255,255,255,.45)';c.setLineDash([3,3]);c.beginPath();c.moveTo(X_(CH),G.s0);c.lineTo(X_(CH),G.dv-9);c.moveTo(X_(CH),G.dv+9);c.lineTo(X_(CH),G.l2b+4);c.stroke();c.setLineDash([]);
+      c.font='11.5px '+SANS;c.fillStyle='#c7ccd3';const rgt=X_(CH)>w*.6;c.textAlign=rgt?'right':'left';c.fillText(TX.change,X_(CH)+(rgt?-6:6),G.l2b+20);c.textAlign='left';}
+    // divider: the lanes below are not the data, but what each method computes from it
+    if(TX.derive){c.font='11px '+SANS;const dt=TX.derive,dw=c.measureText(dt).width+20,xm=w/2;
+      c.strokeStyle='rgba(255,255,255,.14)';c.lineWidth=1;c.beginPath();c.moveTo(0,G.dv);c.lineTo(xm-dw/2,G.dv);c.moveTo(xm+dw/2,G.dv);c.lineTo(w,G.dv);c.stroke();
+      c.fillStyle='#8a9099';c.textAlign='center';c.fillText(dt,xm,G.dv+4);c.textAlign='left';}
+    // lane 1 — classic test: red above the threshold before the change (false alarm), blue after
+    const nF=FALSE.filter(t=>t<=h).length;
+    head(TX.classic,TX.classicSub,G.l1h,TX.nFalse(nF),nF?RED:'#7d848d');
+    const L1=lane(h,G.l1a,G.l1b,lvC,INK,t=>t>=10&&Z[t]>CT?(t<CH?RED:BLUE):null,0);
+    ONS.filter(t=>t<=h).forEach(t=>{const age=h-t,xa=X_(t),col=t<CH?RED:BLUE,yp=L1.yv(lvC(t));
+      if(age<18){const g=c.createLinearGradient(xa-30,0,xa+30,0);g.addColorStop(0,rgba(col,0));g.addColorStop(.5,rgba(col,.22*(1-age/18)));g.addColorStop(1,rgba(col,0));c.fillStyle=g;c.fillRect(xa-30,G.l1a-4,60,G.l1b-G.l1a+4);}
+      c.strokeStyle=rgba(col,.8);c.lineWidth=1.2;c.beginPath();c.moveTo(xa,G.l1a-4);c.lineTo(xa,G.l1b);c.stroke();
+      arrow(xa,G.l1a-5,col,6);
+      if(age<14){c.strokeStyle=rgba(col,1-age/14);c.lineWidth=1.4;c.beginPath();c.arc(xa,yp,4+age*1.6,0,Math.PI*2);c.stroke();}
+      if(t<CH&&age<24&&TX.falseChip&&t===FALSE.filter(u=>u<=h).pop())chip(xa,G.l1a+14,TX.falseChip,RED,'#160407',true);});
+    // lane 2 — anytime-valid
+    head(TX.anytime,TX.anytimeSub,G.l2h,det?TX.alertAfter(DET-CH):TX.nFalse(0),det?BLUE:'#7d848d');
+    const age=det?h-DET:0;
+    const L2=lane(h,G.l2a,G.l2b,lvA,BLUE,t=>E[t]>=ET?(t<CH?RED:BLUE):null,det?Math.max(.35,1-age/30):0);
+    if(det){const xd=X_(DET),yd=L2.yT;
+      c.strokeStyle=rgba(BLUE,.8);c.lineWidth=1.2;c.beginPath();c.moveTo(xd,G.l2a-4);c.lineTo(xd,G.l2b);c.stroke();arrow(xd,G.l2a-5,BLUE,7);
+      for(const k of [0,7])if(age-k>=0&&age-k<20){const a=age-k;c.strokeStyle=rgba(BLUE,1-a/20);c.lineWidth=1.6;c.beginPath();c.arc(xd,yd,5+a*2.2,0,Math.PI*2);c.stroke();}
+      c.save();c.shadowColor=BLUE;c.shadowBlur=14;c.fillStyle=BLUE;c.beginPath();c.arc(xd,yd,4.2,0,Math.PI*2);c.fill();c.restore();
+      if(TX.alertChip)chip(xd,G.l2a+14,TX.alertChip,BLUE,'#030a18',true);}
+    // scanning cursor through every lane
+    if(h<T-1){const tr=c.createLinearGradient(xh-46,0,xh,0);tr.addColorStop(0,'rgba(255,255,255,0)');tr.addColorStop(1,det?rgba(BLUE,.10):'rgba(255,255,255,.07)');
+      c.fillStyle=tr;c.fillRect(xh-46,G.s0,46,G.l2b-G.s0);
+      c.strokeStyle=det?rgba(BLUE,.7):'rgba(255,255,255,.35)';c.lineWidth=1;c.beginPath();c.moveTo(xh+.5,G.s0);c.lineTo(xh+.5,G.l2b);c.stroke();}
+    const yh=ys(SM[hi]);c.fillStyle='rgba(255,255,255,.16)';c.beginPath();c.arc(xh,yh,6+2*Math.sin(tt*5),0,Math.PI*2);c.fill();
+    c.fillStyle='#fff';c.beginPath();c.arc(xh,yh,2.8,0,Math.PI*2);c.fill();
+    c.globalAlpha=1;
   }
-  loopWhenVisible(VIS,reduce,T*2,(now,t)=>render(now,t),11);
+  // ---- 200 simulated streams: bars
+  const bars=[...root.querySelectorAll('.ep-row')], vals=[FAC,FAA];
+  function setBars(u){bars.forEach((b,k)=>{const v=vals[k]*Math.max(0,Math.min(1,u));b.querySelector('.ep-in').style.width=(100*v).toFixed(1)+'%';
+    b.querySelector('b').textContent=u>0?pc(v):'—';});const bb=root.querySelector('.ep-bars');if(bb)bb.classList.toggle('on',u>0);}
+  // ---- timeline (seconds)
+  const L=30, A0=1, A1=15, A2=20, B0=21, B1=23;
+  const caps=[[0,TX.caps[0]],[3.4,TX.caps[1]],[9,TX.caps[2]],[A1+.1,TX.caps[3]],[A1+2.6,TX.caps[4](DET-CH)],[B0,TX.caps[5](pc(FAC),pc(FAA))]];
+  let lastCap=-1, lastU=-1;
+  function render(now,t){
+    const h=t<A0?0:t<A1?(t-A0)/(A1-A0)*(CH-1):Math.min(T-1,CH-1+(t-A1)/(A2-A1)*(T-CH));
+    let k=-1;caps.forEach((cc,j)=>{if(t>=cc[0])k=j;});if(k!==lastCap&&k>=0){lastCap=k;ty.say(caps[k][1],now);}
+    const alpha=t>L-.8?Math.max(0,(L-t)/.8):1;draw(h,alpha,t);
+    const u=t<B0?0:Math.min(1,(t-B0)/(B1-B0));if(u!==lastU){lastU=u;setBars(u);}
+    const bb=root.querySelector('.ep-bars');if(bb)bb.style.opacity=alpha;ty.tick(now);
+  }
+  loopWhenVisible(VIS,reduce,L,render,B1+3);
 }
 
 const IN_HOUSE_CREDIT={
-  fr:'Méthode développée en interne par STORM — travaux non encore publiés.',
+  fr:'Méthode développée en interne par STORM, pas encore publiée.',
   en:'Method developed in-house by STORM — not yet published.'
 };
 const VA_TX={
@@ -1131,22 +1215,24 @@ const VA_TX={
      'Un seul défaut : le test normal rejette déjà. Jeffreys, non.',
      '20 classes de notation, 5 revues annuelles, des modèles tous justes :',
      'le test normal rejette à tort près d’une fois sur cinq. Jeffreys reste fiable.']},
-  eproc:{markup:`<div class="va"><div class="va-tabs" role="group" aria-label="Approche"><button type="button" data-mode="classic" aria-pressed="true">Test classique</button><button type="button" data-mode="anytime" aria-pressed="false">Approche valide à tout instant</button></div>
-   <svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
-   <div class="va-read"><div class="boxF"><b>Fausses alertes</b><span class="vF">0</span><i>avant tout changement</i></div>
-   <div class="boxD"><b>Détection du changement</b><span class="vD">—</span><i>après la rupture</i></div></div>
+  eproc:{markup:`<div class="va va-ep"><canvas role="img" aria-label="Un flux de données surveillé par deux méthodes : test classique et approche valide à tout instant"></canvas>
+   <div class="ep-bars"><p>Part des 200 séries simulées avec au moins une fausse alerte avant le changement</p>
+   <div class="ep-row c"><span>Test classique</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-row a"><span>Valide à tout instant</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-limt"><i></i>limite garantie : 5 %</div></div>
    <div class="va-cap" aria-live="polite"></div>
    <div class="va-foot">${IN_HOUSE_CREDIT.fr}</div></div>`,
-   stream:'Indicateur surveillé · flux de données en temps réel', gauge:'Niveau d\u2019alerte', change:'changement de régime', alarm:'Alerte', falseAlarm:'fausse alerte',
-   delay:n=>`${n} observations`,
-   capsClassic:['Un modèle surveille un flux de données en continu.',
-     'Test classique, refait à chaque observation.',
-     'Rien n’a changé, et pourtant les alertes s’enchaînent.',
-     'La vraie alerte se perd parmi les fausses.'],
-   capsAnytime:['Un modèle surveille un flux de données en continu.',
-     'Approche valide à tout instant : la preuve s’accumule.',
-     'Aucune fausse alerte, même en regardant en continu.',
-     'Changement de régime : alerte en quelques observations.']}
+   seed:4, pct:n=>n+'\u00a0%',
+   thr:'seuil', falseChip:'fausse alerte', alertChip:'alerte', derive:'↓  chaque méthode en déduit son indicateur d’alerte  ↓',
+   stream:'Données : écart moyen entre la prévision et l’observation', change:'la moyenne augmente',
+   classic:'Test classique', classicSub:'statistique de test, recalculée à chaque observation', anytime:'Approche valide à tout instant', anytimeSub:'preuve accumulée contre le modèle',
+   nFalse:n=>n<2?`${n} fausse alerte`:`${n} fausses alertes`, alertAfter:n=>`alerte après ${n} observations`,
+   caps:['Au départ, les données suivent le modèle : l’écart entre prévision et observation reste centré sur zéro.',
+     'Sur cette série, le test classique répété déclenche plusieurs fausses alertes.',
+     'Sur cette série, l’approche valide à tout instant ne déclenche aucune fausse alerte.',
+     'La moyenne des données augmente.',
+     n=>`La méthode valide à tout instant donne l’alerte ${n} observations après le changement.`,
+     (a,b)=>`Avant le changement, ${a} des séries ont déclenché une fausse alerte avec le test classique et ${b} avec l’approche valide à tout instant. En l’absence de changement, cette dernière borne à 5 % la probabilité d’au moins une fausse alerte.`]}
  },
  en:{
   jeff:{markup:`<div class="va"><svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
@@ -1159,22 +1245,24 @@ const VA_TX={
      'A single default: the normal test already rejects. Jeffreys does not.',
      '20 rating grades, 5 annual reviews, all models right:',
      'the normal test wrongly rejects nearly one time in five. Jeffreys stays reliable.']},
-  eproc:{markup:`<div class="va"><div class="va-tabs" role="group" aria-label="Approach"><button type="button" data-mode="classic" aria-pressed="true">Classic test</button><button type="button" data-mode="anytime" aria-pressed="false">Anytime-valid approach</button></div>
-   <svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
-   <div class="va-read"><div class="boxF"><b>False alarms</b><span class="vF">0</span><i>before any change</i></div>
-   <div class="boxD"><b>Change detection</b><span class="vD">—</span><i>after the break</i></div></div>
+  eproc:{markup:`<div class="va va-ep"><canvas role="img" aria-label="A data stream monitored by two methods: classic test and anytime-valid approach"></canvas>
+   <div class="ep-bars"><p>Share of 200 simulated streams with at least one false alarm before the shift</p>
+   <div class="ep-row c"><span>Classic test</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-row a"><span>Anytime-valid</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-limt"><i></i>guaranteed limit: 5%</div></div>
    <div class="va-cap" aria-live="polite"></div>
    <div class="va-foot">${IN_HOUSE_CREDIT.en}</div></div>`,
-   stream:'Monitored indicator · real-time data stream', gauge:'Alert level', change:'regime change', alarm:'Alert', falseAlarm:'false alarm',
-   delay:n=>`${n} observations`,
-   capsClassic:['A model monitors a continuous data stream.',
-     'Classic test, redone at every observation.',
-     'Nothing has changed, yet alarms keep coming.',
-     'The real alarm gets lost among the false ones.'],
-   capsAnytime:['A model monitors a continuous data stream.',
-     'Anytime-valid approach: evidence builds up.',
-     'No false alarm, even when watching continuously.',
-     'Regime change: alarm within a few observations.']}
+   seed:4, pct:n=>n+'%',
+   thr:'threshold', falseChip:'false alarm', alertChip:'alert', derive:'↓  each method derives its own alert indicator  ↓',
+   stream:'Data: average gap between the prediction and the observation', change:'the mean increases',
+   classic:'Classic test', classicSub:'test statistic, recomputed at every observation', anytime:'Anytime-valid approach', anytimeSub:'evidence accumulated against the model',
+   nFalse:n=>n===1?'1 false alarm':`${n} false alarms`, alertAfter:n=>`alert after ${n} observations`,
+   caps:['The data initially follow the model: the gap between forecast and observation stays centred on zero.',
+     'On this stream, the repeated conventional test raises several false alarms.',
+     'The anytime-valid method avoids false alarms on this stream.',
+     'The mean of the data increases.',
+     n=>`On this stream, the anytime-valid method raises an alarm ${n} observations after the shift.`,
+     (a,b)=>`Before the shift, ${a} of streams raised a false alarm with the conventional test and ${b} with the anytime-valid method. Under the no-change model, the anytime-valid method limits the probability of ever raising a false alarm to 5%.`]}
  }
 };
 
@@ -1456,7 +1544,7 @@ document.querySelectorAll('.anim-switch').forEach(sw=>{
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/squaremanagement-storm\.com\/en\/");
+        var filterRegex = new RegExp("https:\/\/squaremanagement-storm\.com\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

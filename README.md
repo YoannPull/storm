@@ -77,8 +77,11 @@ not edit it by hand. Projects in `data/projets.yml` marked
   - `rst` — reverse stress test (threshold → exploration → breaking point →
     neighbourhood → selection);
   - `jeffreys` — Jeffreys calibration test on a low-default portfolio;
-  - `eprocess` — continuous monitoring, classic test vs anytime-valid
-    approach (in-house method, not yet published);
+  - `eprocess` — continuous monitoring: one data stream watched by two alarm
+    lanes on the same time axis, classic test (false alarms in red) vs
+    anytime-valid approach (one blue alert after the mean shift), then bars
+    for 200 simulated streams (in-house method, not yet published). Data are simulated in the browser from a fixed `seed`,
+    so the figures are the same at every visit;
   - `tfm` — a pretrained tabular model estimating one-year default risk from
     prior borrower outcomes and a new loan file.
 

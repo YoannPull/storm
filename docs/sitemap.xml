@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://squaremanagement-storm.com/en/en/expertise/index.html</loc>
-    <lastmod>2026-11-18T19:03:33.519Z</lastmod>
+    <loc>https://squaremanagement-storm.com/en/</loc>
   </url>
   <url>
-    <loc>https://squaremanagement-storm.com/en/en/notes/index.html</loc>
-    <lastmod>2026-11-16T21:31:10.014Z</lastmod>
+    <loc>https://squaremanagement-storm.com/en/about/</loc>
   </url>
   <url>
-    <loc>https://squaremanagement-storm.com/en/en/about/index.html</loc>
-    <lastmod>2026-11-17T04:48:14.722Z</lastmod>
+    <loc>https://squaremanagement-storm.com/en/expertise/</loc>
   </url>
   <url>
-    <loc>https://squaremanagement-storm.com/en/en/publications/index.html</loc>
-    <lastmod>2026-11-18T06:54:21.170Z</lastmod>
+    <loc>https://squaremanagement-storm.com/en/news/</loc>
   </url>
   <url>
-    <loc>https://squaremanagement-storm.com/en/en/index.html</loc>
-    <lastmod>2026-11-18T07:27:13.288Z</lastmod>
+    <loc>https://squaremanagement-storm.com/en/notes/</loc>
   </url>
   <url>
-    <loc>https://squaremanagement-storm.com/en/en/news/index.html</loc>
-    <lastmod>2026-11-16T21:31:10.011Z</lastmod>
+    <loc>https://squaremanagement-storm.com/en/publications/</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/a-propos/</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/actualites/</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/expertise/</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/notes/</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/notes/atrisk-climat</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/notes/downscaling</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/notes/reverse-stress-test</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/notes/stress-tests-credit</loc>
+  </url>
+  <url>
+    <loc>https://squaremanagement-storm.com/fr/publications/</loc>
   </url>
 </urlset>

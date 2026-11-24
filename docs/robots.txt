@@ -1,1 +1,1 @@
-Sitemap: https://squaremanagement-storm.com/en/sitemap.xml
+Sitemap: https://squaremanagement-storm.com/sitemap.xml

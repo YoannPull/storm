@@ -8,3 +8,5 @@ TODO (DO NOT PUSH ON GITHUB)
 - For the hero curve, maybe highlight the curve more (brighter)
 - On the home page when we click at the bottom on "Application" I dont like it, it's like exppertise before
 -> Also concerning application, we may want to have like more general application I guess (than climate risk blabla blabla...)
+- Maybe put only one note at the time (with the Linkedin release, will see)
+- Create the news letter

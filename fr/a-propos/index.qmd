@@ -30,7 +30,7 @@ Cette double culture, académique et opérationnelle, est au cœur de notre faç
 
 Nous développons des modèles et des méthodes quantitatives pour mesurer, anticiper et piloter les risques. Nos travaux portent aujourd'hui principalement sur les risques financiers, mais les méthodes sont pensées pour être transférables à d'autres domaines.
 
-Ils prennent deux formes complémentaires : des **articles de recherche**, soumis à des revues à comité de lecture, et des **notes techniques**, qui en restituent l'usage opérationnel.
+Nous soumettons des **articles de recherche** à des revues à comité de lecture et publions des **notes techniques** qui expliquent comment appliquer nos méthodes.
 
 ## Comment nous travaillons
 

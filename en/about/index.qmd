@@ -24,7 +24,7 @@ STORM is a quantitative research collective of **Square Management**: a team of 
 
 STORM brings together researchers and consultants with complementary backgrounds: statistics, econometrics, economics, data science and machine learning.
 
-This dual culture, academic and operational, is at the heart of how we work: the questions come from practice, the answers go through method.
+We use quantitative methods to answer questions that arise in risk management.
 
 ## What we do
 

@@ -26,5 +26,5 @@
   path: "/fr/notes/stress-tests-credit.html"
   date: "2026-09-08"
   auteurs: ["Inès Bordais", "Léane Chevrier", "Quentin Lajaunie", "Yoann Pull"]
-  description: "Les modèles satellites existants ne transmettent qu'une trajectoire moyenne. En propageant la distribution complète du facteur de crédit, le même dispositif corrige le niveau des PD et livre deux mesures de queue supplémentaires, au même coût de calcul."
+  description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l'incertitude prédictive et deux mesures de queue, au même coût de calcul."
   categories: ["Risque de crédit", "Stress testing", "Quantiles"]

@@ -1,7 +1,7 @@
 ---
 title: "Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne"
 subtitle: "Exploiter pleinement les modèles satellites existants : PD moyenne, PD-at-Risk et expected shortfall au même coût de calcul"
-description: "Les modèles satellites existants ne transmettent qu'une trajectoire moyenne. En propageant la distribution complète du facteur de crédit, le même dispositif corrige le niveau des PD et livre deux mesures de queue supplémentaires, au même coût de calcul."
+description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l'incertitude prédictive et deux mesures de queue, au même coût de calcul."
 date: 2026-09-08
 author:
   - Inès Bordais
@@ -20,7 +20,7 @@ listing:
 ::: {.standfirst}
 
 [En bref]{.lede}
-Les stress tests de crédit disposent déjà d'un pont entre scénario macro-financier et probabilités de défaut : les modèles satellites. Mais ce pont ne transmet, le plus souvent, qu'une trajectoire moyenne. Lorsque la PD est une fonction non linéaire d'un facteur de crédit incertain, cette transmission partielle écarte l'incertitude prédictive : elle sous-estime les niveaux projetés de PD — jusqu'à 8 % dans notre application — et ne dit rien de la queue de distribution, là où se décident provisions et capital.
+Dans les stress tests de crédit, les modèles satellites traduisent les scénarios macro-financiers en probabilités de défaut (PD). Ils sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. Cette approximation écarte l'incertitude prédictive, qui peut influer sur la PD moyenne lorsque la relation entre la PD et le facteur est non linéaire. Dans notre application, les approximations usuelles sous-estiment les PD projetées de 8 % au maximum. Propager la distribution complète du facteur permet aussi d'estimer le risque de queue.
 
 :::
 
@@ -38,13 +38,13 @@ Une correction de niveau et trois lectures du risque au prix d'une.
 
 Le stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s'élargit chaque année. L'architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.
 
-La marge de progrès est dans la façon dont le scénario traverse cette chaîne. En pratique, il est propagé comme une trajectoire moyenne, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Utile, cette approche devient incomplète dès que la PD est non linéaire dans les conditions de crédit : la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. En écartant l'incertitude prédictive, l'approximation joue, par convexité, toujours dans le même sens — elle sous-estime le niveau des PD.
+En pratique, on évalue souvent la PD le long de la trajectoire moyenne du facteur de crédit ou d'une trajectoire supposée connue. Lorsque la PD dépend de façon non linéaire du facteur, la PD évaluée à sa moyenne peut différer de la moyenne des PD calculées sur l'ensemble de sa distribution. Si la fonction de PD est convexe sur le support du facteur, l'évaluation à la moyenne donne une borne inférieure de la PD moyenne projetée.
 
 ::: {.why}
 
 [Pourquoi c'est important]{.label}
 
-- **Des niveaux de PD sous-estimés.** Le *plug-in* (PD évaluée sur la trajectoire moyenne) et la *perfect foresight* (chemin supposé connu) écartent tout ou partie de l'incertitude prédictive : dans notre application, les PD à trois ans sont sous-estimées de 7 à 8 %, un biais direct sur provisions et capital.
+- **Effet sur la PD à trois ans.** Le *plug-in* (PD évaluée sur la trajectoire moyenne) et la *perfect foresight* (trajectoire supposée connue) écartent tout ou partie de l'incertitude prédictive. Dans notre application, ces approximations sous-estiment de 7 à 8 % la PD moyenne projetée à trois ans.
 - **Pas de mesure de queue.** Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.
 - **Une hypothèse peu documentée.** La dispersion du facteur de crédit est écartée sans justification explicite, un point d'attention croissant pour la validation interne comme pour le superviseur.
 
@@ -68,7 +68,7 @@ où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long 
 
 [Ce que le cadre apporte]{.label}
 
-- **Une correction de niveau.** La PD moyenne intègre la distribution complète du facteur de crédit au lieu de sa seule espérance — le biais de convexité disparaît.
+- **Une moyenne qui intègre l'incertitude prédictive.** Le calcul de la PD moyenne tient compte de la distribution complète du facteur de crédit.
 - **Deux mesures de queue, gratuitement.** PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.
 - **Modularité.** Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l'établissement sans toucher au reste.
 - **Généralité.** Le stress test géopolitique sur le crédit américain n'est qu'une preuve de concept : la même mécanique s'applique aux scénarios climatiques, monétaires ou sectoriels.
@@ -89,7 +89,7 @@ où $\Phi$ est la fonction de répartition de la loi normale, $p$ la PD de long 
 
 [À retenir pour chaque équipe]{.label}
 
-- **Modélisation.** Le biais de convexité est systématique et signé : la trajectoire moyenne sous-estime toujours la PD. Le corriger ne coûte rien de plus qu'un changement d'objet propagé.
+- **Modélisation.** Pour calculer la PD moyenne, appliquer le modèle de crédit à la distribution prédictive du facteur et calculer la moyenne des PD obtenues.
 - **Validation.** L'hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.
 - **Pilotage.** Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement.
 
