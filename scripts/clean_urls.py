@@ -12,6 +12,11 @@
 #  Conséquence : ouvrir docs/fr/index.html directement depuis le disque ne
 #  permet plus de naviguer de page en page. Pour un aperçu local, utiliser
 #  « quarto preview », ou servir le dossier : python3 -m http.server -d docs
+#
+#  Ajoute aussi, dans chaque page, les balises de partage que Quarto ne met
+#  pas (LinkedIn, X, Slack…) : og:url et lien canonique (adresse propre),
+#  og:type, og:locale, taille de l'image de partage, liens vers l'autre langue,
+#  et un twitter:title aligné sur og:title.
 # =============================================================================
 import os
 import re
@@ -59,6 +64,40 @@ def write_sitemap(docs):
     (docs / "robots.txt").write_text(f"Sitemap: {origin}/sitemap.xml\n", encoding="utf-8")
 
 
+# Pages équivalentes dans les deux langues (liens hreflang)
+PAIRS = {"fr/": "en/", "fr/expertise/": "en/expertise/", "fr/actualites/": "en/news/",
+         "fr/publications/": "en/publications/", "fr/a-propos/": "en/about/", "fr/notes/": "en/notes/"}
+PAIRS.update({v: k for k, v in PAIRS.items()})
+OG_TITLE = re.compile(r'<meta property="og:title" content="([^"]*)"\s*/?>')
+TW_TITLE = re.compile(r'<meta name="twitter:title" content="[^"]*"\s*/?>')
+
+
+def share_tags(page, docs, origin):
+    """Balises de partage d'une page (idempotent : rien si og:url existe déjà)."""
+    text = page.read_text(encoding="utf-8")
+    if 'property="og:url"' in text or "</head>" not in text:
+        return False
+    rel = clean_path(page.relative_to(docs).as_posix())
+    url = f"{origin}/{quote(rel)}"
+    lang = rel.split("/")[0]
+    tags = [f'<link rel="canonical" href="{url}">'] if 'rel="canonical"' not in text else []
+    tags += [f'<meta property="og:url" content="{url}">',
+             f'<meta property="og:type" content="{"article" if "/notes/" in rel and not rel.endswith("notes/") else "website"}">',
+             f'<meta property="og:locale" content="{"fr_FR" if lang == "fr" else "en_GB"}">']
+    if "og-storm-" in text:
+        tags += ['<meta property="og:image:width" content="1200">', '<meta property="og:image:height" content="630">']
+    if rel in PAIRS:
+        other = PAIRS[rel]
+        tags += [f'<link rel="alternate" hreflang="{lang}" href="{url}">',
+                 f'<link rel="alternate" hreflang="{other.split("/")[0]}" href="{origin}/{other}">']
+    m = OG_TITLE.search(text)
+    if m:
+        text = TW_TITLE.sub(f'<meta name="twitter:title" content="{m.group(1)}">', text)
+    text = text.replace("</head>", "\n".join(tags) + "\n</head>", 1)
+    page.write_text(text, encoding="utf-8")
+    return True
+
+
 docs = Path("docs")
 edition = os.environ.get("PROF", "fr")
 count = 0
@@ -69,4 +108,7 @@ for page in (docs / edition).rglob("*.html"):
         page.write_text(new, encoding="utf-8")
         count += 1
 print("clean_urls: %d pages mises à jour dans docs/%s" % (count, edition))
+origin = "https://" + (docs / "CNAME").read_text(encoding="utf-8").strip()
+shared = sum(share_tags(page, docs, origin) for page in (docs / edition).rglob("*.html") if "/assets/" not in page.as_posix())
+print("clean_urls: balises de partage ajoutées à %d pages" % shared)
 write_sitemap(docs)
