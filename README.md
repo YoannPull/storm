@@ -99,7 +99,10 @@ not edit it by hand. Projects in `data/projets.yml` marked
   and stays still for visitors who disabled animations. Texts follow the page
   language.
 
-No third-party requests at load time: fonts and KaTeX are self-hosted.
+Fonts and KaTeX are self-hosted. The only third-party request is the
+visitor-statistics script (Cloudflare Web Analytics, cookieless), at the end of
+`partials/after-body.html` and in `scripts/404.html`; dashboard in Cloudflare →
+Analytics & Logs → Web Analytics.
 
 ## Repository layout
 
