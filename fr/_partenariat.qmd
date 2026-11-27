@@ -1,6 +1,6 @@
 ::: {.note-cta}
 
-**Discuter de ce travail ?** Une question, une application à votre portefeuille ou une demande de présentation : [écrivez au collectif →](../a-propos/index.qmd#contact)
+**Une question sur cette note ?** Une application à votre portefeuille, une demande de présentation : [écrivez-nous →](../a-propos/index.qmd#contact)
 
 :::
 
