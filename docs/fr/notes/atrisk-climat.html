@@ -152,20 +152,18 @@ window.Quarto = {
 <link rel="stylesheet" href="../../assets/css/storm-dark.css">
 <meta property="og:title" content="Risque de crédit et scénarios climatiques : capter l’information complète de la distribution sous stress – STORM">
 <meta property="og:description" content="L’approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall.">
-<meta property="og:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta property="og:image" content="https://squaremanagement-storm.com/assets/notes/figures/atrisk-below2c.jpeg">
 <meta property="og:site_name" content="STORM">
-<meta property="og:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta property="og:image:alt" content="Projection de la probabilité de défaut sous le scénario Below 2^\circ\text{C} (méthodologie at-Risk) : réponse moyenne, Value-at-Risk (95%) et Expected Shortfall (95%).">
 <meta name="twitter:title" content="Risque de crédit et scénarios climatiques : capter l’information complète de la distribution sous stress – STORM">
 <meta name="twitter:description" content="L’approche at-Risk appliquée aux scénarios climatiques du NGFS : régressions quantiles et lissage skew-t pour reconstruire la distribution conditionnelle complète du facteur systémique, et en dériver VaR et expected shortfall.">
-<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/notes/figures/atrisk-below2c.jpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta name="twitter:image:alt" content="Projection de la probabilité de défaut sous le scénario Below 2^\circ\text{C} (méthodologie at-Risk) : réponse moyenne, Value-at-Risk (95%) et Expected Shortfall (95%).">
 <link rel="canonical" href="https://squaremanagement-storm.com/fr/notes/atrisk-climat">
 <meta property="og:url" content="https://squaremanagement-storm.com/fr/notes/atrisk-climat">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -276,61 +274,170 @@ window.Quarto = {
 </header>
 
 
+<div class="note-pdf">
+<p><a href="../../assets/notes/STORM-note-atrisk-climat.pdf" download="STORM-note-atrisk-climat.pdf">Télécharger la note (PDF)</a></p>
+</div>
 <div class="standfirst">
-<p><span class="lede">En bref</span> Les exercices de stress testing du risque de crédit reposent traditionnellement sur une projection en valeur centrale : à partir d’un scénario macroéconomique donné, une trajectoire attendue de probabilités de défaut est dérivée, dont la moyenne résume l’exposition future. Cette approche demeure incomplète : le risque ne se révèle pas dans la moyenne, il se concentre dans les états de stress sévère. Deux scénarios peuvent produire des trajectoires moyennes proches tout en masquant des niveaux de vulnérabilité très différents dans les queues de distribution.</p>
+<p><span class="lede">En bref</span> Les exercices de stress testing du risque de crédit reposent traditionnellement sur une projection en valeur centrale : à partir d’un scénario macroéconomique donné, une trajectoire attendue de probabilités de défaut (PD) est dérivée, dont la moyenne résume l’exposition future. Cette approche demeure incomplète : le risque ne se révèle pas dans la moyenne mais se concentre dans les états de stress sévère. Deux scénarios peuvent ainsi produire des trajectoires moyennes proches tout en masquant des niveaux de vulnérabilité très différents dans les queues de distribution. Cette note applique l’approche at-Risk au risque de crédit sous les scénarios climatiques du NGFS : en associant régressions quantiles et lissage par une loi skew-t, elle reconstruit l’intégralité de la distribution conditionnelle du facteur systémique Merton-Vasicek à ces scénarios pour en dériver directement la Value-at-Risk (VaR) et l’Expected Shortfall (ES) d’un portefeuille de crédit.</p>
 </div>
 <div class="message">
 <p><span class="label">Message central</span></p>
-<p>L’approche at-Risk ne se substitue pas aux cadres de stress testing existants : elle les prolonge en révélant la <strong>forme complète</strong> de la distribution du risque sous scénario. Appliquée aux trajectoires climatiques du NGFS, elle démontre qu’un scénario n’est pas seulement plus ou moins sévère par sa moyenne, mais par l’épaisseur et l’asymétrie de sa queue défavorable. Les scénarios de transition rapide — <em>Below 2°C</em>, <em>Net Zero 2050</em> — génèrent des queues de risque nettement plus épaisses à court terme, en raison de la brutalité des réajustements monétaires requis.</p>
-<p>L’outil trouve une application directe au titre du Pilier 2 (ICAAP) et des exigences de la directive CRD 6.</p>
+<p>L’approche at-Risk ne se substitue pas aux cadres de stress testing existants : elle les prolonge en révélant la forme complète de la distribution du risque sous scénario. Appliquée aux trajectoires climatiques du NGFS, elle démontre qu’un scénario n’est pas seulement plus ou moins sévère par sa moyenne, mais par l’épaisseur et l’asymétrie de sa queue défavorable. Les scénarios de transition rapide (Below 2°C, Net Zero 2050) génèrent ainsi des queues de risque nettement plus épaisses à court terme en raison de la brutalité des réajustements monétaires requis.</p>
+<p>Cet outil trouve une application directe pour les établissements bancaires dans le cadre du Pilier 2 (ICAAP) et des exigences de la directive CRD 6. Alors que la réglementation impose de retenir un scénario central dans l’évaluation des risques et des plans de transition, la méthodologie at-Risk permet de tester la sensibilité du portefeuille et la résilience du modèle d’affaires si ce scénario central ne se réalisait pas. Elle offre ainsi aux équipes risques une métrique chiffrée pour alimenter les exercices de stress tests internes et challenger la solidité des fonds propres face à des trajectoires alternatives.</p>
 </div>
 <section id="une-asymétrie-des-risques-masquée-par-la-moyenne" class="level2">
 <h2 class="anchored" data-anchor-id="une-asymétrie-des-risques-masquée-par-la-moyenne">1. Une asymétrie des risques masquée par la moyenne</h2>
-<p>La modélisation du risque de crédit s’inscrit traditionnellement dans le cadre structurel Merton–Vasicek / ASRF, où les probabilités de défaut dépendent d’un facteur systémique latent <span class="math inline">z_t</span> résumant l’état macro-financier. Les approches classiques souffrent d’une limite structurelle : elles projettent uniquement la trajectoire centrale de ce facteur. Or les vulnérabilités économiques et financières agissent de manière asymétrique et se lisent principalement dans les queues de distribution.</p>
+<p>La modélisation du risque de crédit s’inscrit traditionnellement dans le cadre structurel Merton-Vasicek / ASRF (Gordy, 2003 ; Vasicek, 1987), où les probabilités de défaut dépendent d’un facteur systémique latent <span class="math inline">z_t</span> résumant l’état macro-financier.</p>
+<p>Cependant, les approches classiques souffrent d’une limite structurelle : elles projettent uniquement la trajectoire centrale de ce facteur. Or, comme le montrent Schechtman et Gaglianone (2012) ainsi qu’Adrian et al.&nbsp;(2019) dans le cadre du Growth-at-Risk, les vulnérabilités économiques et financières agissent de manière asymétrique et se lisent principalement dans les queues de distribution. Aydemir et al.&nbsp;(2024) confirment que les variables macroéconomiques n’impactent pas le risque de crédit de la même façon au centre et dans les zones de stress extrême.</p>
 <div class="why">
 <p><span class="label">Pourquoi c’est important</span></p>
 <ul>
 <li><strong>Aveuglement à la sévérité extrême.</strong> Deux scénarios aux trajectoires moyennes identiques peuvent masquer des niveaux de risque de queue du simple au double.</li>
 <li><strong>Impact des politiques de transition.</strong> Les chocs macro-financiers de court terme liés aux politiques climatiques affectent la volatilité et l’asymétrie du risque bien plus que son niveau moyen.</li>
-<li><strong>Mesures de queue pour IFRS 9 et l’ICAAP.</strong> L’évaluation des provisions et l’estimation du capital interne exigent des métriques dynamiques centrées sur la queue défavorable, hors de portée d’une projection en valeur centrale.</li>
-<li><strong>Cohérence structurelle des mesures.</strong> Le cadre garantit la monotonie stricte des quantiles et le respect de la hiérarchie du risque : l’expected shortfall est, par construction, toujours supérieur à la VaR.</li>
+<li><strong>Mesures de queue pour IFRS 9 et l’ICAAP.</strong> L’évaluation des provisions et l’estimation du capital interne (Pilier 2) nécessitent des métriques dynamiques centrées sur la queue défavorable, hors de portée d’une simple projection en valeur centrale.</li>
+<li><strong>Cohérence structurelle des mesures de risque.</strong> Le cadre garantit le respect des propriétés théoriques des métriques de queue : absence de croisement des quantiles (monotonie stricte) et respect systématique de la hiérarchie du risque (l’Expected Shortfall est, par construction, toujours supérieur à la VaR).</li>
 </ul>
 </div>
 </section>
 <section id="du-taux-de-défaut-à-la-distribution-at-risk-larchitecture" class="level2">
 <h2 class="anchored" data-anchor-id="du-taux-de-défaut-à-la-distribution-at-risk-larchitecture">2. Du taux de défaut à la distribution at-Risk : l’architecture</h2>
+<p>Le cadre proposé par Flament et al.&nbsp;(2025) s’articule en quatre étapes modulaires (figure 1) :</p>
+<ol type="1">
+<li><p><strong>Extraction du facteur systémique <span class="math inline">z_t</span>.</strong> Inversion de la formule ASRF à partir des taux de défaut observés (<span class="math inline">DR_t</span>), de la PD de long terme (<span class="math inline">PD_{LT}</span>) et de la corrélation <span class="math inline">\rho</span> :</p>
+<p><span class="math display">z_t = \frac{\Phi^{-1}(PD_{LT}) - \sqrt{1-\rho}\Phi^{-1}(DR_t)}{\sqrt{\rho}}</span></p></li>
+<li><p><strong>Régressions quantiles conditionnelles.</strong> Estimation des quantiles <span class="math inline">Q_\tau(z_{t+h}\vert{}X_t) = X_t' \beta_h(\tau)</span> sur une grille fine de quantiles <span class="math inline">\tau \in (0,1)</span> pour capturer la dynamique des queues.</p></li>
+<li><p><strong>Lissage paramétrique par loi Skew-t.</strong> Ajustement d’une loi skew-t d’Azzalini et Capitanio (2003) sur les quantiles estimés pour dériver en forme continue le niveau, la dispersion, l’asymétrie et l’épaisseur de queue.</p></li>
+<li><p><strong>Rétrotransformation en PD.</strong> Conversion des métriques de risque (<span class="math inline">z</span>) en probabilités de défaut (<span class="math inline">PD</span>) via la fonction ASRF :</p>
+<p><span class="math display">PD(z) = \Phi\left(\frac{\Phi^{-1}(PD_{LT}) - \sqrt{\rho}z}{\sqrt{1-\rho}}\right)</span></p></li>
+</ol>
 <div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
-<figure class="arch figure"><svg viewbox="0 0 1160 300" role="img" aria-label="Approche at-Risk"><defs><marker id="ah-atrisk" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="105" y="140" text-anchor="middle">INVERSION ASRF</text><text class="arch-in-s" x="105" y="162" text-anchor="middle">Extraction du facteur</text><text class="arch-in-s" x="105" y="180" text-anchor="middle">systémique z</text><line class="arch-arrow" x1="200" y1="148" x2="220" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="224" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="248" cy="96" r="13"></circle><text class="arch-brick-numt" x="248" y="101" text-anchor="middle">2</text><text class="arch-title" x="313" y="140" text-anchor="middle">QUANTILES</text><text class="arch-sub" x="313" y="162" text-anchor="middle">Conditionnement au</text><text class="arch-sub" x="313" y="180" text-anchor="middle">scénario</text><line class="arch-arrow" x1="408" y1="148" x2="428" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="432" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="456" cy="96" r="13"></circle><text class="arch-brick-numt" x="456" y="101" text-anchor="middle">3</text><text class="arch-title" x="521" y="140" text-anchor="middle">LISSAGE SKEW-T</text><text class="arch-sub" x="521" y="162" text-anchor="middle">Distribution continue</text><text class="arch-sub" x="521" y="180" text-anchor="middle">et flexible</text><line class="arch-arrow" x1="616" y1="148" x2="636" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="640" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="664" cy="96" r="13"></circle><text class="arch-brick-numt" x="664" y="101" text-anchor="middle">4</text><text class="arch-title" x="729" y="140" text-anchor="middle">CONVERSION</text><text class="arch-sub" x="729" y="162" text-anchor="middle">Rétrotransformation z</text><text class="arch-sub" x="729" y="180" text-anchor="middle">→ PD</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 72, 842 72" marker-end="url(#ah-atrisk)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">PD moyenne</text><text class="arch-out-s" x="866" y="90">valeur centrale</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 150, 842 150" marker-end="url(#ah-atrisk)"></path><rect class="arch-out is-tail" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">VaR-at-Risk</text><text class="arch-out-s" x="866" y="168">quantile de queue (95 %)</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 228, 842 228" marker-end="url(#ah-atrisk)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">Expected shortfall</text><text class="arch-out-s" x="866" y="246">moyenne au-delà de la VaR</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Architecture modulaire en quatre étapes : extraction du facteur latent, projection quantile sous scénario NGFS, lissage paramétrique skew-t et rétrotransformation analytique en métriques de risque.</figcaption></figure>
+<figure class="arch figure"><svg viewbox="0 0 1160 300" role="img" aria-label="Approche at-Risk"><defs><marker id="ah-atrisk" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="105" y="140" text-anchor="middle">INVERSION ASRF</text><text class="arch-in-s" x="105" y="162" text-anchor="middle">Extraction du facteur</text><text class="arch-in-s" x="105" y="180" text-anchor="middle">systémique z</text><line class="arch-arrow" x1="200" y1="148" x2="220" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="224" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="248" cy="96" r="13"></circle><text class="arch-brick-numt" x="248" y="101" text-anchor="middle">2</text><text class="arch-title" x="313" y="140" text-anchor="middle">QUANTILES</text><text class="arch-sub" x="313" y="162" text-anchor="middle">Conditionnement au</text><text class="arch-sub" x="313" y="180" text-anchor="middle">scénario</text><line class="arch-arrow" x1="408" y1="148" x2="428" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="432" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="456" cy="96" r="13"></circle><text class="arch-brick-numt" x="456" y="101" text-anchor="middle">3</text><text class="arch-title" x="521" y="140" text-anchor="middle">LISSAGE SKEW-T</text><text class="arch-sub" x="521" y="162" text-anchor="middle">Distribution continue</text><text class="arch-sub" x="521" y="180" text-anchor="middle">et flexible</text><line class="arch-arrow" x1="616" y1="148" x2="636" y2="148" marker-end="url(#ah-atrisk)"></line><rect class="arch-brick" x="640" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="664" cy="96" r="13"></circle><text class="arch-brick-numt" x="664" y="101" text-anchor="middle">4</text><text class="arch-title" x="729" y="140" text-anchor="middle">CONVERSION</text><text class="arch-sub" x="729" y="162" text-anchor="middle">Rétrotransformation z</text><text class="arch-sub" x="729" y="180" text-anchor="middle">→ PD</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 72, 842 72" marker-end="url(#ah-atrisk)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">PD moyenne</text><text class="arch-out-s" x="866" y="90">valeur centrale</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 150, 842 150" marker-end="url(#ah-atrisk)"></path><rect class="arch-out is-tail" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">VaR-at-Risk</text><text class="arch-out-s" x="866" y="168">quantile de queue (95 %)</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 228, 842 228" marker-end="url(#ah-atrisk)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">Expected shortfall</text><text class="arch-out-s" x="866" y="246">moyenne au-delà de la VaR</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Figure 1. Architecture modulaire en quatre étapes : extraction du facteur latent, projection quantile sous scénario NGFS, lissage paramétrique skew-t et rétrotransformation analytique en métriques de risque.</figcaption></figure>
 <div class="listing-no-matching d-none">Aucun article correspondant</div>
 </div>
-<p>L’extraction du facteur systémique procède par inversion de la formule ASRF à partir des taux de défaut observés <span class="math inline">DR_t</span>, de la PD de long terme et de la corrélation <span class="math inline">\rho</span> :</p>
-<p><span class="math display">z_t = \frac{\Phi^{-1}(PD_{LT}) - \sqrt{1-\rho}\,\Phi^{-1}(DR_t)}{\sqrt{\rho}}</span></p>
-<p>La rétrotransformation en probabilités de défaut emprunte le chemin inverse, par la fonction ASRF :</p>
-<p><span class="math display">PD(z) = \Phi\!\left(\frac{\Phi^{-1}(PD_{LT}) - \sqrt{\rho}\,z}{\sqrt{1-\rho}}\right)</span></p>
 <div class="why">
 <p><span class="label">Ce que le cadre apporte</span></p>
 <ul>
-<li><strong>Information complète.</strong> Il délivre simultanément la PD moyenne, la VaR-at-Risk à 95 % et l’expected shortfall à 95 %.</li>
-<li><strong>Ancrage réglementaire et académique.</strong> Il réutilise le moteur Merton–Vasicek / ASRF tout en intégrant les avancées de l’économétrie quantile issues du <em>Growth-at-Risk</em>.</li>
-<li><strong>Flexibilité paramétrique.</strong> La loi skew-t capte l’asymétrie et l’épaississement des queues en période de crise, que la loi gaussienne ignore.</li>
+<li><strong>Information complète</strong> : Délivre simultanément la PD moyenne, la VaR-at-Risk à 95% et l’Expected Shortfall à 95%.</li>
+<li><strong>Ancrage réglementaire et académique</strong> : Réutilise le moteur Merton-Vasicek/ASRF tout en intégrant les avancées de l’économie quantile (Growth-at-Risk).</li>
+<li><strong>Flexibilité paramétrique</strong> : La loi skew-t capte l’asymétrie et l’épaississement des queues en période de crise que la loi gaussienne ignore</li>
 </ul>
 </div>
 </section>
-<section id="mise-en-œuvre" class="level2">
-<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<section id="application-empirique-projections-sous-scénarios-climatiques-ngfs" class="level2">
+<h2 class="anchored" data-anchor-id="application-empirique-projections-sous-scénarios-climatiques-ngfs">3. Application empirique : projections sous scénarios climatiques NGFS</h2>
+<p>L’approche at-Risk est appliquée aux trajectoires de transition climatique fournies par le NGFS (Phase IV, sept scénarios) afin d’évaluer la réponse du risque de crédit sur un portefeuille d’entreprises. L’exercice s’articule comme suit :</p>
 <ol type="1">
-<li><strong>Extraction.</strong> Inversion de la formule ASRF / Merton–Vasicek sur l’historique des défauts internes.</li>
-<li><strong>Estimation.</strong> Calibration des régressions quantiles et ajustement de la loi skew-t sur la grille de quantiles estimés.</li>
-<li><strong>Projection.</strong> Injection des trajectoires de scénarios — NGFS, BCE, internes — pour alimenter les métriques de queue.</li>
+<li><p><strong>Choix des variables et traitement des données</strong></p>
+<p>L’analyse s’appuie sur une série historique trimestrielle de taux de défaut agrégés ainsi que sur un ensemble de variables macro-financières internationales (États-Unis, zone euro, Japon). Afin d’aligner le contenu informationnel des régresseurs sur l’horizon temporel du facteur systémique <span class="math inline">z_t</span> (qui mesure la probabilité de défaillance sur les 12 mois à venir), toutes les variables sont transformées en glissement annuel. Après validation de la stationnarité, la sélection des variables procède en deux temps. Une présélection univariée par critère BIC au quantile défavorable <span class="math inline">\tau = 5\%</span> est suivie d’une recherche multivariée exhaustive.</p></li>
+<li><p><strong>Estimation de la dynamique quantile et lissage</strong></p>
+<p>Une fois le modèle sélectionné, les régressions quantiles sont estimées pour chaque horizon <span class="math inline">h</span> sur une grille fine de quantiles <span class="math inline">\tau \in (0,1)</span>. Pour passer de ces quantiles à une distribution continue et exploitable, une loi skew-t d’Azzalini et Capitanio (2003) est ajustée par minimisation de l’écart quadratique entre quantiles théoriques et quantiles estimés. Les quatre paramètres de la loi calibrés à chaque période permettent d’obtenir la déformation de la queue gauche du facteur systémique <span class="math inline">z_t</span>, notamment lors des crises historiques.</p></li>
+<li><p><strong>Projection sous scénarios NGFS et rétrotransformation</strong></p>
+<p>Les trajectoires macroéconomiques propres à chacun des sept scénarios NGFS sont injectées dans les équations quantiles pour projeter la distribution conditionnelle de <span class="math inline">z_{t+h}</span> jusqu’à l’horizon 2050. Chaque distribution projetée du facteur <span class="math inline">z</span> est ensuite rétrotransformée de manière analytique via la fonction de répartition ASRF/Merton-Vasicek :</p>
+<ul>
+<li><p>PD moyenne : obtenue en intégrant la fonction de transformation sur la loi skew-t projetée.</p></li>
+<li><p>Value-at-Risk (<span class="math inline">\text{VaR}_{95\%}</span>) : calculée en appliquant la rétrotransformation au <span class="math inline">5^e</span> percentile de la distribution de <span class="math inline">z_t</span>.</p></li>
+<li><p>Expected Shortfall (<span class="math inline">\text{ES}_{95\%}</span>) : évalué comme la moyenne rétrotransformée au-delà du seuil de VaR.</p></li>
+</ul></li>
+</ol>
+<p>Alors que les PD moyennes stagnent dans un canal étroit (0,30% à 0,32% en régime de croisière) et ne permettent pas de départager les scénarios NGFS, l’Expected Shortfall monte jusqu’à 8,66%, révélant des risques de queue d’un ordre de grandeur supérieur. Les scénarios de transition ordonnée et ambitieuse (Below 2°C, Net Zero 2050) apparaissent comme les plus sévères sur le canal macro-financier de court terme. Cela s’explique par la brutalité des variations de politiques monétaires et de spreads requises pour décarboner rapidement l’économie, instantanément captée dans la queue gauche du modèle at-Risk.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/atrisk-below2c.jpeg" class="img-fluid" alt="Projection de la probabilité de défaut sous le scénario Below 2^\circ\text{C} (méthodologie at-Risk) : réponse moyenne, Value-at-Risk (95%) et Expected Shortfall (95%)."></p>
+<div class="note-cap">
+<p>Figure 2. Projection de la probabilité de défaut sous le scénario <em>Below <span class="math inline">2^\circ\text{C}</span></em> (méthodologie <em>at-Risk</em>) : réponse moyenne, Value-at-Risk (<span class="math inline">95\%</span>) et Expected Shortfall (<span class="math inline">95\%</span>).</p>
+</div>
+</div>
+<table class="caption-top table">
+<caption>Tableau 1. Synthèse des scénarios NGFS : niveaux maximaux projetés (fenêtre 2023-Q1 à 2050-Q4, triés par ES décroissant). Les maxima sont atteints en 2024-Q1 pour l’ensemble des scénarios. Current Policies et Fragmented World affichent des valeurs identiques.</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Scénario NGFS</th>
+<th style="text-align: center;">PD moy. max. (%)</th>
+<th style="text-align: center;">VaR 95% max. (%)</th>
+<th style="text-align: center;">ES 95% max. (%)</th>
+<th style="text-align: center;">Gap max. (ES – PD moy) (pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Below 2 °C</td>
+<td style="text-align: center;">0,70</td>
+<td style="text-align: center;">6,34</td>
+<td style="text-align: center;">8,66</td>
+<td style="text-align: center;">7,96</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Net Zero 2050</td>
+<td style="text-align: center;">1,62</td>
+<td style="text-align: center;">6,39</td>
+<td style="text-align: center;">8,47</td>
+<td style="text-align: center;">6,84</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nationally Determined Contrib.</td>
+<td style="text-align: center;">0,58</td>
+<td style="text-align: center;">5,63</td>
+<td style="text-align: center;">7,74</td>
+<td style="text-align: center;">7,17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Baseline</td>
+<td style="text-align: center;">1,32</td>
+<td style="text-align: center;">5,48</td>
+<td style="text-align: center;">7,33</td>
+<td style="text-align: center;">6,01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Current Policies</td>
+<td style="text-align: center;">1,18</td>
+<td style="text-align: center;">5,09</td>
+<td style="text-align: center;">6,79</td>
+<td style="text-align: center;">5,60</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fragmented World</td>
+<td style="text-align: center;">1,18</td>
+<td style="text-align: center;">5,09</td>
+<td style="text-align: center;">6,79</td>
+<td style="text-align: center;">5,60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Delayed transition</td>
+<td style="text-align: center;">1,28</td>
+<td style="text-align: center;">5,08</td>
+<td style="text-align: center;">6,76</td>
+<td style="text-align: center;">5,47</td>
+</tr>
+</tbody>
+</table>
+<div class="retenir">
+<p><span class="label">Lecture pour les équipes risques</span></p>
+<p>L’enseignement n’est pas « la transition écologique va faire grimper les défauts ». C’est que la trajectoire centrale d’un scénario masque l’essentiel de sa sévérité : la forme de sa distribution, l’épaisseur de sa queue et l’asymétrie de sa réponse, qui s’écartent fortement de la simple valeur moyenne. Les scénarios NGFS se distinguent peu en moyenne mais révèlent des écarts majeurs dans leur queue défavorable sous l’effet des ajustements macro-financiers de court terme. Le climat n’est qu’un banc d’essai : cette même architecture <em>at-Risk</em> s’applique à tout autre catalogue de scénarios internes, prudentiels ou macroéconomiques.</p>
+</div>
+</section>
+<section id="mise-en-œuvre" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">4. Mise en œuvre</h2>
+<p>Le déploiement de l’approche at-Risk s’effectue sans rupture avec la chaîne de modélisation existante:</p>
+<ol type="1">
+<li><strong>Extraction.</strong> Inversion de la formule ASRF/Merton-Vasicek sur l’historique des défauts internes ou sectoriels.</li>
+<li><strong>Estimation.</strong> Calibration des régressions quantiles et ajustement de la loi skew-t (exploitant le package R dédié développé par Flament et al.&nbsp;(2025)).</li>
+<li><strong>Projection.</strong> Injection des trajectoires de scénarios (NGFS, BCE, internes) pour alimenter les stress test.</li>
 </ol>
 <div class="retenir">
 <p><span class="label">À retenir pour chaque équipe</span></p>
 <ul>
-<li><strong>Modélisation.</strong> La sévérité d’un scénario ne se lit pas dans sa moyenne mais dans la forme de sa queue défavorable.</li>
-<li><strong>Validation.</strong> Monotonie des quantiles et hiérarchie VaR / ES sont garanties par construction, donc vérifiables.</li>
-<li><strong>Pilotage.</strong> Le cadre fournit une métrique chiffrée pour challenger la solidité des fonds propres face à des trajectoires alternatives au scénario central imposé.</li>
+<li><strong>Stress testing / ICAAP</strong> : Capacité à hiérarchiser des scénarios aux trajectoires centrales quasi identiques grâce à la mesure de l’Expected Shortfall.</li>
+<li><strong>Provisionnement IFRS 9</strong> : Calibration affinée des ajustements discrétionnaires (overlays) en intégrant l’asymétrie et la déformation des queues de distribution sous stress.</li>
+<li><strong>Validation / Risque de Modèle</strong> : Chaîne économétrique documentée et appuyée sur des publications académiques de référence.</li>
 </ul>
 </div>
+<p>Le groupe Square Management se tient à la disposition des équipes intéressées pour échanger sur l’application de ce cadre à leurs portefeuilles.</p>
 </section>
 <section id="article-de-recherche-associé" class="level2">
 <h2 class="anchored" data-anchor-id="article-de-recherche-associé">Article de recherche associé</h2>
@@ -339,7 +446,7 @@ window.Quarto = {
 <p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/#contact">écrivez au collectif →</a></p>
 </div>
 <div class="partnership">
-<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+<p>Cette note s’appuie sur les travaux conduits au sein du pôle STORM (<em>Scenario-based Testing &amp; Optimization in Risk Modeling</em>) de Square Management, dédié à la modélisation et à la quantification des risques. Le pôle STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Les travaux de cette note s’appuient sur une collaboration avec le Master ESA et Square Management remercie Christophe Hurlin pour ce partenariat.</p>
 </div>
 </section>
 <section id="références" class="level2">
@@ -347,10 +454,11 @@ window.Quarto = {
 <div class="refs">
 <p>Adrian, T., Boyarchenko, N. &amp; Giannone, D. (2019). Vulnerable growth. <em>American Economic Review</em>, 109(4), 1263–1289.</p>
 <p>Aydemir, R., Atik, Z. &amp; Guloglu, B. (2024). Macro stress testing the credit risk of conventional and participation banks in Turkey: a nonparametric quantile regression approach. <em>Eastern European Economics</em>, 62(6), 727–761.</p>
-<p>Azzalini, A. &amp; Capitanio, A. (2003). Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t-distribution. <em>JRSS Series B</em>, 65(2), 367–389.</p>
+<p>Azzalini, A. &amp; Capitanio, A. (2003). Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t-distribution. <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em>, 65(2), 367–389.</p>
+<p>Flament, G., Hurlin, C. &amp; Lajaunie, Q. (2025). The at-Risk approach: a new tool for stress tests and overlays. <em>Annals of Operations Research</em>, 1–34.</p>
 <p>Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. <em>Journal of Financial Intermediation</em>, 12(3), 199–232.</p>
 <p>Schechtman, R. &amp; Gaglianone, W. P. (2012). Macro stress testing of credit risk focused on the tails. <em>Journal of Financial Stability</em>, 8(3), 174–192.</p>
-<p>Vasicek, O. A. (1987). <em>Probability of loss on loan portfolio.</em> KMV.</p>
+<p>Vasicek, O. A. (1987). <em>Probability of loss on loan portfolio</em>. KMV.</p>
 </div>
 
 

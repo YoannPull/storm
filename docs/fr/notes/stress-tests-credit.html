@@ -152,20 +152,20 @@ window.Quarto = {
 <link rel="stylesheet" href="../../assets/css/storm-dark.css">
 <meta property="og:title" content="Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne – STORM">
 <meta property="og:description" content="Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l’incertitude prédictive et deux mesures de queue, au même coût de calcul.">
-<meta property="og:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta property="og:image" content="https://squaremanagement-storm.com/assets/notes/figures/stress-credit-pd-at-risk.png">
 <meta property="og:site_name" content="STORM">
-<meta property="og:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta property="og:image:height" content="598">
+<meta property="og:image:width" content="921">
 <meta name="twitter:title" content="Stress tests de crédit : transmettre la distribution, pas seulement la trajectoire moyenne – STORM">
 <meta name="twitter:description" content="Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l’incertitude prédictive et deux mesures de queue, au même coût de calcul.">
-<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/notes/figures/stress-credit-pd-at-risk.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta name="twitter:image-height" content="598">
+<meta name="twitter:image-width" content="921">
 <link rel="canonical" href="https://squaremanagement-storm.com/fr/notes/stress-tests-credit">
 <meta property="og:url" content="https://squaremanagement-storm.com/fr/notes/stress-tests-credit">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -275,22 +275,24 @@ window.Quarto = {
 </header>
 
 
+<div class="note-pdf">
+<p><a href="../../assets/notes/STORM-note-stress-tests-credit.pdf" download="STORM-note-stress-tests-credit.pdf">Télécharger la note (PDF)</a></p>
+</div>
 <div class="standfirst">
-<p><span class="lede">En bref</span> Dans les stress tests de crédit, les modèles satellites traduisent les scénarios macro-financiers en probabilités de défaut (PD). Ils sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. Cette approximation écarte l’incertitude prédictive, qui peut influer sur la PD moyenne lorsque la relation entre la PD et le facteur est non linéaire. Dans notre application, les approximations usuelles sous-estiment les PD projetées de 8 % au maximum. Propager la distribution complète du facteur permet aussi d’estimer le risque de queue.</p>
+<p><span class="lede">En bref</span> Les stress tests de crédit disposent déjà d’un pont entre scénario macro-financier et probabilités de défaut (PD) : les modèles satellites. Mais ce pont ne transmet, le plus souvent, qu’une trajectoire moyenne. Lorsque la PD est une fonction non linéaire d’un facteur de crédit incertain, cette transmission partielle écarte l’incertitude prédictive du facteur de crédit : elle sous-estime alors les niveaux projetés de PD, jusqu’à <span class="math inline">8\%</span> dans notre application, et ne dit rien de la queue de distribution, là où se décident provisions et capital. Cette note présente un cadre qui complète les satellites existants, sans les remplacer. Il corrige d’abord la PD moyenne en intégrant la distribution complète du facteur de crédit, puis livre au même coût de calcul deux mesures de queue supplémentaires : PD-at-Risk et expected shortfall. Un stress test géopolitique sur le crédit américain sert de preuve de concept ; la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels.</p>
 </div>
 <div class="message">
 <p><span class="label">Message central</span></p>
-<p>Il ne s’agit pas de remplacer les satellites existants, mais de leur faire produire davantage. En propageant la distribution complète du facteur de crédit, et non sa seule trajectoire moyenne, le même dispositif corrige la PD moyenne pour tenir compte de l’incertitude prédictive, puis délivre <strong>en forme close, sans simulation lourde et sans re-développement</strong>, deux mesures de queue complémentaires : le PD-at-Risk et l’expected shortfall — la mesure vers laquelle les régulateurs ont déjà fait basculer le risque de marché.</p>
-<p>Une correction de niveau et trois lectures du risque au prix d’une.</p>
+<p>Il ne s’agit pas de remplacer les satellites existants, mais de leur faire produire davantage. En propageant la <strong>distribution complète</strong> du facteur de crédit, et non sa seule trajectoire moyenne, le même dispositif corrige la <strong>PD moyenne</strong> pour tenir compte de l’incertitude prédictive, puis délivre en forme close, sans simulation lourde et sans re-développement, deux mesures de queue complémentaires : le <strong>PD-at-Risk</strong> et l’<strong>expected shortfall</strong>, la mesure vers laquelle les régulateurs ont déjà fait basculer le risque de marché. Une correction de niveau et trois lectures du risque au prix d’une.</p>
 </div>
 <section id="ce-que-la-trajectoire-moyenne-ne-transmet-pas" class="level2">
 <h2 class="anchored" data-anchor-id="ce-que-la-trajectoire-moyenne-ne-transmet-pas">1. Ce que la trajectoire moyenne ne transmet pas</h2>
-<p>Le stress testing est au cœur du pilotage des risques — IFRS 9, ICAAP, exercices prudentiels — et son périmètre s’élargit chaque année. L’architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels.</p>
-<p>En pratique, on évalue souvent la PD le long de la trajectoire moyenne du facteur de crédit ou d’une trajectoire supposée connue. Lorsque la PD dépend de façon non linéaire du facteur, la PD évaluée à sa moyenne peut différer de la moyenne des PD calculées sur l’ensemble de sa distribution. Si la fonction de PD est convexe sur le support du facteur, l’évaluation à la moyenne donne une borne inférieure de la PD moyenne projetée.</p>
+<p>Le stress testing est au cœur du pilotage des risques (IFRS 9, ICAAP, exercices prudentiels) et son périmètre s’élargit chaque année. L’architecture est bien rodée : un modèle macro-financier propage le scénario, un satellite de crédit le traduit en risque de portefeuille, dans la tradition des modèles satellites utilisés en interne comme dans les exercices prudentiels (Wilson, 1997 ; Henry et Kok, 2013).</p>
+<p>La marge de progrès est dans la façon dont le scénario traverse cette chaîne : en pratique, il est propagé comme une trajectoire <em>moyenne</em>, ou comme un chemin supposé connu, puis la cartographie de crédit est évaluée le long de ce chemin. Utile, cette approche devient incomplète dès que la PD est <strong>non linéaire</strong> dans les conditions de crédit : la cartographie appliquée à la moyenne ne donne ni la moyenne de la PD, ni sa queue. En écartant l’<strong>incertitude prédictive</strong>, l’approximation joue, par convexité, toujours dans le même sens : elle <strong>sous-estime</strong> le niveau des PD.</p>
 <div class="why">
 <p><span class="label">Pourquoi c’est important</span></p>
 <ul>
-<li><strong>Effet sur la PD à trois ans.</strong> Le <em>plug-in</em> (PD évaluée sur la trajectoire moyenne) et la <em>perfect foresight</em> (trajectoire supposée connue) écartent tout ou partie de l’incertitude prédictive. Dans notre application, ces approximations sous-estiment de 7 à 8 % la PD moyenne projetée à trois ans.</li>
+<li><strong>Des niveaux de PD sous-estimés.</strong> Le <em>plug-in</em> (PD évaluée sur la trajectoire moyenne) et la <em>perfect foresight</em> (chemin supposé connu) écartent tout ou partie de l’incertitude prédictive : dans notre application, les PD à trois ans sont sous-estimées de <span class="math inline">7</span> à <span class="math inline">8\%</span>, un biais direct sur provisions et capital.</li>
 <li><strong>Pas de mesure de queue.</strong> Ni quantile de PD, ni expected shortfall : seule sort une trajectoire centrale, alors que le risque se matérialise dans la queue, plus réactive.</li>
 <li><strong>Une hypothèse peu documentée.</strong> La dispersion du facteur de crédit est écartée sans justification explicite, un point d’attention croissant pour la validation interne comme pour le superviseur.</li>
 </ul>
@@ -298,42 +300,142 @@ window.Quarto = {
 </section>
 <section id="corriger-le-niveau-révéler-la-queue-larchitecture" class="level2">
 <h2 class="anchored" data-anchor-id="corriger-le-niveau-révéler-la-queue-larchitecture">2. Corriger le niveau, révéler la queue : l’architecture</h2>
-<p>Le cadre se lit comme une chaîne de transmission : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l’incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément — et c’est là le point décisif en pratique : <strong>chaque bloc est remplaçable par le modèle interne déjà validé de l’établissement.</strong></p>
+<p>Le cadre se lit comme une chaîne de transmission (figure 1) : un choc macro-financier entre à gauche ; à droite sortent une PD moyenne corrigée de l’incertitude prédictive et deux mesures de queue. Entre les deux, deux blocs seulement, estimés séparément, et c’est là le point décisif en pratique : chaque bloc est <strong>remplaçable par le modèle interne déjà validé</strong> de l’établissement. Un bloc macro-financier dynamique (VAR bayésien) propage le choc ; le satellite de crédit reconstruit un facteur systémique <span class="math inline">Z_t</span>, cartographié en PD via le modèle de Merton–Vasicek.</p>
 <div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
-<figure class="arch figure"><svg viewbox="0 0 1160 300" role="img" aria-label="Stress tests de crédit"><defs><marker id="ah-stress-credit" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="105" y="140" text-anchor="middle">CHOC</text><text class="arch-in-s" x="105" y="162" text-anchor="middle">Innovation</text><text class="arch-in-s" x="105" y="180" text-anchor="middle">macro-financière</text><line class="arch-arrow" x1="200" y1="148" x2="220" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="224" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="248" cy="96" r="13"></circle><text class="arch-brick-numt" x="248" y="101" text-anchor="middle">2</text><text class="arch-title" x="313" y="140" text-anchor="middle">VAR MACRO</text><text class="arch-sub" x="313" y="162" text-anchor="middle">Propage le choc dans</text><text class="arch-sub" x="313" y="180" text-anchor="middle">l’économie</text><line class="arch-arrow" x1="408" y1="148" x2="428" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="432" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="456" cy="96" r="13"></circle><text class="arch-brick-numt" x="456" y="101" text-anchor="middle">3</text><text class="arch-title" x="521" y="140" text-anchor="middle">SATELLITE</text><text class="arch-sub" x="521" y="162" text-anchor="middle">Facteur de crédit</text><text class="arch-sub" x="521" y="180" text-anchor="middle">systémique Z</text><line class="arch-arrow" x1="616" y1="148" x2="636" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="640" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="664" cy="96" r="13"></circle><text class="arch-brick-numt" x="664" y="101" text-anchor="middle">4</text><text class="arch-title" x="729" y="140" text-anchor="middle">CARTOGRAPHIE</text><text class="arch-sub" x="729" y="162" text-anchor="middle">Merton–Vasicek π(Z)</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 72, 842 72" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">PD moyenne</text><text class="arch-out-s" x="866" y="90">corrigée de l’incertitude prédictive</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 150, 842 150" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out is-tail" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">PD-at-Risk</text><text class="arch-out-s" x="866" y="168">quantile de queue</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 228, 842 228" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">Expected shortfall</text><text class="arch-out-s" x="866" y="246">moyenne au-delà du seuil</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l’établissement.</figcaption></figure>
+<figure class="arch figure"><svg viewbox="0 0 1160 300" role="img" aria-label="Stress tests de crédit"><defs><marker id="ah-stress-credit" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="105" y="140" text-anchor="middle">CHOC</text><text class="arch-in-s" x="105" y="162" text-anchor="middle">Innovation</text><text class="arch-in-s" x="105" y="180" text-anchor="middle">macro-financière</text><line class="arch-arrow" x1="200" y1="148" x2="220" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="224" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="248" cy="96" r="13"></circle><text class="arch-brick-numt" x="248" y="101" text-anchor="middle">2</text><text class="arch-title" x="313" y="140" text-anchor="middle">VAR MACRO</text><text class="arch-sub" x="313" y="162" text-anchor="middle">Propage le choc dans</text><text class="arch-sub" x="313" y="180" text-anchor="middle">l’économie</text><line class="arch-arrow" x1="408" y1="148" x2="428" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="432" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="456" cy="96" r="13"></circle><text class="arch-brick-numt" x="456" y="101" text-anchor="middle">3</text><text class="arch-title" x="521" y="140" text-anchor="middle">SATELLITE</text><text class="arch-sub" x="521" y="162" text-anchor="middle">Facteur de crédit</text><text class="arch-sub" x="521" y="180" text-anchor="middle">systémique Z</text><line class="arch-arrow" x1="616" y1="148" x2="636" y2="148" marker-end="url(#ah-stress-credit)"></line><rect class="arch-brick" x="640" y="96" width="178" height="104" rx="8"></rect><circle class="arch-brick-num" cx="664" cy="96" r="13"></circle><text class="arch-brick-numt" x="664" y="101" text-anchor="middle">4</text><text class="arch-title" x="729" y="140" text-anchor="middle">CARTOGRAPHIE</text><text class="arch-sub" x="729" y="162" text-anchor="middle">Merton–Vasicek π(Z)</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 72, 842 72" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">PD moyenne</text><text class="arch-out-s" x="866" y="90">corrigée de l’incertitude prédictive</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 150, 842 150" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out is-tail" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">PD-at-Risk</text><text class="arch-out-s" x="866" y="168">quantile de queue</text><path class="arch-arrow" d="M 824 148 C 844 148, 822 228, 842 228" marker-end="url(#ah-stress-credit)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">Expected shortfall</text><text class="arch-out-s" x="866" y="246">moyenne au-delà du seuil</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Figure 1. Une architecture modulaire à deux blocs et trois sorties, en forme close : PD moyenne corrigée de l’incertitude prédictive, quantile de queue et expected shortfall.</figcaption></figure>
 <div class="listing-no-matching d-none">Aucun article correspondant</div>
 </div>
-<p><strong>Une seule équation, déjà familière aux équipes de crédit.</strong> Le cœur du satellite est le modèle de Merton–Vasicek, socle du cadre IRB de Bâle, qui relie le facteur systémique <span class="math inline">Z_t</span> à la PD conditionnelle du portefeuille :</p>
-<p><span class="math display">\pi(Z_t) \;=\; \Phi\!\left(\frac{\Phi^{-1}(p) - \sqrt{\rho}\,Z_t}{\sqrt{1-\rho}}\right)</span></p>
-<p>où <span class="math inline">\Phi</span> est la fonction de répartition de la loi normale, <span class="math inline">p</span> la PD de long terme et <span class="math inline">\rho</span> la corrélation d’actifs. Rien de nouveau ici : c’est précisément parce que cette équation est déjà en place que le cadre ne demande aucun re-développement.</p>
+<p><strong>Une seule équation, déjà familière aux équipes de crédit.</strong> Le cœur du satellite est le modèle de Merton–Vasicek (Merton, 1974 ; Vasicek, 2002 ; Gordy, 2003), le socle du cadre IRB de Bâle, qui relie le facteur systémique <span class="math inline">Z_t</span> à la PD conditionnelle du portefeuille :</p>
+<p><span class="math display">\pi(Z_t) = \Phi\!\left( \frac{\Phi^{-1}(p)-\sqrt{\rho}\,Z_t}{\sqrt{1-\rho}} \right),</span></p>
+<p>où <span class="math inline">\Phi</span> est la loi normale centrée réduite, <span class="math inline">p</span> la PD moyenne de long terme et <span class="math inline">\rho</span> la corrélation d’actifs. L’apport méthodologique tient en un geste : au lieu d’évaluer cette fonction sur une trajectoire moyenne, on y injecte la <em>distribution conditionnelle</em> complète de <span class="math inline">Z_t</span>. Le résultat tombe en forme fermée, sans simulation : la réponse de la PD moyenne, désormais corrigée de l’incertitude prédictive, celle de ses quantiles (le <strong>PD-at-Risk</strong>, transposition du Growth-at-Risk (Adrian et al., 2019)) et celle de l’<strong>expected shortfall</strong>, la mesure cohérente vers laquelle le risque de marché a déjà basculé.</p>
 <div class="why">
 <p><span class="label">Ce que le cadre apporte</span></p>
 <ul>
-<li><strong>Une moyenne qui intègre l’incertitude prédictive.</strong> Le calcul de la PD moyenne tient compte de la distribution complète du facteur de crédit.</li>
-<li><strong>Deux mesures de queue, gratuitement.</strong> PD-at-Risk et expected shortfall sortent en forme close, au même coût de calcul, sans simulation Monte-Carlo.</li>
-<li><strong>Modularité.</strong> Le bloc macro et le satellite sont estimés séparément ; chacun peut être remplacé par le modèle interne de l’établissement sans toucher au reste.</li>
-<li><strong>Généralité.</strong> Le stress test géopolitique sur le crédit américain n’est qu’une preuve de concept : la même mécanique s’applique aux scénarios climatiques, monétaires ou sectoriels.</li>
+<li><strong>Aucun re-développement</strong> : le satellite interne, déjà documenté et validé, reste en place ; on lui « branche » un bloc macro-financier dynamique en amont.</li>
+<li><strong>Les historiques tels qu’ils sont</strong> : le VAR exploite l’historique macro-financier long, le satellite s’estime sur la fenêtre plus courte des défauts, sans troncature ni raccord artificiel.</li>
+<li><strong>Une correction de niveau et deux mesures de queue, en forme fermée</strong> : PD moyenne corrigée, PD-at-Risk <em>et</em> expected shortfall, au même coût de calcul, sans simulation d’événements de défaut. Industrialisable sur tout un catalogue de scénarios.</li>
+<li><strong>Gouvernance et traçabilité</strong> : sortie analytique et reproductible, où chaque canal de transmission du scénario est explicite. Un atout en validation comme face au superviseur.</li>
 </ul>
 </div>
 <div class="storm-anim" data-anim="credit">
 
 </div>
 </section>
+<section id="démonstration-un-stress-test-géopolitique-sur-le-crédit-américain" class="level2">
+<h2 class="anchored" data-anchor-id="démonstration-un-stress-test-géopolitique-sur-le-crédit-américain">3. Démonstration : un stress test géopolitique sur le crédit américain</h2>
+<p>Nous appliquons le cadre à un stress test géopolitique. Le choc est mesuré par le <em>Geopolitical Risk Index</em> de Caldara et Iacoviello (2022) ; le bloc macro-financier est estimé sur données trimestrielles américaines de 1986 à 2024 ; le satellite s’appuie sur le taux de défaut agrégé des banques commerciales américaines, avec une PD de long terme calibrée à <span class="math inline">\hat p = 3{,}20\%</span> et une corrélation d’actifs <span class="math inline">\hat\rho = 0{,}051</span>. Un choc d’un écart-type sur l’indice est propagé jusqu’aux trois réponses de PD (figure 2).</p>
+<div class="note-figure">
+<div class="note-figs">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/notes/figures/stress-credit-pd-at-risk.png" class="img-fluid figure-img"></p>
+<figcaption>PD-at-Risk (quantile de queue).</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/notes/figures/stress-credit-expected-shortfall.png" class="img-fluid figure-img"></p>
+<figcaption>Expected shortfall.</figcaption>
+</figure>
+</div>
+</div>
+<div class="note-cap">
+<p>Figure 2. Réponses de queue de la PD à un choc géopolitique d’un écart-type : réponse moyenne (médiane a posteriori, bande à <span class="math inline">68\%</span>) contre mesures de queue à <span class="math inline">99\%</span> et <span class="math inline">99{,}9\%</span>.</p>
+</div>
+</div>
+<div class="keyfigs">
+<div class="kf">
+<p><span class="v">+0,033 pp</span> Pic de la PD moyenne, au 3<sup>e</sup> trimestre</p>
+</div>
+<div class="kf">
+<p><span class="v">+0,059 pp</span> Pic de l’expected shortfall à <span class="math inline">99{,}9\%</span></p>
+</div>
+<div class="kf">
+<p><span class="v">× 4,6</span> Écart de réponse selon l’état du cycle de crédit</p>
+</div>
+</div>
+<p>Pris isolément, l’effet moyen corrigé reste modeste : <span class="math inline">+0{,}033</span> point de pourcentage au pic. Une lecture en trajectoire moyenne s’arrêterait là, sur un choc absorbable. Les deux résultats suivants montrent ce que cette lecture laisse de côté.</p>
+<p><strong>La queue réagit une fois et demie à deux fois plus que le centre.</strong> La courbure de la cartographie amplifie la réponse vers les quantiles extrêmes, ceux-là mêmes qui pilotent le capital et les provisions : le PD-at-Risk culmine à <span class="math inline">+0{,}050</span> point à <span class="math inline">99\%</span> et <span class="math inline">+0{,}056</span> à <span class="math inline">99{,}9\%</span>, contre <span class="math inline">+0{,}033</span> pour la moyenne. L’expected shortfall va plus loin, à <span class="math inline">+0{,}053</span> et <span class="math inline">+0{,}059</span> point : il capture non seulement le seuil de queue, mais la sévérité moyenne au-delà. Aucun de ces chiffres n’est accessible en trajectoire moyenne.</p>
+<p><strong>Le même choc peut peser jusqu’à <span class="math inline">4{,}6</span> fois plus selon le moment.</strong> À choc identique, la réponse au pic varie d’un facteur <span class="math inline">4{,}6</span> selon l’état initial du crédit observé dans l’historique. L’illustration la plus parlante est une inversion (tableau 1) : la guerre du Golfe, choc plus petit mais survenu sur un crédit déjà dégradé, produit une réponse de PD supérieure à celle du 11 septembre, pourtant un choc plus violent. Un scénario calibré sans conditionnement à l’état courant du crédit peut donc sous-évaluer sensiblement l’impact.</p>
+<table class="caption-top table">
+<caption>Tableau 1. Épisodes géopolitiques évalués dans leurs conditions initiales : le « choc réel » rejoue l’innovation historique ; le choc commun d’un écart-type isole la dépendance à l’état du crédit.</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Épisode</th>
+<th style="text-align: center;">PD à la date (pp)</th>
+<th style="text-align: center;">Choc (é.-t.)</th>
+<th style="text-align: center;">Pic <span class="math inline">\Delta</span>PD choc réel (pp)</th>
+<th style="text-align: center;">Pic <span class="math inline">\Delta</span>PD choc 1 é.-t. (pp)</th>
+<th style="text-align: center;">Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Guerre du Golfe (1990 T3)</td>
+<td style="text-align: center;">4,59</td>
+<td style="text-align: center;">3,14</td>
+<td style="text-align: center;">0,278</td>
+<td style="text-align: center;">0,087</td>
+<td style="text-align: center;">2,59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">11 septembre (2001 T3)</td>
+<td style="text-align: center;">1,97</td>
+<td style="text-align: center;">4,45</td>
+<td style="text-align: center;">0,219</td>
+<td style="text-align: center;">0,047</td>
+<td style="text-align: center;">1,41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Invasion de l’Ukraine (2022 T1)</td>
+<td style="text-align: center;">1,36</td>
+<td style="text-align: center;">3,54</td>
+<td style="text-align: center;">0,106</td>
+<td style="text-align: center;">0,029</td>
+<td style="text-align: center;">0,87</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fin d’échantillon (2025 T1)</td>
+<td style="text-align: center;">1,45</td>
+<td style="text-align: center;">n.a.</td>
+<td style="text-align: center;">n.a.</td>
+<td style="text-align: center;">0,033</td>
+<td style="text-align: center;">1,00</td>
+</tr>
+</tbody>
+</table>
+<div class="retenir">
+<p><span class="label">Lecture pour les équipes risques</span></p>
+<p>L’enseignement n’est pas « le risque géopolitique fait grimper les défauts ». C’est que la <strong>queue de distribution</strong> et l’<strong>état du cycle de crédit</strong> commandent la réponse bien plus que la taille nominale du choc, deux dimensions inaccessibles en trajectoire moyenne. Le géopolitique n’est qu’un banc d’essai : la même architecture sert tout autre scénario.</p>
+</div>
+</section>
 <section id="mise-en-œuvre" class="level2">
-<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">4. Mise en œuvre</h2>
+<p>Le déploiement suit trois étapes, sans rupture avec l’existant :</p>
 <ol type="1">
-<li><strong>Conserver le satellite de crédit interne.</strong> Le cadre se branche sur le modèle déjà validé et n’en modifie ni la spécification ni la calibration.</li>
-<li><strong>Brancher un bloc macro-financier dynamique en amont.</strong> Un VAR bayésien estimé sur l’historique suffit à propager le choc et à produire la distribution prédictive du facteur de crédit.</li>
-<li><strong>Produire les trois sorties pour chaque scénario du catalogue.</strong> PD moyenne corrigée, PD-at-Risk et expected shortfall, pour chaque horizon de projection.</li>
+<li><strong>Conserver le satellite de crédit interne.</strong> Le cadre se branche sur le modèle déjà validé et documenté ; seul le facteur systémique <span class="math inline">Z_t</span> qu’il produit est requis.</li>
+<li><strong>Brancher un bloc macro-financier dynamique en amont.</strong> Un VAR estimé sur l’historique macro-financier long, intégrant la variable de scénario retenue (géopolitique, climat, taux, incertitude, secteur).</li>
+<li><strong>Produire les trois sorties pour chaque scénario du catalogue.</strong> PD moyenne, PD-at-Risk et expected shortfall sortent en forme close, prêtes à alimenter le dossier IFRS 9 / ICAAP.</li>
 </ol>
 <div class="retenir">
 <p><span class="label">À retenir pour chaque équipe</span></p>
 <ul>
-<li><strong>Modélisation.</strong> Pour calculer la PD moyenne, appliquer le modèle de crédit à la distribution prédictive du facteur et calculer la moyenne des PD obtenues.</li>
-<li><strong>Validation.</strong> L’hypothèse implicite « dispersion du facteur de crédit négligeable » devient documentable, donc challengeable.</li>
-<li><strong>Pilotage.</strong> Provisions IFRS 9 et capital interne se décident dans la queue ; le dispositif la produit désormais explicitement.</li>
+<li><strong>Stress testing / ICAAP</strong> : un pont unique, réutilisable pour tous les scénarios du catalogue, au lieu d’un modèle <em>ad hoc</em> par exercice.</li>
+<li><strong>IFRS 9</strong> : corriger un biais de sous-estimation des PD de l’ordre de <span class="math inline">7</span> à <span class="math inline">8\%</span> à trois ans, le plus marqué dans les états dégradés qui pèsent sur les provisions.</li>
+<li><strong>Capital et provisions</strong> : disposer de l’expected shortfall en complément du quantile de queue, au même coût, comme déjà opéré en risque de marché.</li>
+<li><strong>Validation / risque de modèle</strong> : une chaîne analytique, séparable et traçable, plus simple à challenger qu’une simulation jointe opaque.</li>
+<li><strong>CRO</strong> : lire le risque dans la queue autant que dans la moyenne, et documenter la diffusion du choc jusqu’au portefeuille.</li>
 </ul>
 </div>
+<p>Ce cadre ne remplace pas les exercices existants : mêmes satellites, même coût de calcul, mais des niveaux de PD corrigés, deux mesures de queue en plus et une transmission auditable. Le groupe Square Management est à la disposition des équipes intéressées pour échanger sur son application.</p>
 </section>
 <section id="article-de-recherche-associé" class="level2">
 <h2 class="anchored" data-anchor-id="article-de-recherche-associé">Article de recherche associé</h2>
@@ -342,15 +444,17 @@ window.Quarto = {
 <p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/#contact">écrivez au collectif →</a></p>
 </div>
 <div class="partnership">
-<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+<p>Cette note s’appuie sur les travaux conduits au sein du pôle STORM (<em>Scenario-based Testing &amp; Optimization in Risk Modeling</em>) de Square Management, dédié à la modélisation et à la quantification des risques. Le pôle STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Les travaux de cette note s’appuient sur une collaboration avec le Master ESA et Square Management remercie Christophe Hurlin pour ce partenariat.</p>
 </div>
 </section>
 <section id="références" class="level2">
 <h2 class="anchored" data-anchor-id="références">Références</h2>
 <div class="refs">
 <p>Adrian, T., Boyarchenko, N. &amp; Giannone, D. (2019). Vulnerable growth. <em>American Economic Review</em>, 109(4), 1263–1289.</p>
-<p>Caldara, D. &amp; Iacoviello, M. (2022). Measuring geopolitical risk. <em>American Economic Review</em>, 112(4), 1194–1225.</p>
+<p>Caldara, D. &amp; Iacoviello, M. (2022). Measuring Geopolitical Risk. <em>American Economic Review</em>, 112(4), 1194–1225.</p>
+<p>Flament, G., Hurlin, C., Lajaunie, Q. &amp; Pull, Y. (2026). <em>Generalized Impulse Responses of Portfolio Default Probabilities: A Modular Framework with an Application to Geopolitical Risk</em>.</p>
 <p>Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. <em>Journal of Financial Intermediation</em>, 12(3), 199–232.</p>
+<p>Henry, J. &amp; Kok, C. (2013). A Macro Stress Testing Framework for Assessing Systemic Risks in the Banking Sector. In <em>Handbook of Systemic Risk</em>, 619–640.</p>
 <p>Merton, R. C. (1974). On the pricing of corporate debt: The risk structure of interest rates. <em>The Journal of Finance</em>, 29(2), 449–470.</p>
 <p>Vasicek, O. (2002). The distribution of loan portfolio value. <em>Risk</em>, 15(12), 160–162.</p>
 <p>Wilson, T. C. (1997). Portfolio credit risk. <em>RISK</em>, 10(10), 56–61.</p>

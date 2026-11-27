@@ -1,0 +1,188 @@
+---
+title: "Modélisation des interdépendances géo-sectorielles en risque de crédit : l’approche Global VAR"
+subtitle: "Un cadre GVAR géo-sectoriel pour projeter des facteurs de risque de crédit stressés, exploitables dans le cadre de stress tests internes et dans le provisionnement IFRS 9"
+description: "Les modèles satellites estimés secteur par secteur ignorent la propagation des chocs le long des chaînes de valeur. Le cadre Global VAR la paramètre, l’estime et la rend testable, à une granularité géo-sectorielle."
+date: 2026-09-01
+author:
+  - Yassir Motia
+  - Abdellah Nait Akli
+  - Charles-Emmanuel Prost
+categories: [Risque de crédit, Stress testing, Réseaux sectoriels]
+listing:
+  - id: schema
+    contents: ../../data/schemas.yml
+    include:
+      id: "gvar"
+    template: ../../templates/fr/schema.ejs
+---
+
+::: {.note-pdf}
+
+[Télécharger la note (PDF)](../../assets/notes/STORM-note-gvar-geo-sectoriel.pdf){download="STORM-note-gvar-geo-sectoriel.pdf"}
+
+:::
+
+::: {.standfirst}
+
+[En bref]{.lede}
+Les modèles satellites Hors-Retail de niveau sectoriel s’inscrivent dans une exigence de granularité désormais bien installée dans le cadre réglementaire, en particulier pour les stress tests. Mais cette granularité ne suffit pas. Les secteurs ne réagissent pas indépendamment les uns des autres, et la propagation des chocs le long des chaînes de valeur appelle une modélisation explicite de la dépendance inter-sectorielle, que les modèles satellites classiques, estimés secteur par secteur, ignorent le plus souvent. Capturer cette dépendance dans un système multivarié se heurte toutefois à la dimensionnalité, un VAR complet à $N$ secteurs et $k_i$ variables par secteur devenant trop faiblement identifié pour être exploité en projection. Cette note applique le cadre Global VAR (GVAR) à cette granularité sectorielle : chaque secteur reste modélisé séparément par un VARX\* de petite taille, augmenté d’une moyenne pondérée des facteurs des autres secteurs, l’ensemble étant empilé en un modèle global estimable. Une application illustrative sur un panel de 21 unités géo-sectorielles (trois zones, sept secteurs) en montre l’intérêt concret. L’hypothèse d’indépendance des chocs sectoriels est rejetée par les données, et un choc sur un secteur se diffuse simultanément le long de ses deux dimensions, sectorielle et géographique.
+
+:::
+
+::: {.message}
+
+[Message central]{.label}
+
+La dépendance inter-sectorielle n’est plus déduite des seules corrélations de résidus : elle est paramétrée dans le modèle satellite et estimée conjointement avec la dynamique du risque de crédit de chaque secteur composant un portefeuille. Elle devient de ce fait un objet mesurable et testable, doté d’un appareil inférentiel complet : réponses impulsionnelles (GIRFs) pour tracer la diffusion d’un choc dans le temps et à travers le réseau, décomposition de variance (FEVD) pour identifier les canaux dominants de propagation, et prévisions sous scénario convertibles en probabilités de défaut stressées par secteur et par notation.
+
+:::
+
+## 1. Ce que les modèles satellites classiques ignorent
+
+Projeter les paramètres de risque de crédit sous scénario macroéconomique est un exercice central de la gestion des risques bancaires, qu’il s’agisse de stress tests réglementaires ou d’estimation des pertes attendues (ECL) au titre d’IFRS 9. L’outil de référence, le modèle satellite, relie par régression les variables macroéconomiques aux probabilités de défaut sectorielles. On pourrait penser que des variables macroéconomiques communes suffisent à rendre compte de la dépendance entre secteurs. Elles en captent le co-mouvement, non la transmission de l’un vers l’autre le long des chaînes de valeur. Estimé secteur par secteur, le modèle satellite ne comporte aucun mécanisme de propagation, et la dépendance résiduelle, lorsqu’elle est prise en compte, se limite généralement à la corrélation des résidus (approche SUR), qui mesure la simultanéité des chocs sans en identifier le sens ni la persistance.
+
+Modéliser cette dépendance conduit naturellement à estimer conjointement les $N$ secteurs dans un VAR multivarié. Cette voie se heurte immédiatement au nombre de paramètres. Avec $k = \sum_i k_i$ variables au total, un VAR complet en requiert $k^2$ par retard, un nombre qui laisse trop peu de degrés de liberté au regard des historiques disponibles pour une estimation stable, c’est la *curse of dimensionality*. La granularité sectorielle et la modélisation explicite de la dépendance apparaissent ainsi comme deux exigences que les approches usuelles ne peuvent satisfaire simultanément.
+
+## 2. Du secteur isolé au réseau : l’architecture GVAR
+
+Le Global VAR, proposé par Pesaran, Schuermann et Weiner (2004) et appliqué au risque de crédit dès l’origine (Pesaran et al., 2006 ; Castrén, Dées et Zaher, 2010), décompose le système global en $N$ sous-modèles conditionnels de petite taille, chacun augmenté d’une moyenne pondérée des facteurs des autres unités, notée $Z^{*}_{it}$ et désignée *star variable* d’après l’astérisque qui la distingue du facteur domestique, avant de les réassembler en un modèle global estimable.
+
+::: {.why}
+
+[Deux équations à retenir]{.label}
+
+Pour chaque unité géo-sectorielle $i$, le facteur de crédit $Z_{it}$ répond à ses propres retards, à la *star variable* $Z^{*}_{it} = \widetilde{W}_i' Z_t$ et aux variables macroéconomiques du scénario $X_t$ :
+
+$$Z_{it} = \sum_{\ell=1}^{p_i} \Phi_{i\ell}\, Z_{i,t-\ell} + \Lambda_{i0}\, Z^{*}_{it} + \sum_{\ell=1}^{q_i} \Lambda_{i\ell}\, Z^{*}_{i,t-\ell} + \sum_{\ell=0}^{s_i} \beta_{i\ell}\, X_{t-\ell} + u_{it}. \tag{1}$$
+
+La matrice de poids $W$ recense les flux retenus entre unités, $\widetilde{W}_i$ en désignant la $i$-ème ligne, hors diagonale et renormalisée à somme unitaire. Elle peut être construite sur toute source de flux inter-sectoriels documentée, par exemple les tables de l’OCDE (OECD, 2023). Les $N$ sous-modèles, une fois estimés séparément, sont empilés en un système global dont la forme réduite s’écrit
+
+$$Z_t = \sum_{\ell=1}^{p} F_\ell\, Z_{t-\ell} + \sum_{\ell=0}^{s} \Psi_\ell\, X_{t-\ell} + G_0^{-1}\varepsilon_t, \qquad F_\ell = G_0^{-1} G_\ell, \quad \Psi_\ell = G_0^{-1} \beta_\ell, \tag{2}$$
+
+où $G_0 = I_N - \Lambda_0 W$ rassemble les liens contemporains entre unités et $G_\ell = \Phi_\ell + \Lambda_\ell W$ leurs liens retardés, les matrices $\Lambda_\ell$ et $\Phi_\ell$ regroupant en diagonale les coefficients des sous-modèles. Le facteur de crédit $Z_{it}$ étant ici scalaire, le système global est de dimension $N$.
+
+:::
+
+::: {#schema}
+
+:::
+
+C’est l’équation (2) qui rend visible la diffusion des chocs. L’opérateur $G_0^{-1}$, analogue en risque de crédit de l’inverse de Leontief des modèles entrées-sorties (*Input-Output*), propage un choc au sein d’un même trimestre le long du réseau encodé dans $W$. Les coefficients $\Lambda_0$ mesurent la répercussion de la dégradation des unités reliées dans $W$ sur le risque de crédit de l’unité considérée, à un taux (*pass-through rate*) propre à chacune.
+
+Les matrices $F_\ell$ et $\Psi_\ell$ prolongent ensuite l’effet dans le temps. La première combine la persistance propre de chaque secteur et ses liens retardés avec les autres unités. La seconde superpose la sensibilité de chaque unité aux variables macroéconomiques au retard $\ell$ et la redistribution de cet effet dans le réseau.
+
+::: {.why}
+
+[Ce que le cadre apporte]{.label}
+
+- **Parcimonie sous restriction interprétable.** $N$ sous-modèles de petite taille remplacent un VAR complet instable, au prix d’une structure de dépendance imposée par $W$, et sans renoncer aux réponses impulsionnelles ni à la décomposition de variance.
+- **Une propagation économiquement interprétable.** La structure de diffusion repose sur des flux documentés entre secteurs, ce qui inscrit les canaux de propagation estimés dans une réalité économique observable.
+- **Un GVAR-X directement scénarisable.** En projection, les variables macroéconomiques (PIB, taux, chômage, inflation) sont remplacées par leurs trajectoires sous un scénario EBA ou interne, dont le modèle déduit des PD stressées par secteur et par notation.
+- **Une généralisation testable.** Le modèle satellite traditionnel estimé secteur par secteur correspond au cas $\Lambda_0 = \Lambda_\ell = 0$, et la nullité de ces coefficients se teste directement.
+
+:::
+
+Au-delà de ces apports, le GVAR se distingue des modèles de diffusion entrées-sorties, notamment mobilisés dans les stress tests climatiques (Pineau et Zuñiga, 2026 ; Desnos et al., 2023), moins par sa finalité que par le point de la chaîne où il situe le réseau. La matrice entrées-sorties y sert à construire le choc, en le répercutant le long des chaînes de valeur, avant qu’il n’alimente les variables explicatives d’un modèle satellite (Pineau et Zuñiga, 2026). Le GVAR prend au contraire le scénario sectoriel comme donnée et modélise la dépendance entre les facteurs de crédit des secteurs financés, celle que les variables macroéconomiques communes n’expliquent pas à elles seules, avec un taux de répercussion estimé plutôt que fixé et une diffusion qui se prolonge sur plusieurs trimestres. Les deux approches répondent ainsi à des questions distinctes et peuvent se combiner, la seconde prenant en entrée les trajectoires produites par la première.
+
+## 3. Les hypothèses à valider {#hypotheses}
+
+Chaque sous-modèle VARX\* est soumis aux vérifications usuelles de tout modèle satellite (significativité des coefficients, stationnarité, absence d’hétéroscédasticité et d’autocorrélation des résidus). La décomposition en sous-modèles estimés séparément repose en outre sur deux hypothèses propres au GVAR, encadrées par un diagnostic de la dépendance avant et après estimation.
+
+Le préalable est le diagnostic de la dépendance. Il porte sur les résidus des modèles satellites estimés secteur par secteur, sans terme de dépendance inter-sectorielle, et détermine s’il reste une corrélation contemporaine entre unités une fois les chocs macroéconomiques communs retirés. Le test LM de dépendance en coupe transversale (Breusch et Pagan, 1980) répond à cette question. Sans dépendance résiduelle, le recours au cadre multivarié ne se justifie pas.
+
+La première hypothèse porte ensuite sur l’exogénéité faible des *star variables*. Chaque sous-modèle n’est estimable séparément que si le facteur domestique d’une unité ne contribue pas en retour à la détermination de sa *star variable*. Cette hypothèse est d’autant mieux vérifiée que le panel compte d’unités, chacune ne pesant alors qu’un poids faible dans la moyenne pondérée qui la concerne. Elle se vérifie par un test de non-causalité de Granger et par un test de causalité instantanée, lorsque la *star variable* est régressée sur les facteurs systémiques des différentes unités (Dees et al., 2007). Sa non-vérification pour une unité donnée signale un problème d’endogénéité et fragilise l’interprétation causale des réponses impulsionnelles qui la concernent.
+
+La seconde porte sur le choix de la matrice $W$. Une matrice issue des tables entrées-sorties inter-pays de l’OCDE décrit correctement l’économie dans son ensemble, mais ne décrit pas nécessairement les dépendances pertinentes au sein d’un portefeuille donné. La structure retenue reste donc un choix de modélisation, et non une contrainte imposée par les données. Sa validité se teste par un test du rapport de vraisemblance comparant le GVAR-X restreint par $W$ à un VAR-X non contraint (Candelon et Luisi, 2020).
+
+Le diagnostic initial se rejoue enfin sur les résidus du modèle estimé. Des coefficients $\lambda_{i0}$ significatifs établissent que le réseau encodé dans $W$ porte une part de la dépendance, non qu’il la porte tout entière. Une corrélation résiduelle persistante signale une dépendance qui ne transite par aucune structure de réseau, typiquement un facteur commun contemporain, que le test sur $W$ ne détecte pas puisqu’un VAR-X sous forme réduite laisse lui aussi cette composante dans ses résidus.
+
+## 4. Application empirique : 21 unités géo-sectorielles
+
+Le cadre est appliqué à trois zones (États-Unis, Europe, Japon) et sept secteurs, soit 21 unités géo-sectorielles, sur la période 2011T2–2022T2 (45 trimestres). Les facteurs de crédit $Z^s_t$ sont extraits des matrices de migration de notation par un modèle ASRF à un facteur (Belkin, Suchower et Forest, 1998), à partir des notations d’entreprises émettrices d’obligations sur les marchés financiers, suivies dans le temps par plusieurs agences (S&P, Moody’s, Fitch, Egan Jones et Japan Credit Rating). La matrice $W$ est construite sur les tableaux entrées-sorties internationaux annuels de l’OCDE, moyennés sur la période 2011–2020, et décrit donc une structure de dépendance de long terme. Des pondérations variables dans le temps sont possibles (Chudik et Pesaran, 2016), et se justifient surtout lorsque les flux connaissent des recompositions de grande ampleur. Les variables macroéconomiques du scénario proviennent de jeux de données en accès libre de la Banque mondiale, de la Federal Reserve Bank de St. Louis et de Yahoo Finance. La convention de signe est celle des facteurs systémiques, un $Z$ élevé signalant des conditions de crédit favorables, donc une probabilité de défaut basse.
+
+L’indépendance des chocs sectoriels est rejetée sans ambiguïté. Appliqué aux résidus des modèles satellites estimés secteur par secteur, donc une fois les variables macroéconomiques communes retirées, le test LM atteint 451, très au-dessus de la valeur critique de 245 à 5 %. La dépendance inter-sectorielle est statistiquement présente, ce qui légitime le recours au cadre multivarié.
+
+Le tableau 1 rassemble les coefficients $\lambda_{i0}$ estimés pour les 21 unités. Quinze d’entre eux ressortent significatifs, tous positifs.
+
+| Secteur | États-Unis | Europe | Japon |
+|:--|:-:|:-:|:-:|
+| Industrie | +0,18\* | +0,76\*\* | +0,91\*\*\* |
+| Services | +0,51\*\*\* | +0,25\* | +0,45\* |
+| Public | +0,28\* | +0,14 | −0,02 |
+| Finance | +0,27\* | +0,75\*\*\* | +0,21\* |
+| Info & Com | +0,25\* | −0,03 | +0,11 |
+| Constr. & Immo | +0,52\*\* | +0,10 | −0,03 |
+| Primaire | +0,34\*\* | +0,28\* | +0,44\*\* |
+
+: Tableau 1. Coefficients $\lambda_{i0}$ de la *star variable* estimés par unité géo-sectorielle. \*, \*\*, \*\*\* : significativité à 10 %, 5 % et 1 %. Un signe positif est celui attendu d’un mécanisme de propagation : la dégradation des unités reliées dans $W$ fait baisser $Z^{*}_{it}$, et un $\lambda_{i0}$ positif transmet cette baisse à $Z_{it}$, soit une dégradation du risque de crédit de l’unité considérée.
+
+Les sensibilités macroéconomiques vont dans le sens attendu là où elles ressortent significatives. Pour le secteur des services aux États-Unis, l’écartement du spread de taux (−0,52, 5 %) et la hausse des taux longs (−0,29, 10 %) dégradent l’un et l’autre les conditions de crédit du secteur ; sur l’Industrie japonaise, ce sont le chômage (−0,89, 10 %) et l’inflation (−0,38, 5 %).
+
+Trois résultats valident la spécification retenue. L’exogénéité faible des *star variables* est vérifiée pour dix-huit unités sur vingt-et-une. La validité de la matrice $W$ n’est pas rejetée par les données, le test du rapport de vraisemblance mené par *wild bootstrap* ne rejetant pas les restrictions issues des tables de l’OCDE. Le modèle absorbe enfin l’essentiel de la dépendance qu’il est censé capter, le test LM retombant à 280 sur les résidus du GVAR. La corrélation qui subsiste reste détectable, mais d’ampleur nettement réduite.
+
+La décomposition de la variance de l’erreur de prévision qualifie cette dépendance. À l’horizon de dix trimestres, le secteur des Services américains est le plus exposé aux chocs externes, avec près de 44 % de sa variance provenant d’autres unités, principalement de l’Industrie et de l’Information et Communication, tandis que le secteur Public et la Construction restent largement auto-déterminés (77 % à 81 % de variance propre). Le secteur de l’Industrie se dégage comme le principal émetteur de chocs systémiques.
+
+::: {.keyfigs}
+
+::: {.kf}
+[37 %]{.v}
+Part moyenne de l’impact total d’un choc sectoriel qui se matérialise hors de l’unité touchée dès le premier trimestre, sur l’ensemble des 21 chocs testés
+:::
+
+::: {.kf}
+[× 6]{.v}
+Amplitude de l’effet reçu par le principal fournisseur amont du secteur touché, par rapport à la moyenne des autres secteurs domestiques, à l’impact
+:::
+
+::: {.kf}
+[21]{.v}
+Unités géo-sectorielles estimées séparément, contre 441 paramètres par retard pour un VAR complet
+:::
+
+:::
+
+Sur l’étude de cas d’une innovation défavorable d’un écart-type sur l’Industrie américaine, la propagation opère selon deux vitesses distinctes. La diffusion inter-sectorielle domestique est quasi immédiate, le Primaire américain, principal fournisseur amont, encaissant 16,5 points de base à l’impact contre 27,6 pour l’unité touchée, tandis que la traversée des frontières prend plusieurs trimestres, le Primaire japonais culminant au troisième trimestre. La part transfrontalière de l’impact plus que double entre le premier et le quatrième trimestre. Une lecture limitée à l’horizon d’impact conclurait à tort au caractère négligeable de la dimension géographique.
+
+::: {.retenir}
+
+[Lecture pour les équipes risques]{.label}
+
+Ignorer la structure du réseau géo-sectoriel revient à amputer le canal de propagation d’une de ses deux dimensions, sectorielle ou géographique. Un secteur qui semble peu risqué pris isolément peut concentrer l’essentiel du choc reçu par les secteurs qui l’approvisionnent ou qu’il approvisionne ; à l’inverse, une exposition qui paraît diversifiée par zone géographique peut en réalité être concentrée sur un même maillon de la chaîne de valeur. Dans les deux cas, le bénéfice de diversification d’un portefeuille corporate international s’en trouve surestimé.
+
+:::
+
+## 5. Mise en œuvre
+
+Le déploiement s’appuie sur quatre briques réutilisables, chacune remplaçable par les outils internes déjà validés : l’extraction des facteurs de crédit (moteur ASRF/Vasicek existant ou une autre approche), la construction de $W$ sur les tables entrées-sorties disponibles publiquement, l’estimation des sous-modèles VARX\* secteur par secteur, dont la charge de calcul reste comparable à celle de modèles satellites classiques, et la validation du modèle par les tests décrits en [section 3](#hypotheses).
+
+Le GVAR conserve la mécanique interne des modèles satellites existants, en particulier le moteur de conversion facteur → PD ; il modifie l’équation d’estimation elle-même, en y ajoutant un terme de *star variable* qui capte la propagation inter-sectorielle. Le groupe Square Management se tient à la disposition des équipes intéressées pour échanger sur l’application de ce cadre à leurs portefeuilles et à leurs secteurs.
+
+{{< include ../_partenariat.qmd >}}
+
+## Références
+
+::: {.refs}
+
+Belkin, B., Suchower, S. & Forest, L. (1998). A one-parameter representation of credit risk and transition matrices. *CreditMetrics Monitor*, 1(3), 46–56.
+
+Breusch, T. S. & Pagan, A. R. (1980). The Lagrange multiplier test and its applications to model specification in econometrics. *The Review of Economic Studies*, 47(1), 239–253.
+
+Candelon, B. & Luisi, A. (2020). Testing for the validity of W in GVAR models.
+
+Castrén, O., Dées, S. & Zaher, F. (2010). Stress-testing euro area corporate default probabilities using a global macroeconomic model. *Journal of Financial Stability*, 6(2), 64–78.
+
+Chudik, A. & Pesaran, M. H. (2016). Theory and practice of GVAR modelling. *Journal of Economic Surveys*, 30(1), 165–197.
+
+Dees, S., di Mauro, F., Pesaran, M. H. & Smith, L. V. (2007). Exploring the international linkages of the euro area: A global VAR analysis. *Journal of Applied Econometrics*, 22(1), 1–38.
+
+Desnos, B., Le Guenedal, T., Morais, P. & Roncalli, T. (2023). From climate stress testing to climate value-at-risk: A stochastic approach. SSRN 4497124.
+
+OECD (2023). *OECD Inter-Country Input-Output Database*.
+
+Pesaran, M. H., Schuermann, T., Treutler, B.-J. & Weiner, S. M. (2006). Macroeconomic dynamics and credit risk: A global perspective. *Journal of Money, Credit and Banking*, 1211–1261.
+
+Pesaran, M. H., Schuermann, T. & Weiner, S. M. (2004). Modeling regional interdependencies using a global error-correcting macroeconometric model. *Journal of Business & Economic Statistics*, 22(2), 129–162.
+
+Pineau, E. & Zuñiga, E. (2026). Sectoral credit sensitivity to carbon price with value chain effects. *Review of World Economics*, 162(1), 285.
+
+:::

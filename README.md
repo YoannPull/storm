@@ -42,7 +42,7 @@ Most content lives in `data/` and never requires touching HTML:
 | Research papers | `data/publications.yml` |
 | Method and application cards (homepage) | `data/axes.yml` |
 | Architecture diagrams in notes | `data/schemas.yml` |
-| Technical notes | `fr/notes/*.qmd` (French only for now) |
+| Technical notes | `fr/notes/*.qmd` (French only for now); downloadable PDFs in `assets/notes/STORM-note-<page>.pdf`, figures in `assets/notes/figures/` |
 | Expertise page | `fr/expertise/index.qmd`, `en/expertise/index.qmd` |
 | About page and contacts | `fr/a-propos/index.qmd`, `en/about/index.qmd` |
 | Page not found (404) | `scripts/404.html` (copied to `docs/404.html` at each build) |

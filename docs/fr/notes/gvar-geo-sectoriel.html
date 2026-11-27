@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yassir Motia">
+<meta name="author" content="Abdellah Nait Akli">
+<meta name="author" content="Charles-Emmanuel Prost">
+<meta name="description" content="Les modèles satellites estimés secteur par secteur ignorent la propagation des chocs le long des chaînes de valeur. Le cadre Global VAR la paramètre, l’estime et la rend testable, à une granularité géo-sectorielle.">
+
+<title>Modélisation des interdépendances géo-sectorielles en risque de crédit : l’approche Global VAR – STORM</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/brand/favicon-storm.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-listing/list.min.js"></script>
+<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-11d92f49eee63fbfce3dae82d71e3e36.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-340218ab821409dc41e1ba64c7f67bd1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-schema .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-id','listing-etapes','listing-sorties','listing-legende_fr','listing-legende_en',{ data: ['index'] },{ data: ['categories'] }],
+      
+      searchColumns: ["listing-title","listing-id","listing-etapes","listing-sorties","listing-legende_fr","listing-legende_en"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-schema'] = new List('listing-schema', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script defer="" src="../../assets/katex/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/css/fonts.css">
+<link rel="stylesheet" href="../../assets/css/storm-dark.css">
+<meta property="og:title" content="Modélisation des interdépendances géo-sectorielles en risque de crédit : l’approche Global VAR – STORM">
+<meta property="og:description" content="Les modèles satellites estimés secteur par secteur ignorent la propagation des chocs le long des chaînes de valeur. Le cadre Global VAR la paramètre, l’estime et la rend testable, à une granularité géo-sectorielle.">
+<meta property="og:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta property="og:site_name" content="STORM">
+<meta property="og:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta name="twitter:title" content="Modélisation des interdépendances géo-sectorielles en risque de crédit : l’approche Global VAR – STORM">
+<meta name="twitter:description" content="Les modèles satellites estimés secteur par secteur ignorent la propagation des chocs le long des chaînes de valeur. Le cadre Global VAR la paramètre, l’estime et la rend testable, à une granularité géo-sectorielle.">
+<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<link rel="canonical" href="https://squaremanagement-storm.com/fr/notes/gvar-geo-sectoriel">
+<meta property="og:url" content="https://squaremanagement-storm.com/fr/notes/gvar-geo-sectoriel">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-md " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../fr/" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/brand/logo-storm-mark-navy.svg" alt="STORM — Quantitative Risk Collective" class="navbar-logo light-content">
+    <img src="../../assets/brand/logo-storm-mark-navy.svg" alt="STORM — Quantitative Risk Collective" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../fr/">
+    <span class="navbar-title">STORM</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../fr/expertise/"> 
+<span class="menu-text">Expertise</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../fr/actualites/"> 
+<span class="menu-text">Actualités</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../fr/publications/"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../fr/a-propos/"> 
+<span class="menu-text">À propos</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../en/"> 
+<span class="menu-text">EN</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../fr/a-propos/#contact"> 
+<span class="menu-text">Nous contacter</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Modélisation des interdépendances géo-sectorielles en risque de crédit : l’approche Global VAR</h1>
+<p class="subtitle lead">Un cadre GVAR géo-sectoriel pour projeter des facteurs de risque de crédit stressés, exploitables dans le cadre de stress tests internes et dans le provisionnement IFRS 9</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">Risque de crédit</div>
+    <div class="quarto-category">Stress testing</div>
+    <div class="quarto-category">Réseaux sectoriels</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Les modèles satellites estimés secteur par secteur ignorent la propagation des chocs le long des chaînes de valeur. Le cadre Global VAR la paramètre, l’estime et la rend testable, à une granularité géo-sectorielle.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Auteur·rice·s</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yassir Motia </p>
+             <p>Abdellah Nait Akli </p>
+             <p>Charles-Emmanuel Prost </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">1 septembre 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="note-pdf">
+<p><a href="../../assets/notes/STORM-note-gvar-geo-sectoriel.pdf" download="STORM-note-gvar-geo-sectoriel.pdf">Télécharger la note (PDF)</a></p>
+</div>
+<div class="standfirst">
+<p><span class="lede">En bref</span> Les modèles satellites Hors-Retail de niveau sectoriel s’inscrivent dans une exigence de granularité désormais bien installée dans le cadre réglementaire, en particulier pour les stress tests. Mais cette granularité ne suffit pas. Les secteurs ne réagissent pas indépendamment les uns des autres, et la propagation des chocs le long des chaînes de valeur appelle une modélisation explicite de la dépendance inter-sectorielle, que les modèles satellites classiques, estimés secteur par secteur, ignorent le plus souvent. Capturer cette dépendance dans un système multivarié se heurte toutefois à la dimensionnalité, un VAR complet à <span class="math inline">N</span> secteurs et <span class="math inline">k_i</span> variables par secteur devenant trop faiblement identifié pour être exploité en projection. Cette note applique le cadre Global VAR (GVAR) à cette granularité sectorielle : chaque secteur reste modélisé séparément par un VARX* de petite taille, augmenté d’une moyenne pondérée des facteurs des autres secteurs, l’ensemble étant empilé en un modèle global estimable. Une application illustrative sur un panel de 21 unités géo-sectorielles (trois zones, sept secteurs) en montre l’intérêt concret. L’hypothèse d’indépendance des chocs sectoriels est rejetée par les données, et un choc sur un secteur se diffuse simultanément le long de ses deux dimensions, sectorielle et géographique.</p>
+</div>
+<div class="message">
+<p><span class="label">Message central</span></p>
+<p>La dépendance inter-sectorielle n’est plus déduite des seules corrélations de résidus : elle est paramétrée dans le modèle satellite et estimée conjointement avec la dynamique du risque de crédit de chaque secteur composant un portefeuille. Elle devient de ce fait un objet mesurable et testable, doté d’un appareil inférentiel complet : réponses impulsionnelles (GIRFs) pour tracer la diffusion d’un choc dans le temps et à travers le réseau, décomposition de variance (FEVD) pour identifier les canaux dominants de propagation, et prévisions sous scénario convertibles en probabilités de défaut stressées par secteur et par notation.</p>
+</div>
+<section id="ce-que-les-modèles-satellites-classiques-ignorent" class="level2">
+<h2 class="anchored" data-anchor-id="ce-que-les-modèles-satellites-classiques-ignorent">1. Ce que les modèles satellites classiques ignorent</h2>
+<p>Projeter les paramètres de risque de crédit sous scénario macroéconomique est un exercice central de la gestion des risques bancaires, qu’il s’agisse de stress tests réglementaires ou d’estimation des pertes attendues (ECL) au titre d’IFRS 9. L’outil de référence, le modèle satellite, relie par régression les variables macroéconomiques aux probabilités de défaut sectorielles. On pourrait penser que des variables macroéconomiques communes suffisent à rendre compte de la dépendance entre secteurs. Elles en captent le co-mouvement, non la transmission de l’un vers l’autre le long des chaînes de valeur. Estimé secteur par secteur, le modèle satellite ne comporte aucun mécanisme de propagation, et la dépendance résiduelle, lorsqu’elle est prise en compte, se limite généralement à la corrélation des résidus (approche SUR), qui mesure la simultanéité des chocs sans en identifier le sens ni la persistance.</p>
+<p>Modéliser cette dépendance conduit naturellement à estimer conjointement les <span class="math inline">N</span> secteurs dans un VAR multivarié. Cette voie se heurte immédiatement au nombre de paramètres. Avec <span class="math inline">k = \sum_i k_i</span> variables au total, un VAR complet en requiert <span class="math inline">k^2</span> par retard, un nombre qui laisse trop peu de degrés de liberté au regard des historiques disponibles pour une estimation stable, c’est la <em>curse of dimensionality</em>. La granularité sectorielle et la modélisation explicite de la dépendance apparaissent ainsi comme deux exigences que les approches usuelles ne peuvent satisfaire simultanément.</p>
+</section>
+<section id="du-secteur-isolé-au-réseau-larchitecture-gvar" class="level2">
+<h2 class="anchored" data-anchor-id="du-secteur-isolé-au-réseau-larchitecture-gvar">2. Du secteur isolé au réseau : l’architecture GVAR</h2>
+<p>Le Global VAR, proposé par Pesaran, Schuermann et Weiner (2004) et appliqué au risque de crédit dès l’origine (Pesaran et al., 2006 ; Castrén, Dées et Zaher, 2010), décompose le système global en <span class="math inline">N</span> sous-modèles conditionnels de petite taille, chacun augmenté d’une moyenne pondérée des facteurs des autres unités, notée <span class="math inline">Z^{*}_{it}</span> et désignée <em>star variable</em> d’après l’astérisque qui la distingue du facteur domestique, avant de les réassembler en un modèle global estimable.</p>
+<div class="why">
+<p><span class="label">Deux équations à retenir</span></p>
+<p>Pour chaque unité géo-sectorielle <span class="math inline">i</span>, le facteur de crédit <span class="math inline">Z_{it}</span> répond à ses propres retards, à la <em>star variable</em> <span class="math inline">Z^{*}_{it} = \widetilde{W}_i' Z_t</span> et aux variables macroéconomiques du scénario <span class="math inline">X_t</span> :</p>
+<p><span class="math display">Z_{it} = \sum_{\ell=1}^{p_i} \Phi_{i\ell}\, Z_{i,t-\ell} + \Lambda_{i0}\, Z^{*}_{it} + \sum_{\ell=1}^{q_i} \Lambda_{i\ell}\, Z^{*}_{i,t-\ell} + \sum_{\ell=0}^{s_i} \beta_{i\ell}\, X_{t-\ell} + u_{it}. \tag{1}</span></p>
+<p>La matrice de poids <span class="math inline">W</span> recense les flux retenus entre unités, <span class="math inline">\widetilde{W}_i</span> en désignant la <span class="math inline">i</span>-ème ligne, hors diagonale et renormalisée à somme unitaire. Elle peut être construite sur toute source de flux inter-sectoriels documentée, par exemple les tables de l’OCDE (OECD, 2023). Les <span class="math inline">N</span> sous-modèles, une fois estimés séparément, sont empilés en un système global dont la forme réduite s’écrit</p>
+<p><span class="math display">Z_t = \sum_{\ell=1}^{p} F_\ell\, Z_{t-\ell} + \sum_{\ell=0}^{s} \Psi_\ell\, X_{t-\ell} + G_0^{-1}\varepsilon_t, \qquad F_\ell = G_0^{-1} G_\ell, \quad \Psi_\ell = G_0^{-1} \beta_\ell, \tag{2}</span></p>
+<p>où <span class="math inline">G_0 = I_N - \Lambda_0 W</span> rassemble les liens contemporains entre unités et <span class="math inline">G_\ell = \Phi_\ell + \Lambda_\ell W</span> leurs liens retardés, les matrices <span class="math inline">\Lambda_\ell</span> et <span class="math inline">\Phi_\ell</span> regroupant en diagonale les coefficients des sous-modèles. Le facteur de crédit <span class="math inline">Z_{it}</span> étant ici scalaire, le système global est de dimension <span class="math inline">N</span>.</p>
+</div>
+<div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
+<figure class="arch figure"><svg viewbox="0 0 1160 300" role="img" aria-label="Global VAR géo-sectoriel"><defs><marker id="ah-gvar" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="96" width="247" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="96" r="13"></circle><text class="arch-brick-numt" x="40" y="101" text-anchor="middle">1</text><text class="arch-in-t" x="139.5" y="140" text-anchor="middle">VARX*</text><text class="arch-in-s" x="139.5" y="162" text-anchor="middle">Unité 1</text><line class="arch-arrow" x1="269" y1="148" x2="289" y2="148" marker-end="url(#ah-gvar)"></line><rect class="arch-brick" x="293" y="96" width="247" height="104" rx="8"></rect><circle class="arch-brick-num" cx="317" cy="96" r="13"></circle><text class="arch-brick-numt" x="317" y="101" text-anchor="middle">2</text><text class="arch-title" x="416.5" y="140" text-anchor="middle">VARX*</text><text class="arch-sub" x="416.5" y="162" text-anchor="middle">Unité N</text><line class="arch-arrow" x1="546" y1="148" x2="566" y2="148" marker-end="url(#ah-gvar)"></line><rect class="arch-brick" x="570" y="96" width="247" height="104" rx="8"></rect><circle class="arch-brick-num" cx="594" cy="96" r="13"></circle><text class="arch-brick-numt" x="594" y="101" text-anchor="middle">3</text><text class="arch-title" x="693.5" y="140" text-anchor="middle">GVAR-X GLOBAL</text><text class="arch-sub" x="693.5" y="162" text-anchor="middle">forme réduite, dim. N</text><path class="arch-arrow" d="M 823 148 C 843 148, 822 72, 842 72" marker-end="url(#ah-gvar)"></path><rect class="arch-out" x="846" y="40" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="70">GIRFs</text><text class="arch-out-s" x="866" y="90"></text><path class="arch-arrow" d="M 823 148 C 843 148, 822 150, 842 150" marker-end="url(#ah-gvar)"></path><rect class="arch-out" x="846" y="118" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="148">FEVD</text><text class="arch-out-s" x="866" y="168"></text><path class="arch-arrow" d="M 823 148 C 843 148, 822 228, 842 228" marker-end="url(#ah-gvar)"></path><rect class="arch-out is-tail" x="846" y="196" width="300" height="64" rx="8"></rect><text class="arch-out-t" x="866" y="226">PD stressées</text><text class="arch-out-s" x="866" y="246"></text></svg><figcaption class="caption"><strong>Figure 1.</strong> Figure 1. Architecture du modèle GVAR : sous-modèles sectoriels, empilement, outils de propagation.</figcaption></figure>
+<div class="listing-no-matching d-none">Aucun article correspondant</div>
+</div>
+<p>C’est l’équation (2) qui rend visible la diffusion des chocs. L’opérateur <span class="math inline">G_0^{-1}</span>, analogue en risque de crédit de l’inverse de Leontief des modèles entrées-sorties (<em>Input-Output</em>), propage un choc au sein d’un même trimestre le long du réseau encodé dans <span class="math inline">W</span>. Les coefficients <span class="math inline">\Lambda_0</span> mesurent la répercussion de la dégradation des unités reliées dans <span class="math inline">W</span> sur le risque de crédit de l’unité considérée, à un taux (<em>pass-through rate</em>) propre à chacune.</p>
+<p>Les matrices <span class="math inline">F_\ell</span> et <span class="math inline">\Psi_\ell</span> prolongent ensuite l’effet dans le temps. La première combine la persistance propre de chaque secteur et ses liens retardés avec les autres unités. La seconde superpose la sensibilité de chaque unité aux variables macroéconomiques au retard <span class="math inline">\ell</span> et la redistribution de cet effet dans le réseau.</p>
+<div class="why">
+<p><span class="label">Ce que le cadre apporte</span></p>
+<ul>
+<li><strong>Parcimonie sous restriction interprétable.</strong> <span class="math inline">N</span> sous-modèles de petite taille remplacent un VAR complet instable, au prix d’une structure de dépendance imposée par <span class="math inline">W</span>, et sans renoncer aux réponses impulsionnelles ni à la décomposition de variance.</li>
+<li><strong>Une propagation économiquement interprétable.</strong> La structure de diffusion repose sur des flux documentés entre secteurs, ce qui inscrit les canaux de propagation estimés dans une réalité économique observable.</li>
+<li><strong>Un GVAR-X directement scénarisable.</strong> En projection, les variables macroéconomiques (PIB, taux, chômage, inflation) sont remplacées par leurs trajectoires sous un scénario EBA ou interne, dont le modèle déduit des PD stressées par secteur et par notation.</li>
+<li><strong>Une généralisation testable.</strong> Le modèle satellite traditionnel estimé secteur par secteur correspond au cas <span class="math inline">\Lambda_0 = \Lambda_\ell = 0</span>, et la nullité de ces coefficients se teste directement.</li>
+</ul>
+</div>
+<p>Au-delà de ces apports, le GVAR se distingue des modèles de diffusion entrées-sorties, notamment mobilisés dans les stress tests climatiques (Pineau et Zuñiga, 2026 ; Desnos et al., 2023), moins par sa finalité que par le point de la chaîne où il situe le réseau. La matrice entrées-sorties y sert à construire le choc, en le répercutant le long des chaînes de valeur, avant qu’il n’alimente les variables explicatives d’un modèle satellite (Pineau et Zuñiga, 2026). Le GVAR prend au contraire le scénario sectoriel comme donnée et modélise la dépendance entre les facteurs de crédit des secteurs financés, celle que les variables macroéconomiques communes n’expliquent pas à elles seules, avec un taux de répercussion estimé plutôt que fixé et une diffusion qui se prolonge sur plusieurs trimestres. Les deux approches répondent ainsi à des questions distinctes et peuvent se combiner, la seconde prenant en entrée les trajectoires produites par la première.</p>
+</section>
+<section id="hypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="hypotheses">3. Les hypothèses à valider</h2>
+<p>Chaque sous-modèle VARX* est soumis aux vérifications usuelles de tout modèle satellite (significativité des coefficients, stationnarité, absence d’hétéroscédasticité et d’autocorrélation des résidus). La décomposition en sous-modèles estimés séparément repose en outre sur deux hypothèses propres au GVAR, encadrées par un diagnostic de la dépendance avant et après estimation.</p>
+<p>Le préalable est le diagnostic de la dépendance. Il porte sur les résidus des modèles satellites estimés secteur par secteur, sans terme de dépendance inter-sectorielle, et détermine s’il reste une corrélation contemporaine entre unités une fois les chocs macroéconomiques communs retirés. Le test LM de dépendance en coupe transversale (Breusch et Pagan, 1980) répond à cette question. Sans dépendance résiduelle, le recours au cadre multivarié ne se justifie pas.</p>
+<p>La première hypothèse porte ensuite sur l’exogénéité faible des <em>star variables</em>. Chaque sous-modèle n’est estimable séparément que si le facteur domestique d’une unité ne contribue pas en retour à la détermination de sa <em>star variable</em>. Cette hypothèse est d’autant mieux vérifiée que le panel compte d’unités, chacune ne pesant alors qu’un poids faible dans la moyenne pondérée qui la concerne. Elle se vérifie par un test de non-causalité de Granger et par un test de causalité instantanée, lorsque la <em>star variable</em> est régressée sur les facteurs systémiques des différentes unités (Dees et al., 2007). Sa non-vérification pour une unité donnée signale un problème d’endogénéité et fragilise l’interprétation causale des réponses impulsionnelles qui la concernent.</p>
+<p>La seconde porte sur le choix de la matrice <span class="math inline">W</span>. Une matrice issue des tables entrées-sorties inter-pays de l’OCDE décrit correctement l’économie dans son ensemble, mais ne décrit pas nécessairement les dépendances pertinentes au sein d’un portefeuille donné. La structure retenue reste donc un choix de modélisation, et non une contrainte imposée par les données. Sa validité se teste par un test du rapport de vraisemblance comparant le GVAR-X restreint par <span class="math inline">W</span> à un VAR-X non contraint (Candelon et Luisi, 2020).</p>
+<p>Le diagnostic initial se rejoue enfin sur les résidus du modèle estimé. Des coefficients <span class="math inline">\lambda_{i0}</span> significatifs établissent que le réseau encodé dans <span class="math inline">W</span> porte une part de la dépendance, non qu’il la porte tout entière. Une corrélation résiduelle persistante signale une dépendance qui ne transite par aucune structure de réseau, typiquement un facteur commun contemporain, que le test sur <span class="math inline">W</span> ne détecte pas puisqu’un VAR-X sous forme réduite laisse lui aussi cette composante dans ses résidus.</p>
+</section>
+<section id="application-empirique-21-unités-géo-sectorielles" class="level2">
+<h2 class="anchored" data-anchor-id="application-empirique-21-unités-géo-sectorielles">4. Application empirique : 21 unités géo-sectorielles</h2>
+<p>Le cadre est appliqué à trois zones (États-Unis, Europe, Japon) et sept secteurs, soit 21 unités géo-sectorielles, sur la période 2011T2–2022T2 (45 trimestres). Les facteurs de crédit <span class="math inline">Z^s_t</span> sont extraits des matrices de migration de notation par un modèle ASRF à un facteur (Belkin, Suchower et Forest, 1998), à partir des notations d’entreprises émettrices d’obligations sur les marchés financiers, suivies dans le temps par plusieurs agences (S&amp;P, Moody’s, Fitch, Egan Jones et Japan Credit Rating). La matrice <span class="math inline">W</span> est construite sur les tableaux entrées-sorties internationaux annuels de l’OCDE, moyennés sur la période 2011–2020, et décrit donc une structure de dépendance de long terme. Des pondérations variables dans le temps sont possibles (Chudik et Pesaran, 2016), et se justifient surtout lorsque les flux connaissent des recompositions de grande ampleur. Les variables macroéconomiques du scénario proviennent de jeux de données en accès libre de la Banque mondiale, de la Federal Reserve Bank de St.&nbsp;Louis et de Yahoo Finance. La convention de signe est celle des facteurs systémiques, un <span class="math inline">Z</span> élevé signalant des conditions de crédit favorables, donc une probabilité de défaut basse.</p>
+<p>L’indépendance des chocs sectoriels est rejetée sans ambiguïté. Appliqué aux résidus des modèles satellites estimés secteur par secteur, donc une fois les variables macroéconomiques communes retirées, le test LM atteint 451, très au-dessus de la valeur critique de 245 à 5 %. La dépendance inter-sectorielle est statistiquement présente, ce qui légitime le recours au cadre multivarié.</p>
+<p>Le tableau 1 rassemble les coefficients <span class="math inline">\lambda_{i0}</span> estimés pour les 21 unités. Quinze d’entre eux ressortent significatifs, tous positifs.</p>
+<table class="caption-top table">
+<caption>Tableau 1. Coefficients <span class="math inline">\lambda_{i0}</span> de la <em>star variable</em> estimés par unité géo-sectorielle. *, **, *** : significativité à 10 %, 5 % et 1 %. Un signe positif est celui attendu d’un mécanisme de propagation : la dégradation des unités reliées dans <span class="math inline">W</span> fait baisser <span class="math inline">Z^{*}_{it}</span>, et un <span class="math inline">\lambda_{i0}</span> positif transmet cette baisse à <span class="math inline">Z_{it}</span>, soit une dégradation du risque de crédit de l’unité considérée.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Secteur</th>
+<th style="text-align: center;">États-Unis</th>
+<th style="text-align: center;">Europe</th>
+<th style="text-align: center;">Japon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Industrie</td>
+<td style="text-align: center;">+0,18*</td>
+<td style="text-align: center;">+0,76**</td>
+<td style="text-align: center;">+0,91***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Services</td>
+<td style="text-align: center;">+0,51***</td>
+<td style="text-align: center;">+0,25*</td>
+<td style="text-align: center;">+0,45*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Public</td>
+<td style="text-align: center;">+0,28*</td>
+<td style="text-align: center;">+0,14</td>
+<td style="text-align: center;">−0,02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Finance</td>
+<td style="text-align: center;">+0,27*</td>
+<td style="text-align: center;">+0,75***</td>
+<td style="text-align: center;">+0,21*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Info &amp; Com</td>
+<td style="text-align: center;">+0,25*</td>
+<td style="text-align: center;">−0,03</td>
+<td style="text-align: center;">+0,11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Constr. &amp; Immo</td>
+<td style="text-align: center;">+0,52**</td>
+<td style="text-align: center;">+0,10</td>
+<td style="text-align: center;">−0,03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Primaire</td>
+<td style="text-align: center;">+0,34**</td>
+<td style="text-align: center;">+0,28*</td>
+<td style="text-align: center;">+0,44**</td>
+</tr>
+</tbody>
+</table>
+<p>Les sensibilités macroéconomiques vont dans le sens attendu là où elles ressortent significatives. Pour le secteur des services aux États-Unis, l’écartement du spread de taux (−0,52, 5 %) et la hausse des taux longs (−0,29, 10 %) dégradent l’un et l’autre les conditions de crédit du secteur ; sur l’Industrie japonaise, ce sont le chômage (−0,89, 10 %) et l’inflation (−0,38, 5 %).</p>
+<p>Trois résultats valident la spécification retenue. L’exogénéité faible des <em>star variables</em> est vérifiée pour dix-huit unités sur vingt-et-une. La validité de la matrice <span class="math inline">W</span> n’est pas rejetée par les données, le test du rapport de vraisemblance mené par <em>wild bootstrap</em> ne rejetant pas les restrictions issues des tables de l’OCDE. Le modèle absorbe enfin l’essentiel de la dépendance qu’il est censé capter, le test LM retombant à 280 sur les résidus du GVAR. La corrélation qui subsiste reste détectable, mais d’ampleur nettement réduite.</p>
+<p>La décomposition de la variance de l’erreur de prévision qualifie cette dépendance. À l’horizon de dix trimestres, le secteur des Services américains est le plus exposé aux chocs externes, avec près de 44 % de sa variance provenant d’autres unités, principalement de l’Industrie et de l’Information et Communication, tandis que le secteur Public et la Construction restent largement auto-déterminés (77 % à 81 % de variance propre). Le secteur de l’Industrie se dégage comme le principal émetteur de chocs systémiques.</p>
+<div class="keyfigs">
+<div class="kf">
+<p><span class="v">37 %</span> Part moyenne de l’impact total d’un choc sectoriel qui se matérialise hors de l’unité touchée dès le premier trimestre, sur l’ensemble des 21 chocs testés</p>
+</div>
+<div class="kf">
+<p><span class="v">× 6</span> Amplitude de l’effet reçu par le principal fournisseur amont du secteur touché, par rapport à la moyenne des autres secteurs domestiques, à l’impact</p>
+</div>
+<div class="kf">
+<p><span class="v">21</span> Unités géo-sectorielles estimées séparément, contre 441 paramètres par retard pour un VAR complet</p>
+</div>
+</div>
+<p>Sur l’étude de cas d’une innovation défavorable d’un écart-type sur l’Industrie américaine, la propagation opère selon deux vitesses distinctes. La diffusion inter-sectorielle domestique est quasi immédiate, le Primaire américain, principal fournisseur amont, encaissant 16,5 points de base à l’impact contre 27,6 pour l’unité touchée, tandis que la traversée des frontières prend plusieurs trimestres, le Primaire japonais culminant au troisième trimestre. La part transfrontalière de l’impact plus que double entre le premier et le quatrième trimestre. Une lecture limitée à l’horizon d’impact conclurait à tort au caractère négligeable de la dimension géographique.</p>
+<div class="retenir">
+<p><span class="label">Lecture pour les équipes risques</span></p>
+<p>Ignorer la structure du réseau géo-sectoriel revient à amputer le canal de propagation d’une de ses deux dimensions, sectorielle ou géographique. Un secteur qui semble peu risqué pris isolément peut concentrer l’essentiel du choc reçu par les secteurs qui l’approvisionnent ou qu’il approvisionne ; à l’inverse, une exposition qui paraît diversifiée par zone géographique peut en réalité être concentrée sur un même maillon de la chaîne de valeur. Dans les deux cas, le bénéfice de diversification d’un portefeuille corporate international s’en trouve surestimé.</p>
+</div>
+</section>
+<section id="mise-en-œuvre" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">5. Mise en œuvre</h2>
+<p>Le déploiement s’appuie sur quatre briques réutilisables, chacune remplaçable par les outils internes déjà validés : l’extraction des facteurs de crédit (moteur ASRF/Vasicek existant ou une autre approche), la construction de <span class="math inline">W</span> sur les tables entrées-sorties disponibles publiquement, l’estimation des sous-modèles VARX* secteur par secteur, dont la charge de calcul reste comparable à celle de modèles satellites classiques, et la validation du modèle par les tests décrits en <a href="#hypotheses">section 3</a>.</p>
+<p>Le GVAR conserve la mécanique interne des modèles satellites existants, en particulier le moteur de conversion facteur → PD ; il modifie l’équation d’estimation elle-même, en y ajoutant un terme de <em>star variable</em> qui capte la propagation inter-sectorielle. Le groupe Square Management se tient à la disposition des équipes intéressées pour échanger sur l’application de ce cadre à leurs portefeuilles et à leurs secteurs.</p>
+<div class="note-cta">
+<p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/#contact">écrivez au collectif →</a></p>
+</div>
+<div class="partnership">
+<p>Cette note s’appuie sur les travaux conduits au sein du pôle STORM (<em>Scenario-based Testing &amp; Optimization in Risk Modeling</em>) de Square Management, dédié à la modélisation et à la quantification des risques. Le pôle STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Les travaux de cette note s’appuient sur une collaboration avec le Master ESA et Square Management remercie Christophe Hurlin pour ce partenariat.</p>
+</div>
+</section>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
+<div class="refs">
+<p>Belkin, B., Suchower, S. &amp; Forest, L. (1998). A one-parameter representation of credit risk and transition matrices. <em>CreditMetrics Monitor</em>, 1(3), 46–56.</p>
+<p>Breusch, T. S. &amp; Pagan, A. R. (1980). The Lagrange multiplier test and its applications to model specification in econometrics. <em>The Review of Economic Studies</em>, 47(1), 239–253.</p>
+<p>Candelon, B. &amp; Luisi, A. (2020). Testing for the validity of W in GVAR models.</p>
+<p>Castrén, O., Dées, S. &amp; Zaher, F. (2010). Stress-testing euro area corporate default probabilities using a global macroeconomic model. <em>Journal of Financial Stability</em>, 6(2), 64–78.</p>
+<p>Chudik, A. &amp; Pesaran, M. H. (2016). Theory and practice of GVAR modelling. <em>Journal of Economic Surveys</em>, 30(1), 165–197.</p>
+<p>Dees, S., di Mauro, F., Pesaran, M. H. &amp; Smith, L. V. (2007). Exploring the international linkages of the euro area: A global VAR analysis. <em>Journal of Applied Econometrics</em>, 22(1), 1–38.</p>
+<p>Desnos, B., Le Guenedal, T., Morais, P. &amp; Roncalli, T. (2023). From climate stress testing to climate value-at-risk: A stochastic approach. SSRN 4497124.</p>
+<p>OECD (2023). <em>OECD Inter-Country Input-Output Database</em>.</p>
+<p>Pesaran, M. H., Schuermann, T., Treutler, B.-J. &amp; Weiner, S. M. (2006). Macroeconomic dynamics and credit risk: A global perspective. <em>Journal of Money, Credit and Banking</em>, 1211–1261.</p>
+<p>Pesaran, M. H., Schuermann, T. &amp; Weiner, S. M. (2004). Modeling regional interdependencies using a global error-correcting macroeconometric model. <em>Journal of Business &amp; Economic Statistics</em>, 22(2), 129–162.</p>
+<p>Pineau, E. &amp; Zuñiga, E. (2026). Sectoral credit sensitivity to carbon price with value chain effects. <em>Review of World Economics</em>, 162(1), 285.</p>
+</div>
+
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- =========================================================================
+     Scripts communs, insérés en fin de page sur tout le site
+     (clé include-after-body de _quarto.yml).
+
+     1. Fond « horizon de densité » derrière l'accueil (.home-hero) : une
+        grande densité en poussière, la queue au-delà du quantile à 95 % en
+        bleu STORM. Elle respire lentement ; immobile si le visiteur a
+        désactivé les animations.
+     2. Animations de méthodes, à placer dans une page avec :
+          ::: {.storm-anim data-anim="credit"}   stress test de crédit
+          :::
+          ::: {.storm-anim data-anim="rst"}      reverse stress test
+          :::
+          data-anim="jeffreys"  test de Jeffreys (calibration des PD)
+          data-anim="eprocess"  surveillance en continu (e-processus)
+          data-anim="tfm"       modèle de fondation tabulaire
+        Les textes suivent la langue de la page (fr / en).
+     3. Sur l'accueil : le sélecteur entre les trois animations.
+     Chaque animation démarre quand elle entre à l'écran, et se met en pause
+     quand elle en sort.
+     ========================================================================= -->
+<style>
+/* ---- Animation : stress test de crédit (.storm-flow) -------------------- */
+/* ===== composant : schéma animé ===== */
+.storm-flow{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.sf-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sf-tabs{display:inline-flex;gap:2px;padding:3px;background:var(--bg);border:1px solid var(--line);border-radius:999px;font-family:var(--sans);font-size:13.5px}
+.sf-tabs button{all:unset;cursor:pointer;padding:4px 12px;border-radius:999px;color:var(--muted);transition:background .15s,color .15s}
+.sf-tabs button:hover{color:var(--ink)}
+.sf-tabs button[aria-pressed="true"]{background:#fff;color:#000}
+.sf-tabs button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.sf-svg{display:block;width:100%;height:auto;overflow:visible}
+.sf-node rect{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.2;transition:stroke .3s,fill .3s}
+.sf-node.on rect{stroke:#fff;fill:var(--surface-2)}
+.sf-node.swap rect{stroke:var(--signal);stroke-dasharray:5 4;fill:var(--tint)}
+.sf-node .n{font-family:var(--mono);font-size:11px;fill:var(--dim,#7d848d)}
+.sf-node .t{font-family:var(--sans);font-size:14.5px;font-weight:600;fill:var(--ink)}
+.sf-node .s{font-family:var(--sans);font-size:11.5px;fill:var(--muted)}
+.sf-node .swaplab{font-family:var(--mono);font-size:10.5px;fill:var(--primary);opacity:0;transition:opacity .4s}
+.sf-node.swap .swaplab{opacity:1}
+.sf-edge{fill:none;stroke:var(--line-strong);stroke-width:1.2}
+.sf-out rect{fill:var(--surface);stroke:var(--line);stroke-width:1.2;transition:stroke .3s,fill .3s,opacity .3s}
+.sf-out.on rect{stroke:#fff}
+.sf-out.tail.on rect{stroke:var(--signal);fill:var(--signal-tint)}
+.sf-out.off{opacity:.45}
+.sf-out .t{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:var(--ink)}
+.sf-out .v{font-family:var(--mono);font-size:15px;font-weight:500;fill:var(--ink)}
+.sf-out.tail .v{fill:var(--signal)}
+.sf-out .d{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
+.sf-mini{fill:none;stroke:#e6ebf2;stroke-width:1.3;opacity:0;transition:opacity .5s}
+.sf-mini.tailfill{fill:rgba(77,141,255,.40);stroke:none}
+.sf-mini.show{opacity:1}
+.sf-caption{font-family:var(--mono);font-size:13px;color:var(--body);min-height:2.6em;margin:6px 2px 0;padding-top:10px;border-top:1px solid var(--line)}
+.sf-caption .p{color:var(--primary)}
+.sf-caption .cur{display:inline-block;width:.55em;height:1em;vertical-align:-.15em;background:var(--primary);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.sf-foot{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+.sf-foot a{color:var(--primary);text-decoration:none}
+@media (prefers-reduced-motion:reduce){.sf-caption .cur{animation:none}}
+
+
+/* ---- Animation : reverse stress test (.rst) ----------------------------- */
+/* ===== composant : reverse stress test ===== */
+.rst{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.rst-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:4px}
+.rst-steps{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--sans);font-size:12.5px}
+.rst-steps span{padding:3px 10px;border-radius:999px;border:1px solid var(--line-strong);color:var(--dim,#7d848d);transition:all .3s}
+.rst-steps span.on{color:#000;background:#fff;border-color:#fff}
+.rst-steps span.done{color:var(--muted);border-color:var(--line-strong)}
+.rst svg{display:block;width:100%;height:auto}
+.rst .ax{stroke:var(--line-strong);stroke-width:1}
+.rst .axl{font-family:var(--sans);font-size:12px;fill:var(--muted)}
+.rst .ring{fill:none;stroke:#e9edf3;stroke-width:1;stroke-dasharray:1.5 5;stroke-opacity:.32}
+.rst .ring.live{stroke-dasharray:none;stroke-opacity:.8;stroke-width:1.2}
+.rst .front{fill:none;stroke:var(--signal);stroke-width:1.6}
+.rst .flab{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.rst .base{fill:#fff}
+.rst .blab{font-family:var(--sans);font-size:12px;fill:var(--body)}
+.rst .star{fill:var(--signal)}
+.rst .slab{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:#fff}
+.rst .hood{fill:#4d8dff;fill-opacity:0;stroke:#4d8dff;stroke-width:1.3;stroke-opacity:.95}
+.rst .hlab{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.rst .rlab{font-family:var(--mono);font-size:10px;fill:#8a9099}
+.rst .plab{font-family:var(--mono);font-size:11px;font-weight:500;fill:#fff}
+.rst .path{stroke:#fff;stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.6;fill:none}
+.rst-read{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.rst-read div{border:1px solid var(--line);border-radius:10px;padding:9px 12px;transition:border-color .3s}
+.rst-read div.on{border-color:#fff}
+.rst-read div.blue.on{border-color:var(--signal);background:var(--signal-tint)}
+.rst-read b{display:block;font-family:var(--sans);font-size:12px;font-weight:600;color:var(--ink)}
+.rst-read span{display:block;font-family:var(--mono);font-size:14px;color:var(--ink);margin-top:2px}
+.rst-read div.blue span{color:var(--signal)}
+.rst-read i{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:1px}
+.rst-cap{font-family:var(--mono);font-size:13px;color:var(--body);min-height:2.6em;margin:10px 2px 0;padding-top:10px;border-top:1px solid var(--line)}
+.rst-cap .p{color:var(--primary)}
+.rst-cap .cur{display:inline-block;width:.55em;height:1em;vertical-align:-.15em;background:var(--primary);margin-left:2px;animation:rstblink 1s steps(1) infinite}
+@keyframes rstblink{50%{opacity:0}}
+.rst-foot{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+.rst-foot a{color:var(--primary);text-decoration:none}
+@media (max-width:640px){.rst-read{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.rst-steps span:not(.on){display:none}}
+@media (prefers-reduced-motion:reduce){.rst-cap .cur{animation:none}}
+
+
+
+/* ---- Animations : validation et suivi (.va) -------------------------------- */
+.va{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.va svg{display:block;width:100%;height:auto}
+.va .va-ax{stroke:var(--line-strong);stroke-width:1}
+.va .va-tick{font-family:var(--mono);font-size:10px;fill:#8a9099}
+.va .va-lab{font-family:var(--sans);font-size:12px;fill:var(--muted)}
+.va .va-curve{fill:none;stroke:#e9edf3;stroke-width:1.6}
+.va .va-left{fill:rgba(77,141,255,.35);stroke:none}
+.va .va-pd{stroke:#fff;stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.7}
+.va .va-pdl{font-family:var(--mono);font-size:11px;fill:#fff}
+.va .va-pvl{font-family:var(--mono);font-size:11px;font-weight:500;fill:var(--signal)}
+.va .va-zone{fill:rgba(77,141,255,.07)}
+.va .va-thr{stroke:var(--signal);stroke-width:1.3;stroke-dasharray:5 4}
+.va .va-thrl{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.va .va-review{stroke:#fff;stroke-opacity:.18;stroke-width:1;stroke-dasharray:2 4}
+.va .va-rl{font-family:var(--mono);font-size:10px;fill:var(--dim,#7d848d)}
+.va .va-drift{stroke:#fff;stroke-width:1;stroke-dasharray:3 3}
+.va .va-dl{font-family:var(--sans);font-size:11.5px;fill:#c7ccd3}
+.va .va-line{fill:none;stroke:#e9edf3;stroke-width:1.8;stroke-linejoin:round}
+.va .va-line.blue{stroke:var(--signal);stroke-width:2.2}
+.va .va-al{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:#fff}
+.va-read{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:10px}
+.va-read div{border:1px solid var(--line);border-radius:10px;padding:9px 12px;transition:border-color .3s,background .3s}
+.va-read b{display:block;font-family:var(--sans);font-size:12px;font-weight:600;color:#fff}
+.va-read span{display:block;font-family:var(--mono);font-size:14px;color:#fff;margin-top:2px}
+.va-read div.blue span{color:var(--signal)}
+.va-read i{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:1px}
+.va-read div.alert{border-color:var(--signal);background:var(--signal-tint)}
+.va-read div.alert span{color:var(--signal)}
+.va-cap{font-family:var(--mono);font-size:13px;color:var(--body);min-height:2.6em;margin:10px 2px 0;padding-top:10px;border-top:1px solid var(--line)}
+.va-cap .p{color:var(--primary)}
+.va-cap .cur{display:inline-block;width:.55em;height:1em;vertical-align:-.15em;background:var(--primary);margin-left:2px;animation:vablink 1s steps(1) infinite}
+@keyframes vablink{50%{opacity:0}}
+.va-foot{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+.va-foot a{color:var(--primary)}
+.va-tag{font-family:var(--mono);font-size:11px;color:var(--dim,#7d848d)}
+.anim-group .lede-p{font-style:italic;color:var(--muted);margin:0 0 1rem}
+
+/* Jeffreys (portefeuille à faible taux de défaut) et surveillance haute fréquence */
+.va .va-row{font-family:var(--sans);font-size:13px;font-weight:600;fill:#fff}
+.va .va-verdict{font-family:var(--mono);font-size:14px;fill:#e9edf3}
+.va .va-verdict.bad{fill:var(--signal)}
+.va .va-pvt{font-family:var(--mono);font-size:12px;fill:#8a9099}
+.va .va-cnt{font-family:var(--mono);font-size:11px;fill:#c7ccd3}
+.va .va-price{fill:none;stroke:#e9edf3;stroke-width:1.4;stroke-linejoin:round}
+.va .va-eline{fill:none;stroke:#8a9099;stroke-width:1.4}
+.va .va-eline.on{stroke:var(--signal);stroke-width:1.8}
+.va .va-earea{fill:rgba(138,144,153,.12)}
+.va .va-earea.on{fill:rgba(77,141,255,.28)}
+.va-tabs{display:inline-flex;gap:2px;padding:3px;margin-bottom:6px;background:var(--bg);border:1px solid var(--line-strong);border-radius:999px;font-family:var(--sans);font-size:13px}
+.va-tabs button{all:unset;cursor:pointer;padding:4px 12px;border-radius:999px;color:var(--muted)}
+.va-tabs button:hover{color:#fff}
+.va-tabs button[aria-pressed="true"]{background:#fff;color:#000}
+.va-tabs button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.va .va-ticks{stroke:var(--signal);stroke-width:1.6}
+.va .va-fa{font-family:var(--mono);font-size:11px;fill:var(--signal)}
+.va .va-rev{font-family:var(--mono);font-size:9.5px;fill:var(--dim,#7d848d)}
+
+.va .va-fl .va-flagl{stroke-width:1;stroke-dasharray:2 3}
+.va .va-fl.false .va-flagl{stroke:rgba(77,141,255,.75)}
+.va .va-fl.true .va-flagl{stroke:#fff}
+.va .va-fl.false .va-flag{fill:var(--signal)}
+.va .va-fl.true .va-flag{fill:#fff}
+.va .va-flagt{font-family:var(--mono);font-size:10.5px;fill:var(--signal)}
+.va .va-fl.true .va-flagt{fill:#fff;font-weight:500}
+.va .va-gbg{fill:#15171a}
+.va .va-gfill{fill:#8a9099;transition:fill .2s}
+.va .va-gfill.on{fill:var(--signal)}
+.va .va-gthr{stroke:#fff;stroke-width:1.2}
+.va .va-lab tspan{font-size:11px}
+
+.sf-phase{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;pointer-events:none}
+.sf-phase span{position:relative;padding:0 0 5px;color:var(--dim,#7d848d);transition:color .4s}
+.sf-phase span::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--line);transition:background .4s}
+.sf-phase span.on{color:#fff}
+.sf-phase span.on::after{background:var(--signal)}
+@media (max-width:600px){.sf-phase{gap:10px;font-size:10px;letter-spacing:0}}
+
+.tfm svg { margin:.6rem 0; text-anchor:middle; }
+.tfm text { font-family:var(--sans); }
+.tfm .va-cap { display:grid; }
+.tfm .va-cap span { grid-area:1 / 1; }
+.tfm .tfm-label { font-size:14px; font-weight:600; fill:var(--ink); }
+.tfm .tfm-detail,.tfm .tfm-outcome { font-size:12px; fill:var(--muted); }
+.tfm .tfm-outcome { font-family:var(--mono); font-size:10.5px; }
+.tfm .tfm-box,.tfm .tfm-chip { fill:var(--surface-2); stroke:var(--line-strong); }
+.tfm .tfm-input,.tfm .tfm-dial { fill:var(--signal-tint); stroke:var(--line-strong); }
+.tfm .tfm-input,.tfm .tfm-chip.active { stroke:var(--signal); }
+.tfm .tfm-pattern { fill:none; stroke:var(--signal); stroke-width:2; stroke-dasharray:1; }
+.tfm .tfm-default .tfm-avatar { stroke:var(--signal); }
+.tfm .tfm-default .tfm-outcome { fill:var(--signal); }
+.tfm .tfm-avatar { fill:var(--surface); stroke:var(--line-strong); }
+.tfm .tfm-person { stroke:var(--body); fill:none; stroke-width:1.5; stroke-linecap:round; }
+.tfm .tfm-applicant .tfm-person { stroke:var(--signal); }
+.tfm .tfm-track,.tfm .tfm-wire { fill:none; stroke:var(--line-strong); stroke-width:1.6; }
+.tfm .tfm-wire { stroke:var(--signal); stroke-dasharray:1; }
+.tfm .tfm-wire-0 { stroke:var(--muted); }
+.tfm .tfm-layers { fill:var(--signal-tint); stroke:var(--signal); stroke-width:1.4; }
+.tfm .tfm-name,.tfm .tfm-value { font:500 21px var(--mono); fill:var(--ink); }
+.tfm .tfm-value { fill:var(--signal); font-size:25px; }
+.tfm .tfm-share { stroke:var(--signal); stroke-width:3; fill:none; stroke-linecap:round; }
+
+.va-ep canvas{display:block;width:100%}
+.va-ep .ep-bars{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);transition:opacity .3s}
+.va-ep .ep-bars p{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:0 0 8px}
+.va-ep .ep-row{display:grid;grid-template-columns:minmax(0,9.5em) 1fr 3.6em;align-items:center;gap:10px;margin:6px 0}
+.va-ep .ep-row span{font-family:var(--sans);font-size:12.5px;font-weight:600;color:#fff}
+.va-ep .ep-row b{font-family:var(--mono);font-size:14px;font-weight:500;color:#fff;text-align:right}
+.va-ep .ep-row.a b{color:var(--signal)}
+.va-ep .ep-row.c b{color:#ff5d6e}
+.va-ep .ep-bar{position:relative;height:10px;border-radius:5px;background:rgba(255,255,255,.05)}
+.va-ep .ep-in{transition:width .08s linear}
+.va-ep .ep-in{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:5px;background:#ff5d6e;box-shadow:0 0 12px rgba(255,93,110,.55)}
+.va-ep .ep-row.a .ep-in{background:var(--signal);box-shadow:0 0 10px rgba(77,141,255,.6)}
+.va-ep .ep-lim{position:absolute;left:5%;top:-4px;bottom:-4px;border-left:1px dashed var(--signal)}
+.va-ep .ep-limt{display:flex;align-items:center;justify-content:flex-end;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--signal);margin-top:4px}
+.va-ep .ep-limt i{display:inline-block;height:11px;border-left:1px dashed var(--signal)}
+@media (max-width:480px){.va-ep .ep-row{grid-template-columns:7.5em 1fr 3.2em}}
+</style>
+<script>
+/* ---- Density horizon ------------------------------------------------------
+   One large right-skewed density drawn in fine dust behind the hero. The dust
+   drifts slowly along the curve; dots beyond the 95 % quantile glow blue and a
+   thin tick marks the quantile. Every ~24 s the tail gently thickens, the
+   quantile slides out, then everything relaxes. Fades out as you scroll.   */
+(function(){
+  const hero=document.querySelector('.home-hero'); if(!hero) return;
+  const c=document.createElement('canvas'); c.id='storm-horizon'; c.setAttribute('aria-hidden','true'); hero.prepend(c);
+  const g=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DUST=[226,232,242], BLUE=[77,141,255];
+  let W,H,dpr,P=[],t=0,last=performance.now();
+  function erf(x){const s=Math.sign(x);x=Math.abs(x);const k=1/(1+.3275911*x);
+    return s*(1-(((((1.061405429*k-1.453152027)*k)+1.421413741)*k-.284496736)*k+.254829592)*k*Math.exp(-x*x));}
+  const sn=(z,a)=>Math.exp(-z*z/2)*(1+erf(a*z/Math.SQRT2));   // skew-normal, unnormalised
+  // shape at time t: stress s ∈ [0,1] breathes slowly
+  const stress=()=>{const ph=(t/24)%1;return Math.pow(Math.max(0,Math.sin(ph*Math.PI)),3);};
+  // Big density spanning the hero, between the text and the pillars.
+  const content=hero.querySelector('.hero-in'), pillars=hero.querySelector('.pillars');
+  function shape(){
+    const s=stress(), wide=W>=900;
+    const base=pillars.offsetTop-26-BAND()*.5, top=content.offsetTop+content.offsetHeight+32;
+    return {mu:(wide?.44:.40)*W, om:((wide?.09:.126)+.03*s)*W, a:2.4+3.4*s, base, amp:Math.max(0,base-top)*(1-.1*s), s};
+  }
+  let peak=1, q95z=1.6;
+  function calib(S){ // peak height + 95 % quantile in z units for current skew
+    let mx=0,tot=0;const cum=[];
+    for(let z=-4;z<=8;z+=.02){const v=sn(z,S.a);mx=Math.max(mx,v);tot+=v;cum.push([z,tot]);}
+    peak=mx;for(const [z,v] of cum){if(v>=.95*tot){q95z=z;break;}}
+  }
+  const curveY=(x,S)=>S.base-S.amp*sn((x-S.mu)/S.om,S.a)/peak;
+  // mouse parallax (smoothed)
+  let mx=0,my=0,tx=0,ty=0;
+  addEventListener('mousemove',e=>{tx=e.clientX/innerWidth*2-1;ty=e.clientY/innerHeight*2-1;},{passive:true});
+  function resize(){
+    dpr=Math.min(devicePixelRatio||1,3);W=hero.clientWidth;H=hero.clientHeight;
+    c.width=W*dpr;c.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(12000,W*8));P=[];
+    for(let i=0;i<n;i++){
+      const d=Math.pow(Math.random(),.8);                       // depth: 0 far … 1 near
+      const haze=Math.random()<.05;
+      P.push({x:Math.random()*W*1.2-W*.1, v:5+Math.random()*9, d,
+        j:(haze?10:1.0)*(Math.random()+Math.random()+Math.random()-1.5), ph:Math.random()*6.28,
+        r:.45+d*1.15, a:(haze?.08:.26)+d*.6});
+    }
+  }
+  // a ribbon seen in perspective: depth spreads the dust vertically and widens it
+  const BAND=()=>W>=900?22:14;
+  function px(p,S){const cx=W*.5;return cx+(p.x-cx)*(.88+.24*p.d)+mx*14*p.d;}
+  function py(p,S){
+    const height=sn((p.x-S.mu)/S.om,S.a)/peak;
+    return S.base-S.amp*height+(p.d-.5)*(BAND()+12*height)+p.j*(1+.25*Math.sin(t*.6+p.ph))+my*6*p.d;
+  }
+  function stroke(S,x0,x1,rgb,w,a){
+    g.beginPath();for(let x=x0;x<=x1;x+=4){const y=curveY(x,S);x===x0?g.moveTo(x,y):g.lineTo(x,y);}
+    g.strokeStyle=`rgba(${rgb},${a})`;g.lineWidth=w;g.lineCap='round';g.stroke();
+  }
+  function draw(dt){
+    t+=dt;mx+=(tx-mx)*.04;my+=(ty-my)*.04;
+    const S=shape();calib(S);
+    g.clearRect(0,0,W,H);
+    const fade=Math.max(0,1-scrollY/(H*.8));if(fade<=0)return;
+    const xq=S.mu+q95z*S.om;
+    g.globalCompositeOperation='lighter';
+    // bloom: wide, faint strokes along the curve (white body, blue tail)
+    for(const [w,a] of [[34,.018],[14,.035],[5,.07]]){
+      stroke(S,-10,xq,DUST,w,a*fade); stroke(S,xq,W+10,BLUE,w,a*1.6*fade);
+    }
+    // dust
+    for(const p of P){
+      p.x+=p.v*dt;if(p.x>W*1.1)p.x-=W*1.2;
+      const x=px(p,S), y=py(p,S);
+      const tail=x>xq, tw=.8+.2*Math.sin(t*1.3+p.ph);   // colour by the drawn position: blue exactly beyond the q95 tick
+      g.fillStyle=`rgba(${tail?BLUE:DUST},${p.a*tw*fade*(tail?1.25:1)})`;g.fillRect(x,y,p.r,p.r);
+    }
+    // bright core line
+    stroke(S,-10,xq,DUST,1.1,.22*fade); stroke(S,xq,W+10,BLUE,1.3,.5*fade);
+    g.globalCompositeOperation='source-over';
+    // quantile tick + label
+    const yq=curveY(xq,S);
+    g.strokeStyle=`rgba(${BLUE},${(.55+.35*S.s)*fade})`;g.lineWidth=1;
+    g.beginPath();g.moveTo(xq+.5,S.base+BAND()*.5+8);g.lineTo(xq+.5,yq-14);g.stroke();
+    g.fillStyle=`rgba(${BLUE},${fade})`;g.font='500 12px "IBM Plex Mono", monospace';
+    g.fillText('q95',xq+7,S.base+BAND()*.5+18);
+  }
+  function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;draw(dt);requestAnimationFrame(loop);}
+  resize();addEventListener('resize',()=>{resize();draw(0);});
+  if(reduce){t=8;draw(0);addEventListener('scroll',()=>draw(0),{passive:true});}
+  else requestAnimationFrame(loop);
+})();
+</script>
+<script>
+(function(){
+
+const LANG=(document.documentElement.lang||'fr').slice(0,2)==='en'?'en':'fr';
+const FLOW_TX={
+ fr:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-phase" aria-hidden="true"><span data-m="moyenne">1 · Pratique standard</span><span data-m="distribution">2 · Approche STORM</span><span data-m="briques">3 · Vos modèles</span></div></div>
+   <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
+   <div class="sf-foot">D'après <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
+  steps:[{t:'Choc',s:'Scénario macro-financier',k:'scénario',c:'Un choc frappe l’économie.'},
+   {t:'Économie',s:'Propagation du choc',k:'propagation',c:'Le choc se propage dans l’économie.'},
+   {t:'Crédit',s:'Conditions de crédit du portefeuille',k:'facteur de risque',c:'Il se traduit en conditions de crédit.'},
+   {t:'Défauts',s:'Probabilités de défaut',k:'probabilités',c:'Elles deviennent des probabilités de défaut.'}],
+  outs:[{t:'Risque moyen',n:'Risque moyen',tail:false},{t:'Risque extrême',n:'Risque extrême',tail:true},{t:'Moyenne des extrêmes',n:'Moyenne des extrêmes',tail:true}],
+  end:({path,mean,es})=>({
+    moyenne:`Ce scénario donne une probabilité de défaut de ${path}. Le risque extrême reste à quantifier.`,
+    distribution:`La probabilité de défaut moyenne atteint ${mean} sur l’ensemble des scénarios et ${es} dans les 5 % les plus sévères.`,
+    briques:'Vous pouvez utiliser vos modèles validés pour les blocs Économie (2) et Crédit (3).'}),
+  yours:'votre modèle', here:' — ici, votre modèle validé.', central:'scénario central', notmeasured:'non mesuré',
+  vs:' % vs central', intro:{moyenne:'Le scénario central sert de référence pour évaluer le risque du portefeuille.',distribution:'Pour le même choc, STORM évalue toute la gamme des conditions de crédit possibles.',briques:'Le modèle macroéconomique transmet le choc au modèle de crédit du portefeuille.'}, thr:'seuil à 95 %', beyond:'au-delà du seuil', num:x=>x.replace('.',',')},
+ en:{markup:`<div class="storm-flow"><div class="sf-top"><div class="sf-phase" aria-hidden="true"><span data-m="moyenne">1 · Standard practice</span><span data-m="distribution">2 · STORM approach</span><span data-m="briques">3 · Your models</span></div></div>
+   <svg class="sf-svg" role="img" aria-hidden="true"></svg><div class="sf-caption" aria-live="polite"></div>
+   <div class="sf-foot">Based on <a href="https://arxiv.org/abs/2608.04469" target="_blank" rel="noopener">Generalized Impulse Responses of Portfolio Default Probabilities</a> — Flament, Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
+  steps:[{t:'Shock',s:'Macro-financial scenario',k:'scenario',c:'A shock hits the economy.'},
+   {t:'Economy',s:'Shock propagation',k:'propagation',c:'The shock spreads through the economy.'},
+   {t:'Credit',s:'Portfolio credit conditions',k:'risk factor',c:'It translates into credit conditions.'},
+   {t:'Defaults',s:'Default probabilities',k:'probabilities',c:'They become default probabilities.'}],
+  outs:[{t:'Average risk',n:'Average risk',tail:false},{t:'Extreme risk',n:'Extreme risk',tail:true},{t:'Mean of extremes',n:'Mean of extremes',tail:true}],
+  end:({path,mean,es})=>({
+    moyenne:`The central scenario puts default probability at ${path}. Tail risk remains unmeasured.`,
+    distribution:`Default probability averages ${mean} across all scenarios and ${es} in the most adverse 5%.`,
+    briques:'You can use your validated models for the Economy (2) and Credit (3) blocks.'}),
+  yours:'your model', here:' — here, your validated model.', central:'central scenario', notmeasured:'not measured',
+  vs:' % vs central', intro:{moyenne:'The central scenario provides a baseline for portfolio risk.',distribution:'For the same shock, STORM assesses the full range of possible credit conditions.',briques:'The macroeconomic model passes the shock through to the portfolio’s credit model.'}, thr:'95 % threshold', beyond:'beyond the threshold', num:x=>x}
+};
+const RST_TX={
+ fr:{markup:u=>`<div class="rst"><div class="rst-top"><div class="rst-steps"><span data-s="0">1 · Seuil</span><span data-s="1">2 · Explorer</span><span data-s="2">3 · Rupture</span><span data-s="3">4 · Voisinage</span><span data-s="4">5 · Sélection</span></div></div>
+   ${RST_SVG(u)}<div class="rst-read">
+   <div data-r="0"><b>Seuil de capital</b><span>ratio de 7,0 %</span><i>à ne pas franchir</i></div>
+   <div data-r="1" class="blue"><b>Point de rupture</b><span class="v1">—</span><i>plausibilité</i></div>
+   <div data-r="2"><b>Voisinage</b><span class="v2">—</span><i>plausibilité</i></div>
+   <div data-r="3"><b>Sélection</b><span class="v3">—</span><i>scénarios retenus</i></div></div>
+   <div class="rst-cap" aria-live="polite"></div>
+   <div class="rst-foot">D'après <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
+  ax:'Choc économique →', ay:'Choc géopolitique →', flab:'Seuil de capital · ratio de 7 %', hood:'Voisinage', central:'Scénario central', breakpt:'Point de rupture',
+  caps:p=>['On fixe d’abord le seuil : le ratio de capital ne doit pas passer sous 7 %.',
+    'On explore les scénarios autour du scénario central : chaque anneau est un niveau de plausibilité.',
+    'Le premier scénario qui touche le seuil est le point de rupture le plus plausible ('+p+').',
+    'Son voisinage, côté rupture : des scénarios proches du point de rupture, qui franchissent tous le seuil.',
+    'On en retient un nombre fini, assez différents pour raconter des histoires distinctes — chacun avec sa plausibilité.']},
+ en:{markup:u=>`<div class="rst"><div class="rst-top"><div class="rst-steps"><span data-s="0">1 · Threshold</span><span data-s="1">2 · Explore</span><span data-s="2">3 · Break</span><span data-s="3">4 · Neighbourhood</span><span data-s="4">5 · Selection</span></div></div>
+   ${RST_SVG(u)}<div class="rst-read">
+   <div data-r="0"><b>Capital threshold</b><span>ratio of 7.0 %</span><i>not to be breached</i></div>
+   <div data-r="1" class="blue"><b>Breaking point</b><span class="v1">—</span><i>plausibility</i></div>
+   <div data-r="2"><b>Neighbourhood</b><span class="v2">—</span><i>plausibility</i></div>
+   <div data-r="3"><b>Selection</b><span class="v3">—</span><i>scenarios kept</i></div></div>
+   <div class="rst-cap" aria-live="polite"></div>
+   <div class="rst-foot">Based on <a href="https://arxiv.org/abs/2601.03983" target="_blank" rel="noopener">Reverse Stress Testing Geopolitical Risk in Corporate Credit Portfolios</a> — Hurlin, Lajaunie &amp; Pull (2026).</div></div>`,
+  ax:'Economic shock →', ay:'Geopolitical shock →', flab:'Capital threshold · ratio of 7 %', hood:'Neighbourhood', central:'Central scenario', breakpt:'Breaking point',
+  caps:p=>['First, set the threshold: the capital ratio must not fall below 7 %.',
+    'Explore scenarios around the central one: each ring is a level of plausibility.',
+    'The first scenario to touch the threshold is the most plausible breaking point ('+p+').',
+    'Its neighbourhood, on the breaking side: nearby scenarios that all breach the threshold.',
+    'Keep a finite set, different enough to tell distinct stories — each with its own plausibility.']}
+};
+function RST_SVG(u){return `<svg viewBox="0 0 560 400" role="img" aria-hidden="true"><defs>
+  <pattern id="rst-hatch${u}" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="rgba(77,141,255,.05)"/><line x1="0" y1="0" x2="0" y2="7" stroke="rgba(77,141,255,.16)" stroke-width="1"/></pattern>
+  <radialGradient id="rst-glow${u}"><stop offset="0" stop-color="rgba(77,141,255,.55)"/><stop offset="1" stop-color="rgba(77,141,255,0)"/></radialGradient></defs>
+  <g class="g-axes"></g><g class="g-zone"></g><g class="g-rings"></g><g class="g-dots"></g><g class="g-top"></g></svg>`;}
+
+function initFlow(root,TX,VIS){
+  const BLUE='#4d8dff', WHITE='#e9edf3';
+
+  root.innerHTML=TX.markup; const svg=root.querySelector('svg'), cap=root.querySelector('.sf-caption');
+  const NS='http://www.w3.org/2000/svg', reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- le modèle (Merton–Vasicek), valeurs illustratives ---------- */
+  function erf(x){const s=Math.sign(x);x=Math.abs(x);const k=1/(1+.3275911*x);
+    return s*(1-(((((1.061405429*k-1.453152027)*k)+1.421413741)*k-.284496736)*k+.254829592)*k*Math.exp(-x*x));}
+  const Phi=x=>.5*(1+erf(x/Math.SQRT2));
+  function PhiInv(p){ // Acklam
+    const a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924],
+          b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857],
+          c=[-.00778489400243029,-.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878],
+          d=[.00778469570904146,.32246712907004,2.445134137143,3.75440866190742];
+    const q=p<.02425?Math.sqrt(-2*Math.log(p)):p>1-.02425?Math.sqrt(-2*Math.log(1-p)):0;
+    if(p<.02425)return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    if(p>1-.02425)return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    const r=p-.5,s=r*r;return(((((a[0]*s+a[1])*s+a[2])*s+a[3])*s+a[4])*s+a[5])*r/(((((b[0]*s+b[1])*s+b[2])*s+b[3])*s+b[4])*s+1);
+  }
+  const P0=.02, RHO=.12, MZ=-1.2, SZ=.7;                  // PD de long terme, corrélation, facteur Z sous stress
+  const PD=z=>Phi((PhiInv(P0)-Math.sqrt(RHO)*z)/Math.sqrt(1-RHO));
+  // intégration numérique sur Z ~ N(MZ, SZ)
+  let m=0,w=0;const zq=MZ-1.6449*SZ, q95=PD(zq);let es=0,we=0;
+  for(let x=-6;x<=6;x+=.005){const f=Math.exp(-x*x/2),v=PD(MZ+SZ*x);m+=f*v;w+=f;if(MZ+SZ*x<=zq){es+=f*v;we+=f;}}
+  const V={path:PD(MZ), mean:m/w, q95, es:es/we};
+  const pct=v=>TX.num((100*v).toFixed(2))+' %';
+
+  /* ---------- contenu ---------- */
+  const STEPS=TX.steps, OUTS=TX.outs;
+  const END=TX.end({path:pct(V.path),mean:pct(V.mean),es:pct(V.es)});
+
+  /* ---------- mise en page (horizontale / verticale) ---------- */
+  let L, nodes=[], outs=[], parts=[], minis={};
+  function layout(){
+    const narrow=root.clientWidth<560;
+    svg.innerHTML='';nodes=[];outs=[];parts=[];
+    if(!narrow){
+      L={W:760,H:300,narrow,nw:112,nh:78,ow:150,oh:62};
+      L.nodes=STEPS.map((_,i)=>({x:6+i*148,y:111}));
+      L.outs=OUTS.map((_,i)=>({x:L.W-L.ow-4,y:22+i*92}));
+    }else{
+      L={W:360,H:560,narrow,nw:300,nh:62,ow:104,oh:78};
+      L.nodes=STEPS.map((_,i)=>({x:30,y:8+i*96}));
+      L.outs=OUTS.map((_,i)=>({x:8+i*118,y:472}));
+    }
+    svg.setAttribute('viewBox',`0 0 ${L.W} ${L.H}`);
+    const el=(tag,attrs,parent=svg)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent.appendChild(e);return e;};
+    // centres
+    L.c=L.nodes.map(n=>({x:n.x+L.nw/2,y:n.y+L.nh/2}));
+    L.oc=L.outs.map(o=>({x:o.x+o.x*0+L.ow/2,y:o.y+L.oh/2}));
+    // arêtes
+    for(let i=0;i<3;i++){const a=L.c[i],b=L.c[i+1];
+      el('path',{class:'sf-edge',d:L.narrow?`M${a.x} ${a.y+L.nh/2}L${b.x} ${b.y-L.nh/2}`:`M${a.x+L.nw/2} ${a.y}L${b.x-L.nw/2} ${b.y}`});}
+    const last=L.c[3];
+    L.oc.forEach(o=>{
+      const sx=L.narrow?last.x:last.x+L.nw/2, sy=L.narrow?last.y+L.nh/2:last.y;
+      const ex=L.narrow?o.x:o.x-L.ow/2, ey=L.narrow?o.y-L.oh/2:o.y;
+      el('path',{class:'sf-edge',d:L.narrow?`M${sx} ${sy}C${sx} ${sy+50},${ex} ${ey-50},${ex} ${ey}`:`M${sx} ${sy}C${sx+40} ${sy},${ex-40} ${ey},${ex} ${ey}`});
+    });
+    // particules
+    // Each output is computed from the whole distribution: the cloud splits
+    // into three equal streams after the last block.
+    const N=44;
+    for(let out=0;out<3;out++)for(let k=0;k<N;k++){
+      const z=PhiInv((k+.5)/N);                     // rang de quantile fixe
+      parts.push({z,out,lag:Math.random()*.12,e:el('circle',{r:2.1,fill:WHITE,opacity:0})});
+    }
+    parts.push({z:0,lag:0,solo:true,e:el('circle',{r:4.2,fill:WHITE,opacity:0})});
+    // briques
+    STEPS.forEach((s,i)=>{
+      const g=el('g',{class:'sf-node'}),n=L.nodes[i];
+      el('rect',{x:n.x,y:n.y,width:L.nw,height:L.nh,rx:9},g);
+      el('text',{class:'n',x:n.x+10,y:n.y+17},g).textContent='0'+(i+1);
+      const tx=L.narrow?n.x+40:n.x+L.nw/2, anchor=L.narrow?'start':'middle';
+      el('text',{class:'t',x:tx,y:n.y+(L.narrow?27:36),'text-anchor':anchor},g).textContent=s.t;
+      el('text',{class:'s',x:tx,y:n.y+(L.narrow?45:54),'text-anchor':anchor},g).textContent=L.narrow?s.s:s.k;
+      if(i===1||i===2) el('text',{class:'swaplab',x:n.x+L.nw-8,y:n.y+17,'text-anchor':'end'},g).textContent=TX.yours;
+      nodes.push(g);
+    });
+    // mini densités (Z dans le satellite, PD dans la cartographie)
+    const mk=(i,fn,tail)=>{const n=L.nodes[i],x0=L.narrow?n.x+L.nw-96:n.x+20,w=L.narrow?84:L.nw-40,y0=L.narrow?n.y+L.nh-10:n.y+L.nh-4,h=L.narrow?26:15;
+      let mx=0;for(let k=0;k<=40;k++)mx=Math.max(mx,fn(k/40));const f0=fn;fn=u=>f0(u)/mx;
+      let d='',df='';for(let k=0;k<=40;k++){const u=k/40,v=fn(u);d+=(k?'L':'M')+(x0+u*w).toFixed(1)+' '+(y0-v*h).toFixed(1);}
+      if(tail){df=`M${x0+tail*w} ${y0}`;for(let k=Math.round(tail*40);k<=40;k++){const u=k/40;df+=`L${(x0+u*w).toFixed(1)} ${(y0-fn(u)*h).toFixed(1)}`;}df+=`L${x0+w} ${y0}Z`;}
+      const g=el('g',{});if(df)el('path',{class:'sf-mini tailfill',d:df},g);el('path',{class:'sf-mini',d},g);return g;};
+    minis.z=mk(2,u=>Math.exp(-Math.pow((u-.5)/.17,2)/2),null);
+    minis.pd=mk(3,u=>Math.pow(u,1.4)*Math.exp(-u*5.2),.62);
+    // sorties
+    OUTS.forEach((o,i)=>{
+      const g=el('g',{class:'sf-out'+(o.tail?' tail':'')}),p=L.outs[i];
+      el('rect',{x:p.x,y:p.y,width:L.ow,height:L.oh,rx:9},g);
+      {const tt=el('text',{class:'t',x:p.x+12,y:p.y+19},g);tt.textContent=o.t;(root._fit=root._fit||[])[i]=()=>{try{const v=g.querySelector('.v'),d=g.querySelector('.d'),y1=p.y+(L.narrow?44:41),y2=p.y+(L.narrow?62:55);tt.removeAttribute('font-size');tt.setAttribute('y',p.y+19);tt.textContent=o.t;v&&v.setAttribute('y',y1);d&&d.setAttribute('y',y2);const w=tt.getComputedTextLength(),m=L.ow-22;if(!w||w<=m)return;const sp=o.t.lastIndexOf(' ',Math.ceil(o.t.length/2)+2);if(L.narrow&&sp>0){tt.textContent='';tt.setAttribute('y',p.y+17);[o.t.slice(0,sp),o.t.slice(sp+1)].forEach((x,k)=>{const ts=el('tspan',{x:p.x+12,dy:k?14:0},tt);ts.textContent=x;});v&&v.setAttribute('y',p.y+52);d&&d.setAttribute('y',p.y+69);}else tt.setAttribute('font-size',(12.5*m/w).toFixed(2)+'px');}catch(e){}};}
+      el('text',{class:'v',x:p.x+12,y:p.y+(L.narrow?44:41)},g).textContent='—';
+      el('text',{class:'d',x:p.x+12,y:p.y+(L.narrow?62:55)},g).textContent='';
+      outs.push(g);
+    });
+  }
+
+  /* ---------- trajectoire d'une particule ---------- */
+  const lerp=(a,b,u)=>a+(b-a)*u, ease=u=>u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+  function pos(p,u,mode){
+    // u ∈ [0,1] : 0→0.75 le long des 4 briques, 0.75→1 vers une sortie
+    const spreadMax=L.narrow?60:26;
+    if(u<.75){
+      const s=u/.75*3,i=Math.min(2,Math.floor(s)),f=s-i,a=L.c[i],b=L.c[i+1];
+      const x=lerp(a.x,b.x,f),y=lerp(a.y,b.y,f);
+      const grow=mode==='moyenne'?0:Math.min(1,Math.max(0,(s-.6)/1.6));  // la dispersion naît dans le VAR
+      const off=p.z*grow*spreadMax*.55;
+      return L.narrow?{x:x+off,y}:{x,y:y+off};
+    }
+    const f=ease((u-.75)/.25),a=L.c[3];
+    const tail=p.z<=-1.6449, k=mode==='moyenne'?0:p.out, o=L.oc[k];
+    const sx=L.narrow?a.x+p.z*spreadMax*.55:a.x, sy=L.narrow?a.y:a.y+p.z*spreadMax*.55;
+    return {x:lerp(sx,o.x,f),y:lerp(sy,o.y,f),k,tail};
+  }
+
+  /* Particle travel and caption reading time are independent. */
+  const travelMs=6500, charMs=26;
+  const captionDuration=text=>text.length*charMs+Math.max(3000,text.split(/\s+/).length*285);
+  const home=root.dataset.sequence==='home';
+  if(home) root.querySelector('[data-m="briques"]').remove();
+  const labels=[...root.querySelectorAll('.sf-phase [data-m]')];
+  const phases=labels.map(label=>{
+    const mode=label.dataset.m;
+    const resultAt=Math.max(travelMs,captionDuration(TX.intro[mode]));
+    const resultEnd=resultAt+captionDuration(END[mode]);
+    const swapAt=home&&mode==='distribution'?resultEnd:Infinity;
+    const duration=resultEnd+(Number.isFinite(swapAt)?captionDuration(END.briques):0);
+    return {mode,resultAt,swapAt,duration};
+  });
+  cap.removeAttribute('aria-live');
+  cap.innerHTML='<span aria-hidden="true"><span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span></span><span class="visually-hidden" aria-live="polite"></span>';
+  const typed=cap.querySelector('.x'), announced=cap.querySelector('[aria-live]');
+  function caption(text,age){
+    if(announced.textContent!==text) announced.textContent=text;
+    const visible=reduce?text:text.slice(0,Math.floor(age/charMs));
+    if(typed.textContent!==visible) typed.textContent=visible;
+  }
+
+  let phaseIndex=reduce&&home?1:0, mode=phases[phaseIndex].mode;
+  let elapsed=reduce?phases[phaseIndex].duration:0, lastStep=-1;
+  function resetDiagram(){
+    mode=phases[phaseIndex].mode;
+    lastStep=-1;
+    labels.forEach(label=>label.classList.toggle('on',label.dataset.m===mode));
+    outs.forEach(o=>{o.classList.remove('on','off');o.querySelector('.v').textContent='—';o.querySelector('.d').textContent='';});
+    Object.values(minis).forEach(g=>g.querySelectorAll('.sf-mini').forEach(p=>p.classList.remove('show')));
+  }
+
+  function fill(){
+    const set=(i,v,d,off)=>{const o=outs[i];o.classList.toggle('on',!off);o.classList.toggle('off',!!off);o.querySelector('.v').textContent=v;o.querySelector('.d').textContent=d;};
+    if(mode==='moyenne'){set(0,pct(V.path),TX.central);set(1,'—',TX.notmeasured,true);set(2,'—',TX.notmeasured,true);}
+    else{const gain=((V.mean/V.path-1)*100).toFixed(0);
+      set(0,pct(V.mean),'+'+gain+TX.vs);set(1,pct(V.q95),TX.thr);set(2,pct(V.es),TX.beyond);}
+  }
+
+  function render(){
+    const phase=phases[phaseIndex], run=Math.min(1,elapsed/travelMs);
+    const step=run<.75?Math.min(3,Math.floor(run/.75*3+.15)):4;
+    if(step!==lastStep){
+      lastStep=step;
+      nodes.forEach((n,i)=>n.classList.toggle('on',i<=step));
+      if(step===4) fill();
+      if(step>=2&&mode!=='moyenne')minis.z.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
+      if(step>=3&&mode!=='moyenne')minis.pd.querySelectorAll('.sf-mini').forEach(p=>p.classList.add('show'));
+    }
+    const finale=elapsed>=phase.swapAt;
+    nodes.forEach((n,i)=>n.classList.toggle('swap',(mode==='briques'||finale)&&(i===1||i===2)));
+    if(finale) caption(END.briques,elapsed-phase.swapAt);
+    else if(elapsed>=phase.resultAt) caption(END[mode],elapsed-phase.resultAt);
+    else caption(TX.intro[mode],elapsed);
+    // particules
+    for(const p of parts){
+      const show=mode==='moyenne'?p.solo:!p.solo;
+      if(!show){p.e.setAttribute('opacity',0);continue;}
+      const uu=Math.max(0,Math.min(1,run*1.08-p.lag));
+      const q=pos(p,uu,mode);
+      p.e.setAttribute('cx',q.x.toFixed(1));p.e.setAttribute('cy',q.y.toFixed(1));
+      const fade=uu<=0?0:uu>=1?(p.solo?.9:.55):(p.solo?1:.75);
+      p.e.setAttribute('opacity',fade);
+      p.e.setAttribute('fill',mode!=='moyenne'&&q.k>=1?BLUE:WHITE);   // les flux vers les deux mesures de queue sont bleus
+    }
+  }
+
+  let lastNow=null;
+  function frame(now){
+    if(VIS.on&&!document.hidden){
+      if(lastNow!==null) elapsed+=now-lastNow;
+      if(elapsed>=phases[phaseIndex].duration){
+        phaseIndex=(phaseIndex+1)%phases.length;
+        elapsed=0;
+        resetDiagram();
+      }
+      render();
+      lastNow=now;
+    }else lastNow=null;
+    requestAnimationFrame(frame);
+  }
+  document.addEventListener('visibilitychange',()=>{lastNow=null;});
+  function redraw(){
+    layout();
+    resetDiagram();
+    (root._fit||[]).forEach(f=>f());
+    render();
+  }
+  redraw();
+  document.fonts.ready.then(()=>(root._fit||[]).forEach(f=>f()));
+  if(!reduce) requestAnimationFrame(frame);
+  addEventListener('resize',()=>{
+    if(!root.clientWidth) return;
+    if((root.clientWidth<560)!==L.narrow) redraw();
+    else (root._fit||[]).forEach(f=>f()); // titles may have been measured in a hidden pane
+  });
+
+}
+let RST_N=0;
+function initRST(root,TX,VIS){
+  const UID='-'+(++RST_N);
+
+  root.innerHTML=TX.markup(UID);
+  const svg=root.querySelector('svg'), NS='http://www.w3.org/2000/svg';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const G={axes:svg.querySelector('.g-axes'),zone:svg.querySelector('.g-zone'),rings:svg.querySelector('.g-rings'),dots:svg.querySelector('.g-dots'),top:svg.querySelector('.g-top')};
+  const cap=root.querySelector('.rst-cap'), steps=[...root.querySelectorAll('.rst-steps span')], reads=[...root.querySelectorAll('.rst-read div')];
+  const v1=root.querySelector('.v1'), v2=root.querySelector('.v2'), v3=root.querySelector('.v3');
+  const el=(tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};
+  const BLUE='#4d8dff', WHITE='#e9edf3';
+
+  /* ---------- geometry (scenario space u, v ∈ [0, 5]) ---------- */
+  const X0=58,X1=540,Y0=352,Y1=22, U=5;
+  const px=u=>X0+u/U*(X1-X0), py=v=>Y0-v/U*(Y0-Y1);
+  const MU=[.75,.7], RHO=.4, SQ=Math.sqrt(1-RHO*RHO);
+  const off=(c,x,y)=>[c[0]+x, c[1]+RHO*x+SQ*y];                 // metric offset → scenario space
+  const at=(d,th)=>off(MU,d*Math.cos(th),d*Math.sin(th));
+  const maha=(u,v)=>{const a=u-MU[0],b=v-MU[1];return Math.sqrt((a*a-2*RHO*a*b+b*b)/(1-RHO*RHO));};
+  const K=4.6, f=(u,v)=>.8*u+.7*v+.15*u*v, breach=(u,v)=>f(u,v)>=K;
+  const vF=u=>(K-.8*u)/(.7+.15*u);
+  const FR=[];let best={d:1e9};
+  for(let u=0;u<=5.75;u+=.01){const v=vF(u);if(v<0)break;const d=maha(u,v);if(d<best.d)best={d,u,v};if(v<=U&&u<=U)FR.push([u,v]);}
+  const DSTAR=best.d, S=[best.u,best.v], RN=.9;                 // breaking point, neighbourhood radius
+  // plausibility of a scenario = share of scenarios at least as extreme as it
+  const plaus=d=>Math.exp(-d*d/2), pc=x=>Math.round(100*x)+' %';
+  const PSTAR=plaus(DSTAR);
+
+  /* ---------- static drawing ---------- */
+  const clip=el('clipPath',{id:'rst-clip'+UID},svg.querySelector('defs'));
+  el('rect',{x:X0,y:Y1,width:X1-X0,height:Y0-Y1},clip);
+  [G.zone,G.rings,G.dots].forEach(g=>g.setAttribute('clip-path','url(#rst-clip'+UID+')'));
+  el('line',{class:'ax',x1:X0,y1:Y0,x2:X1,y2:Y0},G.axes);el('line',{class:'ax',x1:X0,y1:Y0,x2:X0,y2:Y1},G.axes);
+  el('text',{class:'axl',x:X1,y:Y0+24,'text-anchor':'end'},G.axes).textContent=TX.ax;
+  el('text',{class:'axl',x:X0-8,y:Y1+4,'text-anchor':'end',transform:`rotate(-90 ${X0-8} ${Y1+4})`},G.axes).textContent=TX.ay;
+  const fd=FR.map((p,i)=>(i?'L':'M')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1)).join('');
+  const zone=el('path',{class:'zone',d:fd+`L${px(U)} ${py(U)}Z`,opacity:0,fill:'url(#rst-hatch'+UID+')'},G.zone);
+  const front=el('path',{class:'front',d:fd},G.zone);
+  const flen=front.getTotalLength?front.getTotalLength():800;front.style.strokeDasharray=flen;front.style.strokeDashoffset=flen;
+  const flab=el('text',{class:'flab',x:X1-10,y:Y1+18,'text-anchor':'end',opacity:0},G.top);flab.textContent=TX.flab;
+  const ellipse=(c,d)=>{let s='';for(let k=0;k<=72;k++){const t=k/72*2*Math.PI,p=off(c,d*Math.cos(t),d*Math.sin(t));s+=(k?'L':'M')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1);}return s+'Z';};
+  const LEVELS=[.5,1,1.5,2].filter(d=>d<DSTAR-.08);
+  const statics=LEVELS.map(d=>el('path',{class:'ring',d:ellipse(MU,d),opacity:0},G.rings));
+  const rlabs=LEVELS.map(d=>{const p=at(d,1.62);const t=el('text',{class:'rlab',x:px(p[0]),y:py(p[1])-5,'text-anchor':'middle',opacity:0},G.top);t.textContent=pc(plaus(d));return t;});
+  const live=el('path',{class:'ring live',d:'',opacity:0},G.rings);
+  // neighbourhood of the breaking point
+  const zclip=el('clipPath',{id:'rst-zclip'+UID},svg.querySelector('defs'));
+  el('path',{d:fd+`L${px(U)} ${py(U)}Z`},zclip);
+  const hoodG=el('g',{'clip-path':'url(#rst-zclip'+UID+')'},G.rings);
+  const hood=el('path',{class:'hood',d:ellipse(S,RN),opacity:0},hoodG);
+  const hlen=hood.getTotalLength?hood.getTotalLength():300;
+  const hlab=el('text',{class:'hlab',opacity:0},G.top);hlab.textContent=TX.hood;
+  { const p=off(S,RN*.95,RN*.25); hlab.setAttribute('x',px(p[0])+8); hlab.setAttribute('y',py(p[1])+4); }
+  const base=el('circle',{class:'base',cx:px(MU[0]),cy:py(MU[1]),r:0},G.top);
+  const blab=el('text',{class:'blab',x:px(MU[0])+10,y:py(MU[1])+18,opacity:0},G.top);blab.textContent=TX.central;
+  const path=el('path',{class:'path',d:`M${px(MU[0])} ${py(MU[1])}L${px(S[0])} ${py(S[1])}`,opacity:0},G.top);
+  const glow=el('circle',{cx:px(S[0]),cy:py(S[1]),r:26,fill:'url(#rst-glow'+UID+')',opacity:0},G.top);
+  const star=el('circle',{class:'star',cx:px(S[0]),cy:py(S[1]),r:0},G.top);
+  const slab=el('text',{class:'slab',opacity:0},G.top);slab.textContent=TX.breakpt;
+  { const p=off(S,-RN*.9,RN*.55); slab.setAttribute('x',px(p[0])-6); slab.setAttribute('y',py(p[1])); slab.setAttribute('text-anchor','end'); }
+
+  /* ---------- particles ---------- */
+  let rnd=7;const R=()=>{rnd=(rnd*16807)%2147483647;return rnd/2147483647;};
+  const SEARCH=150, NEIGH=90, PICK=5;
+  const search=[...Array(SEARCH)].map(()=>({th:R()*2*Math.PI,sp:.4+R()*.45,t0:4.3+R()*4.2,e:el('circle',{r:1.7,fill:WHITE,opacity:0},G.dots)}));
+  // neighbourhood: uniform inside the ellipse, slightly denser near the centre
+  const neigh=[];
+  while(neigh.length<NEIGH){const r=RN*Math.pow(R(),.62),th=R()*2*Math.PI;const [u,v]=off(S,r*Math.cos(th),r*Math.sin(th));
+    if(!breach(u,v)||u>U||v>U)continue;
+    neigh.push({u,v,br:true,p:plaus(maha(u,v)),t0:14.2+R()*2.0,e:el('circle',{cx:px(u),cy:py(v),r:2.1,fill:BLUE,opacity:0},G.dots)});}
+  const PMIN=Math.min(...neigh.map(p=>p.p));
+  // selection: a finite, diverse set among the breaching scenarios (farthest-point sampling)
+  const cand=neigh.filter(p=>p.br);
+  const dist=(a,b)=>{const x=a.u-b.u,y=a.v-b.v;return Math.sqrt((x*x-2*RHO*x*y+y*y)/(1-RHO*RHO));};
+  const picks=[cand.reduce((m,p)=>dist(p,{u:S[0],v:S[1]})<dist(m,{u:S[0],v:S[1]})?p:m,cand[0])];
+  while(picks.length<Math.min(PICK,cand.length)){
+    let bestp=null,bd=-1;for(const p of cand){if(picks.includes(p))continue;const d=Math.min(...picks.map(q=>dist(p,q)));if(d>bd){bd=d;bestp=p;}}
+    picks.push(bestp);
+  }
+  picks.forEach((p,i)=>{p.pick=i;p.ring=el('circle',{cx:px(p.u),cy:py(p.v),r:7,fill:'none',stroke:'#fff','stroke-width':1.2,opacity:0},G.top);
+    const left=p.u<S[0]-.05, below=p.v<S[1]-.05;p.lab=el('text',{class:'plab',x:px(p.u)+(left?-10:10),y:py(p.v)+(below?16:-9),'text-anchor':left?'end':'start',opacity:0},G.top);p.lab.textContent='S'+(i+1)+' · '+pc(p.p);});
+  svg.appendChild(G.top);                                         // labels on top
+
+  /* ---------- caption ---------- */
+  const CAPS=TX.caps(pc(PSTAR));
+  let sayTxt='',sayT=0,sayEl=null;
+  cap.removeAttribute('aria-live');
+  function say(t,now){sayTxt=t;sayT=now;cap.innerHTML='<span aria-hidden="true"><span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span></span><span class="visually-hidden" aria-live="polite"></span>';
+    cap.querySelector('[aria-live]').textContent=t;sayEl=cap.querySelector('.x');if(reduce)sayEl.textContent=t;}
+
+  /* ---------- timeline ---------- */
+  const T=26.5, clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+  const B=[0,4,9.4,13.8,18.8];                                   // step starts
+  let start=performance.now(), lastStep=-1;
+  function render(now,tt){
+    const t=tt!=null?tt:((now-start)/1000)%T;
+    const step=t<B[1]?0:t<B[2]?1:t<B[3]?2:t<B[4]?3:4;
+    if(step!==lastStep){lastStep=step;say(CAPS[step],now);
+      steps.forEach((s,i)=>{s.classList.toggle('on',i===step);s.classList.toggle('done',i<step);});
+      reads.forEach((r,i)=>r.classList.toggle('on',i===0||(i===1&&step>=2)||(i===2&&step>=3)||(i===3&&step>=4)));
+      if(step<2)v1.textContent='—'; if(step<3)v2.textContent='—'; if(step<4)v3.textContent='—';
+    }
+    const out=t>T-1?1-clamp((t-(T-1))/.9):1;
+    // 1 · threshold
+    const a0=ease(clamp(t/2.0));
+    front.style.strokeDashoffset=flen*(1-a0);front.setAttribute('opacity',out);
+    zone.setAttribute('opacity',a0*out);flab.setAttribute('opacity',clamp((t-1.2)/.8)*out);
+    // 2 · exploration
+    const b=clamp((t-B[1])/.5);base.setAttribute('r',4.5*b);base.setAttribute('opacity',out);blab.setAttribute('opacity',b*out);
+    const g=ease(clamp((t-(B[1]+.3))/(B[2]-B[1]-.4))), Rr=g*DSTAR;
+    live.setAttribute('d',Rr>.02?ellipse(MU,Rr):'');live.setAttribute('opacity',(t<B[1]?0:t<B[2]?.8:.3)*out);
+    statics.forEach((r,i)=>{const o=(Rr>=LEVELS[i]?(t<B[3]?.9:.45):0)*out;r.setAttribute('opacity',o);rlabs[i].setAttribute('opacity',o*.9);});
+    const dimSearch=t<B[3]?1:Math.max(.15,1-(t-B[3])/1.2);
+    for(const p of search){
+      const d=(t-p.t0)*p.sp;
+      if(d<=0){p.e.setAttribute('opacity',0);p.hit=null;continue;}
+      let pos=at(d,p.th);
+      if(!p.hit&&breach(pos[0],pos[1]))p.hit={pos,t};
+      if(p.hit)pos=p.hit.pos;
+      const o=p.hit?Math.max(.18,1-(t-p.hit.t)/2.5):(d>5?0:.7);
+      p.e.setAttribute('cx',px(pos[0]).toFixed(1));p.e.setAttribute('cy',py(pos[1]).toFixed(1));
+      p.e.setAttribute('fill',p.hit?BLUE:WHITE);p.e.setAttribute('opacity',o*out*dimSearch);
+    }
+    // 3 · breaking point
+    const c=clamp((t-B[2])/.6);
+    star.setAttribute('r',5.5*c);star.setAttribute('opacity',out);
+    glow.setAttribute('opacity',c*(.65+.35*Math.sin(t*4))*out*(t<B[4]?1:.5));
+    path.setAttribute('opacity',.55*c*out);slab.setAttribute('opacity',c*out*(t<B[4]?1:.6));
+    if(step>=2&&v1.textContent==='—')v1.textContent=pc(PSTAR);
+    // 4 · neighbourhood: outline draws, then fills with nearby scenarios
+    const h=ease(clamp((t-B[3])/1.0));
+    hood.style.strokeDasharray=`${hlen*h} ${hlen}`;hood.setAttribute('opacity',(h>0?1:0)*out);
+    hood.style.fillOpacity=.16*h;hlab.setAttribute('opacity',h*out);
+    const sel=clamp((t-B[4])/.6);                                  // 5 · others fade once the selection starts
+    for(const p of neigh){
+      const o=clamp((t-p.t0)/.4), keep=p.pick!=null;
+      p.e.setAttribute('opacity',o*.95*out*(keep?1:1-.7*sel));
+      if(keep){const k=clamp((t-(B[4]+.8+p.pick*.7))/.4);
+        p.e.setAttribute('r',2.1+1.6*k);p.e.setAttribute('fill',k>0?'#fff':BLUE);
+        p.ring.setAttribute('opacity',k*out);p.ring.setAttribute('r',7+6*(1-k));p.lab.setAttribute('opacity',k*out);}
+    }
+    if(step>=3&&v2.textContent==='—')v2.textContent=pc(PMIN)+' – '+pc(PSTAR);
+    if(step>=4&&v3.textContent==='—')v3.textContent=String(picks.length);
+    if(sayEl)sayEl.textContent=sayTxt.slice(0,Math.floor((now-sayT)/25));
+  }
+  if(reduce){render(performance.now(),22);if(sayEl)sayEl.textContent=CAPS[4];}
+  else{let last=performance.now(),seen=false;(function loop(now){if(!VIS.on){start+=now-last;}else{if(!seen){seen=true;start=now;lastStep=-1;}render(now);}last=now;requestAnimationFrame(loop);})(performance.now());}
+
+}
+/* ---- Validation & monitoring animations ---------------------------------
+   initJeffreys : low-default portfolio (2 000 borrowers, predicted PD 0.01 %,
+     i.e. 0.2 default expected per year). One default occurs: the normal
+     (Gaussian) test already rejects the model, the Jeffreys test does not.
+     Repeated over 100 years where the model is right, the normal test rejects
+     wrongly about one year in five; Jeffreys stays close to its nominal level.
+   initEprocess : in-house method (not yet published). 200 monitoring paths
+     of a model that is right: the classic test redone at every observation
+     raises false alarms on most of them, the anytime-valid approach on almost
+     none; then the model drifts and every path detects it.
+   Illustrative values only.                                                  */
+// Typed captions: the letters appear on screen, but screen readers get the whole
+// sentence at once, from a hidden live region (and never the letter-by-letter typing).
+function mkTyper(cap,reduce,speed){let txt='',t0=0,x=null;cap.removeAttribute('aria-live');
+  return {say(t,now){txt=t;t0=now;cap.innerHTML='<span aria-hidden="true"><span class="p">&gt;/</span> <span class="x"></span><span class="cur"></span></span><span class="visually-hidden" aria-live="polite"></span>';
+            cap.querySelector('[aria-live]').textContent=t;x=cap.querySelector('.x');if(reduce)x.textContent=t;},
+          tick(now){if(x&&!reduce)x.textContent=txt.slice(0,Math.floor((now-t0)/speed));}};}
+function svgEl(svg){const NS='http://www.w3.org/2000/svg';return (tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};}
+function loopWhenVisible(VIS,reduce,T,render,tFinal){
+  if(reduce){render(performance.now(),tFinal);return;}
+  let start=performance.now(),last=start,seen=false;
+  (function loop(now){if(!VIS.on){start+=now-last;}else{if(!seen){seen=true;start=now;}render(now,((now-start)/1000)%T);}last=now;requestAnimationFrame(loop);})(start);
+}
+
+function initJeffreys(root,TX,VIS){
+  root.innerHTML=TX.markup;
+  const svg=root.querySelector('svg'), el=svgEl(svg), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ty=mkTyper(root.querySelector('.va-cap'),reduce,25);
+  const N=2000, COLS=50, STEP=3.5, GX=18, GY=40;
+  const YEARS=[0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // the portfolio
+  el('text',{class:'va-lab',x:GX,y:GY-14}).textContent=TX.grid;
+  const cells=[];for(let i=0;i<N;i++)cells.push(el('rect',{x:GX+(i%COLS)*STEP,y:GY+Math.floor(i/COLS)*STEP,width:2.2,height:2.2,fill:'#e9edf3',opacity:.22}));
+  const DEF=1137, hit=el('circle',{cx:GX+(DEF%COLS)*STEP+1.1,cy:GY+Math.floor(DEF/COLS)*STEP+1.1,r:0,fill:'#4d8dff'});
+  const hitG=el('circle',{cx:hit.getAttribute('cx'),cy:hit.getAttribute('cy'),r:12,fill:'rgba(77,141,255,.35)',opacity:0});
+  {const tl=el('text',{class:'va-lab',x:GX,y:GY+40*STEP+18});TX.pdLines.forEach((ln,k)=>{const sp=el('tspan',{x:GX,dy:k?15:0},tl);sp.textContent=ln;});}
+  // the two tests
+  // 20 rating grades (columns) × 5 annual reviews (rows), all well calibrated
+  const RX=226, G=20, Y=5, rows=[{name:TX.normal,y:46,p1:.037},{name:TX.jeff,y:158,p1:.060}];
+  rows.forEach(R=>{
+    el('text',{class:'va-row',x:RX,y:R.y}).textContent=R.name;
+    R.v=el('text',{class:'va-verdict',x:RX,y:R.y+22});
+    R.pv=el('text',{class:'va-pvt',x:RX+322,y:R.y+22,'text-anchor':'end'});
+    R.rl=[];for(let r=0;r<Y;r++){R.rl.push(el('text',{class:'va-rev',x:RX,y:R.y+40+r*9.5,opacity:0}));R.rl[r].textContent=TX.review(r+1);}
+    R.cells=[];for(let k=0;k<G*Y;k++)R.cells.push(el('rect',{x:RX+58+(k%G)*13.2,y:R.y+33+Math.floor(k/G)*9.5,width:10,height:7,rx:1.2,fill:'#e9edf3',opacity:0}));
+    R.cnt=el('text',{class:'va-cnt',x:RX,y:R.y+92,opacity:0});
+  });
+  const rej=d=>({n:d>=1,j:d>=2});
+  const T=20;let last=-1;
+  function render(now,t){
+    const step=t<3.5?0:t<7.5?1:t<14.2?2:3;
+    if(step!==last){last=step;ty.say(TX.caps[step],now);}
+    const one=t>=3.6;
+    hit.setAttribute('r',one?3.2:0);hitG.setAttribute('opacity',one?(.5+.5*Math.sin(now/160)):0);
+    rows.forEach((R,i)=>{
+      const p=one?R.p1:(i?.472:.673), bad=p<.05;
+      R.v.textContent=bad?TX.reject:TX.accept;R.v.setAttribute('class','va-verdict'+(bad?' bad':''));
+      R.pv.textContent='p = '+TX.num((100*p).toFixed(1))+' %';
+    });
+    // one annual review every 1.2 s, 20 grades at a time
+    const nr=t<7.9?0:Math.min(Y,1+Math.floor((t-7.9)/1.2)), shown=nr*G;
+    let cn=0,cj=0;
+    for(let k=0;k<G*Y;k++){const s=k<shown,r=rej(YEARS[k]);if(s&&r.n)cn++;if(s&&r.j)cj++;
+      rows[0].cells[k].setAttribute('opacity',s?(r.n?1:.28):0);rows[0].cells[k].setAttribute('fill',r.n?'#4d8dff':'#e9edf3');
+      rows[1].cells[k].setAttribute('opacity',s?(r.j?1:.28):0);rows[1].cells[k].setAttribute('fill',r.j?'#4d8dff':'#e9edf3');}
+    rows.forEach(R=>R.rl.forEach((e,r)=>e.setAttribute('opacity',r<nr?1:0)));
+    rows[0].cnt.setAttribute('opacity',nr?1:0);rows[1].cnt.setAttribute('opacity',nr?1:0);
+    rows[0].cnt.textContent=TX.wrong(cn,shown);rows[1].cnt.textContent=TX.wrong(cj,shown);
+    ty.tick(now);
+  }
+  loopWhenVisible(VIS,reduce,T,render,18);
+}
+
+function initEprocess(root,TX,VIS){
+  /* Two methods monitor the same simulated stream before and after a mean
+     shift. The final bars show the share of 200 simulated streams with at
+     least one false alarm before the shift, for each method.
+     Colours: red = false alarm (the test rejects a model that is right),
+     blue = correct alert after the shift. */
+  root.innerHTML=TX.markup;
+  const cv=root.querySelector('canvas'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ty=mkTyper(root.querySelector('.va-cap'),reduce,32);
+  const BLUE='#4d8dff', RED='#ff5d6e', INK='#e9edf3';
+  const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;};
+  // ---- simulation (seeded: the same story at every visit)
+  const N=200, T=240, CH=170, MU=1.8, TAU=.3, W=40, CT=1.645, ET=Math.log(20), PATH=3;
+  let s=TX.seed||4;const rnd=()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const gauss=()=>{let u=0;while(!u)u=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*rnd());};
+  let nC=0,nA=0;const del=[];let X,Z,E;
+  for(let i=0;i<N;i++){
+    const x=new Float32Array(T),z=new Float32Array(T),e=new Float32Array(T);for(let t=0;t<T;t++)x[t]=gauss()+(t>=CH?MU:0);
+    let c=0,S=0,a=-1,b=-1,d=-1;const cum=[0];
+    for(let t=0;t<T;t++){c+=x[t];cum.push(c);const lo=Math.max(0,t-W+1);z[t]=(cum[t+1]-cum[lo])/Math.sqrt(t-lo+1);
+      if(a<0&&t>=10&&z[t]>CT)a=t;S+=x[t];const n=t+1;e[t]=-.5*Math.log(1+n*TAU)+TAU*S*S/(2*(1+n*TAU));
+      if(e[t]>=ET){if(t<CH){if(b<0)b=t;}else if(d<0)d=t;}}
+    if(a>=0&&a<CH)nC++;if(b>=0)nA++;if(d>=0)del.push(d-CH);
+    if(i===PATH){X=x;Z=z;E=e;}}
+  del.sort((p,q)=>p-q);
+  const FAC=nC/N, FAA=nA/N, MED=del[Math.floor(del.length/2)], pc=v=>TX.pct(Math.round(100*v));
+  // the monitored path: smoothed indicator, classic alarm onsets, anytime-valid alert
+  const SM=new Float32Array(T);for(let t=0;t<T;t++){let a=0,n=0;for(let j=Math.max(0,t-5);j<=t;j++){a+=X[j];n++;}SM[t]=a/n;}
+  // alarm episodes: a new alarm once the statistic has stayed below the threshold for a while
+  const ONS=[];{let last=-99,prev=false;for(let t=0;t<T;t++){const up=t>=10&&Z[t]>CT;if(up&&!prev&&t-last>=8)ONS.push(t);if(up)last=t;prev=up;}}
+  const FALSE=ONS.filter(t=>t<CH), DET=[...E].findIndex((v,t)=>t>=CH&&v>=ET);
+  // display scale of each lane: the threshold sits at 55 % of the lane height; what lies above it is
+  // stretched so that every crossing shows clearly
+  const TH=.55, cl=v=>Math.max(0,Math.min(1,v));
+  const lvC=t=>{const z=Z[t];return z<CT?TH*cl((z+2)/(CT+2)):TH+(1-TH)*cl((z-CT)/.42);};
+  const lvA=t=>{const e=E[t];return e<ET?TH*cl((e+1.5)/(ET+1.5)):TH+(1-TH)*cl((e-ET)/2.5);};
+  // ---- layout (CSS pixels)
+  const css=getComputedStyle(root), SANS=(css.getPropertyValue('--sans')||'sans-serif').trim(), MONO=(css.getPropertyValue('--mono')||'monospace').trim();
+  let w=0,H=0,dpr=1,G={};
+  function size(){w=cv.clientWidth||560;dpr=Math.min(2.5,window.devicePixelRatio||1);
+    const HS=w<480?84:104, LB=w<480?40:46;G={s0:26,s1:26+HS};const HG=w<480?50:36;G.dv=G.s1+22;G.l1h=G.s1+58;G.l1a=G.l1h+HG;G.l1b=G.l1a+LB;G.l2h=G.l1b+34;G.l2a=G.l2h+HG;G.l2b=G.l2a+LB;H=G.l2b+26;
+    cv.width=Math.round(w*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
+  size();let rw=w;addEventListener('resize',()=>{if(Math.abs(cv.clientWidth-rw)>20){rw=cv.clientWidth;size();}});
+  const c=cv.getContext('2d');
+  const X_=t=>t/(T-1)*w;
+  function rr(x,y,ww,hh,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+ww,y,x+ww,y+hh,r);c.arcTo(x+ww,y+hh,x,y+hh,r);c.arcTo(x,y+hh,x,y,r);c.arcTo(x,y,x+ww,y,r);c.closePath();}
+  function glowLine(pts,col,lw,blur){c.save();c.shadowColor=col;c.shadowBlur=blur;c.strokeStyle=col;c.lineWidth=lw;c.lineJoin='round';c.beginPath();pts.forEach((p,k)=>k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();c.restore();}
+  function arrow(x,y,col,size){c.save();c.shadowColor=col;c.shadowBlur=10;c.fillStyle=col;c.beginPath();c.moveTo(x,y);c.lineTo(x-size*.75,y-size*1.3);c.lineTo(x+size*.75,y-size*1.3);c.closePath();c.fill();c.restore();}
+  function chip(x,y,txt,bg,fg,side){c.font='600 10.5px '+MONO;const tw=c.measureText(txt).width+12;let xx=side?x+9:x-tw/2;if(side&&xx+tw>w-2)xx=x-9-tw;xx=Math.min(w-tw-1,Math.max(1,xx));
+    c.save();c.shadowColor=bg;c.shadowBlur=12;c.fillStyle=bg;rr(xx,y-15,tw,16,8);c.fill();c.restore();c.fillStyle=fg;c.textAlign='left';c.fillText(txt,xx+6,y-4);}
+  // lane header: title, then what the curve is (line 2); the counter goes where it fits
+  function head(txt,sub,y,right,rcol){c.textAlign='left';c.font='600 13.5px '+SANS;c.fillStyle='#fff';c.fillText(txt,0,y);const tw=c.measureText(txt).width;
+    c.font='500 12px '+MONO;const rwd=c.measureText(right).width;c.fillStyle=rcol;c.textAlign='right';
+    c.font='10.5px '+MONO;const sw=c.measureText(sub).width;c.font='500 12px '+MONO;
+    if(tw+rwd+14<w)c.fillText(right,w,y);else if(sw+rwd+14<w)c.fillText(right,w,y+16);else c.fillText(right,w,y+31);
+    c.textAlign='left';c.font='10.5px '+MONO;c.fillStyle='#8a9099';c.fillText(sub,0,y+16);}
+  // a lane: the statistic, the threshold, what lies above it in colour
+  function lane(h,y0,y1,lv,base,hot,tint){
+    const hi=Math.floor(h), yv=l=>y1-l*(y1-y0), yT=yv(TH);
+    const bg=c.createLinearGradient(0,y0,0,y1);bg.addColorStop(0,'rgba(255,255,255,.045)');bg.addColorStop(1,'rgba(255,255,255,.015)');
+    c.fillStyle=bg;rr(0,y0-4,w,y1-y0+4,6);c.fill();
+    if(tint>0){c.save();c.globalAlpha=tint;c.strokeStyle=BLUE;c.shadowColor=BLUE;c.shadowBlur=14;rr(0,y0-4,w,y1-y0+4,6);c.stroke();c.restore();}
+    const pts=[];for(let t=0;t<=hi;t++)pts.push([X_(t),yv(lv(t))]);
+    // area below the curve
+    const ga=c.createLinearGradient(0,y0,0,y1);ga.addColorStop(0,rgba(base,.22));ga.addColorStop(1,rgba(base,0));
+    c.beginPath();c.moveTo(0,y1);pts.forEach(p=>c.lineTo(p[0],p[1]));c.lineTo(X_(hi),y1);c.closePath();c.fillStyle=ga;c.fill();
+    glowLine(pts,rgba(base,.85),1.4,4);
+    // above the threshold: coloured by who is right (hot(t) gives the colour)
+    c.save();c.beginPath();c.rect(0,y0-6,w,yT-y0+6);c.clip();
+    let t=0;while(t<=hi){const col=hot(t);let u=t;while(u<=hi&&hot(u)===col)u++;
+      if(col){const seg=pts.slice(t,Math.min(u+1,pts.length));c.beginPath();c.moveTo(seg[0][0],yT);seg.forEach(p=>c.lineTo(p[0],p[1]));c.lineTo(seg[seg.length-1][0],yT);c.closePath();
+        c.fillStyle=rgba(col,.45);c.fill();glowLine(seg,col,2,10);}
+      t=u;}
+    c.restore();
+    c.strokeStyle=rgba(BLUE,.9);c.lineWidth=1;c.setLineDash([4,4]);c.beginPath();c.moveTo(0,yT);c.lineTo(w,yT);c.stroke();c.setLineDash([]);
+    c.font='9.5px '+MONO;c.fillStyle=rgba(BLUE,.9);c.textAlign='right';c.fillText(TX.thr||'seuil',w-6,yT-4);c.textAlign='left';
+    return {yT,yv};}
+  function draw(h,alpha,tt){
+    c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,H);c.globalAlpha=alpha;
+    const hi=Math.floor(h), xh=X_(h), Y0=-3.4, Y1=4.8, ys=v=>G.s1-(v-Y0)/(Y1-Y0)*(G.s1-G.s0), det=DET>=0&&DET<=h;
+    // grid
+    c.strokeStyle='rgba(255,255,255,.035)';c.lineWidth=1;for(let t=0;t<T;t+=20){c.beginPath();c.moveTo(X_(t)+.5,G.s0);c.lineTo(X_(t)+.5,G.l2b);c.stroke();}
+    // stream
+    c.font='12px '+SANS;c.fillStyle='#8a9099';c.textAlign='left';c.fillText(TX.stream,0,13);
+    c.strokeStyle='rgba(255,255,255,.14)';c.setLineDash([2,4]);c.beginPath();c.moveTo(0,ys(0));c.lineTo(w,ys(0));c.stroke();c.setLineDash([]);
+    if(h>=CH){const g=c.createLinearGradient(0,ys(MU),0,ys(0));g.addColorStop(0,rgba(BLUE,.16));g.addColorStop(1,rgba(BLUE,0));
+      c.fillStyle=g;c.fillRect(X_(CH),ys(MU),xh-X_(CH),ys(0)-ys(MU));
+      c.strokeStyle=rgba(BLUE,.7);c.setLineDash([4,4]);c.beginPath();c.moveTo(X_(CH),ys(MU));c.lineTo(xh,ys(MU));c.stroke();c.setLineDash([]);}
+    const sp=[];for(let t=0;t<=hi;t++)sp.push([X_(t),ys(SM[t])]);glowLine(sp,INK,1.7,8);
+    // regime change
+    if(h>=CH){c.strokeStyle='rgba(255,255,255,.45)';c.setLineDash([3,3]);c.beginPath();c.moveTo(X_(CH),G.s0);c.lineTo(X_(CH),G.dv-9);c.moveTo(X_(CH),G.dv+9);c.lineTo(X_(CH),G.l2b+4);c.stroke();c.setLineDash([]);
+      c.font='11.5px '+SANS;c.fillStyle='#c7ccd3';const rgt=X_(CH)>w*.6;c.textAlign=rgt?'right':'left';c.fillText(TX.change,X_(CH)+(rgt?-6:6),G.l2b+20);c.textAlign='left';}
+    // divider: the lanes below are not the data, but what each method computes from it
+    if(TX.derive){c.font='11px '+SANS;const dt=TX.derive,dw=c.measureText(dt).width+20,xm=w/2;
+      c.strokeStyle='rgba(255,255,255,.14)';c.lineWidth=1;c.beginPath();c.moveTo(0,G.dv);c.lineTo(xm-dw/2,G.dv);c.moveTo(xm+dw/2,G.dv);c.lineTo(w,G.dv);c.stroke();
+      c.fillStyle='#8a9099';c.textAlign='center';c.fillText(dt,xm,G.dv+4);c.textAlign='left';}
+    // lane 1 — classic test: red above the threshold before the change (false alarm), blue after
+    const nF=FALSE.filter(t=>t<=h).length;
+    head(TX.classic,TX.classicSub,G.l1h,TX.nFalse(nF),nF?RED:'#7d848d');
+    const L1=lane(h,G.l1a,G.l1b,lvC,INK,t=>t>=10&&Z[t]>CT?(t<CH?RED:BLUE):null,0);
+    ONS.filter(t=>t<=h).forEach(t=>{const age=h-t,xa=X_(t),col=t<CH?RED:BLUE,yp=L1.yv(lvC(t));
+      if(age<18){const g=c.createLinearGradient(xa-30,0,xa+30,0);g.addColorStop(0,rgba(col,0));g.addColorStop(.5,rgba(col,.22*(1-age/18)));g.addColorStop(1,rgba(col,0));c.fillStyle=g;c.fillRect(xa-30,G.l1a-4,60,G.l1b-G.l1a+4);}
+      c.strokeStyle=rgba(col,.8);c.lineWidth=1.2;c.beginPath();c.moveTo(xa,G.l1a-4);c.lineTo(xa,G.l1b);c.stroke();
+      arrow(xa,G.l1a-5,col,6);
+      if(age<14){c.strokeStyle=rgba(col,1-age/14);c.lineWidth=1.4;c.beginPath();c.arc(xa,yp,4+age*1.6,0,Math.PI*2);c.stroke();}
+      if(t<CH&&age<24&&TX.falseChip&&t===FALSE.filter(u=>u<=h).pop())chip(xa,G.l1a+14,TX.falseChip,RED,'#160407',true);});
+    // lane 2 — anytime-valid
+    head(TX.anytime,TX.anytimeSub,G.l2h,det?TX.alertAfter(DET-CH):TX.nFalse(0),det?BLUE:'#7d848d');
+    const age=det?h-DET:0;
+    const L2=lane(h,G.l2a,G.l2b,lvA,BLUE,t=>E[t]>=ET?(t<CH?RED:BLUE):null,det?Math.max(.35,1-age/30):0);
+    if(det){const xd=X_(DET),yd=L2.yT;
+      c.strokeStyle=rgba(BLUE,.8);c.lineWidth=1.2;c.beginPath();c.moveTo(xd,G.l2a-4);c.lineTo(xd,G.l2b);c.stroke();arrow(xd,G.l2a-5,BLUE,7);
+      for(const k of [0,7])if(age-k>=0&&age-k<20){const a=age-k;c.strokeStyle=rgba(BLUE,1-a/20);c.lineWidth=1.6;c.beginPath();c.arc(xd,yd,5+a*2.2,0,Math.PI*2);c.stroke();}
+      c.save();c.shadowColor=BLUE;c.shadowBlur=14;c.fillStyle=BLUE;c.beginPath();c.arc(xd,yd,4.2,0,Math.PI*2);c.fill();c.restore();
+      if(TX.alertChip)chip(xd,G.l2a+14,TX.alertChip,BLUE,'#030a18',true);}
+    // scanning cursor through every lane
+    if(h<T-1){const tr=c.createLinearGradient(xh-46,0,xh,0);tr.addColorStop(0,'rgba(255,255,255,0)');tr.addColorStop(1,det?rgba(BLUE,.10):'rgba(255,255,255,.07)');
+      c.fillStyle=tr;c.fillRect(xh-46,G.s0,46,G.l2b-G.s0);
+      c.strokeStyle=det?rgba(BLUE,.7):'rgba(255,255,255,.35)';c.lineWidth=1;c.beginPath();c.moveTo(xh+.5,G.s0);c.lineTo(xh+.5,G.l2b);c.stroke();}
+    const yh=ys(SM[hi]);c.fillStyle='rgba(255,255,255,.16)';c.beginPath();c.arc(xh,yh,6+2*Math.sin(tt*5),0,Math.PI*2);c.fill();
+    c.fillStyle='#fff';c.beginPath();c.arc(xh,yh,2.8,0,Math.PI*2);c.fill();
+    c.globalAlpha=1;
+  }
+  // ---- 200 simulated streams: bars
+  const bars=[...root.querySelectorAll('.ep-row')], vals=[FAC,FAA];
+  function setBars(u){bars.forEach((b,k)=>{const v=vals[k]*Math.max(0,Math.min(1,u));b.querySelector('.ep-in').style.width=(100*v).toFixed(1)+'%';
+    b.querySelector('b').textContent=u>0?pc(v):'—';});const bb=root.querySelector('.ep-bars');if(bb)bb.classList.toggle('on',u>0);}
+  // ---- timeline (seconds)
+  const L=30, A0=1, A1=15, A2=20, B0=21, B1=23;
+  const caps=[[0,TX.caps[0]],[3.4,TX.caps[1]],[9,TX.caps[2]],[A1+.1,TX.caps[3]],[A1+2.6,TX.caps[4](DET-CH)],[B0,TX.caps[5](pc(FAC),pc(FAA))]];
+  let lastCap=-1, lastU=-1;
+  function render(now,t){
+    const h=t<A0?0:t<A1?(t-A0)/(A1-A0)*(CH-1):Math.min(T-1,CH-1+(t-A1)/(A2-A1)*(T-CH));
+    let k=-1;caps.forEach((cc,j)=>{if(t>=cc[0])k=j;});if(k!==lastCap&&k>=0){lastCap=k;ty.say(caps[k][1],now);}
+    const alpha=t>L-.8?Math.max(0,(L-t)/.8):1;draw(h,alpha,t);
+    const u=t<B0?0:Math.min(1,(t-B0)/(B1-B0));if(u!==lastU){lastU=u;setBars(u);}
+    const bb=root.querySelector('.ep-bars');if(bb)bb.style.opacity=alpha;ty.tick(now);
+  }
+  loopWhenVisible(VIS,reduce,L,render,B1+3);
+}
+
+const IN_HOUSE_CREDIT={
+  fr:'Méthode développée en interne par STORM, pas encore publiée.',
+  en:'Method developed in-house by STORM — not yet published.'
+};
+const VA_TX={
+ fr:{
+  jeff:{markup:`<div class="va"><svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">D'après <a href="https://www.sciencedirect.com/science/article/abs/pii/S0377221726004509" target="_blank" rel="noopener">A Bayesian Approach to Probability Default Model Calibration</a> — Hurlin &amp; Pull, <em>European Journal of Operational Research</em> (2026).</div></div>`,
+   grid:'Portefeuille à faible taux de défaut · 2 000 emprunteurs', pd:'', pdLines:['Probabilité de défaut prédite : 0,01 %','soit 0,2 défaut attendu par an'],
+   normal:'Test normal (approximation gaussienne)', jeff:'Test de Jeffreys', accept:'Calibration acceptée', reject:'Calibration rejetée',
+   num:x=>x.replace('.',','), wrong:(c,n)=>`rejets à tort : ${c} sur ${n} tests`, review:n=>`revue ${n}`,
+   caps:['Peu de défauts : 2 000 emprunteurs, 0,2 défaut attendu par an.',
+     'Un seul défaut : le test normal rejette déjà. Jeffreys, non.',
+     '20 classes de notation, 5 revues annuelles, des modèles tous justes :',
+     'le test normal rejette à tort près d’une fois sur cinq. Jeffreys reste fiable.']},
+  eproc:{markup:`<div class="va va-ep"><canvas role="img" aria-label="Un flux de données surveillé par deux méthodes : test classique et approche valide à tout instant"></canvas>
+   <div class="ep-bars"><p>Part des 200 séries simulées avec au moins une fausse alerte avant le changement</p>
+   <div class="ep-row c"><span>Test classique</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-row a"><span>Valide à tout instant</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-limt"><i></i>limite garantie : 5 %</div></div>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">${IN_HOUSE_CREDIT.fr}</div></div>`,
+   seed:4, pct:n=>n+'\u00a0%',
+   thr:'seuil', falseChip:'fausse alerte', alertChip:'alerte', derive:'↓  chaque méthode en déduit son indicateur d’alerte  ↓',
+   stream:'Données : écart moyen entre la prévision et l’observation', change:'la moyenne augmente',
+   classic:'Test classique', classicSub:'statistique de test, recalculée à chaque observation', anytime:'Approche valide à tout instant', anytimeSub:'preuve accumulée contre le modèle',
+   nFalse:n=>n<2?`${n} fausse alerte`:`${n} fausses alertes`, alertAfter:n=>`alerte après ${n} observations`,
+   caps:['Au départ, les données suivent le modèle : l’écart entre prévision et observation reste centré sur zéro.',
+     'Sur cette série, le test classique répété déclenche plusieurs fausses alertes.',
+     'Sur cette série, l’approche valide à tout instant ne déclenche aucune fausse alerte.',
+     'La moyenne des données augmente.',
+     n=>`La méthode valide à tout instant donne l’alerte ${n} observations après le changement.`,
+     (a,b)=>`Avant le changement, ${a} des séries ont déclenché une fausse alerte avec le test classique et ${b} avec l’approche valide à tout instant. En l’absence de changement, cette dernière borne à 5 % la probabilité d’au moins une fausse alerte.`]}
+ },
+ en:{
+  jeff:{markup:`<div class="va"><svg viewBox="0 0 560 280" role="img" aria-hidden="true"></svg>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">Based on <a href="https://www.sciencedirect.com/science/article/abs/pii/S0377221726004509" target="_blank" rel="noopener">A Bayesian Approach to Probability Default Model Calibration</a> — Hurlin &amp; Pull, <em>European Journal of Operational Research</em> (2026).</div></div>`,
+   grid:'Low-default portfolio · 2,000 borrowers', pd:'', pdLines:['Predicted probability of default: 0.01 %','i.e. 0.2 default expected per year'],
+   normal:'Normal test (Gaussian approximation)', jeff:'Jeffreys test', accept:'Calibration accepted', reject:'Calibration rejected',
+   num:x=>x, wrong:(c,n)=>`wrong rejections: ${c} out of ${n} tests`, review:n=>`review ${n}`,
+   caps:['Few defaults: 2,000 borrowers, 0.2 default expected per year.',
+     'A single default: the normal test already rejects. Jeffreys does not.',
+     '20 rating grades, 5 annual reviews, all models right:',
+     'the normal test wrongly rejects nearly one time in five. Jeffreys stays reliable.']},
+  eproc:{markup:`<div class="va va-ep"><canvas role="img" aria-label="A data stream monitored by two methods: classic test and anytime-valid approach"></canvas>
+   <div class="ep-bars"><p>Share of 200 simulated streams with at least one false alarm before the shift</p>
+   <div class="ep-row c"><span>Classic test</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-row a"><span>Anytime-valid</span><div class="ep-bar"><div class="ep-in"></div><div class="ep-lim"></div></div><b>—</b></div>
+   <div class="ep-limt"><i></i>guaranteed limit: 5%</div></div>
+   <div class="va-cap" aria-live="polite"></div>
+   <div class="va-foot">${IN_HOUSE_CREDIT.en}</div></div>`,
+   seed:4, pct:n=>n+'%',
+   thr:'threshold', falseChip:'false alarm', alertChip:'alert', derive:'↓  each method derives its own alert indicator  ↓',
+   stream:'Data: average gap between the prediction and the observation', change:'the mean increases',
+   classic:'Classic test', classicSub:'test statistic, recomputed at every observation', anytime:'Anytime-valid approach', anytimeSub:'evidence accumulated against the model',
+   nFalse:n=>n===1?'1 false alarm':`${n} false alarms`, alertAfter:n=>`alert after ${n} observations`,
+   caps:['The data initially follow the model: the gap between forecast and observation stays centred on zero.',
+     'On this stream, the repeated conventional test raises several false alarms.',
+     'The anytime-valid method avoids false alarms on this stream.',
+     'The mean of the data increases.',
+     n=>`On this stream, the anytime-valid method raises an alarm ${n} observations after the shift.`,
+     (a,b)=>`Before the shift, ${a} of streams raised a false alarm with the conventional test and ${b} with the anytime-valid method. Under the no-change model, the anytime-valid method limits the probability of ever raising a false alarm to 5%.`]}
+ }
+};
+
+
+const TFM_TX={
+  fr:{
+    stages:['Préentraînement','Portefeuille A','Portefeuille B'],
+    training:'Tâches synthétiques', paid:'Sans défaut', defaulted:'Défaut',
+    applicant:'Dossier 024', income:'Revenu 3 100 €/mois', payment:'Mensualité 940 €',
+    learning:'Apprentissage', frozen:'Poids fixes', risk:'PD à un an', percent:n=>n+' %',
+    captions:(a,b)=>['Sur des jeux de données synthétiques, le modèle apprend à prédire des résultats masqués.',
+      `Avec les dossiers de référence du portefeuille A, le modèle estime la PD à un an à ${a}.`,
+      `À profil comparable, les défauts sont plus fréquents dans B. Pour le même emprunteur, la PD passe de ${a} à ${b}.`]
+  },
+  en:{
+    stages:['Pretraining','Portfolio A','Portfolio B'],
+    training:'Synthetic tasks', paid:'No default', defaulted:'Default',
+    applicant:'Applicant 024', income:'Income €3,100/month', payment:'Monthly payment €940',
+    learning:'Learning', frozen:'Fixed weights', risk:'One-year PD', percent:n=>n+'%',
+    captions:(a,b)=>['Across synthetic datasets, the model learns to predict hidden outcomes.',
+      `With Portfolio A as its reference, the model estimates a one-year probability of default of ${a}.`,
+      `Comparable borrowers default more often in Portfolio B. For the same applicant, the estimate rises from ${a} to ${b}.`]
+  }
+};
+
+function initTFM(root,tx,vis){
+  const firstPD=4, secondPD=8;
+  const captions=tx.captions(tx.percent(firstPD),tx.percent(secondPD));
+  root.innerHTML=`<div class="va tfm"><div class="sf-phase" aria-hidden="true">${tx.stages.map((s,i)=>`<span>${i+1} · ${s}</span>`).join('')}</div>
+    <svg role="img" aria-label="${captions.join(' ')}"></svg>
+    <div class="va-cap" aria-hidden="true">${captions.map(text=>`<span>${text}</span>`).join('')}</div><div class="va-foot">${IN_HOUSE_CREDIT[LANG]}</div></div>`;
+  const svg=root.querySelector('svg'), captionLines=root.querySelectorAll('.va-cap span');
+  const labels=[...root.querySelectorAll('.sf-phase span')];
+  const motion=matchMedia('(prefers-reduced-motion: reduce)');
+  const firstPortfolio=4200, secondPortfolio=11600, cycle=20400;
+  let elapsed=0, lastTime=null, phase=-1, narrow;
+  let tasks, cases, historyTitle, modelStatus, previous, query, wires, value, chip, result;
+
+  function person(x,y,showOutcome=false){
+    return `<g transform="translate(${x} ${y})">
+      <circle class="tfm-avatar" r="18"/><g class="tfm-person"><circle cy="-4" r="4"/>
+      <path d="M-9 8c0-9 18-9 18 0"/></g>
+      ${showOutcome?'<text class="tfm-outcome" y="32"></text>':''}</g>`;
+  }
+
+  function layout(compact){
+    narrow=compact;
+    // On phones the two inputs feed the model from above. The output stays beside it.
+    const hx=8, hy=10, hw=compact?284:230, hh=104;
+    const qx=compact?102:18, qy=compact?138:167, qw=compact?190:216, qh=76;
+    const mx=compact?12:306, my=compact?241:90, mw=compact?130:140, mh=108;
+    const rx=compact?236:556, ry=my+mh/2;
+    const paths=compact
+      ? ['M57 114V241','M184 214C184 232 112 218 112 241',`M142 ${ry}H197`]
+      : ['M238 60C279 60 270 119 306 119','M234 201C272 201 269 168 306 168',`M446 ${ry}H517`];
+    svg.setAttribute('viewBox',compact?'0 0 300 382':'0 0 640 258');
+    svg.innerHTML=`
+      ${paths.map((d,i)=>`<path class="tfm-track" d="${d}"/><path class="tfm-wire tfm-wire-${i}" d="${d}" pathLength="1"/>`).join('')}
+      <g transform="translate(${hx} ${hy})"><rect class="tfm-box" width="${hw}" height="${hh}" rx="12"/>
+        <text class="tfm-label tfm-history-title" x="${hw/2}" y="23"></text>
+        <g class="tfm-tasks">${['M-17 10L-7 7L3 1L16-9','M-17-6Q0 20 16-7','M-17 10H-4V1H6V-8H16'].map((curve,i)=>
+          `<g transform="translate(${hw*(i+.5)/3} 61)"><rect class="tfm-avatar" x="-25" y="-21" width="50" height="42" rx="6"/>
+          <path class="tfm-pattern" d="${curve}" pathLength="1"/></g>`).join('')}</g>
+        <g class="tfm-cases">${[0,1,2].map(i=>person(hw*(i+.5)/3,56,true)).join('')}</g>
+      </g>
+      <g transform="translate(${qx} ${qy})"><g class="tfm-applicant">
+        <rect class="tfm-input" width="${qw}" height="${qh}" rx="12"/>${person(29,34)}
+        <text class="tfm-label" x="57" y="25" text-anchor="start">${tx.applicant}</text>
+        <text class="tfm-detail" x="57" y="44" text-anchor="start">${tx.income}</text>
+        <text class="tfm-detail" x="57" y="60" text-anchor="start">${tx.payment}</text>
+      </g></g>
+      <g transform="translate(${mx} ${my})"><rect class="tfm-chip" width="${mw}" height="${mh}" rx="13"/>
+        <g class="tfm-layers" transform="translate(${mw/2} 24)">
+          <path d="m-21 11 21 9 21-9-21-9z"/><path d="m-21 5 21 9 21-9-21-9z"/>
+          <path d="m-21-1 21 9 21-9-21-9z"/>
+        </g>
+        <text class="tfm-name" x="${mw/2}" y="69">TFM</text>
+        <text class="tfm-detail tfm-model-status" x="${mw/2}" y="89"></text>
+      </g>
+      <g transform="translate(${rx} ${ry})">
+        <circle class="tfm-dial" r="39"/><circle class="tfm-share" r="39" pathLength="100" transform="rotate(-90)"/>
+        <text class="tfm-value" y="8">—</text><text class="tfm-label" y="60">${tx.risk}</text>
+        <text class="tfm-detail tfm-comparison" y="77">A ${tx.percent(firstPD)} → B ${tx.percent(secondPD)}</text>
+      </g>`;
+    tasks=svg.querySelector('.tfm-tasks');
+    cases=svg.querySelector('.tfm-cases');
+    historyTitle=svg.querySelector('.tfm-history-title');
+    modelStatus=svg.querySelector('.tfm-model-status');
+    previous=svg.querySelector('.tfm-comparison');
+    query=svg.querySelector('.tfm-applicant');
+    wires=[...svg.querySelectorAll('.tfm-wire')];
+    value=svg.querySelector('.tfm-value');
+    chip=svg.querySelector('.tfm-chip');
+    result=svg.querySelector('.tfm-share');
+    phase=-1;
+  }
+
+  // Ease each visual on the same playback clock so transitions also pause off screen.
+  function ease(t,start,duration){
+    const u=Math.max(0,Math.min(1,(t-start)/duration));
+    return u*u*(3-2*u);
+  }
+  function draw(t){
+    const stage=t<firstPortfolio?0:t<secondPortfolio?1:2;
+    const start=[0,firstPortfolio,secondPortfolio][stage];
+    const end=[firstPortfolio,secondPortfolio,cycle][stage];
+    const age=t-start;
+    const fadeIn=ease(age,0,480), fadeOut=1-ease(t,end-480,480);
+    const referenceOpacity=fadeIn*fadeOut;
+    const loopOut=1-ease(t,cycle-650,650);
+    const applicantOpacity=ease(t,firstPortfolio,750)*loopOut;
+    if(stage!==phase){
+      phase=stage;
+      labels.forEach((label,i)=>label.classList.toggle('on',i===stage));
+      captionLines.forEach(line=>{line.style.opacity=0;});
+      historyTitle.textContent=stage===0?tx.training:tx.stages[stage];
+      tasks.style.display=stage===0?'':'none';
+      cases.style.display=stage===0?'none':'';
+      modelStatus.textContent=stage===0?tx.learning:tx.frozen;
+      chip.classList.toggle('active',stage>0);
+      cases.querySelectorAll('.tfm-outcome').forEach((label,i)=>{
+        const defaulted=stage===2?i>=1:i===2;
+        label.textContent=defaulted?tx.defaulted:tx.paid;
+        label.parentNode.classList.toggle('tfm-default',defaulted);
+      });
+    }
+    captionLines[stage].style.opacity=referenceOpacity;
+    historyTitle.style.opacity=referenceOpacity;
+    if(stage===0){
+      tasks.style.opacity=referenceOpacity;
+      tasks.style.strokeDashoffset=1-ease(age,120,1200);
+    }else cases.style.opacity=referenceOpacity;
+    query.style.opacity=applicantOpacity;
+    modelStatus.style.opacity=stage===0?referenceOpacity:applicantOpacity;
+
+    // Keep the applicant connection and the first estimate in place while B arrives.
+    wires[0].style.strokeDashoffset=1-ease(age,200,1250);
+    wires[0].style.opacity=fadeOut;
+    wires[1].style.strokeDashoffset=1-ease(t,firstPortfolio+350,1050);
+    wires[2].style.strokeDashoffset=1-ease(t,firstPortfolio+1400,700);
+    wires[1].style.opacity=wires[2].style.opacity=loopOut;
+
+    const reveal=ease(t,firstPortfolio+2000,650);
+    const change=ease(t,secondPortfolio+1300,1000);
+    const arc=reveal*(firstPD+(secondPD-firstPD)*change);
+    const display=reveal===0?'—':tx.percent(change<.5?firstPD:secondPD);
+    if(value.textContent!==display) value.textContent=display;
+    // Fade the numeral through the midpoint; the ring travels continuously from A to B.
+    value.style.opacity=reveal*Math.abs(1-2*change)*loopOut;
+    result.style.strokeDasharray=`${arc} 100`;
+    result.style.opacity=reveal*loopOut;
+    previous.style.opacity=ease(t,secondPortfolio+2200,550)*loopOut;
+  }
+
+  function size(){
+    if(!root.clientWidth) return;
+    const compact=root.clientWidth<540;
+    if(compact!==narrow){layout(compact);draw(motion.matches?secondPortfolio+4000:elapsed);}
+  }
+  size();
+  new ResizeObserver(size).observe(root);
+  document.addEventListener('visibilitychange',()=>{lastTime=null;});
+  let frameId;
+  function frame(now){
+    if(vis.on&&!document.hidden&&tasks){
+      if(lastTime!==null) elapsed=(elapsed+now-lastTime)%cycle;
+      draw(elapsed);
+      lastTime=now;
+    }else lastTime=null;
+    frameId=requestAnimationFrame(frame);
+  }
+  function applyMotionPreference(){
+    cancelAnimationFrame(frameId);
+    lastTime=null;
+    if(motion.matches){if(tasks) draw(secondPortfolio+4000);}
+    else frameId=requestAnimationFrame(frame);
+  }
+  motion.addEventListener('change',applyMotionPreference);
+  applyMotionPreference();
+}
+
+// each animation starts when it scrolls into view, and pauses when it leaves
+function watch(el){const V={on:false,heard:false};
+  if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{V.heard=true;V.on=e.isIntersecting;}),{threshold:.35}).observe(el);
+    // safety net: if the browser never reports visibility, fall back to "on screen" by geometry
+    setTimeout(()=>{if(!V.heard){const r=el.getBoundingClientRect();V.on=r.bottom>0&&r.top<innerHeight&&r.height>0;}},1500);}
+  else V.on=true;
+  return V;}
+// one failing animation must never break the others (nor the switches below)
+const safe=(f,el)=>{try{f(el);}catch(e){console.error('STORM animation',el.dataset.anim,e);}};
+document.querySelectorAll('.storm-anim[data-anim="credit"]').forEach(el=>safe(el=>initFlow(el,FLOW_TX[LANG],watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="rst"]').forEach(el=>safe(el=>initRST(el,RST_TX[LANG],watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="jeffreys"]').forEach(el=>safe(el=>initJeffreys(el,VA_TX[LANG].jeff,watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="eprocess"]').forEach(el=>safe(el=>initEprocess(el,VA_TX[LANG].eproc,watch(el)),el));
+document.querySelectorAll('.storm-anim[data-anim="tfm"]').forEach(el=>safe(el=>initTFM(el,TFM_TX[LANG],watch(el)),el));
+// switches between animations: each switch drives the panes of its own group
+document.querySelectorAll('.anim-switch').forEach(sw=>{
+  const grp=sw.closest('.anim-group')||document;
+  const panes=[...grp.querySelectorAll('.anim-pane')];
+  sw.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    sw.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    panes.forEach(p=>p.hidden=p.dataset.pane!==b.dataset.pane);
+    dispatchEvent(new Event('resize'));
+  }));
+});
+
+})();
+</script>
+
+<!-- Statistiques de visite : Cloudflare Web Analytics (sans cookie).
+     Tableau de bord : Cloudflare → Analytics & Logs → Web Analytics. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{&quot;token&quot;: &quot;74e6809aa9a4495abe52c598637c9bf3&quot;}"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/squaremanagement-storm\.com\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><strong>STORM</strong> — Quantitative Risk Collective · un collectif de Square Management</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../fr/a-propos/#contact">
+<p>Contact</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

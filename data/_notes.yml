@@ -28,3 +28,10 @@
   auteurs: ["Inès Bordais", "Léane Chevrier", "Quentin Lajaunie", "Yoann Pull"]
   description: "Les modèles satellites sont souvent évalués sur la seule trajectoire moyenne du facteur de crédit. En propageant sa distribution complète, on obtient une PD moyenne qui tient compte de l’incertitude prédictive et deux mesures de queue, au même coût de calcul."
   categories: ["Risque de crédit", "Stress testing", "Quantiles"]
+
+- title: "Modélisation des interdépendances géo-sectorielles en risque de crédit : l’approche Global VAR"
+  path: "/fr/notes/gvar-geo-sectoriel.html"
+  date: "2026-09-01"
+  auteurs: ["Yassir Motia", "Abdellah Nait Akli", "Charles-Emmanuel Prost"]
+  description: "Les modèles satellites estimés secteur par secteur ignorent la propagation des chocs le long des chaînes de valeur. Le cadre Global VAR la paramètre, l’estime et la rend testable, à une granularité géo-sectorielle."
+  categories: ["Risque de crédit", "Stress testing", "Réseaux sectoriels"]

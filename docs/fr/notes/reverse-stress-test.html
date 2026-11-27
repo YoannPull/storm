@@ -152,20 +152,22 @@ window.Quarto = {
 <link rel="stylesheet" href="../../assets/css/storm-dark.css">
 <meta property="og:title" content="Reverse stress testing : partir du seuil de capital, pas du scénario – STORM">
 <meta property="og:description" content="Une architecture opérationnelle qui transforme un seuil de capital CET1 en scénario de rupture : la combinaison de chocs la plus plausible capable de franchir le seuil, assortie de son voisinage.">
-<meta property="og:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta property="og:image" content="https://squaremanagement-storm.com/assets/notes/figures/reverse-stress-design-point.png">
 <meta property="og:site_name" content="STORM">
-<meta property="og:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta property="og:image:alt" content="(a) Le point de rupture s^{\star}=(g^{\star},x^{\star}) : le scénario le plus plausible sur la frontière R(s)=R^{\star}, et son voisinage local (zone hachurée). (b) Le ratio CET1 correspondant, de la référence R_0 au seuil R^{\star}. Portefeuille fictif et illustratif.">
+<meta property="og:image:height" content="895">
+<meta property="og:image:width" content="2049">
 <meta name="twitter:title" content="Reverse stress testing : partir du seuil de capital, pas du scénario – STORM">
 <meta name="twitter:description" content="Une architecture opérationnelle qui transforme un seuil de capital CET1 en scénario de rupture : la combinaison de chocs la plus plausible capable de franchir le seuil, assortie de son voisinage.">
-<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/notes/figures/reverse-stress-design-point.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta name="twitter:image:alt" content="(a) Le point de rupture s^{\star}=(g^{\star},x^{\star}) : le scénario le plus plausible sur la frontière R(s)=R^{\star}, et son voisinage local (zone hachurée). (b) Le ratio CET1 correspondant, de la référence R_0 au seuil R^{\star}. Portefeuille fictif et illustratif.">
+<meta name="twitter:image-height" content="895">
+<meta name="twitter:image-width" content="2049">
 <link rel="canonical" href="https://squaremanagement-storm.com/fr/notes/reverse-stress-test">
 <meta property="og:url" content="https://squaremanagement-storm.com/fr/notes/reverse-stress-test">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -275,21 +277,27 @@ window.Quarto = {
 </header>
 
 
+<div class="note-pdf">
+<p><a href="../../assets/notes/STORM-note-reverse-stress-test.pdf" download="STORM-note-reverse-stress-test.pdf">Télécharger la note (PDF)</a></p>
+</div>
 <div class="standfirst">
-<p><span class="lede">En bref</span> Les stress tests classiques répondent à la question « combien coûterait ce scénario ? ». Le régulateur pose désormais aussi la question inverse : « quel scénario coûterait cela ? » L’exercice thématique 2026 de la BCE demande aux banques d’identifier les événements géopolitiques susceptibles d’entamer leur capital CET1 d’au moins 300 points de base. Cette note présente une architecture opérationnelle qui transforme un seuil de capital en scénario de rupture, en réutilisant les modèles internes existants.</p>
+<p><span class="lede">En bref</span> Les stress tests classiques répondent à la question « combien coûterait ce scénario ? ». Le régulateur pose désormais aussi la question inverse : « quel scénario coûterait cela ? » L’exercice thématique 2026 de la BCE demande ainsi aux banques d’identifier les événements géopolitiques susceptibles d’entamer leur capital CET1 d’au moins 300 points de base (ECB, 2025). Cette note présente une architecture opérationnelle qui transforme un seuil de capital en un <em>scénario de rupture</em> : la combinaison de chocs la plus plausible capable de franchir le seuil, assortie de son voisinage de scénarios proches. Elle réutilise les modèles internes existants ; un portefeuille de crédit stylisé sert de preuve de concept.</p>
 </div>
 <div class="message">
 <p><span class="label">Message central</span></p>
-<p>Le reverse stress testing inverse la logique habituelle : au lieu de mesurer l’impact d’un scénario donné, on part de la condition de défaillance et on cherche, parmi tous les scénarios possibles, celui qui la produit <strong>avec la plus grande plausibilité</strong>.</p>
-<p>Formulé comme une recherche sous contrainte, l’exercice cesse d’être un récit : il produit un objet documenté, chiffré et challengeable. L’illustration géopolitique n’est qu’une preuve de concept ; la même architecture s’applique aux chocs macroéconomiques, climatiques, de taux, sectoriels ou de marché.</p>
+<p>Le reverse stress testing inverse la logique habituelle : au lieu de mesurer l’impact d’un scénario donné, on part de la condition de défaillance et on cherche, parmi tous les scénarios possibles, celui qui la produit avec la <strong>plus grande plausibilité</strong>. Formulé comme une recherche sous contrainte, l’exercice cesse d’être un récit : il produit un objet documenté, chiffré et challengeable. L’illustration géopolitique n’est qu’une preuve de concept ; la même architecture s’applique aux chocs macroéconomiques, climatiques, de taux, sectoriels ou de marché.</p>
 </div>
 <section id="ce-que-les-scénarios-prescrits-ne-couvrent-pas" class="level2">
 <h2 class="anchored" data-anchor-id="ce-que-les-scénarios-prescrits-ne-couvrent-pas">1. Ce que les scénarios prescrits ne couvrent pas</h2>
-<p>Le stress testing standard part d’un scénario prescrit et en mesure l’impact. Le reverse stress testing part du résultat qui compte — un franchissement de seuil — et remonte vers le scénario qui l’expliquerait. Les deux sont complémentaires.</p>
+<p>Le stress testing standard part d’un scénario prescrit et en mesure l’impact. Le reverse stress testing part du résultat qui compte, un franchissement de seuil, et remonte vers le scénario qui l’expliquerait. Les deux sont complémentaires (BCBS, 2009, 2018) :</p>
+<div class="rst-compare" role="img" aria-label="Stress testing forward : un scénario connu, dont on mesure l’impact. Reverse stress testing : un seuil franchi, dont on recherche le scénario.">
+  <div class="row fwd"><span class="lab">Stress testing forward</span><span class="box">Scénario<br>connu</span><span class="arr" aria-hidden="true">→</span><span class="box">Impact mesuré<br>(pertes, capital)</span></div>
+  <div class="row rev"><span class="lab">Reverse stress testing</span><span class="box">Seuil<br><i>R</i><sup>★</sup> franchi</span><span class="arr" aria-hidden="true">→</span><span class="box">Scénario recherché<br><i>s</i><sup>★</sup> ?</span></div>
+</div>
 <div class="why">
 <p><span class="label">Pourquoi c’est important</span></p>
 <ul>
-<li><strong>Un angle mort structurel.</strong> Un exercice <em>forward</em> n’évalue que les scénarios que l’on a pensé à écrire ; une combinaison de chocs dangereuse pour le profil propre de l’établissement peut ne figurer dans aucun catalogue. Le reverse stress testing va la chercher directement.</li>
+<li><strong>Un angle mort structurel.</strong> Un exercice forward n’évalue que les scénarios que l’on a pensé à écrire ; une combinaison de chocs dangereuse pour le profil propre de l’établissement peut ne figurer dans aucun catalogue. Le reverse stress testing va la chercher directement.</li>
 <li><strong>Une attente prudentielle explicite.</strong> Les principes de stress testing du Comité de Bâle incluent le reverse stress testing, et l’exercice thématique 2026 de la BCE en fait une demande concrète, avec un seuil chiffré.</li>
 <li><strong>Une exigence de plausibilité.</strong> Sans mesure de plausibilité explicite, un scénario de rupture reste un récit : impossible à comparer, difficile à challenger en validation.</li>
 </ul>
@@ -297,42 +305,81 @@ window.Quarto = {
 </section>
 <section id="du-seuil-au-scénario-une-architecture-en-cinq-briques" class="level2">
 <h2 class="anchored" data-anchor-id="du-seuil-au-scénario-une-architecture-en-cinq-briques">2. Du seuil au scénario : une architecture en cinq briques</h2>
-<p>Le seuil de capital entre par la gauche, un scénario documenté sort par la droite. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement.</p>
+<p>Le seuil de capital entre par la gauche, un scénario documenté sort par la droite (figure 1). Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement.</p>
 <div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
-<figure class="arch figure"><svg viewbox="0 0 1160 232" role="img" aria-label="Reverse stress testing"><defs><marker id="ah-reverse-st" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="58" r="13"></circle><text class="arch-brick-numt" x="40" y="63" text-anchor="middle">1</text><text class="arch-in-t" x="118" y="102" text-anchor="middle">SEUIL</text><text class="arch-in-s" x="118" y="124" text-anchor="middle">Ratio CET1 minimal R*</text><line class="arch-arrow" x1="226" y1="110" x2="246" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="250" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="274" cy="58" r="13"></circle><text class="arch-brick-numt" x="274" y="63" text-anchor="middle">2</text><text class="arch-title" x="352" y="102" text-anchor="middle">SCÉNARIOS</text><text class="arch-sub" x="352" y="124" text-anchor="middle">Macro-financiers et</text><text class="arch-sub" x="352" y="142" text-anchor="middle">géopolitiques</text><line class="arch-arrow" x1="460" y1="110" x2="480" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="484" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="508" cy="58" r="13"></circle><text class="arch-brick-numt" x="508" y="63" text-anchor="middle">3</text><text class="arch-title" x="586" y="102" text-anchor="middle">TRANSMISSION</text><text class="arch-sub" x="586" y="124" text-anchor="middle">PD/LGD → pertes → RWA/CET1</text><line class="arch-arrow" x1="694" y1="110" x2="714" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="718" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="742" cy="58" r="13"></circle><text class="arch-brick-numt" x="742" y="63" text-anchor="middle">4</text><text class="arch-title" x="820" y="102" text-anchor="middle">RUPTURE</text><text class="arch-sub" x="820" y="124" text-anchor="middle">Point s* le plus plausible</text><line class="arch-arrow" x1="928" y1="110" x2="948" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="952" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="976" cy="58" r="13"></circle><text class="arch-brick-numt" x="976" y="63" text-anchor="middle">5</text><text class="arch-title" x="1054" y="102" text-anchor="middle">GOUVERNANCE</text><text class="arch-sub" x="1054" y="124" text-anchor="middle">Voisinage local et</text><text class="arch-sub" x="1054" y="142" text-anchor="middle">robustesse</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement.</figcaption></figure>
+<figure class="arch figure"><svg viewbox="0 0 1160 232" role="img" aria-label="Reverse stress testing"><defs><marker id="ah-reverse-st" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="58" r="13"></circle><text class="arch-brick-numt" x="40" y="63" text-anchor="middle">1</text><text class="arch-in-t" x="118" y="102" text-anchor="middle">SEUIL</text><text class="arch-in-s" x="118" y="124" text-anchor="middle">Ratio CET1 minimal R*</text><line class="arch-arrow" x1="226" y1="110" x2="246" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="250" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="274" cy="58" r="13"></circle><text class="arch-brick-numt" x="274" y="63" text-anchor="middle">2</text><text class="arch-title" x="352" y="102" text-anchor="middle">SCÉNARIOS</text><text class="arch-sub" x="352" y="124" text-anchor="middle">Macro-financiers et</text><text class="arch-sub" x="352" y="142" text-anchor="middle">géopolitiques</text><line class="arch-arrow" x1="460" y1="110" x2="480" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="484" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="508" cy="58" r="13"></circle><text class="arch-brick-numt" x="508" y="63" text-anchor="middle">3</text><text class="arch-title" x="586" y="102" text-anchor="middle">TRANSMISSION</text><text class="arch-sub" x="586" y="124" text-anchor="middle">PD/LGD → pertes → RWA/CET1</text><line class="arch-arrow" x1="694" y1="110" x2="714" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="718" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="742" cy="58" r="13"></circle><text class="arch-brick-numt" x="742" y="63" text-anchor="middle">4</text><text class="arch-title" x="820" y="102" text-anchor="middle">RUPTURE</text><text class="arch-sub" x="820" y="124" text-anchor="middle">Point s* le plus plausible</text><line class="arch-arrow" x1="928" y1="110" x2="948" y2="110" marker-end="url(#ah-reverse-st)"></line><rect class="arch-brick" x="952" y="58" width="204" height="104" rx="8"></rect><circle class="arch-brick-num" cx="976" cy="58" r="13"></circle><text class="arch-brick-numt" x="976" y="63" text-anchor="middle">5</text><text class="arch-title" x="1054" y="102" text-anchor="middle">GOUVERNANCE</text><text class="arch-sub" x="1054" y="124" text-anchor="middle">Voisinage local et</text><text class="arch-sub" x="1054" y="142" text-anchor="middle">robustesse</text></svg><figcaption class="caption"><strong>Figure 1.</strong> Figure 1. Architecture modulaire du reverse stress testing : du seuil de capital au scénario de rupture et à son voisinage.</figcaption></figure>
 <div class="listing-no-matching d-none">Aucun article correspondant</div>
 </div>
 <p><strong>Une seule équation à retenir.</strong> Le reverse stress test se formule comme une recherche de plausibilité sous contrainte :</p>
-<p><span class="math display">s^\star \in \arg\max_{s \in \mathcal{S}} f(s) \quad \text{sous contrainte} \quad R(s) \le R^\star</span></p>
-<p>où <span class="math inline">f(s)</span> mesure la plausibilité du scénario, <span class="math inline">R(s)</span> le ratio de capital sous ce scénario et <span class="math inline">R^\star</span> le seuil critique. Le point de rupture <span class="math inline">s^\star</span> est la façon <strong>la plus crédible</strong> de franchir le seuil, pas la plus sévère : c’est précisément ce qui le rend discutable en comité et opposable en validation.</p>
+<p><span class="math display">s^{\star} \;\in\; \operatorname*{arg\,max}_{s \in \mathcal{S}} f(s) \quad \text{sous contrainte} \quad R(s) \leq R^{\star},</span></p>
+<p>où <span class="math inline">f(s)</span> mesure la plausibilité du scénario, <span class="math inline">R(s)</span> le ratio de capital sous ce scénario et <span class="math inline">R^{\star}</span> le seuil critique. Le point de rupture <span class="math inline">s^{\star}</span> est la façon la plus <em>crédible</em> de franchir le seuil, pas la plus sévère : c’est précisément ce qui le rend discutable en comité et opposable en validation.</p>
 <div class="why">
 <p><span class="label">Ce que le cadre apporte</span></p>
 <ul>
-<li><strong>Aucun re-développement.</strong> Le moteur de crédit interne (Merton–Vasicek / ASRF, déjà validé) et les cartographies PD/LGD existantes sont réutilisés tels quels ; seule la couche de recherche s’ajoute.</li>
-<li><strong>Une plausibilité explicite.</strong> Chaque scénario de rupture est assorti d’une mesure de crédibilité — densité de référence ou distance statistique — comparable d’un exercice à l’autre.</li>
-<li><strong>Un objet de gouvernance.</strong> Un point de rupture documenté et son voisinage, plutôt qu’une bibliothèque de récits non hiérarchisés.</li>
-<li><strong>Généralisable.</strong> Géopolitique, climat, taux, secteur, marché : changer de famille de scénarios ne change ni l’architecture, ni la gouvernance.</li>
+<li><strong>Aucun re-développement</strong> : le moteur de crédit interne (Merton–Vasicek / ASRF, déjà validé) et les cartographies PD/LGD existantes sont réutilisés tels quels ; seule la couche de recherche s’ajoute.</li>
+<li><strong>Une plausibilité explicite</strong> : chaque scénario de rupture est assorti d’une mesure de crédibilité (densité de référence ou distance statistique), comparable d’un exercice à l’autre.</li>
+<li><strong>Un objet de gouvernance</strong> : un point de rupture documenté et son voisinage, plutôt qu’une bibliothèque de récits non hiérarchisés.</li>
+<li><strong>Généralisable</strong> : géopolitique, climat, taux, secteur, marché ; changer de famille de scénarios ne change ni l’architecture, ni la gouvernance.</li>
 </ul>
 </div>
 <div class="storm-anim" data-anim="rst">
 
 </div>
+<div class="why">
+<p><span class="label">Ancrage académique</span></p>
+<p>L’approche s’appuie sur trois briques connues : la formulation du reverse stress testing comme un problème de vraisemblance sous contrainte (Glasserman et al., 2015 ; Kopeliovich et al., 2015 ; Grundke, 2011), le moteur de crédit Merton–Vasicek / ASRF des modèles bancaires internes (Vasicek, 2002 ; Gordy, 2003), et les principes prudentiels de stress testing (BCBS, 2009, 2018 ; ECB, 2025). La littérature fournit les briques ; l’enjeu opérationnel est de les assembler.</p>
+</div>
+</section>
+<section id="le-point-de-rupture-et-son-voisinage" class="level2">
+<h2 class="anchored" data-anchor-id="le-point-de-rupture-et-son-voisinage">3. Le point de rupture, et son voisinage</h2>
+<p>Le point de rupture <span class="math inline">s^{\star}</span> n’est pas une prévision : c’est la combinaison de chocs la plus crédible qui ferait franchir le seuil de capital, compte tenu de ce que la banque sait des co-mouvements de ses facteurs de risque. Il se situe exactement sur la frontière de rupture : ni un point arbitraire, ni un scénario extrême choisi pour l’effet. Il donne aux équipes risques un scénario concret à discuter, challenger et documenter.</p>
+<p>Un point unique reste toutefois fragile : deux scénarios presque aussi plausibles peuvent raconter des histoires très différentes (rupture commerciale, choc de financement domestique…). Le cadre complète donc <span class="math inline">s^{\star}</span> par un <strong>voisinage local</strong> de scénarios proches, de sévérité comparable, obtenu en relâchant légèrement la contrainte de plausibilité. Cette lecture évite à la gouvernance de reposer sur un unique scénario, surtout quand la frontière de rupture est non convexe.</p>
+</section>
+<section id="proof-of-concept-un-portefeuille-de-crédit-stylisé" class="level2">
+<h2 class="anchored" data-anchor-id="proof-of-concept-un-portefeuille-de-crédit-stylisé">4. Proof of Concept : un portefeuille de crédit stylisé</h2>
+<p>Pour passer du principe à la preuve, nous appliquons le cadre à un portefeuille de crédit corporate fictif (six secteurs), avec un choc géopolitique/commercial <span class="math inline">g</span> et un choc macro-financier <span class="math inline">x</span> cartographiés vers des PD/LGD sectorielles, puis traduits en pertes, RWA et ratio CET1 sous stress, via le modèle de portefeuille ASRF. Le seuil <span class="math inline">R^{\star}</span> est fixé à 300 points de base sous le ratio de référence, à l’image du repère retenu par la BCE.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/reverse-stress-design-point.png" class="img-fluid" alt="(a) Le point de rupture s^{\star}=(g^{\star},x^{\star}) : le scénario le plus plausible sur la frontière R(s)=R^{\star}, et son voisinage local (zone hachurée). (b) Le ratio CET1 correspondant, de la référence R_0 au seuil R^{\star}. Portefeuille fictif et illustratif."></p>
+<div class="note-cap">
+<p>Figure 2. (a) Le point de rupture <span class="math inline">s^{\star}=(g^{\star},x^{\star})</span> : le scénario le plus plausible sur la frontière <span class="math inline">R(s)=R^{\star}</span>, et son voisinage local (zone hachurée). (b) Le ratio CET1 correspondant, de la référence <span class="math inline">R_0</span> au seuil <span class="math inline">R^{\star}</span>. Portefeuille fictif et illustratif.</p>
+</div>
+</div>
+<div class="keyfigs">
+<div class="kf">
+<p><span class="v">−300 pb</span> Seuil de rupture du CET1</p>
+</div>
+<div class="kf">
+<p><span class="v">29 %</span> Plausibilité du point de rupture</p>
+</div>
+<div class="kf">
+<p><span class="v">+2,3 %</span> Hausse des RWA (crédit seul)</p>
+</div>
+</div>
+<p>Le résultat le plus utile n’est pas le chiffre lui-même, mais sa lecture : le scénario qui met le ratio en défaut n’est pas le choc le plus violent imaginable, c’est une combinaison modérée de deux chocs corrélés, suffisamment plausible pour mériter une ligne dans le dossier ICAAP. C’est exactement le type de scénario qu’un exercice narratif, construit facteur par facteur, a le moins de chances d’écrire.</p>
+<div class="retenir">
+<p><span class="label">Lecture pour les équipes risques</span></p>
+<p>Le message n’est pas « le risque géopolitique est dangereux ». C’est qu’une recherche disciplinée, calibrée sur le portefeuille de l’établissement, met au jour des combinaisons de chocs qu’un exercice narratif risquerait de manquer, quelle que soit la famille de scénarios.</p>
+</div>
 </section>
 <section id="mise-en-œuvre" class="level2">
-<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">5. Mise en œuvre</h2>
+<p>Le déploiement suit trois étapes, sans rupture avec l’existant :</p>
 <ol type="1">
-<li><strong>Fixer la condition de défaillance.</strong> Un seuil de capital explicite, par exemple un ratio CET1 minimal, ou une perte maximale tolérée.</li>
-<li><strong>Décrire l’espace de scénarios et sa plausibilité.</strong> Un petit nombre de facteurs de risque et une densité de référence suffisent pour rendre la recherche interprétable.</li>
-<li><strong>Réutiliser la chaîne de transmission interne.</strong> Cartographies PD/LGD, pertes, RWA et capital : le dispositif existant fournit <span class="math inline">R(s)</span> sans modification.</li>
+<li><strong>Fixer la condition de défaillance.</strong> Un seuil de capital explicite, par exemple un ratio CET1 minimal ou une baisse de 300 points de base, en cohérence avec l’appétit au risque et les attentes prudentielles.</li>
+<li><strong>Décrire l’espace de scénarios et sa plausibilité.</strong> Un petit nombre de facteurs de risque interprétables, et une distribution de référence estimée sur l’historique (densité ou distance statistique) pour hiérarchiser les scénarios.</li>
+<li><strong>Réutiliser la chaîne de transmission interne.</strong> Cartographies PD/LGD, pertes, RWA et CET1 déjà en place ; la recherche sous contrainte livre alors le point de rupture et son voisinage, prêts à être documentés dans le dossier ICAAP.</li>
 </ol>
 <div class="retenir">
 <p><span class="label">À retenir pour chaque équipe</span></p>
 <ul>
-<li><strong>Modélisation.</strong> La plausibilité doit être définie avant la recherche, pas après : c’est elle qui distingue un scénario de rupture d’un récit sévère.</li>
-<li><strong>Validation.</strong> Le point de rupture et son voisinage sont documentés et reproductibles, donc opposables.</li>
-<li><strong>Pilotage.</strong> L’exercice répond directement à la demande prudentielle 2026 sans nouvelle infrastructure de modèles.</li>
+<li><strong>ICAAP / capital planning</strong> : un scénario de rupture propre à l’établissement, chiffré et hiérarchisé, en complément des scénarios macro prescrits.</li>
+<li><strong>Portefeuille de crédit</strong> : la décomposition sectorielle révèle où concentration et sensibilité aux chocs interagissent réellement.</li>
+<li><strong>Validation / risque de modèle</strong> : une chaîne modulaire, documentée et challengeable brique par brique, avec une mesure de plausibilité explicite plutôt qu’un récit.</li>
+<li><strong>Gouvernance</strong> : un petit nombre de scénarios concrets à examiner, plutôt qu’une bibliothèque non structurée.</li>
+<li><strong>CRO et régulateurs</strong> : une réponse directe aux attentes prudentielles, dont l’exercice thématique 2026 de la BCE.</li>
 </ul>
 </div>
+<p>Le cadre ne remplace pas les exercices prudentiels existants : il rend explicite, reproductible et auditable la recherche des vulnérabilités propres à l’établissement. Sa valeur tient à la méthode, pas à un chiffre simulé isolé. Le groupe Square Management se tient à la disposition des équipes intéressées pour échanger sur l’application de ce cadre à leurs portefeuilles et à leurs seuils de capital.</p>
 </section>
 <section id="article-de-recherche-associé" class="level2">
 <h2 class="anchored" data-anchor-id="article-de-recherche-associé">Article de recherche associé</h2>
@@ -341,19 +388,19 @@ window.Quarto = {
 <p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/#contact">écrivez au collectif →</a></p>
 </div>
 <div class="partnership">
-<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+<p>Cette note s’appuie sur les travaux conduits au sein du pôle STORM (<em>Scenario-based Testing &amp; Optimization in Risk Modeling</em>) de Square Management, dédié à la modélisation et à la quantification des risques. Le pôle STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Les travaux de cette note s’appuient sur une collaboration avec le Master ESA et Square Management remercie Christophe Hurlin pour ce partenariat.</p>
 </div>
 </section>
 <section id="références" class="level2">
 <h2 class="anchored" data-anchor-id="références">Références</h2>
 <div class="refs">
-<p>BCBS (2009). <em>Principles for sound stress testing practices and supervision.</em> BCBS155, Comité de Bâle.</p>
-<p>BCBS (2018). <em>Stress testing principles.</em> D450, Comité de Bâle.</p>
-<p>ECB (2025). <em>ECB to assess banks’ stress testing capabilities to capture geopolitical risk.</em> Communiqué, supervision bancaire, 12 décembre 2025.</p>
+<p>BCBS (2009). <em>Principles for sound stress testing practices and supervision</em>. BCBS155, Basel Committee on Banking Supervision, May 2009.</p>
+<p>BCBS (2018). <em>Stress testing principles</em>. Guidelines, D450, Basel Committee on Banking Supervision, 17 October 2018.</p>
+<p>ECB (2025). <em>ECB to assess banks’ stress testing capabilities to capture geopolitical risk</em>. European Central Bank, Banking Supervision press release, 12 December 2025.</p>
 <p>Glasserman, P., Kang, C. &amp; Kang, W. (2015). Stress scenario selection by empirical likelihood. <em>Quantitative Finance</em>, 15(1), 25–41.</p>
 <p>Gordy, M. B. (2003). A risk-factor model foundation for ratings-based bank capital rules. <em>Journal of Financial Intermediation</em>, 12(3), 199–232.</p>
 <p>Grundke, P. (2011). Reverse stress tests with bottom-up approaches. <em>Journal of Risk Model Validation</em>, 5(3), 71–90.</p>
-<p>Kopeliovich, Y., Novosyolov, A., Satchkov, D. &amp; Schachter, B. (2015). Robust risk estimation and hedging: A reverse stress testing approach. <em>The Journal of Derivatives</em>, 22(4), 10–25.</p>
+<p>Kopeliovich, Y., Novosyolov, A., Satchkov, D. &amp; Schachter, B. (2015). Robust Risk Estimation and Hedging: A Reverse Stress Testing Approach. <em>The Journal of Derivatives</em>, 22(4), 10–25.</p>
 <p>Vasicek, O. (2002). The distribution of loan portfolio value. <em>Risk</em>, 15(12), 160–162.</p>
 </div>
 

@@ -31,7 +31,7 @@
     - titre: "Expected shortfall"
       sous_titre: "moyenne au-delà du seuil"
       queue: true
-  legende_fr: "Une architecture modulaire à deux blocs et trois sorties, en forme close. Les briques 2 et 3 sont remplaçables par les modèles internes déjà validés de l’établissement."
+  legende_fr: "Figure 1. Une architecture modulaire à deux blocs et trois sorties, en forme close : PD moyenne corrigée de l’incertitude prédictive, quantile de queue et expected shortfall."
   legende_en: "A modular architecture with two blocks and three closed-form outputs. Blocks 2 and 3 can be replaced by the institution's already-validated internal models."
 
 - title: "Reverse stress testing"
@@ -47,7 +47,7 @@
       sous_titre: "Point s* le plus plausible"
     - titre: "GOUVERNANCE"
       sous_titre: "Voisinage local et robustesse"
-  legende_fr: "Du seuil de capital au scénario de rupture et à son voisinage. Chaque brique est indépendante et remplaçable par le modèle interne déjà validé de l’établissement."
+  legende_fr: "Figure 1. Architecture modulaire du reverse stress testing : du seuil de capital au scénario de rupture et à son voisinage."
   legende_en: "From the capital threshold to the breaking scenario and its neighbourhood. Each block is independent and replaceable by the institution's validated internal model."
 
 - title: "Approche at-Risk"
@@ -70,7 +70,7 @@
     - titre: "Expected shortfall"
       sous_titre: "moyenne au-delà de la VaR"
       queue: true
-  legende_fr: "Architecture modulaire en quatre étapes : extraction du facteur latent, projection quantile sous scénario NGFS, lissage paramétrique skew-t et rétrotransformation analytique en métriques de risque."
+  legende_fr: "Figure 1. Architecture modulaire en quatre étapes : extraction du facteur latent, projection quantile sous scénario NGFS, lissage paramétrique skew-t et rétrotransformation analytique en métriques de risque."
   legende_en: "A four-step modular architecture: latent factor extraction, quantile projection under NGFS scenarios, skew-t parametric smoothing and analytical back-transformation into risk metrics."
 
 - title: "Downscaling statistique"
@@ -87,3 +87,20 @@
   premier_plein: true
   legende_fr: "La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d’ajustement : la préservation du signal de changement prime dans un exercice prospectif."
   legende_en: "The four-step distribution-wise procedure. Selection is not on goodness of fit alone: preserving the change signal takes precedence in a forward-looking exercise."
+
+- title: "Global VAR géo-sectoriel"
+  id: "gvar"
+  etapes:
+    - titre: "VARX*"
+      sous_titre: "Unité 1"
+    - titre: "VARX*"
+      sous_titre: "Unité N"
+    - titre: "GVAR-X GLOBAL"
+      sous_titre: "forme réduite, dim. N"
+  sorties:
+    - titre: "GIRFs"
+    - titre: "FEVD"
+    - titre: "PD stressées"
+      queue: true
+  legende_fr: "Figure 1. Architecture du modèle GVAR : sous-modèles sectoriels, empilement, outils de propagation."
+  legende_en: "Architecture of the GVAR model: sectoral sub-models, stacking, propagation tools."

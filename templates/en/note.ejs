@@ -11,7 +11,7 @@ function yr(v){ const m=String(v==null?"":(v instanceof Date?v.toISOString():v))
 /* Note categories are written in French in the notes: English labels here. */
 const CAT_EN = { "Risque climatique":"Climate risk", "Risque de crédit":"Credit risk", "Risque physique":"Physical risk",
   "Risque géopolitique":"Geopolitical risk", "Optimisation":"Optimisation", "Stress testing":"Stress testing",
-  "Quantiles":"Quantiles", "Downscaling":"Downscaling" };
+  "Quantiles":"Quantiles", "Downscaling":"Downscaling", "Réseaux sectoriels":"Sectoral networks" };
 const catEn = c => CAT_EN[c] || c;
 let out = '<div class="news">';
 for (const it of items) {

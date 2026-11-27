@@ -34,8 +34,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../assets/brand/favicon-storm.png" rel="icon" type="image/png">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -73,35 +71,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Recherche"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-schema .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-id','listing-etapes','listing-premier_plein','listing-legende_fr','listing-legende_en',{ data: ['index'] },{ data: ['categories'] }],
-      
-      searchColumns: ["listing-title","listing-id","listing-etapes","listing-premier_plein","listing-legende_fr","listing-legende_en"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-schema'] = new List('listing-schema', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script defer="" src="../../assets/katex/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -151,20 +120,22 @@ window.Quarto = {
 <link rel="stylesheet" href="../../assets/css/storm-dark.css">
 <meta property="og:title" content="Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique – STORM">
 <meta property="og:description" content="Pourquoi les sorties brutes des modèles CMIP6 ne suffisent pas à l’analyse du risque physique, et comment les corriger sans amputer le signal de changement climatique aux quantiles extrêmes.">
-<meta property="og:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta property="og:image" content="https://squaremanagement-storm.com/assets/notes/figures/downscaling-resolution.png">
 <meta property="og:site_name" content="STORM">
-<meta property="og:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta property="og:image:alt" content="Trois cartes de France de la température journalière : sortie brute du modèle KIOST-ESM, même champ interpolé, et réanalyse ERA5-Land.">
+<meta property="og:image:height" content="1132">
+<meta property="og:image:width" content="4534">
 <meta name="twitter:title" content="Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique – STORM">
 <meta name="twitter:description" content="Pourquoi les sorties brutes des modèles CMIP6 ne suffisent pas à l’analyse du risque physique, et comment les corriger sans amputer le signal de changement climatique aux quantiles extrêmes.">
-<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/brand/og-storm-fr.png">
+<meta name="twitter:image" content="https://squaremanagement-storm.com/assets/notes/figures/downscaling-resolution.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image:alt" content="STORM — Quantifier l’incertitude, éclairer la décision.">
+<meta name="twitter:image:alt" content="Trois cartes de France de la température journalière : sortie brute du modèle KIOST-ESM, même champ interpolé, et réanalyse ERA5-Land.">
+<meta name="twitter:image-height" content="1132">
+<meta name="twitter:image-width" content="4534">
 <link rel="canonical" href="https://squaremanagement-storm.com/fr/notes/downscaling">
 <meta property="og:url" content="https://squaremanagement-storm.com/fr/notes/downscaling">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -232,7 +203,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Downscaling statistique des projections climatiques : corriger les biais avant d’évaluer le risque physique</h1>
-<p class="subtitle lead">Pourquoi les sorties brutes des modèles climatiques ne suffisent pas à l’analyse des risques physiques, et comment les corriger</p>
+<p class="subtitle lead">Pourquoi les sorties brutes des modèles climatiques ne suffisent pas à l’analyse des risques physiques, et comment les corriger : cadre méthodologique et application à la température journalière sur la France</p>
   <div class="quarto-categories">
     <div class="quarto-category">Risque climatique</div>
     <div class="quarto-category">Downscaling</div>
@@ -273,76 +244,228 @@ window.Quarto = {
 </header>
 
 
+<div class="note-pdf">
+<p><a href="../../assets/notes/STORM-note-downscaling.pdf" download="STORM-note-downscaling.pdf">Télécharger la note (PDF)</a></p>
+</div>
 <div class="standfirst">
-<p><span class="lede">En bref</span> L’évaluation prospective des risques physiques s’appuie sur les projections climatiques produites par la communauté scientifique internationale, dont la génération la plus récente est le CMIP6. Ces projections sont produites par des modèles globaux conçus pour l’étude du système climatique à l’échelle planétaire : leurs sorties brutes ne peuvent pas être utilisées directement pour évaluer un aléa sur des expositions localisées. Les méthodes de downscaling statistique <em>distribution-wise</em> y répondent en alignant les lois marginales simulées sur celles d’une réanalyse de référence.</p>
+<p><span class="lede">En bref</span> L’évaluation prospective des risques physiques s’appuie sur les projections climatiques produites par la communauté scientifique internationale, dont la génération la plus récente aujourd’hui finalisée est le CMIP6. Ces projections sont produites par des modèles globaux (GCM), conçus pour l’étude du système climatique à l’échelle planétaire, dont les sorties brutes ne peuvent être utilisées directement pour évaluer un aléa sur des expositions localisées. En effet, leur résolution, souvent supérieure à la centaine de kilomètres, ne permet pas de rattacher une exposition à son niveau d’aléa propre, deux sites distants de plusieurs dizaines de kilomètres partageant la même valeur simulée. Cette discrétisation produit un effet de moyennisation qui atténue les pointes locales, et les sorties des modèles sous-estiment de façon documentée l’ampleur et la fréquence des événements extrêmes, c’est-à-dire précisément ceux qui concentrent les impacts économiques et financiers. Les méthodes de <em>downscaling</em> statistique <em>distribution-wise</em> y répondent en alignant les lois marginales simulées sur celles d’une réanalyse de référence, pour un coût de mise en œuvre modeste et sans recourir à une simulation climatique à une échelle fine. Une application à la température journalière sur la France illustre l’apport de ces méthodes et les critères qui doivent présider au choix d’une variante dans un exercice prospectif.</p>
 </div>
 <div class="message">
 <p><span class="label">Message central</span></p>
-<p>Une correction de biais poursuit <strong>deux objectifs distincts</strong> : ramener la distribution simulée sur celle de la référence, et transporter intact le changement que le modèle projette entre la période historique et le futur. Rien ne garantit qu’une méthode satisfaisant le premier réussisse sur le second.</p>
-<p>Entre deux méthodes aux performances d’ajustement quasi identiques sur l’historique, l’une peut amputer une part sensible du signal de changement climatique aux quantiles extrêmes, quand l’autre le préserve intégralement. La qualité d’ajustement est un <strong>préalable</strong>, pas un critère de sélection à lui seul : dans un exercice prospectif, la préservation du signal prend le pas.</p>
+<p>Une correction de biais des sorties d’un modèle climatique poursuit deux objectifs distincts : ramener la distribution simulée sur celle de la référence, et préserver autant que possible le changement que le modèle projette entre la période historique et le futur. Rien ne garantit qu’une méthode satisfaisant le premier réussisse sur le second. Entre deux méthodes aux performances d’ajustement quasi identiques sur l’historique, l’une peut amputer une part sensible du signal de changement climatique aux quantiles extrêmes, quand l’autre le préserve intégralement. La qualité d’ajustement constitue dès lors un préalable et non un critère de sélection à lui seul, la préservation du signal prenant le pas dans un exercice prospectif.</p>
 </div>
-<section id="pourquoi-les-sorties-brutes-ne-suffisent-pas" class="level2">
-<h2 class="anchored" data-anchor-id="pourquoi-les-sorties-brutes-ne-suffisent-pas">1. Pourquoi les sorties brutes ne suffisent pas</h2>
-<p>L’intensification des aléas physiques se transmet aux bilans financiers par une chaîne documentée : l’aléa frappe des expositions localisées — collatéral immobilier, sites industriels, contreparties agricoles — dont la vulnérabilité détermine un dommage physique qui se traduit en pertes financières, hausse du risque de crédit pour les banques et alourdissement de la sinistralité pour les assureurs.</p>
+<section id="pourquoi-les-sorties-brutes-des-modèles-climatiques-ne-suffisent-pas" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-les-sorties-brutes-des-modèles-climatiques-ne-suffisent-pas">1. Pourquoi les sorties brutes des modèles climatiques ne suffisent pas</h2>
+<p>L’intensification des aléas physiques se transmet aux bilans financiers par une chaîne aujourd’hui documentée : l’aléa frappe des expositions localisées (collatéral immobilier, sites industriels, contreparties agricoles), dont la vulnérabilité détermine un dommage physique qui se traduit <em>in fine</em> en pertes financières, hausse du risque de crédit pour les banques et alourdissement de la sinistralité pour les assureurs. En France, la CCR évalue à environ +40 % la croissance de la charge des catastrophes naturelles à l’horizon 2050 sous le seul effet climatique dans le scénario médian RCP 4.5, et jusqu’à +60 % une fois intégrée la croissance du parc assuré (Caisse Centrale de Réassurance, 2023). Projeter ces aléas suppose de mobiliser les sorties du <em>Coupled Model Intercomparison Project</em>, dont la sixième phase (CMIP6) constitue la base scientifique du sixième rapport d’évaluation du GIEC. Deux limites s’opposent toutefois à leur usage direct.</p>
+<p><strong>La résolution spatiale.</strong> Les modèles climatiques globaux simulent le système terrestre sur une grille dont la maille dépasse fréquemment la centaine de kilomètres, si bien que le territoire métropolitain n’est couvert que par une trentaine de cellules dans les modèles les plus grossiers. Ramener ces champs sur une grille plus fine relève de l’interpolation spatiale, qui lisse les valeurs simulées sans créer d’information locale nouvelle. Les effets orographiques et le gradient littoral, présents dans la réanalyse, demeurent ainsi absents du champ interpolé (Figure 1). C’est cet écart que le <em>downscaling</em> statistique vise à combler.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/downscaling-resolution.png" class="img-fluid" alt="Trois cartes de France de la température journalière : sortie brute du modèle KIOST-ESM, même champ interpolé, et réanalyse ERA5-Land."></p>
+<div class="note-cap">
+<p>Figure 1. Résolution native d’un modèle CMIP6, champ interpolé et référence (KIOST-ESM et ERA5-Land, 1<sup>er</sup> janvier 1990).</p>
+<p><em>Clés de lecture — Panneau (a) : champ brut de température journalière sur la grille native du modèle (∼1,9°×1,25°). Panneau (b) : même champ après interpolation bilinéaire sur la grille 0,1° d’ERA5-Land. Panneau (c) : champ ERA5-Land reconstitué pour le même jour.</em></p>
+</div>
+</div>
+<p><strong>Le biais de distribution.</strong> La seconde limite est plus lourde de conséquences. Les modèles du CMIP sous-estiment fréquemment l’ampleur et la fréquence des événements extrêmes (Maraun et Widmann, 2018 ; Vautard et al., 2020). La Figure 2 en donne la mesure dans le cas de la température journalière à 2 mètres au-dessus du sol sur la France métropolitaine : la densité simulée sur la période historique est quasi unimodale, quand la distribution de référence présente deux modes distincts, correspondant aux régimes hivernal et estival. Le même défaut se retrouve sur les projections, dont les distributions conservent cette forme unimodale quel que soit le scénario d’émissions et se déplacent le long de l’axe des températures sans retrouver la structure de la référence. Ce défaut échappe par ailleurs à une approche multi-modèles : l’agrégation d’un ensemble de GCM rend compte de la divergence entre modèles, non de ce qu’ils partagent, et un biais commun se retrouve aussi bien dans la médiane que dans les bornes de l’enveloppe d’incertitude. Corriger ces projections suppose donc de rectifier la forme de la loi simulée, et non son seul niveau.</p>
+<p>Des projections corrigées existent, mais ne sont pas toujours librement accessibles. Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d’auditabilité qui s’imposent aux établissements bancaires et assurantiels. Maîtriser ces méthodes en interne relève dès lors autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif auprès du superviseur.</p>
+</section>
+<section id="methodes" class="level2">
+<h2 class="anchored" data-anchor-id="methodes">2. Les méthodes <em>distribution-wise</em> : principe et variantes</h2>
+<p>Les approches <em>Model Output Statistics</em> (MOS) établissent une relation statistique directe entre les sorties brutes d’un modèle climatique donné et une référence locale, typiquement une réanalyse climatique telle qu’ERA5-Land, de résolution native de 9 km et diffusée sur une grille régulière de 0,1°. Une réanalyse n’est pas à proprement parler un jeu d’observations : elle résulte d’une simulation numérique contrainte par des mesures issues de sources multiples, stations, radiosondages, satellites ou bouées. ERA5-Land en est une déclinaison terrestre, obtenue en rejouant le modèle de surface d’ERA5 à plus fine résolution ; les observations n’y sont pas directement intégrées, mais influencent ses champs par l’intermédiaire des forçages atmosphériques hérités d’ERA5. Ces produits constituent la référence usuelle pour l’évaluation des modèles climatiques et la correction de leurs biais.</p>
+<p>La relation, apprise sur la période historique, est ensuite appliquée aux projections du même modèle. La procédure comporte quatre étapes : alignement spatial des grilles par <em>regridding</em>, apprentissage de plusieurs méthodes candidates sur un échantillon d’apprentissage, sélection sur un échantillon de test indépendant, puis recalibrage sur l’intégralité de l’historique et application aux scénarios futurs.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/downscaling-distributions-brutes.png" class="img-fluid" alt="Densités de la température moyenne journalière : historique simulé par KIOST-ESM et projections SSP1-2.6, SSP2-4.5 et SSP5-8.5, quasi unimodales, contre la réanalyse ERA5-Land, bimodale."></p>
+<div class="note-cap">
+<p>Figure 2. Distributions de température journalière simulée et de référence sur la France métropolitaine.</p>
+<p><em>Clés de lecture — Densités de probabilité estimées par noyau, sur l’ensemble des cellules du domaine.</em></p>
+</div>
+</div>
+<p>Au sein de ce cadre, les méthodes dites <em>distribution-wise</em> agissent sur la distribution marginale des variables simulées, cellule par cellule. Ce choix tient à la nature de l’objet que l’on cherche à corriger. Les méthodes alternatives, dites <em>event-wise</em>, apparient simulation et réanalyse à la même date et reposent le plus souvent sur l’estimation d’une espérance conditionnelle : elles restituent alors le comportement moyen et lissent les queues de la distribution, alors que ce sont précisément elles qui portent l’information de risque. Elles supposent en outre une correspondance temporelle entre simulation et réanalyse que les simulations climatiques ne vérifient pas, faute d’être synchronisées avec la chronologie réelle du climat. Maraun et Widmann (2018) concluent que le cadre MOS ne peut être appliqué rigoureusement à de telles simulations que dans une perspective <em>distribution-wise</em>. C’est celle que retient la présente note.</p>
 <div class="why">
-<p><span class="label">Pourquoi c’est important</span></p>
-<ul>
-<li><strong>La résolution spatiale.</strong> La maille des modèles globaux dépasse fréquemment la centaine de kilomètres : deux sites distants de plusieurs dizaines de kilomètres partagent la même valeur simulée. L’interpolation lisse les valeurs sans créer d’information locale nouvelle.</li>
-<li><strong>Le biais de distribution.</strong> Les modèles CMIP sous-estiment l’ampleur et la fréquence des événements extrêmes — précisément ceux qui concentrent les impacts économiques et financiers.</li>
-<li><strong>L’agrégation multi-modèles ne suffit pas.</strong> Un ensemble de modèles rend compte de leur divergence, non de ce qu’ils partagent : un biais commun se retrouve aussi bien dans la médiane que dans les bornes de l’enveloppe d’incertitude.</li>
-<li><strong>Souveraineté et auditabilité.</strong> Le recours à un fournisseur tiers expose à un coût récurrent, à une dépendance et à un effet « boîte noire » difficilement compatibles avec les exigences d’auditabilité qui s’imposent aux établissements.</li>
-</ul>
+<p><span class="label">Formulation</span></p>
+<p>Soit <span class="math inline">Y^{\text{hist}}_{i,j}</span> la variable climatique simulée sur la période historique au point de grille <span class="math inline">(i, j)</span>, et <span class="math inline">Y^{\text{ref}}_{i,j}</span> la variable correspondante issue de la réanalyse de référence au même point. On estime une transformation <span class="math inline">\mathcal{T}_{i,j}</span> telle que</p>
+<p><span class="math display">Y^{\text{ref}}_{i,j} \overset{d}{=} \mathcal{T}_{i,j}\left(Y^{\text{hist}}_{i,j}\right),</span></p>
+<p>où <span class="math inline">\overset{d}{=}</span> désigne l’égalité en loi. Estimée sur l’historique, cette transformation est ensuite appliquée aux simulations futures du même modèle, <span class="math inline">\hat{y}^{\,\text{proj}}_{t,i,j} = \mathcal{T}_{i,j}\left(y^{\text{proj}}_{t,i,j}\right)</span>. Seules les lois marginales sont mises en relation, sans qu’aucun appariement date à date entre simulation et référence ne soit requis.</p>
+</div>
+<p>Les variantes se distinguent par la forme retenue pour <span class="math inline">\mathcal{T}_{i,j}</span> et par la manière dont elles traitent le signal de changement climatique. Le <em>Linear Scaling</em> (LS, Lenderink et al., 2007) corrige le seul premier moment par une translation. Le <em>Quantile Mapping</em> (QM) corrige l’ensemble de la distribution en faisant correspondre quantile à quantile la loi simulée et la loi de référence ; la transformation estimée sur l’historique est alors appliquée telle quelle aux projections, ce qui suppose que les biais, quantile par quantile, demeurent invariants dans le temps, hypothèse d’autant plus contestable que l’horizon de projection s’allonge. Quatre extensions relâchent cette hypothèse, et toutes mobilisent pour cela la distribution projetée par le modèle. Le <em>Detrended QM</em> (DQM, Cannon et al., 2015) retire la tendance avant correction et la réintroduit ensuite, mais ne transporte que le décalage de moyenne ; le <em>Quantile Delta Mapping</em> (QDM, Cannon et al., 2015) préserve explicitement le changement projeté pour chaque quantile ; le <em>Scaled Distribution Mapping</em> (SDM, Switanek et al., 2017) procède par ajustement des périodes de retour, et la CDF-t (Michelangeli et al., 2009) modélise directement le déplacement de la loi simulée entre historique et futur. Toutes sont estimées conditionnellement au jour de l’année, sur une fenêtre glissante de 31 jours : un même niveau de température n’occupe pas le même rang dans la distribution selon la saison, et une correction unique confondrait les régimes hivernal et estival. Ce conditionnement n’apparie que des positions dans le cycle saisonnier et non des dates au sens strict.</p>
+</section>
+<section id="application" class="level2">
+<h2 class="anchored" data-anchor-id="application">3. Application : température journalière sur la France</h2>
+<p>Les six méthodes présentées à la <a href="#methodes">section 2</a> sont mises en œuvre sur les températures moyennes journalières à 2 mètres au dessus du sol simulées par KIOST-ESM (Pak et al., 2021), dont la maille compte parmi les plus larges des modèles CMIP6 sur l’Europe de l’Ouest, ce qui en fait un candidat particulièrement illustratif. La référence est la réanalyse ERA5-Land ; la période historique 1990–2014 est découpée chronologiquement en un échantillon d’apprentissage (1990–2004) et un échantillon de test (2010–2014), ce dernier strictement réservé à la comparaison finale.</p>
+<section id="ce-que-la-correction-apporte" class="level3">
+<h3 class="anchored" data-anchor-id="ce-que-la-correction-apporte">Ce que la correction apporte</h3>
+<p>Le Tableau 1 rapporte les performances sur les échantillons d’apprentissage et de test. Toutes les méthodes améliorent nettement la sortie brute. Le <em>Kling–Gupta Efficiency</em> (KGE, Gupta et al., 2009), qui décompose explicitement biais, corrélation et rapport d’écarts-types, progresse sur le test de 0,658 à 0,725–0,740, et sa troisième composante <span class="math inline">\sigma_f</span> passe de 0,81 à 1,02–1,04. Ces indicateurs portent sur la distribution rassemblée sur l’année, dont la variance est dominée par le cycle saisonnier, si bien que <span class="math inline">\sigma_f</span> en mesure l’amplitude. Les six méthodes corrigées se tiennent dans un intervalle très resserré sur les deux échantillons, les écarts entre elles relevant de l’ordre du centième. Le recul d’environ six centièmes de KGE entre apprentissage et test leur est par ailleurs commun, signe qu’il tient à la différence de climat entre les deux fenêtres et non à l’une d’entre elles en particulier.</p>
+<table class="caption-top table">
+<caption>Tableau 1. Performances sur les échantillons d’apprentissage et de test. <em>Clés de lecture — RMSE en °C (plus faible = meilleur) ; KGE, optimum à 1. <span class="math inline">\sigma_f = \sigma_{\hat y} / \sigma_{y^{\text{ref}}}</span>, troisième composante du KGE, mesure la restitution de l’amplitude de la variabilité, optimum à 1. Valeur la plus favorable en bleu, sortie brute en gris.</em></caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Méthode</th>
+<th style="text-align: center;">Apprentissage RMSE</th>
+<th style="text-align: center;">Apprentissage KGE</th>
+<th style="text-align: center;">Apprentissage <span class="math inline">\sigma_f</span></th>
+<th style="text-align: center;">Test RMSE</th>
+<th style="text-align: center;">Test KGE</th>
+<th style="text-align: center;">Test <span class="math inline">\sigma_f</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="raw">Sortie brute (KIOST-ESM)</span></td>
+<td style="text-align: center;"><span class="raw">4,708</span></td>
+<td style="text-align: center;"><span class="raw">0,576</span></td>
+<td style="text-align: center;"><span class="raw">0,79</span></td>
+<td style="text-align: center;"><span class="raw">4,543</span></td>
+<td style="text-align: center;"><span class="raw">0,658</span></td>
+<td style="text-align: center;"><span class="raw">0,81</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><em>Linear Scaling</em> (LS)</td>
+<td style="text-align: center;">4,117</td>
+<td style="text-align: center;">0,787</td>
+<td style="text-align: center;">1,01</td>
+<td style="text-align: center;">4,399</td>
+<td style="text-align: center;">0,725</td>
+<td style="text-align: center;">1,04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><em>Quantile Mapping</em> (QM)</td>
+<td style="text-align: center;">4,038</td>
+<td style="text-align: center;">0,794</td>
+<td style="text-align: center;"><span class="best">1,00</span></td>
+<td style="text-align: center;"><span class="best">4,281</span></td>
+<td style="text-align: center;"><span class="best">0,740</span></td>
+<td style="text-align: center;"><span class="best">1,02</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><em>Detrended QM</em> (DQM)</td>
+<td style="text-align: center;">4,038</td>
+<td style="text-align: center;">0,794</td>
+<td style="text-align: center;"><span class="best">1,00</span></td>
+<td style="text-align: center;">4,323</td>
+<td style="text-align: center;">0,735</td>
+<td style="text-align: center;">1,03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><em>Quantile Delta Mapping</em> (QDM)</td>
+<td style="text-align: center;">4,039</td>
+<td style="text-align: center;">0,794</td>
+<td style="text-align: center;"><span class="best">1,00</span></td>
+<td style="text-align: center;">4,332</td>
+<td style="text-align: center;">0,730</td>
+<td style="text-align: center;">1,03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><em>Scaled Distribution Mapping</em> (SDM)</td>
+<td style="text-align: center;">4,044</td>
+<td style="text-align: center;">0,794</td>
+<td style="text-align: center;"><span class="best">1,00</span></td>
+<td style="text-align: center;">4,325</td>
+<td style="text-align: center;">0,729</td>
+<td style="text-align: center;">1,03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CDF-t</td>
+<td style="text-align: center;"><span class="best">4,032</span></td>
+<td style="text-align: center;"><span class="best">0,795</span></td>
+<td style="text-align: center;"><span class="best">1,00</span></td>
+<td style="text-align: center;">4,356</td>
+<td style="text-align: center;">0,726</td>
+<td style="text-align: center;">1,03</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sur-quel-critère-départager-les-variantes" class="level3">
+<h3 class="anchored" data-anchor-id="sur-quel-critère-départager-les-variantes">Sur quel critère départager les variantes</h3>
+<p>Les six méthodes étant à ce point resserrées, les indicateurs d’ajustement ne permettent pas de trancher. Le critère décisif pour un exercice prospectif est ailleurs, dans la capacité de la correction à transporter sans le déformer le signal de changement climatique porté par le modèle. Une correction est en effet estimée sur la période historique mais appliquée à des projections, et rien ne garantit <em>a priori</em> qu’elle laisse intacte l’évolution que le modèle projette entre ces deux périodes.</p>
+<p>Ce diagnostic se formalise en comparant, pour une statistique d’intérêt <span class="math inline">s</span>, l’évolution future de la série corrigée à celle de la sortie brute du modèle :</p>
+<p><span class="math display">\Delta B_{i,j}(s) = \left[ s\left(\hat{y}^{\text{proj}}_{i,j}\right) - s\left(\hat{y}^{\text{hist}}_{i,j}\right) \right] - \left[ s\left(y^{\text{proj}}_{G,i,j}\right) - s\left(y^{\text{hist}}_{G,i,j}\right) \right], \tag{1}</span></p>
+<p>où <span class="math inline">\hat{y}</span> désigne la série corrigée et <span class="math inline">y_G</span> la sortie brute du modèle. Le premier crochet mesure le changement climatique présent dans la série corrigée, le second celui que porte le modèle. Un <span class="math inline">\Delta B_{i,j}</span> nul signifie que la correction a restitué exactement l’amplitude du changement projeté ; un <span class="math inline">\Delta B_{i,j}</span> négatif, qu’elle l’a atténué. La statistique <span class="math inline">s</span> retenue ici est le 95<sup>e</sup> centile, qui isole le comportement des extrêmes chauds, et le diagnostic est conduit sous le scénario SSP5-8.5, qui maximise l’amplitude du réchauffement projeté et constitue donc le test le plus exigeant.</p>
+<p>La Figure 3 donne la distribution spatiale de cet écart pour les six méthodes. Le <em>Quantile Mapping</em> en retire 0,65 °C en médiane, conséquence directe de son hypothèse de stationnarité des quantiles : en appliquant aux projections une transformation estimée sur le seul historique, il ramène les quantiles futurs vers leur position passée et ampute d’autant le réchauffement des extrêmes. Le DQM, qui ne transporte que le décalage de moyenne, corrige l’essentiel de ce défaut mais laisse subsister un biais de queue résiduel de −0,15 °C. Les quatre méthodes restantes se tiennent au voisinage de zéro, avec des médianes comprises entre −0,06 et +0,08 °C, soit un ordre de grandeur en dessous.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/downscaling-preservation-signal.png" class="img-fluid" alt="Boîtes à moustaches du biais de préservation du signal pour les six méthodes : LS, QDM, SDM et CDF-t proches de zéro, QM nettement négatif, DQM légèrement négatif."></p>
+<div class="note-cap">
+<p>Figure 3. Biais de préservation du signal climatique <span class="math inline">\Delta B_{i,j}</span> au 95<sup>e</sup> centile (extrêmes chauds), SSP5-8.5 à l’horizon 2050.</p>
+<p><em>Clés de lecture — Chaque boîte agrège la distribution spatiale de <span class="math inline">\Delta B_{i,j}</span>, défini par l’équation (1), sur les 6 375 pixels terrestres du domaine, en °C ; moustaches de Tukey (1,5× écart interquartile). La ligne tiretée marque la préservation exacte du signal.</em></p>
+</div>
+</div>
+<p>Ce diagnostic départage ce que les scores d’ajustement ne départageaient pas, et il inverse la hiérarchie : le QM, pourtant le mieux classé au KGE, est celui qui déforme le plus le signal prospectif, c’est-à-dire précisément la grandeur que l’on cherche à projeter. Restent quatre méthodes ; parmi elles, le QDM préserve le signal quantile par quantile plutôt qu’en moyenne, propriété qui le distingue du LS, et son KGE de test est le meilleur des quatre. C’est la méthode retenue.</p>
+</section>
+<section id="ce-que-la-correction-produit" class="level3">
+<h3 class="anchored" data-anchor-id="ce-que-la-correction-produit">Ce que la correction produit</h3>
+<p>Le QDM est recalibré sur l’intégralité de la période historique (1990-2014), puis appliqué aux projections. La Figure 4 en donne le résultat, à mettre en regard de la Figure 2. Sur l’historique, la distribution corrigée se superpose à celle de la référence et retrouve la bimodalité que la sortie brute ne restituait pas, son mode autour de 9 °C se scindant en deux régimes distincts. Les queues suivent le même mouvement, la densité corrigée s’étendant des deux côtés bien au-delà de l’enveloppe de la sortie brute.</p>
+<p>Les trois distributions projetées, corrigées par la même transformation, se déplacent vers les températures chaudes d’autant plus que le scénario est sévère, mais pas de la même manière. Sous SSP1-2.6 et SSP2-4.5, la distribution se translate en conservant sa structure ; sous SSP5-8.5, la queue supérieure s’étale et la densité au-delà de 25 °C dépasse de plusieurs fois celle des deux autres scénarios. C’est cette déformation des queues, et non le seul décalage de moyenne, que la correction QDM préserve.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/downscaling-distributions-corrigees.png" class="img-fluid" alt="Densités de la température après correction QDM : l’historique corrigé se superpose à la réanalyse et retrouve deux modes ; les projections corrigées se déplacent vers les températures chaudes."></p>
+<div class="note-cap">
+<p>Figure 4. Effet de la correction QDM sur les distributions de température (France métropolitaine).</p>
+<p><em>Clés de lecture — Densités de probabilité estimées par noyau, sur l’ensemble des cellules du domaine.</em></p>
+</div>
 </div>
 </section>
-<section id="les-méthodes-distribution-wise-principe-et-variantes" class="level2">
-<h2 class="anchored" data-anchor-id="les-méthodes-distribution-wise-principe-et-variantes">2. Les méthodes distribution-wise : principe et variantes</h2>
-<p>Les approches <em>Model Output Statistics</em> établissent une relation statistique directe entre les sorties brutes d’un modèle climatique et une référence locale — typiquement une réanalyse telle qu’ERA5-Land, de résolution native de 9 km. La relation, apprise sur la période historique, est ensuite appliquée aux projections du même modèle.</p>
-<div id="listing-schema" class="quarto-listing quarto-listing-container-custom">
-<figure class="arch figure"><svg viewbox="0 0 1160 232" role="img" aria-label="Downscaling statistique"><defs><marker id="ah-downscaling" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-soft)"></path></marker></defs><rect class="arch-in" x="16" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="40" cy="58" r="13"></circle><text class="arch-brick-numt" x="40" y="63" text-anchor="middle">1</text><text class="arch-in-t" x="147.5" y="102" text-anchor="middle">REGRIDDING</text><text class="arch-in-s" x="147.5" y="124" text-anchor="middle">Alignement spatial des grilles</text><line class="arch-arrow" x1="285" y1="110" x2="305" y2="110" marker-end="url(#ah-downscaling)"></line><rect class="arch-brick" x="309" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="333" cy="58" r="13"></circle><text class="arch-brick-numt" x="333" y="63" text-anchor="middle">2</text><text class="arch-title" x="440.5" y="102" text-anchor="middle">APPRENTISSAGE</text><text class="arch-sub" x="440.5" y="124" text-anchor="middle">Méthodes candidates sur</text><text class="arch-sub" x="440.5" y="142" text-anchor="middle">l’historique</text><line class="arch-arrow" x1="578" y1="110" x2="598" y2="110" marker-end="url(#ah-downscaling)"></line><rect class="arch-brick" x="602" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="626" cy="58" r="13"></circle><text class="arch-brick-numt" x="626" y="63" text-anchor="middle">3</text><text class="arch-title" x="733.5" y="102" text-anchor="middle">SÉLECTION</text><text class="arch-sub" x="733.5" y="124" text-anchor="middle">Échantillon de test indépendant</text><line class="arch-arrow" x1="871" y1="110" x2="891" y2="110" marker-end="url(#ah-downscaling)"></line><rect class="arch-brick" x="895" y="58" width="263" height="104" rx="8"></rect><circle class="arch-brick-num" cx="919" cy="58" r="13"></circle><text class="arch-brick-numt" x="919" y="63" text-anchor="middle">4</text><text class="arch-title" x="1026.5" y="102" text-anchor="middle">APPLICATION</text><text class="arch-sub" x="1026.5" y="124" text-anchor="middle">Recalibrage puis projections</text><text class="arch-sub" x="1026.5" y="142" text-anchor="middle">futures</text></svg><figcaption class="caption"><strong>Figure 1.</strong> La procédure distribution-wise en quatre étapes. La sélection ne se fait pas sur la seule qualité d’ajustement : la préservation du signal de changement prime dans un exercice prospectif.</figcaption></figure>
-<div class="listing-no-matching d-none">Aucun article correspondant</div>
+<section id="le-biais-résiduel-après-correction" class="level3">
+<h3 class="anchored" data-anchor-id="le-biais-résiduel-après-correction">Le biais résiduel après correction</h3>
+<p>Il reste à mesurer ce que la correction laisse subsister, en comparant cellule par cellule une statistique de la série corrigée à celle de la réanalyse,</p>
+<p><span class="math display">B_{i,j}(s) = s\left(\hat{y}_{i,j}\right) - s\left(y^{\text{ref}}_{i,j}\right), \tag{2}</span></p>
+<p>où, contrairement à <span class="math inline">\Delta B_{i,j}</span> qui portait sur une évolution entre deux périodes, il s’agit d’un écart de niveau, positif en cas de surestimation et négatif en cas de sous-estimation. Le calcul est conduit sur la moyenne, qui rend compte du corps de la distribution, et sur les 5<sup>e</sup> et 95<sup>e</sup> centiles, qui en isolent les deux queues.</p>
+<div class="note-figure">
+<p><img src="../../assets/notes/figures/downscaling-biais-residuel.png" class="img-fluid" alt="Trois cartes de France du biais résiduel après correction QDM : queue froide, moyenne et queue chaude ; biais quasi nul sur la moyenne, biais chaud faible sur les queues."></p>
+<div class="note-cap">
+<p>Figure 5. Biais résiduel <span class="math inline">B_{i,j}</span> de la correction QDM sur l’historique (France métropolitaine, 1990–2014) : (a) queue froide (5<sup>e</sup> centile), (b) moyenne, (c) queue chaude (95<sup>e</sup> centile).</p>
+<p><em>Clés de lecture — Échelle de couleur divergente centrée sur zéro : le jaune pâle marque un biais nul, le rouge une surestimation, le bleu une sous-estimation. L’encart de chaque panneau indique le biais spatial moyen correspondant.</em></p>
 </div>
+</div>
+<p>Les résultats sont sans ambiguïté sur le corps de la distribution : le biais moyen s’établit à +0,001 °C en moyenne spatiale et la carte correspondante est uniforme (Figure 5, panneau b), ce qui est le comportement recherché. Les queues conservent en revanche un biais chaud résiduel, faible mais systématique et spatialement structuré : +0,029 °C sur la queue froide et +0,039 °C sur la queue chaude, concentrés sur le Bassin parisien et le quart Nord-Est, tandis que les reliefs et la Corse restent proches de zéro.</p>
+<p>Évalué hors échantillon, la transformation apprise sur 1990–2004 étant appliquée à la période de test, le biais reste faible mais se creuse sur les queues, +0,2 °C sur la moyenne contre +0,5 °C sur la queue froide et +0,4 °C sur la queue chaude. La sortie brute présente au contraire un biais de +2,5 °C sur la queue froide et de −0,8 °C sur la queue chaude, soit une distribution resserrée de près de trois degrés que la correction ramène à son amplitude de référence.</p>
+</section>
+</section>
+<section id="limites-et-pistes-dextension" class="level2">
+<h2 class="anchored" data-anchor-id="limites-et-pistes-dextension">4. Limites et pistes d’extension</h2>
 <div class="why">
-<p><span class="label">Ce que la correction apporte</span></p>
-<ul>
-<li><strong>Une loi marginale réaliste.</strong> La distribution corrigée retrouve la structure bimodale — régimes hivernal et estival — que les sorties brutes aplatissent.</li>
-<li><strong>Des extrêmes exploitables.</strong> Les quantiles hauts et bas cessent d’être systématiquement sous-estimés, ce qui conditionne toute mesure de risque physique.</li>
-<li><strong>Un coût de mise en œuvre modeste.</strong> Aucune simulation climatique à fine échelle n’est requise.</li>
-<li><strong>Une maîtrise interne.</strong> La méthode est explicite, documentable et justifiable auprès du superviseur.</li>
-</ul>
+<p><span class="label">Deux limites</span></p>
+<p><strong>La référence borne la résolution atteignable.</strong> Une correction MOS ne peut produire une information plus fine que le jeu sur lequel elle est calibrée, soit une dizaine de kilomètres avec ERA5-Land. La portée de cette borne dépend de l’origine de la finesse requise. Elle pèse peu lorsque celle-ci vient du terrain, comme pour une inondation fluviale dont l’emprise est déterminée par un modèle numérique de terrain à partir d’une précipitation agrégée sur le bassin versant (Sampson et al., 2015). Elle devient contraignante lorsque la finesse doit venir de la variable elle-même, comme pour les précipitations intenses dans le cas d’une inondation pluviale, dont l’échelle kilométrique n’est restituée que moyennée, donc atténuée, par une réanalyse. La lever suppose de mobiliser des covariables statiques à très haute résolution, telles que les modèles numériques de terrain, les indices de végétation ou l’occupation des sols, pour atteindre l’échelle décamétrique (Immerzeel et al., 2009 ; Jia et al., 2011).</p>
+<p><strong>Un biais résiduel subsiste hors échantillon.</strong> La correction est apprise sur une période et appliquée à une autre, sans garantie que la structure du biais soit demeurée identique, l’écart croissant avec la distance à la période de calibration. Le résidu se concentre en général sur les queues, plus sensibles que le corps de la distribution à un changement de climatologie : dans l’application présentée, il atteint +0,5 °C sur la queue froide et +0,4 °C sur la queue chaude, contre +0,2 °C sur la moyenne. Son sens n’est pas neutre selon l’aléa considéré, un biais chaud majorant l’intensité des vagues de chaleur et sous-estimant celle des épisodes de gel.</p>
 </div>
+<p>L’arrivée de CMIP7 et d’ERA6 améliorera la qualité des simulations sans supprimer le besoin d’une correction, des modèles régionaux déjà mieux résolus que les modèles globaux du CMIP6 continuant d’exiger un ajustement de leurs sorties avant tout usage local (Tabari et al., 2016).</p>
+<p>Le prolongement naturel du dispositif consiste à convertir le forçage corrigé en aléa, en le couplant à des modèles d’impact, hydrologiques pour l’inondation ou de bilan hydrique des sols pour le retrait-gonflement des argiles, afin de dériver des courbes d’aléa par période de retour aux horizons futurs. Pour un portefeuille géolocalisé, l’enjeu est direct, c’est à ce niveau de résolution qu’un actif bascule d’« exposé » à « non exposé ».</p>
 </section>
 <section id="mise-en-œuvre" class="level2">
-<h2 class="anchored" data-anchor-id="mise-en-œuvre">3. Mise en œuvre</h2>
-<ol type="1">
-<li><strong>Aligner les grilles.</strong> Regridding des sorties du modèle sur la grille de la réanalyse de référence.</li>
-<li><strong>Apprendre et sélectionner.</strong> Estimer plusieurs méthodes candidates sur un échantillon d’apprentissage, puis les départager sur un échantillon de test indépendant.</li>
-<li><strong>Recalibrer et projeter.</strong> Réestimer sur l’intégralité de l’historique, puis appliquer aux scénarios futurs.</li>
-</ol>
-<div class="retenir">
-<p><span class="label">À retenir pour chaque équipe</span></p>
-<ul>
-<li><strong>Modélisation.</strong> Deux critères, pas un : ajustement sur l’historique <strong>et</strong> préservation du signal de changement aux quantiles extrêmes.</li>
-<li><strong>Validation.</strong> La méthode retenue doit être justifiée sur le second critère, qui n’apparaît dans aucune métrique d’ajustement standard.</li>
-<li><strong>Pilotage.</strong> Maîtriser la correction en interne relève autant de la souveraineté sur la donnée que de la capacité à justifier le dispositif.</li>
-</ul>
-</div>
+<h2 class="anchored" data-anchor-id="mise-en-œuvre">5. Mise en œuvre</h2>
+<p>La chaîne repose sur des données publiques. Le <em>Climate Data Store</em> de Copernicus donne accès, au format NetCDF, aux projections des modèles CMIP6 comme aux réanalyses ERA5 et ERA5-Land, et couvre les variables climatiques mobilisées pour la modélisation des aléas physiques : au-delà de la température retenue ici, les précipitations, la vitesse du vent, l’humidité des sols ou le ruissellement y sont disponibles au moins au pas journalier. La méthode s’applique ainsi à tout aléa, moyennant les variantes propres à chaque variable, une correction sur les précipitations appelant par exemple un traitement multiplicatif et une gestion explicite des jours secs (Switanek et al., 2017). Les compétences requises relèvent de la statistique et de la programmation, non de la modélisation physique du climat, et aucun supercalculateur n’est nécessaire, ce qui distingue cette voie du <em>downscaling</em> dynamique. L’essentiel du coût tient au volume des données à manipuler plutôt qu’à la complexité des traitements.</p>
+<p>Un pilote sur une variable et un modèle suffit à éprouver la chaîne de bout en bout. L’extension à un ensemble multi-modèles se fait ensuite à architecture inchangée, mais non sans coût, une transformation MOS étant propre au modèle sur lequel elle a été estimée : chaque membre de l’ensemble doit être corrigé séparément avant agrégation. Reste un choix à arrêter avant l’estimation, celui du critère de sélection, l’écart observé à la <a href="#application">section 3</a> entre le classement au KGE et celui obtenu sur la préservation du signal montrant que l’indicateur retenu commande le résultat. Le documenter dès la conception conditionne la capacité à justifier le dispositif auprès du superviseur.</p>
+<p>Le groupe Square Management se tient à la disposition des équipes intéressées pour échanger sur la mise en œuvre d’une chaîne de <em>downscaling</em> statistique adaptée aux aléas et aux zones d’exposition qui les concernent.</p>
 <div class="note-cta">
 <p><strong>Discuter de ce travail ?</strong> Une question, une application à votre portefeuille ou une demande de présentation : <a href="../../fr/a-propos/#contact">écrivez au collectif →</a></p>
 </div>
 <div class="partnership">
-<p>Cette note s’appuie sur les travaux conduits au sein du collectif STORM — <em>Scenario-based Testing &amp; Optimization in Risk Modeling</em> — de Square Management et du Square Research Center, dédié à la modélisation et à la quantification des risques. STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Ces travaux s’appuient sur une collaboration avec le Master ESA de l’Université d’Orléans.</p>
+<p>Cette note s’appuie sur les travaux conduits au sein du pôle STORM (<em>Scenario-based Testing &amp; Optimization in Risk Modeling</em>) de Square Management, dédié à la modélisation et à la quantification des risques. Le pôle STORM transforme la recherche quantitative en briques méthodologiques concrètes au service des équipes risques des établissements. Les travaux de cette note s’appuient sur une collaboration avec le Master ESA et Square Management remercie Christophe Hurlin pour ce partenariat.</p>
 </div>
 </section>
 <section id="références" class="level2">
 <h2 class="anchored" data-anchor-id="références">Références</h2>
 <div class="refs">
-<p>Caisse Centrale de Réassurance (2023). <em>Conséquences du changement climatique sur le coût des catastrophes naturelles en France à horizon 2050.</em></p>
-<p>Lenderink, G., Buishand, A. &amp; van Deursen, W. (2007). Estimates of future discharges of the river Rhine using two scenario methodologies. <em>Hydrology and Earth System Sciences</em>, 11(3), 1145–1159.</p>
-<p>Maraun, D. &amp; Widmann, M. (2018). <em>Statistical Downscaling and Bias Correction for Climate Research.</em> Cambridge University Press.</p>
-<p>Michelangeli, P.-A., Vrac, M. &amp; Loukos, H. (2009). Probabilistic downscaling approaches. <em>Geophysical Research Letters</em>, 36(11).</p>
-<p>Vautard, R. et al.&nbsp;(2020). Human contribution to the record-breaking June and July 2019 heatwaves in Western Europe. <em>Environmental Research Letters</em>, 15(9), 094077.</p>
+<p>Caisse Centrale de Réassurance (2023). <em>Conséquences du changement climatique sur le coût des catastrophes naturelles en France à horizon 2050</em>. Technical report, CCR, Paris.</p>
+<p>Cannon, A. J., Sobie, S. R. &amp; Murdock, T. Q. (2015). Bias correction of GCM precipitation by quantile mapping: how well do methods preserve changes in quantiles and extremes? <em>Journal of Climate</em>, 28(17), 6938–6959.</p>
+<p>Gupta, H. V., Kling, H., Yilmaz, K. K. &amp; Martinez, G. F. (2009). Decomposition of the mean squared error and NSE performance criteria: Implications for improving hydrological modelling. <em>Journal of Hydrology</em>, 377(1–2), 80–91.</p>
+<p>Immerzeel, W. W., Rutten, M. M. &amp; Droogers, P. (2009). Spatial downscaling of TRMM precipitation using vegetative response on the Iberian Peninsula. <em>Remote Sensing of Environment</em>, 113(2), 362–370.</p>
+<p>Jia, S., Zhu, W., Lü, A. &amp; Yan, T. (2011). A statistical spatial downscaling algorithm of TRMM precipitation based on NDVI and DEM in the Qaidam Basin of China. <em>Remote Sensing of Environment</em>, 115(12), 3069–3079.</p>
+<p>Lenderink, G., Buishand, A. &amp; van Deursen, W. (2007). Estimates of future discharges of the river Rhine using two scenario methodologies: direct versus delta approach. <em>Hydrology and Earth System Sciences</em>, 11(3), 1145–1159.</p>
+<p>Maraun, D. &amp; Widmann, M. (2018). <em>Statistical downscaling and bias correction for climate research</em>. Cambridge University Press.</p>
+<p>Michelangeli, P.-A., Vrac, M. &amp; Loukos, H. (2009). Probabilistic downscaling approaches: Application to wind cumulative distribution functions. <em>Geophysical Research Letters</em>, 36(11).</p>
+<p>Pak, G., Noh, Y., Lee, M.-I., Yeh, S.-W., Kim, D., Kim, S.-Y., Lee, J.-L., Lee, H. J., Hyun, S.-H., Lee, K.-Y., et al.&nbsp;(2021). Korea Institute of Ocean Science and Technology Earth System Model and its simulation characteristics. <em>Ocean Science Journal</em>, 56(1), 18–45.</p>
+<p>Sampson, C. C., Smith, A. M., Bates, P. D., Neal, J. C., Alfieri, L. &amp; Freer, J. E. (2015). A high-resolution global flood hazard model. <em>Water Resources Research</em>, 51(9), 7358–7381.</p>
+<p>Switanek, M. B., Troch, P. A., Castro, C. L., Leuprecht, A., Chang, H.-I., Mukherjee, R. &amp; Demaria, E. (2017). Scaled distribution mapping: a bias correction method that preserves raw climate model projected changes. <em>Hydrology and Earth System Sciences</em>, 21(6), 2649–2666.</p>
+<p>Tabari, H., De Troch, R., Giot, O., Hamdi, R., Termonia, P., Saeed, S., Brisson, E., Van Lipzig, N. &amp; Willems, P. (2016). Local impact analysis of climate change on precipitation extremes: are high-resolution climate models needed for realistic simulations? <em>Hydrology and Earth System Sciences</em>, 20(9), 3843–3857.</p>
+<p>Vautard, R., van Aalst, M., Boucher, O., Drouin, A., Haustein, K., Kreienkamp, F., Van Oldenborgh, G. J., Otto, F. E., Ribes, A., Robin, Y., et al.&nbsp;(2020). Human contribution to the record-breaking June and July 2019 heatwaves in Western Europe. <em>Environmental Research Letters</em>, 15(9), 094077.</p>
 </div>
-
 
 
 </section>
