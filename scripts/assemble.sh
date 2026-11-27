@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 # =============================================================================
-#  Exécuté automatiquement par Quarto après chaque rendu (clé post-render).
-#  Recopie l'édition qui vient d'être construite dans docs/.
-#  Vous n'avez normalement jamais à lancer ce script à la main.
+#  Run automatically by Quarto after each render (post-render key).
+#  Copies the edition that was just built into docs/.
+#  You should never need to run this script by hand.
 # =============================================================================
 set -e
 
 PROF="${QUARTO_PROFILE:-fr}"
 OUT="${QUARTO_PROJECT_OUTPUT_DIR:-_site-$PROF}"
 
-[ -d "$OUT/$PROF" ] || { echo "assemble: rien à copier depuis $OUT/$PROF"; exit 0; }
+[ -d "$OUT/$PROF" ] || { echo "assemble: nothing to copy from $OUT/$PROF"; exit 0; }
 
 mkdir -p docs
-# GitHub Pages : désactive Jekyll (sinon certains fichiers peuvent être ignorés)
+# GitHub Pages: disable Jekyll (otherwise some files may be ignored)
 touch docs/.nojekyll
-# Domaine personnalisé (GitHub Pages) — à garder en phase avec Settings → Pages
+# Custom domain (GitHub Pages) — keep in sync with Settings → Pages
 echo "squaremanagement-storm.com" > docs/CNAME
-# Icône d’onglet à la racine (certains navigateurs la demandent toujours là)
+# Tab icon at the root (some browsers always ask for it there)
 [ -f assets/brand/favicon.ico ] && cp assets/brand/favicon.ico docs/favicon.ico
-# Page « introuvable » (GitHub Pages la sert pour toute adresse inconnue)
+# "Page not found" page (GitHub Pages serves it for any unknown address)
 [ -f scripts/404.html ] && cp scripts/404.html docs/404.html
 rm -rf "docs/$PROF"
 cp -R "$OUT/$PROF" "docs/$PROF"
@@ -27,7 +27,7 @@ cp -R "$OUT/$PROF" "docs/$PROF"
 mkdir -p docs/site_libs
 [ -d "$OUT/site_libs" ] && cp -R "$OUT/site_libs/." docs/site_libs/
 
-# Index de recherche : un par édition, fusionnés en un seul pour tout le site.
+# Search index: one per edition, merged into a single one for the whole site.
 if [ -f "$OUT/search.json" ]; then
   cp "$OUT/search.json" "docs/search-$PROF.json"
   if command -v python3 >/dev/null 2>&1; then
@@ -47,15 +47,17 @@ PY
   fi
 fi
 
-# Adresses propres : les liens internes ne montrent plus « index.html » ni
-# « .html » (GitHub Pages sert /fr/expertise/ et /fr/notes/downscaling tout seul).
-# Le plan du site reprend ces adresses pour les deux éditions présentes dans docs/.
+# Clean URLs: internal links no longer show "index.html" or ".html"
+# (GitHub Pages serves /fr/expertise/ and /fr/notes/downscaling on its own).
+# The sitemap uses these addresses for both editions present in docs/.
 if command -v python3 >/dev/null 2>&1; then
   PROF="$PROF" python3 scripts/clean_urls.py
 else
-  echo "assemble: python3 absent — plan du site non régénéré"
+  echo "assemble: python3 not found — sitemap not regenerated"
 fi
 
+# Root page: redirects to the French edition (its text stays in French,
+# since visitors may briefly see it).
 cat > docs/index.html <<'HTML'
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
@@ -74,4 +76,4 @@ cat > docs/index.html <<'HTML'
 </head><body><p>Redirection vers <a href="fr/">STORM</a>…</p></body></html>
 HTML
 
-echo "assemble: édition $PROF copiée dans docs/$PROF"
+echo "assemble: $PROF edition copied into docs/$PROF"

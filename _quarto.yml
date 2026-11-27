@@ -10,7 +10,10 @@
 project:
   type: website
   resources:
-    - assets/**
+    # Le « / » initial ancre le motif à la racine du projet. Sans lui, Quarto
+    # copie TOUT dossier « assets » où qu'il soit (docs/assets, _site-en/assets…),
+    # ce qui recopie les éditions l'une dans l'autre à chaque rendu.
+    - /assets/**
   pre-render:
     # Extrait les en-têtes des notes FR vers data/_notes.yml, que les deux
     # éditions lisent pour leurs listes d'actualités (Quarto ne sait pas lire

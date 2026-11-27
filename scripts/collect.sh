@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Lancé avant chaque rendu. Si python3 n'est pas disponible, on garde le
-# fichier data/_notes.yml déjà présent dans le dépôt.
+# Runs before each render. If python3 is not available, the data/_notes.yml
+# file already in the repository is kept as is.
 if command -v python3 >/dev/null 2>&1; then
   python3 "$(dirname "$0")/collect.py"
 else
-  echo "collect: python3 absent — listes anglaises inchangées"
+  echo "collect: python3 not found — English lists left unchanged"
 fi
